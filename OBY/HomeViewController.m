@@ -42,7 +42,6 @@
 
 @property (nonatomic, strong) HTHorizontalSelectionList *selectionList;
 @property (nonatomic, strong) NSArray *categoryList;
-
 @end
 
 @implementation HomeViewController
@@ -522,20 +521,20 @@
                      //[self setBusy:NO];
                      isMenuChoosed = YES;
                      [self showImages];
-                 }else{
+                 } else {
                      [refreshControl endRefreshing];
                      [appDelegate hideHUDForView2:self.view];
                      //[self setBusy:NO];
                      [self showMessage:SERVER_ERROR];
                  }
                 
-             }else{
+             } else {
                  [refreshControl endRefreshing];
                  [appDelegate hideHUDForView2:self.view];
                  //[self setBusy:NO];
                  [self showMessage:SERVER_ERROR];
              }
-         }else{
+         } else {
              [refreshControl endRefreshing];
              [appDelegate hideHUDForView2:self.view];
              //[self setBusy:NO];
@@ -845,7 +844,7 @@
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    CollectionViewCellimage *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCellimage" forIndexPath:indexPath];
+    CollectionViewCellimage *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCellimage" forIndexPath:indexPath];
     
 //    cell.imgView.image=[UIImage imageNamed:[NSString stringWithFormat:@"%d.png",indexPath.row]];
 //    
@@ -856,7 +855,7 @@
     if(isMenuChoosed){
         photoClass = [arrCategoryPhotos objectAtIndex:indexPath.row];
     } else {
-   photoClass = [appDelegate.arrPhotos objectAtIndex:indexPath.row];
+        photoClass = [appDelegate.arrPhotos objectAtIndex:indexPath.row];
     }
     
     cell.lblName.text = photoClass.creator;
@@ -898,7 +897,7 @@
     if(tapCellIndex == indexPath.row){
         cell.imgView.hidden = YES;
         cell.viewInfo.hidden = NO;
-    }else{
+    } else {
         cell.imgView.hidden = NO;
         cell.viewInfo.hidden = YES;
     }
@@ -1087,7 +1086,7 @@
     
     int likecount = (int)[photoClass.like_count integerValue];
     if(photoClass.isLike){
-        for(int i =0 ; i < photoClass.likers.count; i++){
+        for(int i = 0 ; i < photoClass.likers.count; i++){
             NSMutableDictionary *dict = [photoClass.likers objectAtIndex:i];
             
             if ([[dict objectForKey:@"user__username"]isEqualToString:GetUserName]){
@@ -1156,8 +1155,7 @@
     [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
     //Call the Login Web services
-    [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-     {
+    [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
          if(error != nil){
              NSLog(@"%@",error);
          }

@@ -75,8 +75,8 @@
             return;
         }
         PhotoClass *photoClass=[arrTimelinePhotos objectAtIndex:indexPath.row];
-        photoViewController.photoURL=photoClass.photo;
-        photoViewController.view.frame=appDelegate.window.frame;
+        photoViewController.photoURL = photoClass.photo;
+        photoViewController.view.frame = appDelegate.window.frame;
 
         [self.view addSubview:photoViewController.view];
     }

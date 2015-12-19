@@ -525,7 +525,6 @@
                         </subviews>
                         <color key="backgroundColor" red="0.94117647059999998" green="0.93725490199999995" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="badgeLabel" destination="8hT-To-2jG" id="tfQ-Zo-Ojb"/>
                         <outlet property="tabView" destination="bbC-pe-8Mc" id="Pea-7I-qdg"/>

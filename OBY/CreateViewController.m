@@ -11,6 +11,7 @@
 #import "CustomeImagePicker.h"
 #import "UIView+RNActivityView.h"
 #import "ChoosePhotoViewController.h"
+#import "TimeLineViewController.h"
 #import "AnimatedMethods.h"
 #import "Reachability.h"
 
@@ -58,19 +59,19 @@
     appDelegate=[AppDelegate getDelegate];
     [super viewDidLoad];
     
-    choosePhotoViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"ChoosePhotoViewController"];
+    choosePhotoViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ChoosePhotoViewController"];
   
-    choosePhotoViewController.delegate=self;
+    choosePhotoViewController.delegate = self;
     
-    if(self.view.frame.size.height==480 &&self.view.frame.size.width==320){
-        imgView.frame=CGRectMake(imgView.frame.origin.x+5, imgView.frame.origin.y, 100, 100);
+    if(self.view.frame.size.height == 480 && self.view.frame.size.width == 320){
+        imgView.frame = CGRectMake(imgView.frame.origin.x+5, imgView.frame.origin.y, 100, 100);
     }
     
     imgView.layer.cornerRadius = imgView.frame.size.width / 2;
     imgView.layer.masksToBounds = YES;
     
     UISwipeGestureRecognizer *viewRight=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
-    viewRight.direction=UISwipeGestureRecognizerDirectionRight;
+    viewRight.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:viewRight];
 }
 
@@ -84,13 +85,13 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    appDelegate.tabbar.tabView.hidden=YES;
+    appDelegate.tabbar.tabView.hidden = YES;
     
     txtDescription.layer.borderWidth = 0.5;
-    txtDescription.layer.borderColor =[[UIColor lightGrayColor] CGColor];
+    txtDescription.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     
-    lblCat.layer.borderWidth=0.5;
-    lblCat.layer.borderColor=[[UIColor lightGrayColor] CGColor];;
+    lblCat.layer.borderWidth = 0.5;
+    lblCat.layer.borderColor = [[UIColor lightGrayColor] CGColor];;
   
     [super viewWillAppear:YES];
 }
@@ -110,31 +111,31 @@
 }
 
 -(void)selectImage:(UIImage *)imgSelect{
-    imgView.image=imgSelect;
+    imgView.image = imgSelect;
 }
 
 - (IBAction)onCategory:(id)sender {
     [self.view endEditing:YES];
     
-    CategoryViewController *categoryViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"CategoryViewController"];
-    categoryViewController.delegate=self;
+    CategoryViewController *categoryViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CategoryViewController"];
+    categoryViewController.delegate = self;
     
     [self.navigationController pushViewController:categoryViewController animated:YES];
 }
 
 -(void)chooseCategory:(NSString *)choosedCategory selectedIndex:(int)selectIndex{
     NSLog(@"%@",choosedCategory);
-    selectedCode=selectIndex+2;
-    txtCategory.text=choosedCategory;
+    selectedCode = selectIndex+2;
+    txtCategory.text = choosedCategory;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) animateTextView: (UITextView*) textView up: (BOOL) up{
     float val;
     if(self.view.frame.size.height==480){
-        val=0.75;
-    }else{
-        val=kOFFSET_FOR_KEYBOARD;
+        val = 0.75;
+    } else {
+        val = kOFFSET_FOR_KEYBOARD;
     }
     const int movementDistance = val * textView.frame.origin.y;
     
@@ -157,8 +158,8 @@
 
 - (void)nextTextField:(UIBarButtonItem *)sender {
     [self.view endEditing:YES];
-    CategoryViewController *categoryViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"CategoryViewController"];
-    categoryViewController.delegate=self;
+    CategoryViewController *categoryViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CategoryViewController"];
+    categoryViewController.delegate = self;
     [self.navigationController pushViewController:categoryViewController animated:YES];
 }
 
@@ -174,15 +175,15 @@
     
     keyboardToolBar.barStyle = UIBarStyleDefault;
     
-    UIBarButtonItem *bar2=[[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStyleBordered target:self action:@selector(nextTextField:)];
+    UIBarButtonItem *bar2 = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStyleBordered target:self action:@selector(nextTextField:)];
     bar2.tag=textView.tag;
     
-    UIBarButtonItem *bar3= [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    bar3.tag=textView.tag;
+    UIBarButtonItem *bar3 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    bar3.tag = textView.tag;
     
-    UIBarButtonItem *bar4=
+    UIBarButtonItem *bar4 =
     [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(resignKeyboard)];
-    bar4.tag=textView.tag;
+    bar4.tag = textView.tag;
     
     [keyboardToolBar setItems: [NSArray arrayWithObjects:
                                 bar2,bar3,bar4,
@@ -233,14 +234,14 @@
                 UIImage *image = [UIImage imageWithCGImage:imageRef];
                 if (imageRef) {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        if(count==0){
+                        if(count == 0){
                             [imgView setImage:image];
                             //[imageView1 setImage:image];
                         }
-                        if(count==1){
+                        if(count == 1){
                            // [imageView2 setImage:image];
                         }
-                        if(count==2){
+                        if(count == 2){
                            // [imageView3 setImage:image];
                         }
                     });
@@ -256,8 +257,8 @@
 }
 
 -(BOOL)validateFields{
-    UIImage *img=[UIImage imageNamed:@"gallery_icon"];
-    BOOL check=[AnimatedMethods firstimage:img isEqualTo:imgView.image];
+    UIImage *img = [UIImage imageNamed:@"gallery_icon"];
+    BOOL check = [AnimatedMethods firstimage:img isEqualTo:imgView.image];
     
     if ([[txtCategory.text Trim] isEmpty]){
         [self showMessage:EMPTY_CATEGORY];
@@ -288,17 +289,15 @@
     int i = (int)buttonIndex;
     
     switch(i) {
-        case 0:
-        {
+        case 0: {
             if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-                [AppDelegate showMessage:@"No Camera Available"];
-            }else{
+                [AppDelegate showMessage:@"No camera available"];
+            } else {
                 [self ShowImagePickerForType:UIImagePickerControllerSourceTypeCamera];
             }
         }
             break;
-        case 1:
-        {
+        case 1: {
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 //UIImagePickerControllerSourceTypePhotoLibrary
               
@@ -309,16 +308,16 @@
         }
             break;
         default:
-            // Do Nothing.........
+            // Do Nothing...
             break;
     }
 }
 
 -(void)ShowImagePickerForType:(int)type{
-    UIImagePickerController *picker=[[UIImagePickerController alloc]init];
-    picker.sourceType=type;
-    picker.delegate=self;
-    picker.allowsEditing=YES;
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    picker.sourceType = type;
+    picker.delegate = self;
+    picker.allowsEditing = YES;
     [self presentViewController:picker animated:YES completion:nil];
 }
 
@@ -335,8 +334,8 @@
         imageToSave = originalImage;
     }
     
-    isImageChoosed=YES;
-    imgView.image=imageToSave;
+    isImageChoosed = YES;
+    imgView.image = imageToSave;
     
     /*
     NSData *strProfile;
@@ -361,7 +360,7 @@
 #pragma mark - IBActionSheet/UIActionSheet Delegate Method
 
 -(void)uploadImage{
-    self.funkyIBAS = [[IBActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Take Photo",@"Choose from library",nil];
+    self.funkyIBAS = [[IBActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Take photo",@"Choose from library",nil];
     self.funkyIBAS.buttonResponse = IBActionSheetButtonResponseShrinksOnPress;
     [self.funkyIBAS setButtonBackgroundColor:[UIColor clearColor]];
     [self.funkyIBAS setButtonTextColor:[UIColor clearColor]];
@@ -392,7 +391,7 @@
     Reachability *reachability=[Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus=[reachability currentReachabilityStatus];
     if(networkStatus == NotReachable) {
-        [self showMessage:@"Please check your internet connection."];
+        [self showMessage:@"Please check your network connection"];
         return;
     }
     
@@ -404,9 +403,9 @@
     NSString *description;
     
     if([txtDescription.text isEqualToString:@"Description"]){
-        description=@"";
-    }else{
-        description=txtDescription.text;
+        description = @"";
+    } else {
+        description = txtDescription.text;
     }
     
     // Dictionary that holds post parameters. You can set your post parameters that your server accepts or programmed to accept.
@@ -445,7 +444,6 @@
     }
     
     // add image data
-    
     NSData *imageData = UIImageJPEGRepresentation(imgView.image, 1.0);
     if (imageData) {
         [body appendData:[[NSString stringWithFormat:@"--%@\r\n", BoundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -454,7 +452,6 @@
         [body appendData:imageData];
         [body appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
     }
-    
     [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", BoundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
     
     // setting the body of the post to the reqeust
@@ -463,7 +460,7 @@
     NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
     NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
-    NSString *authValue =[NSString stringWithFormat:@"Basic %@", base64String];
+    NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
     [request setValue:authValue forHTTPHeaderField:@"Authorization"];
     
     // set the content-length
@@ -478,23 +475,22 @@
               [self setBusy:NO];
              
              NSDictionary * JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-             NSString *strResponse = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+//             NSString *strResponse = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
              
-             NSLog(@"jsno value=%@",JSONValue);
+             NSLog(@"json value=%@",JSONValue);
             // NSLog(@"Response=%@",strResponse);
              
              if([JSONValue isKindOfClass:[NSDictionary class]]){
-                 if([JSONValue allKeys].count==3 && [JSONValue objectForKey:@"photo"]){
-                     [self showMessage:@"Thank you! You have successfully uploaded your picture!"];
-                     
+                 if([JSONValue allKeys].count == 3 && [JSONValue objectForKey:@"photo"]){
+                     [self showMessage:@"You have successfully uploaded your photo!"];
                      [self.navigationController popViewControllerAnimated:YES];
-                 }else{
+                 } else {
                      [self showMessage:SERVER_ERROR];
                  }
-             }else{
+             } else {
                  [self showMessage:SERVER_ERROR];
              }
-         }else{
+         } else {
              [self showMessage:SERVER_ERROR];
          }
          [self setBusy:NO];
@@ -511,21 +507,20 @@
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView{
-        if ([textView.text isEqualToString:@"Description"]) {
-            textView.text = @"";
-            textView.textColor = [UIColor blackColor]; //optional
+    if ([textView.text isEqualToString:@"Description"]) {
+        textView.text = @"";
+        textView.textColor = [UIColor blackColor]; //optional
         [textView becomeFirstResponder];
     }
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView{
-        if ([textView.text isEqualToString:@""]) {
-            textView.text = @"Description";
-            textView.textColor = [UIColor lightGrayColor]; //optional
-        }
-
+    if ([textView.text isEqualToString:@""]) {
+        textView.text = @"Description";
+        textView.textColor = [UIColor lightGrayColor]; //optional
+    }
     [textView resignFirstResponder];
-        [self animateTextView:textView up: NO];
+    [self animateTextView:textView up: NO];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

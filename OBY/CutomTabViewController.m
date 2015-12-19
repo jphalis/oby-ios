@@ -167,9 +167,6 @@ enum{
     UINavigationController *navController3 = [[UINavigationController alloc]initWithRootViewController:notificationViewController];
     UINavigationController *navController4 = [[UINavigationController alloc]initWithRootViewController:miscellaneousViewController];
     
-//    self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, 40);
-//    [super viewWillAppear:animated];
-    
     [self PushViewController:navController1];
     [self PushViewController:navController2];
     [self PushViewController:navController3];
@@ -187,6 +184,7 @@ enum{
     specialViewController = vc;
     CGRect frame = vc.view.frame;
     frame.origin = CGPointMake(0, 0);
+    frame.size.height = frame.size.height + 40;
     vc.view.frame = frame;
     [self.view addSubview:vc.view];
     //[self.view bringSubviewToFront:self.tabView];
@@ -201,6 +199,8 @@ enum{
     prevController = naVController;
     CGRect frame = prevController.view.frame;
     frame.origin = CGPointMake(0, 0);
+    // view is 40 pixels short of reaching tabbar
+    frame.size.height = frame.size.height + 40;
     prevController.view.frame = frame;
     [self.view addSubview:prevController.view];
     [self.view bringSubviewToFront:tabView];
