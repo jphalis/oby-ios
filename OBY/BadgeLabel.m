@@ -71,7 +71,7 @@
 - (void)setStyle:(BadgeLabelStyle)style{
     switch (style) {
         case BadgeLabelStyleAppIcon:
-            self.backgroundColor = [UIColor colorWithRed:222.0f/255.0 green:32/255.0 blue:32/255.0 alpha:1];
+            self.backgroundColor = [UIColor colorWithRed:252.0f/255.0 green:0 blue:255/255.0 alpha:1];
             //self.hasBorder = YES;
             //self.hasShadow = YES;
             //self.hasGloss = YES;
@@ -102,7 +102,7 @@
 	if (self = [super initWithFrame:frame]) {
 		[self initBadge];
         self.textColor = [UIColor whiteColor];
-        self.font = [UIFont boldSystemFontOfSize:17];
+        self.font = [UIFont boldSystemFontOfSize:5];
         self.textAlignment = NSTextAlignmentCenter;
         self.backgroundColor = [UIColor blueColor];
 	}

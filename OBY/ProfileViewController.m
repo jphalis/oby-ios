@@ -74,65 +74,65 @@
 
 - (void)viewDidLoad {
     SetisUpdate(NO);
-    dictProfileInformation =[[NSMutableDictionary alloc]init];
+    dictProfileInformation = [[NSMutableDictionary alloc]init];
     
 NSLog(@"url=%@",userURL);
     
-    photoViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"PhotoViewController"];
-    photoViewController.delegate=self;
+    photoViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PhotoViewController"];
+    photoViewController.delegate = self;
     
-    commentViewController= [self.storyboard instantiateViewControllerWithIdentifier:@"CommentViewController"];
-    commentViewController.delegate=self;
+    commentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CommentViewController"];
+    commentViewController.delegate = self;
     
-    pgControl.numberOfPages=2;
-    pgControl.currentPage=1;
+    pgControl.numberOfPages = 2;
+    pgControl.currentPage = 1;
     
     pgControl.pageIndicatorTintColor = [UIColor redColor];
     
-    appDelegate=[AppDelegate getDelegate];
+    appDelegate = [AppDelegate getDelegate];
     
-    arrPhotsList=[[NSMutableArray alloc]init];
-    tapCellIndex=-1;
-    arrImages=[[NSMutableArray alloc]init];
+    arrPhotsList = [[NSMutableArray alloc]init];
+    tapCellIndex = -1;
+    arrImages = [[NSMutableArray alloc]init];
     
-    previousIndexPath=nil;
+    previousIndexPath = nil;
     
-    viewOne.frame=CGRectMake(0, viewOne.frame.origin.y, self.view.frame.size.width, viewOne.frame.size.height);
+    viewOne.frame = CGRectMake(0, viewOne.frame.origin.y, self.view.frame.size.width, viewOne.frame.size.height);
     
-    viewTwo.frame=CGRectMake(self.view.frame.size.width,
+    viewTwo.frame = CGRectMake(self.view.frame.size.width,
                              viewTwo.frame.origin.y, self.view.frame.size.width, viewTwo.frame.size.height);
     
-    UISwipeGestureRecognizer *viewOneSwipe=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeViewOne:)];
-    viewOneSwipe.direction=UISwipeGestureRecognizerDirectionLeft;
+    UISwipeGestureRecognizer *viewOneSwipe = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeViewOne:)];
+    viewOneSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
     [viewOne addGestureRecognizer:viewOneSwipe];
     
-    UISwipeGestureRecognizer *viewTwoSwipe=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeViewTwo:)];
-    viewTwoSwipe.direction=UISwipeGestureRecognizerDirectionRight;
+    UISwipeGestureRecognizer *viewTwoSwipe = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeViewTwo:)];
+    viewTwoSwipe.direction = UISwipeGestureRecognizerDirectionRight;
     [viewTwo addGestureRecognizer:viewTwoSwipe];
     
-    UISwipeGestureRecognizer *viewRight=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
-    viewRight.direction=UISwipeGestureRecognizerDirectionRight;
+    UISwipeGestureRecognizer *viewRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
+    viewRight.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:viewRight];
     
-    UISwipeGestureRecognizer *viewTop=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeTop:)];
-    viewTop.direction=UISwipeGestureRecognizerDirectionUp;
+    UISwipeGestureRecognizer *viewTop = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeTop:)];
+    viewTop.direction = UISwipeGestureRecognizerDirectionUp;
     [viewSwipeFront addGestureRecognizer:viewTop];
     
-    UILongPressGestureRecognizer *longPressCollectionView=[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
-    longPressCollectionView.minimumPressDuration=1;
+    UILongPressGestureRecognizer *longPressCollectionView = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    longPressCollectionView.minimumPressDuration = 1;
    // [collectionVW addGestureRecognizer:longPressCollectionView];
 
-    refreshControl= [[UIRefreshControl alloc] init];
+    refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(startRefresh)
              forControlEvents:UIControlEventValueChanged];
     [collectionVW addSubview:refreshControl];
     
     collectionVW.alwaysBounceVertical = YES;
     
-    if(self.view.frame.size.height==480 &&self.view.frame.size.width==320){
-        imgProfileView.frame=CGRectMake(imgProfileView.frame.origin.x+2, imgProfileView.frame.origin.y, 60, 60);
+    if(self.view.frame.size.height == 480 && self.view.frame.size.width == 320){
+        imgProfileView.frame = CGRectMake(imgProfileView.frame.origin.x+2, imgProfileView.frame.origin.y, 60, 60);
         
-       imgSuportTypes.frame=CGRectMake(imgSuportTypes.frame.origin.x, imgSuportTypes.frame.origin.y, imgSuportTypes.frame.size.width+10, imgSuportTypes.frame.size.height);
+       imgSuportTypes.frame = CGRectMake(imgSuportTypes.frame.origin.x, imgSuportTypes.frame.origin.y, imgSuportTypes.frame.size.width+10, imgSuportTypes.frame.size.height);
     }
     
     imgProfileView.layer.cornerRadius = imgProfileView.frame.size.width / 2;
@@ -151,15 +151,15 @@ NSLog(@"url=%@",userURL);
     if (indexPath == nil){
         NSLog(@"couldn't find index path");
     } else {
-        static int i=0;
+        static int i = 0;
         i++;
-        if(i==1){
+        if(i == 1){
             return;
         }
 
-        PhotoClass *photoClass=[arrPhotsList objectAtIndex:indexPath.row];
-        photoViewController.photoURL=photoClass.photo;
-        photoViewController.view.frame=appDelegate.window.frame;
+        PhotoClass *photoClass = [arrPhotsList objectAtIndex:indexPath.row];
+        photoViewController.photoURL = photoClass.photo;
+        photoViewController.view.frame = appDelegate.window.frame;
         
         [self.view addSubview:photoViewController.view];
     }
@@ -180,12 +180,12 @@ NSLog(@"url=%@",userURL);
     
     [btnTopBar setTitle:[userURL lastPathComponent] forState:UIControlStateNormal];
     
-    appDelegate.tabbar.tabView.hidden=YES;
+    appDelegate.tabbar.tabView.hidden = YES;
     
     if([[userURL lastPathComponent]isEqualToString:GetUserName]){
-        btnAdd.hidden=NO;
+        btnAdd.hidden = NO;
     }else{
-        btnAdd.hidden=YES;
+        btnAdd.hidden = YES;
     }
 
     [self checkUser];
@@ -198,22 +198,22 @@ NSLog(@"url=%@",userURL);
 
 -(void)checkUser{
     if([[userURL lastPathComponent]isEqualToString:GetUserName]){
-        if(self.view.frame.size.height==480 &&self.view.frame.size.width==320){
+        if(self.view.frame.size.height == 480 &&self.view.frame.size.width == 320){
             
         }
         
-        imgSuportTypes.image=[UIImage imageNamed:@"editsquare"];
-        btnSupport.tag=1;
+        imgSuportTypes.image = [UIImage imageNamed:@"editsquare"];
+        btnSupport.tag = 1;
         
     }else{
-        NSString *profileUserName=[userURL lastPathComponent];
+        NSString *profileUserName = [userURL lastPathComponent];
         
         if([appDelegate.arrSupports containsObject:profileUserName]){
-            imgSuportTypes.image=[UIImage imageNamed:@"supporting.png"];
-            btnSupport.tag=2;
+            imgSuportTypes.image = [UIImage imageNamed:@"supporting.png"];
+            btnSupport.tag = 2;
         }else{
-            imgSuportTypes.image=[UIImage imageNamed:@"support.png"];
-            btnSupport.tag=3;
+            imgSuportTypes.image = [UIImage imageNamed:@"support.png"];
+            btnSupport.tag = 3;
         }
     }
 }
@@ -224,49 +224,48 @@ NSLog(@"url=%@",userURL);
 }
 
 -(void)swipeViewOne:(UISwipeGestureRecognizer *)gestureRecognizer{
-    if(viewOne.frame.origin.x==0.0){
+    if(viewOne.frame.origin.x == 0.0){
         if(gestureRecognizer.direction==UISwipeGestureRecognizerDirectionLeft){
             
             [UIView animateWithDuration:0.5
                                   delay:0.0
                                 options:UIViewAnimationOptionTransitionFlipFromTop
                              animations:^{
-                                  pgControl.currentPage=0;
-                                 viewOne.frame=CGRectMake(-self.view.frame.size.width, viewOne.frame.origin.y, self.view.frame.size.width, viewOne.frame.size.height);
+                                  pgControl.currentPage = 0;
+                                 viewOne.frame = CGRectMake(-self.view.frame.size.width, viewOne.frame.origin.y, self.view.frame.size.width, viewOne.frame.size.height);
                                  
-                                 viewTwo.frame=CGRectMake(0, viewTwo.frame.origin.y, self.view.frame.size.width, viewTwo.frame.size.height);
+                                 viewTwo.frame = CGRectMake(0, viewTwo.frame.origin.y, self.view.frame.size.width, viewTwo.frame.size.height);
                                  
                              }
                              completion:^(BOOL finished) {
                                  
                              }
              ];
-        }else{
+        } else {
             return;
         }
         
-    }else{
+    } else {
         
     }
 }
 
 -(void)swipeRight:(UISwipeGestureRecognizer *)gestureRecognizer{
     [self.navigationController popViewControllerAnimated:YES];
-    
 }
 
 -(void)swipeViewTwo:(UISwipeGestureRecognizer *)gestureRecognizer{
-    if(viewTwo.frame.origin.x==0.0){
+    if(viewTwo.frame.origin.x == 0.0){
             [UIView animateWithDuration:0.5
                                   delay:0.0
                                 options:UIViewAnimationOptionTransitionFlipFromTop
                              animations:^{
                                 
-                                 pgControl.currentPage=1;
+                                 pgControl.currentPage = 1;
                                  
-                                 viewOne.frame=CGRectMake(0, viewOne.frame.origin.y, self.view.frame.size.width, viewOne.frame.size.height);
+                                 viewOne.frame = CGRectMake(0, viewOne.frame.origin.y, self.view.frame.size.width, viewOne.frame.size.height);
                                  
-                                 viewTwo.frame=CGRectMake(+self.view.frame.size.width, viewTwo.frame.origin.y, self.view.frame.size.width, viewTwo.frame.size.height);
+                                 viewTwo.frame = CGRectMake(+self.view.frame.size.width, viewTwo.frame.origin.y, self.view.frame.size.width, viewTwo.frame.size.height);
                                  
                              }
                              completion:^(BOOL finished) {
@@ -287,12 +286,12 @@ NSLog(@"url=%@",userURL);
 */
 
 - (IBAction)onAddClick:(id)sender {
-    CreateViewController *createViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"CreateViewController"];
+    CreateViewController *createViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CreateViewController"];
     [self.navigationController pushViewController:createViewController animated:YES];
 }
 
 - (IBAction)onSettingClick:(id)sender {
-    SettingViewController *settingViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"SettingViewController"];
+    SettingViewController *settingViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingViewController"];
     [self.navigationController pushViewController:settingViewController animated:YES];
 }
 
@@ -301,29 +300,29 @@ NSLog(@"url=%@",userURL);
 }
 
 - (IBAction)onViewList:(id)sender {
-    SupportViewController *supportViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"SupportViewController"];
+    SupportViewController *supportViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SupportViewController"];
     
     ProfileClass *profileClass=[dictProfileInformation objectForKey:@"ProfileInfo"];
     
-    if([sender tag]==1){
+    if([sender tag] == 1){
         if([lblSupporters.text isEqualToString:@"0"]){
             return;
         }
-        supportViewController.pageTitle=@"SUPPORTERS";
-        supportViewController.arrDetails=profileClass.arrfollowers.copy;
+        supportViewController.pageTitle = @"SUPPORTERS";
+        supportViewController.arrDetails = profileClass.arrfollowers.copy;
     }else{
         if([lblSupporting.text isEqualToString:@"0"]){
             return;
         }
-        supportViewController.pageTitle=@"SUPPORTING";
-        supportViewController.arrDetails=profileClass.arrfollowings.copy;
+        supportViewController.pageTitle = @"SUPPORTING";
+        supportViewController.arrDetails = profileClass.arrfollowings.copy;
     }
     [self.navigationController pushViewController:supportViewController animated:YES];
 }
 
 - (IBAction)onURLClick:(id)sender {
     if(![lblWebsite.text isEqualToString:@""]){
-        NSString *urlString=lblWebsite.text;
+        NSString *urlString = lblWebsite.text;
         NSURL *webpageUrl;
         
         if ([urlString hasPrefix:@"http://"] || [urlString hasPrefix:@"https://"]) {
@@ -337,10 +336,10 @@ NSLog(@"url=%@",userURL);
 }
 
 - (IBAction)onSupport:(id)sender {
-    if([sender tag]==1){
+    if([sender tag] == 1){
         NSLog(@"user");
         
-        EditProfileViewController *editProfileViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"EditProfileViewController"];
+        EditProfileViewController *editProfileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"EditProfileViewController"];
         [self.navigationController pushViewController:editProfileViewController animated:YES];
     }else{
         //return;
@@ -349,17 +348,17 @@ NSLog(@"url=%@",userURL);
 }
 
 -(void)doSupport :(int) option{
-    Reachability *reachability=[Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus=[reachability currentReachabilityStatus];
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
     if(networkStatus == NotReachable) {
-        [self showMessage:@"Please check your internet connection."];
+        [self showMessage:@"Please check your network connection"];
         return;
     }
     
     [self.view endEditing:YES];
     [self setBusy:YES];
-    ProfileClass *profileClass= [dictProfileInformation objectForKey:@"ProfileInfo"];
-    NSString *strURL=[NSString stringWithFormat:@"%@%@/",SUPPORTURL,profileClass.Id];
+    ProfileClass *profileClass = [dictProfileInformation objectForKey:@"ProfileInfo"];
+    NSString *strURL = [NSString stringWithFormat:@"%@%@/",SUPPORTURL,profileClass.Id];
     
     NSURL *url = [NSURL URLWithString:strURL];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
@@ -368,7 +367,7 @@ NSLog(@"url=%@",userURL);
     NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
     NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
-    NSString *authValue =[NSString stringWithFormat:@"Basic %@", base64String];
+    NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
     
     [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
     [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
@@ -376,28 +375,28 @@ NSLog(@"url=%@",userURL);
     //Call the Login Web services
     [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
      {
-         if(error!=nil){
+         if(error != nil){
              NSLog(@"%@",error);
          }
          if ([data length] > 0 && error == nil){
-             NSDictionary *JSONValue=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-             if(JSONValue!=nil){
+             NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+             if(JSONValue != nil){
                   // NSLog(@"Jsonvalue=%@",JSONValue);
-                 if([[JSONValue allKeys]count]>1){
-                     NSMutableArray *arrFollower=[JSONValue objectForKey:@"get_followers_info"];
+                 if([[JSONValue allKeys]count] > 1){
+                     NSMutableArray *arrFollower = [JSONValue objectForKey:@"get_followers_info"];
 
                      int followerCount=arrFollower.count;
                      
-                     profileClass.followers_count=[NSString stringWithFormat:@"%d",followerCount];
+                     profileClass.followers_count = [NSString stringWithFormat:@"%d",followerCount];
                      
-                     if(profileClass.arrfollowers.count==0){
-                         profileClass.arrfollowers= [[NSMutableArray alloc]init];
+                     if(profileClass.arrfollowers.count == 0){
+                         profileClass.arrfollowers = [[NSMutableArray alloc]init];
                      }
-                     if(profileClass.arrfollowers.count>0){
+                     if(profileClass.arrfollowers.count > 0){
                          [profileClass.arrfollowers removeAllObjects];
                      }
                      
-                     for(int j=0;j<arrFollower.count;j++){
+                     for(int j = 0; j < arrFollower.count; j++){
                          
                          NSMutableDictionary *dictFollowerInfo=[[NSMutableDictionary alloc]init];
                          NSDictionary *dictUserDetail=[arrFollower objectAtIndex:j];
@@ -408,7 +407,7 @@ NSLog(@"url=%@",userURL);
                              [dictFollowerInfo setObject:@"" forKey:@"user__profile_picture"];
                              
                          }else{
-                             NSString *proflURL=[NSString stringWithFormat:@"%@%@",@"https://oby.s3.amazonaws.com/media/",[dictUserDetail objectForKey:@"user__profile_picture"]];
+                             NSString *proflURL = [NSString stringWithFormat:@"%@%@",@"https://oby.s3.amazonaws.com/media/",[dictUserDetail objectForKey:@"user__profile_picture"]];
                              
                              [dictFollowerInfo setValue:proflURL forKey:@"user__profile_picture"];
                          }
@@ -429,7 +428,7 @@ NSLog(@"url=%@",userURL);
                          NSString *userName=[dictFollowerInfo objectForKey:@"user__username"];
                          NSString *fullName=[dictFollowerInfo objectForKey:@"user__full_name"];
                          
-                         fullString=[NSString stringWithFormat:@"%@ %@",fullName,userName];
+                         fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
                          
                          NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
                          
@@ -442,8 +441,8 @@ NSLog(@"url=%@",userURL);
                          [profileClass.arrfollowers addObject:dictFollowerInfo];
                      }
                      
-                     if(option==2){
-                         for(int i=0;i<appDelegate.arrSupports.count;i++){
+                     if(option == 2){
+                         for(int i = 0; i < appDelegate.arrSupports.count; i++){
                              if([[appDelegate.arrSupports objectAtIndex:i]isEqualToString:profileClass.username]){
                                  [appDelegate.arrSupports removeObjectAtIndex:i];
                              }
@@ -470,24 +469,24 @@ NSLog(@"url=%@",userURL);
 }
 
 -(void)getProfileDetails{
-    Reachability *reachability=[Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus=[reachability currentReachabilityStatus];
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
     if(networkStatus == NotReachable) {
         [refreshControl endRefreshing];
-        [self showMessage:@"Please check your internet connection."];
+        [self showMessage:@"Please check your network connection"];
         return;
     }
 
     [self setBusy:YES];
   
-    NSString *urlString=[NSString stringWithFormat:@"%@",userURL];
+    NSString *urlString = [NSString stringWithFormat:@"%@",userURL];
     NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                              timeoutInterval:60];
     
     NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
     NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
-    NSString *authValue =[NSString stringWithFormat:@"Basic %@", base64String];
+    NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
     [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
     
     //[_request setValue:[NSString stringWithFormat:@"Token %@",GetUserToken] forHTTPHeaderField:@"Authorization"];
@@ -495,15 +494,15 @@ NSLog(@"url=%@",userURL);
     [_request setHTTPMethod:@"GET"];
     
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-         if(error!=nil){
+         if(error != nil){
              NSLog(@"%@",error);
              [self setBusy:NO];
          }
          if ([data length] > 0 && error == nil){
-             NSDictionary *JSONValue=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+             NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
              //NSLog(@"%@",JSONValue);
             
-             if(arrPhotsList.count>0){
+             if(arrPhotsList.count > 0){
                  [arrPhotsList removeAllObjects];
              }
              
@@ -521,62 +520,62 @@ NSLog(@"url=%@",userURL);
                  SetProifilePic(profilePic);
                   */
                  
-                 if([JSONValue allKeys].count==1 && [JSONValue objectForKey:@"detail"]){
+                 if([JSONValue allKeys].count == 1 && [JSONValue objectForKey:@"detail"]){
                      [self setBusy:NO];
                      [self showMessage:SERVER_ERROR];
                      return;
                  }
                      
-                     ProfileClass *profileClass=[[ProfileClass alloc]init];
+                     ProfileClass *profileClass = [[ProfileClass alloc]init];
                  
-                        int profileId=[[JSONValue objectForKey:@"id"]intValue];
+                        int profileId = [[JSONValue objectForKey:@"id"]intValue];
                  
-                     profileClass.Id=[NSString stringWithFormat:@"%d",profileId];
-                     profileClass.username=[JSONValue objectForKey:@"username"];
-                     profileClass.account_url=[JSONValue objectForKey:@"account_url"];
-                     profileClass.email=[JSONValue objectForKey:@"email"];
-                     profileClass.full_name=[JSONValue objectForKey:@"full_name"];
-                     profileClass.bio=[JSONValue objectForKey:@"bio"];
-                     profileClass.website=[JSONValue objectForKey:@"website"];
-                     profileClass.gender=[JSONValue objectForKey:@"gender"];
-                     profileClass.arrphoto_set=[[NSMutableArray alloc]init];
+                     profileClass.Id = [NSString stringWithFormat:@"%d",profileId];
+                     profileClass.username = [JSONValue objectForKey:@"username"];
+                     profileClass.account_url = [JSONValue objectForKey:@"account_url"];
+                     profileClass.email = [JSONValue objectForKey:@"email"];
+                     profileClass.full_name = [JSONValue objectForKey:@"full_name"];
+                     profileClass.bio = [JSONValue objectForKey:@"bio"];
+                     profileClass.website = [JSONValue objectForKey:@"website"];
+                     profileClass.gender = [JSONValue objectForKey:@"gender"];
+                     profileClass.arrphoto_set = [[NSMutableArray alloc]init];
                      
                      NSArray *arrPhotoset=[JSONValue objectForKey:@"photo_set"];
-                     for(int i=0;i<arrPhotoset.count;i++){
+                     for(int i = 0; i < arrPhotoset.count; i++){
                          NSMutableDictionary *dictResult;
-                         dictResult=[[NSMutableDictionary alloc]init];
-                         dictResult=[arrPhotoset objectAtIndex:i];
+                         dictResult = [[NSMutableDictionary alloc]init];
+                         dictResult = [arrPhotoset objectAtIndex:i];
                        
-                         PhotoClass *phClas=[[PhotoClass alloc]init];
-                         phClas.category_url=[dictResult objectForKey:@"category_url"];
-                         phClas.photo=[dictResult objectForKey:@"photo"];
-                         phClas.comment_count=[dictResult objectForKey:@"comment_count"];
-                        // phClas.comment_set=[dictResult objectForKey:@"comment_set"];
-                         phClas.created=[dictResult objectForKey:@"created"];
-                         phClas.creator=[[dictResult objectForKey:@"creator"] uppercaseString];
-                         phClas.creator_url=[dictResult objectForKey:@"creator_url"];
-                         phClas.description=[dictResult objectForKey:@"description"];
+                         PhotoClass *phClas = [[PhotoClass alloc]init];
+                         phClas.category_url = [dictResult objectForKey:@"category_url"];
+                         phClas.photo = [dictResult objectForKey:@"photo"];
+                         phClas.comment_count = [dictResult objectForKey:@"comment_count"];
+                        // phClas.comment_set = [dictResult objectForKey:@"comment_set"];
+                         phClas.created = [dictResult objectForKey:@"created"];
+                         phClas.creator = [[dictResult objectForKey:@"creator"] uppercaseString];
+                         phClas.creator_url = [dictResult objectForKey:@"creator_url"];
+                         phClas.description = [dictResult objectForKey:@"description"];
                          
-                         int userId=[[dictResult objectForKey:@"id"]intValue];
-                         int linke_Count=[[dictResult objectForKey:@"like_count"]intValue];
+                         int userId = [[dictResult objectForKey:@"id"]intValue];
+                         int linke_Count = [[dictResult objectForKey:@"like_count"]intValue];
                          
-                         phClas.PhotoId=[NSString stringWithFormat:@"%d",userId];
+                         phClas.PhotoId = [NSString stringWithFormat:@"%d",userId];
                          
-                         phClas.like_count=[NSString stringWithFormat:@"%d",linke_Count];
+                         phClas.like_count = [NSString stringWithFormat:@"%d",linke_Count];
                          
-                       //  phClas.likers=[dictResult objectForKey:@"likers"];
+                       //  phClas.likers = [dictResult objectForKey:@"likers"];
                          
-                         phClas.likers=[[NSMutableArray alloc]init];
-                         phClas.comment_set=[[NSMutableArray alloc]init];
+                         phClas.likers = [[NSMutableArray alloc]init];
+                         phClas.comment_set = [[NSMutableArray alloc]init];
                          
-                         NSArray *arrLiker=[dictResult objectForKey:@"get_likers_info"];
+                         NSArray *arrLiker = [dictResult objectForKey:@"get_likers_info"];
                          
-                         phClas.isLike=NO;
-                         if([[dictResult objectForKey:@"get_likers_info"] count]>0){
-                             for(int l=0;l<[arrLiker count];l++){
-                                 NSDictionary *dictUsers= [arrLiker objectAtIndex:l];
+                         phClas.isLike = NO;
+                         if([[dictResult objectForKey:@"get_likers_info"] count] > 0){
+                             for(int l = 0; l < [arrLiker count]; l++){
+                                 NSDictionary *dictUsers = [arrLiker objectAtIndex:l];
                                  if([[dictUsers objectForKey:@"username"] isEqualToString:GetUserName]){
-                                     phClas.isLike=YES;
+                                     phClas.isLike = YES;
                                      break;
                                  }
                              }

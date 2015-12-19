@@ -43,42 +43,43 @@ extern AppDelegate *appDelegate;
 #define ShowNetworkActivityIndicator()      [UIApplication sharedApplication].networkActivityIndicatorVisible = YES
 #define HideNetworkActivityIndicator()      [UIApplication sharedApplication].networkActivityIndicatorVisible = NO
 
-//LIVE URLS
-//#define LIKEURL @"https://www.obystudio.com/hide/oby/api/like/"
-//#define COMMENTURL @"https://www.obystudio.com/hide/oby/api/comments/create/"
-//#define SUPPORTURL @"https://www.obystudio.com/hide/oby/api/support/"
-//#define SEARCH_URL @"https://www.obystudio.com/hide/oby/api/search/?q="
-//#define CHANGEPASSURL @"https://www.obystudio.com/hide/oby/api/password/change/"
-//#define FORGOTPASSURL @"https://www.obystudio.com/hide/oby/api/password/reset/"
-//#define LOGINURL @"https://www.obystudio.com/hide/oby/api/auth/token/"
-//#define SIGNUPURL @"https://www.obystudio.com/hide/oby/api/accounts/create/"
-//#define HOMEPAGEURL @"https://www.obystudio.com/hide/oby/api/homepage/"
-//#define CATEGORYURL @"https://www.obystudio.com/hide/oby/api/categories/"
-//#define NOTIFICATIONURL @"https://www.obystudio.com/hide/oby/api/notifications/"
-//#define CREATEURL @"https://www.obystudio.com/hide/oby/api/photos/create/"
-//#define TIMELINEURL @"https://www.obystudio.com/hide/oby/api/timeline/"
-//#define PROFILEURL @"https://www.obystudio.com/hide/oby/api/accounts/"
-//#define TERMSURL @"https://www.obystudio.com/terms"
-//#define PRIVACYURL @"https://www.obystudio.com/privacy"
-
-//TEST URLS
-#define LIKEURL @"http://127.0.0.1:8000/hide/oby/api/like/"
-#define COMMENTURL @"http://127.0.0.1:8000/hide/oby/api/comments/create/"
-#define SUPPORTURL @"http://127.0.0.1:8000/hide/oby/api/support/"
-#define SEARCH_URL @"http://127.0.0.1:8000/hide/oby/api/search/?q="
-#define CHANGEPASSURL @"http://127.0.0.1:8000/hide/oby/api/password/change/"
-#define FORGOTPASSURL @"http://127.0.0.1:8000/hide/oby/api/password/reset/"
-#define LOGINURL @"http://127.0.0.1:8000/hide/oby/api/auth/token/"
-#define SIGNUPURL @"http://127.0.0.1:8000/hide/oby/api/accounts/create/"
-#define HOMEPAGEURL @"http://127.0.0.1:8000/hide/oby/api/homepage/"
-#define CATEGORYURL @"http://127.0.0.1:8000/hide/oby/api/categories/"
-#define NOTIFICATIONURL @"http://127.0.0.1:8000/hide/oby/api/notifications/"
-#define CREATEURL @"http://127.0.0.1:8000/hide/oby/api/photos/create/"
-#define TIMELINEURL @"http://127.0.0.1:8000/hide/oby/api/timeline/"
-#define PROFILEURL @"http://127.0.0.1:8000/hide/oby/api/accounts/"
-#define TERMSURL @"http://127.0.0.1:8000/terms"
-#define PRIVACYURL @"http://127.0.0.1:8000/privacy"
-
+#ifdef DEBUG
+    // DEV URLS
+    #define LIKEURL @"http://127.0.0.1:8000/hide/oby/api/like/"
+    #define COMMENTURL @"http://127.0.0.1:8000/hide/oby/api/comments/create/"
+    #define SUPPORTURL @"http://127.0.0.1:8000/hide/oby/api/support/"
+    #define SEARCH_URL @"http://127.0.0.1:8000/hide/oby/api/search/?q="
+    #define CHANGEPASSURL @"http://127.0.0.1:8000/hide/oby/api/password/change/"
+    #define FORGOTPASSURL @"http://127.0.0.1:8000/hide/oby/api/password/reset/"
+    #define LOGINURL @"http://127.0.0.1:8000/hide/oby/api/auth/token/"
+    #define SIGNUPURL @"http://127.0.0.1:8000/hide/oby/api/accounts/create/"
+    #define HOMEPAGEURL @"http://127.0.0.1:8000/hide/oby/api/homepage/"
+    #define CATEGORYURL @"http://127.0.0.1:8000/hide/oby/api/categories/"
+    #define NOTIFICATIONURL @"http://127.0.0.1:8000/hide/oby/api/notifications/"
+    #define CREATEURL @"http://127.0.0.1:8000/hide/oby/api/photos/create/"
+    #define TIMELINEURL @"http://127.0.0.1:8000/hide/oby/api/timeline/"
+    #define PROFILEURL @"http://127.0.0.1:8000/hide/oby/api/accounts/"
+    #define TERMSURL @"http://127.0.0.1:8000/terms"
+    #define PRIVACYURL @"http://127.0.0.1:8000/privacy"
+#else
+    // PROD URLS
+    #define LIKEURL @"https://www.obystudio.com/hide/oby/api/like/"
+    #define COMMENTURL @"https://www.obystudio.com/hide/oby/api/comments/create/"
+    #define SUPPORTURL @"https://www.obystudio.com/hide/oby/api/support/"
+    #define SEARCH_URL @"https://www.obystudio.com/hide/oby/api/search/?q="
+    #define CHANGEPASSURL @"https://www.obystudio.com/hide/oby/api/password/change/"
+    #define FORGOTPASSURL @"https://www.obystudio.com/hide/oby/api/password/reset/"
+    #define LOGINURL @"https://www.obystudio.com/hide/oby/api/auth/token/"
+    #define SIGNUPURL @"https://www.obystudio.com/hide/oby/api/accounts/create/"
+    #define HOMEPAGEURL @"https://www.obystudio.com/hide/oby/api/homepage/"
+    #define CATEGORYURL @"https://www.obystudio.com/hide/oby/api/categories/"
+    #define NOTIFICATIONURL @"https://www.obystudio.com/hide/oby/api/notifications/"
+    #define CREATEURL @"https://www.obystudio.com/hide/oby/api/photos/create/"
+    #define TIMELINEURL @"https://www.obystudio.com/hide/oby/api/timeline/"
+    #define PROFILEURL @"https://www.obystudio.com/hide/oby/api/accounts/"
+    #define TERMSURL @"https://www.obystudio.com/terms"
+    #define PRIVACYURL @"https://www.obystudio.com/privacy"
+#endif
 
 #define    SetisComment(x)        [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"isComment"]
 #define    GetisComment            [[NSUserDefaults standardUserDefaults] boolForKey:@"isComment"]

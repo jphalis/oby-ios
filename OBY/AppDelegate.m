@@ -21,7 +21,10 @@ MBProgressHUD *hud;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    // Hide status bar on splash page
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
+    
+    // Display white status bar on screen
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     [NSThread sleepForTimeInterval:1];

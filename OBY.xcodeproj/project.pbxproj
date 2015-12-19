@@ -822,13 +822,6 @@
 			name = RNActivityView;
 			sourceTree = "<group>";
 		};
-		BE54C1941BFF1740001380A0 /* OLGhostAlertView */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = OLGhostAlertView;
-			sourceTree = "<group>";
-		};
 		BE54C1971BFF1740001380A0 /* ColorUtil */ = {
 			isa = PBXGroup;
 			children = (
@@ -841,10 +834,8 @@
 		BE54C1AC1BFF1740001380A0 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				BECF7AF81C229A30008627B9 /* OLAcitivity */,
 				BECF7AD01C2297CD008627B9 /* CustomImagePicker */,
 				BE54C1911BFF1740001380A0 /* RNActivityView */,
-				BE54C1941BFF1740001380A0 /* OLGhostAlertView */,
 				BE54C1971BFF1740001380A0 /* ColorUtil */,
 			);
 			name = Library;
@@ -961,13 +952,6 @@
 				BECF7AE41C229818008627B9 /* YCameraViewController.xib */,
 			);
 			name = CustomImagePicker;
-			sourceTree = "<group>";
-		};
-		BECF7AF81C229A30008627B9 /* OLAcitivity */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = OLAcitivity;
 			sourceTree = "<group>";
 		};
 		BED44BD61BEB0DB300A1330E /* MBProgress */ = {

@@ -225,9 +225,9 @@
     }
     if(isMenuChoosed){
         if(arrCategoryPhotos.count > 0){
-        [self scrollToTop];
+            [self scrollToTop];
         }
-    }else{
+    } else {
         if(appDelegate.arrPhotos.count > 0){
             [self scrollToTop];
         }
@@ -236,7 +236,7 @@
 
 -(void)scrollToTop{
     [UIView animateWithDuration:0.3 animations:^(void){
-    [collectionVWHome scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+        [collectionVWHome scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
     }];
 
     //[collectionVWHome setContentOffset:CGPointZero animated:YES];

@@ -80,13 +80,13 @@ enum{
     [self.badgeLabel initBadge];
     [self.badgeLabel setStyle:BadgeLabelStyleAppIcon];
     
-    self.badgeLabel.hidden= (appDelegate.notificationCount>0)? NO:YES;
+    self.badgeLabel.hidden = (appDelegate.notificationCount > 0)? NO:YES;
     
     if ([timer isValid]) {
         [timer invalidate], timer = nil;
     }
     
-   timer = [NSTimer scheduledTimerWithTimeInterval:45 target:self selector:@selector(DoGetNotificationCount) userInfo:nil repeats:YES];
+   timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(DoGetNotificationCount) userInfo:nil repeats:YES];
 }
 
 -(void)DoGetNotificationCount{
@@ -106,39 +106,38 @@ enum{
     [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
     [_request setHTTPMethod:@"GET"];
     
-    [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-     {
-         if(error!=nil){
+    [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+         if(error != nil){
              NSLog(@"%@",error);
            
              //[self setBusy:NO];
          }
          if ([data length] > 0 && error == nil){
              //[self setBusy:NO];
-             NSDictionary *JSONValue=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+             NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
           //   NSLog(@"%@",JSONValue);
              
-             if([JSONValue isKindOfClass:[NSDictionary class]] && [[JSONValue allKeys]count]>2){
-                 NSArray *arrNotifResult=[JSONValue objectForKey:@"results"];
-                 int notifCount=0;
+             if([JSONValue isKindOfClass:[NSDictionary class]] && [[JSONValue allKeys]count] > 2){
+                 NSArray *arrNotifResult = [JSONValue objectForKey:@"results"];
+                 int notifCount = 0;
 
-                 for (int i=0; i<arrNotifResult.count; i++) {
-                     NSMutableDictionary *dictNoti=[arrNotifResult objectAtIndex:i];
+                 for (int i = 0; i < arrNotifResult.count; i++) {
+                     NSMutableDictionary *dictNoti = [arrNotifResult objectAtIndex:i];
+                     int rd = (int)[[dictNoti objectForKey:@"read"]integerValue];
                      
-                     int rd=(int)[[dictNoti objectForKey:@"read"]integerValue];
-                     
-                     if(rd!=1){
+                     if(rd != 1){
                          notifCount++;
                      }
                  }
-                 
-                 appDelegate.notificationCount=notifCount;
-                 
+                 appDelegate.notificationCount = notifCount;
                  dispatch_async(dispatch_get_main_queue(),
                                 ^{
-                                    self.badgeLabel.text = [NSString stringWithFormat:@"%ld",(long)appDelegate.notificationCount];
+                                    // Display number of unread notifications
+//                                    self.badgeLabel.text = [NSString stringWithFormat:@"%ld",(long)appDelegate.notificationCount];
+                                    // Blank circle
+                                    self.badgeLabel.text = @" ";
                                     
-                                    self.badgeLabel.hidden= (appDelegate.notificationCount>0)? NO:YES;
+                                    self.badgeLabel.hidden= (appDelegate.notificationCount > 0)? NO:YES;
                                     if (self.badgeLabel.hidden == NO) {
                                         [self viewWillLayoutSubviews];
                                     }
@@ -146,13 +145,13 @@ enum{
              }
          }
      }];
-      });
+    });
 }
 
 -(void)viewWillLayoutSubviews{
-    CGFloat width =  [self.badgeLabel.text sizeWithAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"Helvetica" size:16.0]}].width;
+    CGFloat width =  [self.badgeLabel.text sizeWithAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"Helvetica" size:12.0]}].width;
     CGRect frame = self.badgeLabel.frame;
-    frame.size.width = width+10;
+    frame.size.width = width + 10;
     self.badgeLabel.frame = frame;
     [self.badgeLabel sizeToFit];
 }
@@ -167,6 +166,9 @@ enum{
     UINavigationController *navController2 = [[UINavigationController alloc]initWithRootViewController:timeLineViewController];
     UINavigationController *navController3 = [[UINavigationController alloc]initWithRootViewController:notificationViewController];
     UINavigationController *navController4 = [[UINavigationController alloc]initWithRootViewController:miscellaneousViewController];
+    
+//    self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, 40);
+//    [super viewWillAppear:animated];
     
     [self PushViewController:navController1];
     [self PushViewController:navController2];

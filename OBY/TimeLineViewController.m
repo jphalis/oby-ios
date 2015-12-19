@@ -119,7 +119,7 @@
 
 -(void)scrollToTop{
     [UIView animateWithDuration:0.3 animations:^(void){
-        [colltionVw scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+        [colltionVw scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
     }];
     
     // [colltionVw setContentOffset:CGPointZero animated:YES];
