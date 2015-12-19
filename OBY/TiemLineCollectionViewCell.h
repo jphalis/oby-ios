@@ -6,5 +6,4 @@
 
 
 @interface TiemLineCollectionViewCell : UICollectionViewCell
-
 @end

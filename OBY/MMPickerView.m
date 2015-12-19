@@ -39,7 +39,6 @@ NSString * const MMshowsSelectionIndicator = @"showsSelectionIndicator";
 
 @end
 
-
 @implementation MMPickerView
 
 #pragma mark - Singleton
@@ -52,7 +51,6 @@ NSString * const MMshowsSelectionIndicator = @"showsSelectionIndicator";
 }
 
 #pragma mark - Show Methods
-
 
 +(void)showPickerViewInView:(UIView *)view
                 withStrings:(NSArray *)strings

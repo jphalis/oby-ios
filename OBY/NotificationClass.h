@@ -6,7 +6,6 @@
 
 
 @interface NotificationClass : NSObject
-
 @property (nonatomic, strong) NSString *NotificationCount;
 @property (nonatomic, retain) NSString *next;
 @property (nonatomic, retain) NSMutableArray *results;
@@ -24,5 +23,4 @@
 @property (nonatomic, retain) NSString *modified;
 @property (nonatomic, retain) NSString *target_url;
 @property (nonatomic, retain) NSString *target_photo;
-            
 @end

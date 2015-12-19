@@ -6,5 +6,4 @@
 
 
 @implementation CategoryClass
-
 @end

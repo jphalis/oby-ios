@@ -86,7 +86,7 @@ enum{
         [timer invalidate], timer = nil;
     }
     
-   timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(DoGetNotificationCount) userInfo:nil repeats:YES];
+   timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(DoGetNotificationCount) userInfo:nil repeats:YES];
 }
 
 -(void)DoGetNotificationCount{

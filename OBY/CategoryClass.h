@@ -6,5 +6,4 @@
 
 
 @interface CategoryClass : NSObject
-
 @end

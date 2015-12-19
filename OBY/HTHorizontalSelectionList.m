@@ -175,88 +175,53 @@
         button.layer.borderWidth = 2;
         button.layer.cornerRadius = 5.0;
         switch (index) {
-            case 0:
-            {
+            case 0: {
                 button.layer.borderColor =[AnimatedMethods colorFromHexString:@"#5375ab" ].CGColor;
             }
                 break;
-                
-            case 1:
-            {
+            case 1: {
                 button.layer.borderColor =[AnimatedMethods colorFromHexString:@"#D673DD" ].CGColor;
-              
-                
             }
                 break;
-            case 2:
-            {
-                
+            case 2: {
                 button.layer.borderColor =[AnimatedMethods colorFromHexString:@"#fca565" ].CGColor;
-            
             }
                 break;
-            case 3:
-            {
+            case 3: {
                button.layer.borderColor =[AnimatedMethods colorFromHexString:@"#4f70a6" ].CGColor;
-        
-              
             }
                 break;
-            case 4:
-            {
-               
+            case 4: {
                 button.layer.borderColor =[AnimatedMethods colorFromHexString:@"#f86cb5" ].CGColor;
-                
             }
                 break;
-            case 5:
-            {
+            case 5: {
                 button.layer.borderColor =[AnimatedMethods colorFromHexString:@"#b9f3cd" ].CGColor;
-
-              
             }
                 break;
-            case 6:
-            {
+            case 6: {
                 button.layer.borderColor =[AnimatedMethods colorFromHexString:@"#eff8a5" ].CGColor;
-                
             }
                 break;
-            case 7:
-            {
-              
+            case 7: {
                 button.layer.borderColor =[AnimatedMethods colorFromHexString:@"#f4adf9" ].CGColor;
-                
             }
-          
                 break;
-            case 8:
-            {
-             
+            case 8: {
                  button.layer.borderColor =[AnimatedMethods colorFromHexString:@"#fe502e" ].CGColor;
-               
             }
-                
                 break;
-            case 9:
-            {
-                
+            case 9: {
                 button.layer.borderColor =[AnimatedMethods colorFromHexString:@"#5375ab" ].CGColor;
-                
             }
-                
                 break;
-            default:
-            {
+            default: {
                 button.layer.borderColor = [UIColor blueColor].CGColor;
             }
                 break;
         }
       
-        
         button.layer.masksToBounds = YES;
-
-        
         
         [self.contentView addSubview:button];
 
@@ -297,7 +262,6 @@
        UIButton *selectedButton = self.buttons[self.selectedButtonIndex];
         //saravanan
       selectedButton.selected = NO;
-        
 
         switch (self.selectionIndicatorStyle) {
             case HTHorizontalSelectionIndicatorStyleBottomBar: {
@@ -311,7 +275,6 @@
                 [self alignSelectionIndicatorWithButton:selectedButton];
                 break;
             }
-
             case HTHorizontalSelectionIndicatorStyleButtonBorder: {
                 selectedButton.layer.borderColor = self.selectionIndicatorColor.CGColor;
                 break;
@@ -381,89 +344,54 @@
             NSInteger oldIndex = [self.buttons indexOfObject:oldSelectedButton];
             
            // NSLog(@"%d",oldIndex);
-            
            
             switch (oldIndex) {
-                case 0:
-                {
+                case 0: {
                     oldSelectedButton.layer.borderColor =[AnimatedMethods colorFromHexString:@"#5375ab" ].CGColor;
                 }
                     break;
-                    
-                case 1:
-                {
+                case 1: {
                     oldSelectedButton.layer.borderColor =[AnimatedMethods colorFromHexString:@"#D673DD" ].CGColor;
-                    
-                    
                 }
                     break;
-                case 2:
-                {
-                    
+                case 2: {
                     oldSelectedButton.layer.borderColor =[AnimatedMethods colorFromHexString:@"#fca565" ].CGColor;
-                    
                 }
                     break;
-                case 3:
-                {
+                case 3: {
                     oldSelectedButton.layer.borderColor =[AnimatedMethods colorFromHexString:@"#4f70a6" ].CGColor;
-                    
-                    
                 }
                     break;
-                case 4:
-                {
-                    
+                case 4: {
                     oldSelectedButton.layer.borderColor =[AnimatedMethods colorFromHexString:@"#f86cb5" ].CGColor;
-                    
                 }
                     break;
-                case 5:
-                {
+                case 5: {
                     oldSelectedButton.layer.borderColor =[AnimatedMethods colorFromHexString:@"#b9f3cd" ].CGColor;
-                    
-                    
                 }
                     break;
-                case 6:
-                {
+                case 6: {
                     oldSelectedButton.layer.borderColor =[AnimatedMethods colorFromHexString:@"#eff8a5" ].CGColor;
-                    
                 }
                     break;
-                case 7:
-                {
-                    
+                case 7: {
                     oldSelectedButton.layer.borderColor =[AnimatedMethods colorFromHexString:@"#f4adf9" ].CGColor;
-                    
                 }
-                    
                     break;
-                case 8:
-                {
-                    
+                case 8: {
                     oldSelectedButton.layer.borderColor =[AnimatedMethods colorFromHexString:@"#fe502e" ].CGColor;
-                    
                 }
-                    
                     break;
-                case 9:
-                {
-                    
+                case 9: {
                     oldSelectedButton.layer.borderColor =[AnimatedMethods colorFromHexString:@"#5375ab" ].CGColor;
-                    
                 }
-                    
                     break;
-                default:
-                {
+                default: {
                     oldSelectedButton.layer.borderColor = [UIColor blueColor].CGColor;
                 }
                     break;
             }
 
-          
-          
             //oldSelectedButton.layer.borderColor = [UIColor clearColor].CGColor;
             break;
         }
@@ -525,7 +453,5 @@
         }
     }
 }
-
-
 
 @end

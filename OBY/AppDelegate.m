@@ -18,7 +18,7 @@ MBProgressHUD *hud;
 @implementation AppDelegate
 @synthesize arrPhotos,dicAllKeys,arrTimeLinePhotos,dictProfileInfo,arrSupports;
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
     // Override point for customization after application launch.
     
     // Hide status bar on splash page
@@ -29,10 +29,10 @@ MBProgressHUD *hud;
     
     [NSThread sleepForTimeInterval:1];
     
-    arrSupports=[[NSMutableArray alloc]init];
-    arrPhotos=[[NSMutableArray alloc]init];
-    arrTimeLinePhotos=[[NSMutableArray alloc]init];
-    dictProfileInfo=[[NSMutableDictionary alloc]init];
+    arrSupports = [[NSMutableArray alloc]init];
+    arrPhotos = [[NSMutableArray alloc]init];
+    arrTimeLinePhotos = [[NSMutableArray alloc]init];
+    dictProfileInfo = [[NSMutableDictionary alloc]init];
     return YES;
 }
 
@@ -60,29 +60,29 @@ MBProgressHUD *hud;
 
 -(void)showHUDAddedTo:(UIView *)view {
     ShowNetworkActivityIndicator();
-    hud =[MBProgressHUD showHUDAddedTo:self.window animated:YES];  //view
-    hud.labelText= @"";
+    hud = [MBProgressHUD showHUDAddedTo:self.window animated:YES];  //view
+    hud.labelText = @"";
 }
 
 -(void)showHUDAddedToView:(UIView *)view message:(NSString *)message {
     [self hideHUDForView:view];
     ShowNetworkActivityIndicator();
-    hud =[MBProgressHUD showHUDAddedTo:view animated:YES];  //view
-    hud.labelText= message;
+    hud = [MBProgressHUD showHUDAddedTo:view animated:YES];  //view
+    hud.labelText = message;
 }
 
 -(void)showHUDAddedToView2:(UIView *)view message:(NSString *)message {
     [self hideHUDForView:view];
     ShowNetworkActivityIndicator();
-    hud =[MBProgressHUD showHUDAddedTo:view animated:YES];  //view
-    hud.labelText= message;
+    hud = [MBProgressHUD showHUDAddedTo:view animated:YES];  //view
+    hud.labelText = message;
 }
 
 -(void)showHUDAddedTo:(UIView *)view message:(NSString *)message {
     [self hideHUDForView:view];
     ShowNetworkActivityIndicator();
-    hud =[MBProgressHUD showHUDAddedTo:self.window animated:YES];  //view
-    hud.labelText= message;
+    hud = [MBProgressHUD showHUDAddedTo:self.window animated:YES];  //view
+    hud.labelText = message;
 }
 
 -(void)hideHUDForView2:(UIView *)view {
@@ -91,14 +91,14 @@ MBProgressHUD *hud;
 }
 
 -(void)UpdateMessage:(NSString *)message {
-    if(hud!=nil && hud.labelText!=nil)
-        hud.labelText= message;
+    if(hud != nil && hud.labelText != nil)
+        hud.labelText = message;
 }
 
 #pragma mark - Validation Methods
 
 +(BOOL)validateEmail:(NSString *)email{
-    email= [email lowercaseString];
+    email = [email lowercaseString];
     NSString *emailRegEx =
     @"(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}"
     @"~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\"
@@ -114,7 +114,7 @@ MBProgressHUD *hud;
 }
 
 +(BOOL)validateUsername:(NSString *)un {
-    un= [un lowercaseString];
+    un = [un lowercaseString];
     NSString *unRegEx =
     @"^[a-z0-9_-]{5,20}";
     NSPredicate *regExPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", unRegEx];
@@ -164,11 +164,11 @@ MBProgressHUD *hud;
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"UserFullName"];
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"ProifilePic"];
 
-    if(arrSupports.count>0){
+    if(arrSupports.count > 0){
         [arrSupports removeAllObjects];
     }
     
-    if(arrPhotos.count>0){
+    if(arrPhotos.count > 0){
         [arrPhotos removeAllObjects];
     }
 

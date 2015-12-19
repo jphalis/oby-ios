@@ -6,5 +6,4 @@
 
 
 @interface TimeLineClass : NSObject
-
 @end

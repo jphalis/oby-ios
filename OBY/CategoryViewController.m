@@ -18,7 +18,7 @@
 
 // Need to fix this to be dynamic based on admin entries
 - (void)viewDidLoad {
-    arrCategory=[[NSMutableArray alloc]initWithObjects:@"Just Because",@"Sports & Fitness",@"Nightlife",@"Style",@"Lol",@"Pay it Forward",@"University",@"Food",@"Fall",@"", nil];
+    arrCategory = [[NSMutableArray alloc]initWithObjects:@"Just Because",@"Sports & Fitness",@"Nightlife",@"Style",@"Lol",@"Pay it Forward",@"University",@"Food",@"Fall",@"", nil];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
@@ -57,16 +57,15 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                        reuseIdentifier:MyIdentifier];
     }
-  
     cell.textLabel.text = [arrCategory objectAtIndex:indexPath.row];
     
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell=[tblVw cellForRowAtIndexPath:indexPath];
+    UITableViewCell *cell = [tblVw cellForRowAtIndexPath:indexPath];
     
-    if(indexPath.row==9){
+    if(indexPath.row == 9){
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         //cell.selectionStyle=UITableViewCellEditingStyleNone;
         return;
