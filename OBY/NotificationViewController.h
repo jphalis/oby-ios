@@ -6,5 +6,4 @@
 
 
 @interface NotificationViewController : UIViewController
-
 @end

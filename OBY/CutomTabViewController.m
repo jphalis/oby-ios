@@ -86,13 +86,13 @@ enum{
         [timer invalidate], timer = nil;
     }
     
-   timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(DoGetNotificationCount) userInfo:nil repeats:YES];
+   timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(DoGetNotificationCount) userInfo:nil repeats:YES];
 }
 
 -(void)DoGetNotificationCount{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     //[self setBusy:YES];
-    NSString *urlString=[NSString stringWithFormat:@"%@",NOTIFICATIONURL];
+    NSString *urlString=[NSString stringWithFormat:@"%@",NOTIFICATIONUNREADURL];
     
     NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                              timeoutInterval:60];

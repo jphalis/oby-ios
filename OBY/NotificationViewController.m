@@ -28,7 +28,6 @@
     PhotoViewController *photoViewController;
     UIRefreshControl *refreshControl;
 }
-
 @end
 
 @implementation NotificationViewController
@@ -101,7 +100,7 @@
     
     NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
-    NSString *authValue =[NSString stringWithFormat:@"Basic %@", base64String];
+    NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
     [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
     [_request setHTTPMethod:@"GET"];
     
@@ -112,11 +111,11 @@
              [appDelegate hideHUDForView2:self.view];
              //[self setBusy:NO];
          }
-         if ([data length] > 0 && error == nil){
+         if([data length] > 0 && error == nil){
                [appDelegate hideHUDForView2:self.view];
              //[self setBusy:NO];
              
-             NSDictionary *JSONValue=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+             NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
              //  NSLog(@"%@",JSONValue);
             
              if([JSONValue isKindOfClass:[NSDictionary class]] && [[JSONValue allKeys]count] > 2){
@@ -124,12 +123,12 @@
                  nextURL = [JSONValue objectForKey:@"next"];
                  previousURL = [JSONValue objectForKey:@"previous"];
                  
-                 NSArray *arrNotifResult=[JSONValue objectForKey:@"results"];
+                 NSArray *arrNotifResult = [JSONValue objectForKey:@"results"];
                  
                  if(arrNotifResult.count > 0){
                      lblWaterMark.hidden = YES;
                      lblWaterMark.text = @"";
-                 }else{
+                 } else {
                      lblWaterMark.hidden = NO;
                      lblWaterMark.text = @"No notifications";
                  }
@@ -149,7 +148,7 @@
                          
                          if([[arrNotifResult objectAtIndex:i]valueForKey:@"read"]){
                              notificationClass.read=@"Yes";
-                         }else{
+                         } else {
                              notificationClass.read=@"No";
                          }
                         
@@ -160,8 +159,8 @@
                          //target_photo
                          if([[arrNotifResult objectAtIndex:i]valueForKey:@"target_url"] != [NSNull null]){
                                notificationClass.target_url = [[arrNotifResult objectAtIndex:i]valueForKey:@"target_url"];
-                         }else{
-                             notificationClass.target_url=@"";
+                         } else {
+                             notificationClass.target_url = @"";
                          }
                          if([[arrNotifResult objectAtIndex:i]valueForKey:@"target_photo"]){
                     
@@ -174,7 +173,7 @@
                              } else {
                                  notificationClass.target_photo = [NSString stringWithFormat:@"http://%@", urlString];
                              }
-                         }else{
+                         } else {
                              notificationClass.target_photo = @"";
                          }
                          
@@ -188,12 +187,12 @@
                      [appDelegate hideHUDForView2:self.view];
                  //[self setBusy:NO];
                     [self showNotifications];
-             }else{
+             } else {
                  [appDelegate hideHUDForView2:self.view];
                  //[self setBusy:NO];
                  [self showMessage:SERVER_ERROR];
              }
-         }else{
+         } else {
              [appDelegate hideHUDForView2:self.view];
              //[self setBusy:NO];
              [self showMessage:SERVER_ERROR];
@@ -229,7 +228,7 @@
     
     if([notificationClass.target_url isEqualToString:@""]){
         cell.txtNotification.textColor = [UIColor lightGrayColor];
-    }else{
+    } else {
         cell.txtNotification.textColor = [UIColor blackColor];
     }
     NSLog(@"SenderURL: %@",notificationClass.sender_profile_picture);
@@ -262,22 +261,19 @@
     if (indexPath == nil){
         NSLog(@"couldn't find index path");
     } else {
-        
         NotificationClass *notificationClass = [arrNotification objectAtIndex:indexPath.row];
         NSLog(@"%@",notificationClass.target_url);
         
         Reachability *reachability = [Reachability reachabilityForInternetConnection];
         NetworkStatus networkStatus = [reachability currentReachabilityStatus];
         if(networkStatus == NotReachable) {
-            
             [self showMessage:@"Please check your network connection"];
             return;
         }
         
         if([notificationClass.target_photo isEqualToString:@""]){
-            
             return;
-        }else{
+        } else {
             NSLog(@"target photo;; %@",notificationClass.target_photo);
             photoViewController.photoURL = notificationClass.target_photo;
             photoViewController.view.frame = appDelegate.window.frame;
@@ -301,10 +297,10 @@
    
     if([notificationClass.target_photo isEqualToString:@""]){
         return;
-    }else{
+    } else {
         NSLog(@"target photo;; %@",notificationClass.target_photo);
-        photoViewController.photoURL=notificationClass.target_photo;
-        photoViewController.view.frame=appDelegate.window.frame;
+        photoViewController.photoURL = notificationClass.target_photo;
+        photoViewController.view.frame = appDelegate.window.frame;
         [self.view addSubview:photoViewController.view];
 
         //[[UIApplication sharedApplication]openURL:[NSURL URLWithString:notificationClass.target_url]];

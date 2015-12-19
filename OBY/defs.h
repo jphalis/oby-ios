@@ -56,6 +56,7 @@ extern AppDelegate *appDelegate;
     #define HOMEPAGEURL @"http://127.0.0.1:8000/hide/oby/api/homepage/"
     #define CATEGORYURL @"http://127.0.0.1:8000/hide/oby/api/categories/"
     #define NOTIFICATIONURL @"http://127.0.0.1:8000/hide/oby/api/notifications/"
+    #define NOTIFICATIONUNREADURL @"http://127.0.0.1:8000/hide/oby/api/notifications/unread/"
     #define CREATEURL @"http://127.0.0.1:8000/hide/oby/api/photos/create/"
     #define TIMELINEURL @"http://127.0.0.1:8000/hide/oby/api/timeline/"
     #define PROFILEURL @"http://127.0.0.1:8000/hide/oby/api/accounts/"
