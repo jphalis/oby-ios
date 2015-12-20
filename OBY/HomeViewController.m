@@ -115,7 +115,7 @@
     
     [self performSelectorInBackground:@selector(getSupportList) withObject:nil];
     
- [self getHomePageDetails];
+    [self getHomePageDetails];
 }
 
 -(void)setComment:(int)selectIndex commentCount:(NSString *)countStr{
@@ -444,8 +444,8 @@
                              }
                              
                              NSString *fullString;
-                             NSString *userName=[dictFollowerInfo objectForKey:@"user__username"];
-                             NSString *fullName=[dictFollowerInfo objectForKey:@"full_name"];
+                             NSString *userName = [dictFollowerInfo objectForKey:@"user__username"];
+                             NSString *fullName = [dictFollowerInfo objectForKey:@"full_name"];
                              
                              fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
                              
@@ -464,7 +464,7 @@
 
                          for(int k = 0; k < arrCommentSet.count; k++){
                              NSMutableDictionary *dictFollowerInfo = [[NSMutableDictionary alloc]init];
-                             NSDictionary *dictUserDetail=[arrCommentSet objectAtIndex:k];
+                             NSDictionary *dictUserDetail = [arrCommentSet objectAtIndex:k];
                              
                              if([dictUserDetail objectForKey:@"profile_picture"] == [NSNull null]){
                                  [dictFollowerInfo setObject:@"" forKey:@"user__profile_picture"];
@@ -708,7 +708,6 @@
                          }
 
                          for(int j = 0; j < arrLiker.count; j++){
-                             
                              NSMutableDictionary *dictFollowerInfo=[[NSMutableDictionary alloc]init];
                              NSDictionary *dictUserDetail=[arrLiker objectAtIndex:j];
                   
@@ -838,7 +837,7 @@
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if(isMenuChoosed){
         return  [arrCategoryPhotos count];
-    }else{
+    } else {
     return [appDelegate.arrPhotos count];
     }
 }
@@ -859,7 +858,7 @@
     }
     
     cell.lblName.text = photoClass.creator;
-    cell.lblDescription.text=photoClass.description;
+    cell.lblDescription.text = photoClass.description;
     cell.lblLikes.text = [NSString stringWithFormat:@"%@",photoClass.like_count];
     cell.lblComments.text = [NSString stringWithFormat:@"%@",photoClass.comment_count];
     
@@ -928,6 +927,7 @@
         return;
     }
     
+    //spinning icon if image is not there
     UIImage *img = [UIImage imageNamed:@"spining"];
     if([self firstimage:img isEqualTo:currentCell.imgView.image]){
         return;
@@ -1134,7 +1134,7 @@
     NSLog(@"Like Click");
 }
 
--(void)doLike : (PhotoClass *)photoClass selectCell:(CollectionViewCellimage *)selectCell {
+-(void)doLike:(PhotoClass *)photoClass selectCell:(CollectionViewCellimage *)selectCell {
     [self.view endEditing:YES];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{

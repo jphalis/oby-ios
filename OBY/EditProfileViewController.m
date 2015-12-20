@@ -331,24 +331,24 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     UIToolbar * keyboardToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
-    keyboardToolBar.tag=textField.tag;
+    keyboardToolBar.tag = textField.tag;
     
-    int tag=textField.tag;
+    int tag = textField.tag;
     
     keyboardToolBar.barStyle = UIBarStyleDefault;
     
-    UIBarButtonItem *bar1=[[UIBarButtonItem alloc]initWithTitle:@"Previous" style:UIBarButtonItemStyleBordered target:self action:@selector(previousTextField:)];
-    bar1.tag=textField.tag;
+    UIBarButtonItem *bar1 = [[UIBarButtonItem alloc]initWithTitle:@"Previous" style:UIBarButtonItemStyleBordered target:self action:@selector(previousTextField:)];
+    bar1.tag = textField.tag;
     
-    UIBarButtonItem *bar2=[[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStyleBordered target:self action:@selector(nextTextField:)];
-    bar2.tag=textField.tag;
+    UIBarButtonItem *bar2 = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStyleBordered target:self action:@selector(nextTextField:)];
+    bar2.tag = textField.tag;
     
-    UIBarButtonItem *bar3= [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    bar3.tag=textField.tag;
+    UIBarButtonItem *bar3 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    bar3.tag = textField.tag;
     
-    UIBarButtonItem *bar4=
+    UIBarButtonItem *bar4 =
     [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(resignKeyboard)];
-    bar4.tag=textField.tag;
+    bar4.tag = textField.tag;
     [keyboardToolBar setItems: [NSArray arrayWithObjects:
                                 bar1,bar2,bar3,bar4,
                                 nil]];
@@ -362,24 +362,24 @@
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView{
     UIToolbar * keyboardToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
-    keyboardToolBar.tag=textView.tag;
+    keyboardToolBar.tag = textView.tag;
     
-    int tag=textView.tag;
+    int tag = textView.tag;
     
     keyboardToolBar.barStyle = UIBarStyleDefault;
     
-    UIBarButtonItem *bar1=[[UIBarButtonItem alloc]initWithTitle:@"Previous" style:UIBarButtonItemStyleBordered target:self action:@selector(previousTextField:)];
-    bar1.tag=textView.tag;
+    UIBarButtonItem *bar1 = [[UIBarButtonItem alloc]initWithTitle:@"Previous" style:UIBarButtonItemStyleBordered target:self action:@selector(previousTextField:)];
+    bar1.tag = textView.tag;
     
-    UIBarButtonItem *bar2=[[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStyleBordered target:self action:@selector(nextTextField:)];
-    bar2.tag=textView.tag;
+    UIBarButtonItem *bar2 = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStyleBordered target:self action:@selector(nextTextField:)];
+    bar2.tag = textView.tag;
     
-    UIBarButtonItem *bar3= [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    bar3.tag=textView.tag;
-    
-    UIBarButtonItem *bar4=
+    UIBarButtonItem *bar3 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    bar3.tag = textView.tag;
+
+    UIBarButtonItem *bar4 =
     [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(resignKeyboard)];
-    bar4.tag=textView.tag;
+    bar4.tag = textView.tag;
     
     [keyboardToolBar setItems: [NSArray arrayWithObjects:
                                 bar1,bar2,bar3,bar4,
@@ -402,9 +402,9 @@
 - (void) animateTextField: (UITextField*) textField up: (BOOL) up{
     float val;
     if(self.view.frame.size.height==480){
-        val=0.75;
-    }else{
-        val=kOFFSET_FOR_KEYBOARD;
+        val = 0.75;
+    } else {
+        val = kOFFSET_FOR_KEYBOARD;
     }
     
     const int movementDistance = val * textField.frame.origin.y;
@@ -424,10 +424,10 @@
 
 - (void) animateTextView: (UITextView*) textView up: (BOOL) up{
     float val;
-    if(self.view.frame.size.height==480){
-        val=0.75;
-    }else{
-        val=kOFFSET_FOR_KEYBOARD;
+    if(self.view.frame.size.height == 480){
+        val = 0.75;
+    } else {
+        val = kOFFSET_FOR_KEYBOARD;
     }
     
     const int movementDistance = val * textView.frame.origin.y;
@@ -446,54 +446,51 @@
 }
 
 - (void)nextTextField:(UIBarButtonItem *)sender {
-        if(sender.tag==1){
+        if(sender.tag == 1){
             [txtUserName resignFirstResponder];
             [txtEmail becomeFirstResponder];
-        }else if(sender.tag==2){
+        } else if(sender.tag == 2) {
             [txtEmail resignFirstResponder];
             [txtFullName becomeFirstResponder];
-        }else if(sender.tag==3){
+        } else if(sender.tag == 3) {
             [txtFullName resignFirstResponder];
             [txtBio becomeFirstResponder];
-        }else if(sender.tag==4){
+        } else if(sender.tag == 4) {
             [txtWebsite resignFirstResponder];
             [txtEduEmail becomeFirstResponder];
-        }else if(sender.tag==7){
+        } else if(sender.tag == 7) {
             [txtBio resignFirstResponder];
             [txtWebsite becomeFirstResponder];
-        }
-        else if(sender.tag==5){
+        } else if(sender.tag == 5) {
             [txtEduEmail resignFirstResponder];
             [self showGender];
         }
 }
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     
-    if([text isEqualToString:@"\n"]) {
+    if([text isEqualToString:@"\n"]){
         [textView resignFirstResponder];
         [txtWebsite becomeFirstResponder];
-        
         return NO;
     }
-    
     return YES;
 }
 
 -(void)previousTextField:(UIBarButtonItem *)sender{
-        if(sender.tag==5){
+        if(sender.tag == 5){
             [txtEduEmail resignFirstResponder];
             [txtWebsite becomeFirstResponder];
-        }else if(sender.tag==4){
+        } else if(sender.tag == 4) {
             [txtWebsite resignFirstResponder];
             [txtBio becomeFirstResponder];
-        }else if(sender.tag==3){
+        } else if(sender.tag == 3) {
             [txtFullName resignFirstResponder];
             [txtEmail becomeFirstResponder];
-        }else if(sender.tag==2){
+        } else if(sender.tag == 2) {
             [txtEmail resignFirstResponder];
             [txtUserName becomeFirstResponder];
-        }else if(sender.tag==7){
+        } else if(sender.tag == 7) {
             [txtBio resignFirstResponder];
             [txtFullName becomeFirstResponder];
         }
@@ -512,34 +509,32 @@
      */
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES];
 }
 
 -(BOOL)ValidateFields{
     NSString *code;
     
-    if([[txtEduEmail.text Trim] length ]>3){
-        
+    if([[txtEduEmail.text Trim] length ] > 3){
         code = [[txtEduEmail.text Trim] substringFromIndex: [[txtEduEmail.text Trim] length] - 4];
     }
    
     if ([[txtUserName.text Trim] isEmpty]){
         [self showMessage:EMPTY_USERNAME];
         return NO;
-    }else if ([[txtUserName.text Trim] length]<3){
+    } else if ([[txtUserName.text Trim] length] < 3){
         [self showMessage:USERNAME_MIN_LEGTH];
         return NO;
-    }
-    else if ([[txtEmail.text Trim] isEmpty]){
+    } else if ([[txtEmail.text Trim] isEmpty]){
         [self showMessage:EMPTY_EMAIL];
         return NO;
-    }else if ([AppDelegate validateEmail:[txtEmail.text Trim]] == NO) {
+    } else if ([AppDelegate validateEmail:[txtEmail.text Trim]] == NO) {
         [self showMessage:INVALID_EMAIL];
         return NO;
-    }else if (![[txtEduEmail.text Trim] isEmpty] && [AppDelegate validateEmail:[txtEduEmail.text Trim]] == NO){
+    } else if (![[txtEduEmail.text Trim] isEmpty] && [AppDelegate validateEmail:[txtEduEmail.text Trim]] == NO){
         [self showMessage:INVALID_EDU_EMAIL];
-    }else if (![[txtEduEmail.text Trim] isEmpty] && ![code isEqualToString:@".edu"]){
+    } else if (![[txtEduEmail.text Trim] isEmpty] && ![code isEqualToString:@".edu"]){
         [self showMessage:INVALID_EDU_EMAIL];
          return NO;
     }
@@ -565,7 +560,6 @@
 }
 
 - (IBAction)onUpdate:(id)sender {
-    
     if([self ValidateFields]){
         [self doUpdate];
     }
@@ -575,8 +569,7 @@
     Reachability *reachability=[Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus=[reachability currentReachabilityStatus];
     if(networkStatus == NotReachable) {
-        
-        [self showMessage:@"Please check your internet connection."];
+        [self showMessage:@"Please check your network connection"];
         return;
     }
     
@@ -595,8 +588,8 @@
     [_params setObject:[txtEduEmail.text Trim] forKey:@"edu_email"];
     if([txtGender.text isEqualToString:@"-----"]){
         [_params setObject:@"" forKey:@"gender"];
-    }else{
-    [_params setObject:[txtGender.text Trim] forKey:@"gender"];
+    } else {
+        [_params setObject:[txtGender.text Trim] forKey:@"gender"];
     }
     [_params setObject:@"true" forKey:@"is_active"];
     [_params setObject:@"true" forKey:@"is_verified"];
@@ -636,13 +629,13 @@
     
     // add image data
     NSData *imageData;
-    UIImage *img=[UIImage imageNamed:@"avatar"];
+    UIImage *img = [UIImage imageNamed:@"avatar"];
     if([AnimatedMethods firstimage:img isEqualTo:imgProfile.image]){
-        imageData =nil;
+        imageData = nil;
     }else{
-    imageData = UIImageJPEGRepresentation(imgProfile.image, 1.0);
+        imageData = UIImageJPEGRepresentation(imgProfile.image, 1.0);
     }
-    if (imageData) {
+    if (imageData){
         [body appendData:[[NSString stringWithFormat:@"--%@\r\n", BoundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@.jpg\"\r\n", FileParamConstant,myUniqueName] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
@@ -658,7 +651,7 @@
     NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
     NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
-    NSString *authValue =[NSString stringWithFormat:@"Basic %@", base64String];
+    NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
     [request setValue:authValue forHTTPHeaderField:@"Authorization"];
     
     
@@ -669,10 +662,8 @@
     // set URL
     [request setURL:requestURL];
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-     {
-         if ([data length] > 0 && error == nil)
-         {
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+         if ([data length] > 0 && error == nil){
              [self setBusy:NO];
              
              NSDictionary * JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
@@ -681,36 +672,35 @@
             NSLog(@"jsno value=%@",JSONValue);
              // NSLog(@"Response=%@",strResponse);
              if([JSONValue isKindOfClass:[NSDictionary class]]){
-                 
-                 if([JSONValue allKeys].count>5){
+                 if([JSONValue allKeys].count > 5){
                     // SetUserName(txtUserName.text);
                      SetisUpdate(YES);
                      
                      SetUserName([JSONValue objectForKey:@"username"]);
                      SetUserFullName([JSONValue objectForKey:@"full_name"]);
                      NSString *profilePic;
-                     if([JSONValue objectForKey:@"profile_picture"]==[NSNull null]){
-                         profilePic=@"";
-                     }else{
-                         profilePic=[JSONValue objectForKey:@"profile_picture"];
+                     if([JSONValue objectForKey:@"profile_picture"] == [NSNull null]){
+                         profilePic = @"";
+                     } else {
+                         profilePic = [JSONValue objectForKey:@"profile_picture"];
                      }
                      SetProifilePic(profilePic);
                      
                      [self showMessage:@"Your profile has been updated successfully"];
-                 }else if ([JSONValue objectForKey:@"username"]){
+                 } else if ([JSONValue objectForKey:@"username"]) {
                      [self showMessage:USER_EXISTS_ANOTHER_USER];
-                 }else if ([JSONValue objectForKey:@"email"]){
+                 } else if ([JSONValue objectForKey:@"email"]) {
                      [self showMessage:EMAIL_EXISTS_ANOTHER_USER];
-                 }else if ([JSONValue objectForKey:@"edu_email"]){
+                 } else if ([JSONValue objectForKey:@"edu_email"]) {
                      [self showMessage:@"Sorry, this university isn't registered with us yet. Email us to get it signed up! universities@obystudio.com"];
-                 }else if ([JSONValue objectForKey:@"gender"]){
-                     [self showMessage:@"This is not a valid choice in Gender"];
+                 } else if ([JSONValue objectForKey:@"gender"]) {
+                     [self showMessage:@"This is not a valid gender choice"];
                  }
                  
-             }else{
+             } else {
                  [self showMessage:SERVER_ERROR];
              }
-         }else{
+         } else {
              [self setBusy:NO];
              [self showMessage:SERVER_ERROR];
          }
@@ -754,18 +744,15 @@
     int i = (int)buttonIndex;
     
     switch(i) {
-        case 0:
-        {
-            if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-                
-                [AppDelegate showMessage:@"No Camera Available"];
-            }else{
+        case 0: {
+            if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
+                [AppDelegate showMessage:@"No camera available"];
+            } else {
                 [self ShowImagePickerForType:UIImagePickerControllerSourceTypeCamera];
             }
         }
             break;
-        case 1:
-        {
+        case 1: {
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 [self ShowImagePickerForType:UIImagePickerControllerSourceTypePhotoLibrary];
                 // [self launchImagePickerViewController                 ];
@@ -773,17 +760,16 @@
         }
             break;
         default:
-            // Do Nothing.........
+            // Do nothing...
             break;
     }
 }
 
 -(void)ShowImagePickerForType:(int)type{
-    UIImagePickerController *picker=[[UIImagePickerController alloc]init];
-    picker.sourceType=type;
-    picker.delegate=self;
-    
-    picker.allowsEditing=YES;
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    picker.sourceType = type;
+    picker.delegate = self;
+    picker.allowsEditing = YES;
     
     [self presentViewController:picker animated:YES completion:nil];
 }
@@ -795,13 +781,13 @@
     originalImage = (UIImage *) [info objectForKey:
                                  UIImagePickerControllerOriginalImage];
     
-    if (editedImage) {
+    if (editedImage){
         imageToSave = editedImage;
     } else if (originalImage) {
         imageToSave = originalImage;
     }
 
-    imgProfile.image=imageToSave;
+    imgProfile.image = imageToSave;
     
     /*
      NSData *strProfile;

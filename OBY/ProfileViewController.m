@@ -21,6 +21,8 @@
 #import "CommentViewController.h"
 #import "AnimatedMethods.h"
 #import "Reachability.h"
+//#import "SVWebViewController.h"
+#import "SVModalWebViewController.h"
 
 
 @interface ProfileViewController ()<PhotoViewControllerDelegate,CommentViewControllerDelegate>{
@@ -308,13 +310,13 @@ NSLog(@"url=%@",userURL);
         if([lblSupporters.text isEqualToString:@"0"]){
             return;
         }
-        supportViewController.pageTitle = @"SUPPORTERS";
+        supportViewController.pageTitle = @"Supporters";
         supportViewController.arrDetails = profileClass.arrfollowers.copy;
     }else{
         if([lblSupporting.text isEqualToString:@"0"]){
             return;
         }
-        supportViewController.pageTitle = @"SUPPORTING";
+        supportViewController.pageTitle = @"Supporting";
         supportViewController.arrDetails = profileClass.arrfollowings.copy;
     }
     [self.navigationController pushViewController:supportViewController animated:YES];
@@ -323,15 +325,29 @@ NSLog(@"url=%@",userURL);
 - (IBAction)onURLClick:(id)sender {
     if(![lblWebsite.text isEqualToString:@""]){
         NSString *urlString = lblWebsite.text;
-        NSURL *webpageUrl;
+//        NSURL *webpageUrl;
+        NSString *modalWebpageUrl;
         
+        // Use with Safari view
+//        if ([urlString hasPrefix:@"http://"] || [urlString hasPrefix:@"https://"]) {
+//            webpageUrl = [NSURL URLWithString:urlString];
+//        } else {
+//            webpageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", urlString]];
+//        }
+        
+        // Use with modal view
         if ([urlString hasPrefix:@"http://"] || [urlString hasPrefix:@"https://"]) {
-            webpageUrl = [NSURL URLWithString:urlString];
+            modalWebpageUrl = [NSString stringWithFormat:@"%@",urlString];
         } else {
-            webpageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", urlString]];
+            modalWebpageUrl = [NSString stringWithFormat:@"http://%@", urlString];
         }
-
-         [[UIApplication sharedApplication]openURL:webpageUrl];
+        
+        // Opens webpageUrl in a modal view
+        SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithAddress:modalWebpageUrl];
+        [self presentViewController:webViewController animated:YES completion:NULL];
+        
+        // Opens webpageUrl in Safari
+        // [[UIApplication sharedApplication]openURL:webpageUrl];
     }
 }
 
@@ -786,13 +802,14 @@ NSLog(@"url=%@",userURL);
 }
 
 -(void)showProfileInfo{
-    ProfileClass *profileClass=[dictProfileInformation objectForKey:@"ProfileInfo"];
-    lblProfileName.text=profileClass.username;
-    lblSupporters.text=profileClass.followers_count;
-    lblSupporting.text=profileClass.following_count;
+    ProfileClass *profileClass = [dictProfileInformation objectForKey:@"ProfileInfo"];
+    lblProfileName.text = profileClass.username;
+    lblSupporters.text = profileClass.followers_count;
+    lblSupporting.text = profileClass.following_count;
     [imgProfileView loadImageFromURL:profileClass.profile_picture withTempImage:@"avatar"];
-    lblDescription.text=profileClass.bio;
-    lblWebsite.text=profileClass.website;
+    lblDescription.text = profileClass.bio;
+    lblWebsite.text = profileClass.website;
+    
     [refreshControl endRefreshing];
     [collectionVW reloadData];
 }
@@ -810,14 +827,14 @@ NSLog(@"url=%@",userURL);
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     CollectionViewCellimage *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"ProfileCell" forIndexPath:indexPath];
    
-    PhotoClass *photoClass=[arrPhotsList objectAtIndex:indexPath.row];
+    PhotoClass *photoClass = [arrPhotsList objectAtIndex:indexPath.row];
     
-    cell.lblName.text=photoClass.creator;
+    cell.lblName.text = photoClass.creator;
     //NSLog(@"%@",photoClass.creator);
     
-    cell.lblDescription.text=photoClass.description;
-    cell.lblLikes.text=[NSString stringWithFormat:@"%@",photoClass.like_count];
-    cell.lblComments.text=[NSString stringWithFormat:@"%@",photoClass.comment_count];
+    cell.lblDescription.text = photoClass.description;
+    cell.lblLikes.text = [NSString stringWithFormat:@"%@",photoClass.like_count];
+    cell.lblComments.text = [NSString stringWithFormat:@"%@",photoClass.comment_count];
     
     [cell.imgView loadImageFromURL:photoClass.photo withTempImage:@""];
 
@@ -825,24 +842,24 @@ NSLog(@"url=%@",userURL);
     
       //[cell.imgView sd_setImageWithURL:[NSURL URLWithString:photoClass.photo] placeholderImage:[UIImage imageNamed:@"testLoader.gif"]];
     
-    cell.lblLikes.textColor=[AnimatedMethods colorFromHexString:@"#cacaca"];
-    cell.lblComments.textColor=[AnimatedMethods colorFromHexString:@"#cacaca"];
+    cell.lblLikes.textColor = [AnimatedMethods colorFromHexString:@"#cacaca"];
+    cell.lblComments.textColor = [AnimatedMethods colorFromHexString:@"#cacaca"];
     
-    cell.lblLikeBack.backgroundColor=[UIColor whiteColor];
-    cell.lblLikeBack.layer.borderColor=[AnimatedMethods colorFromHexString:@"#cacaca"].CGColor;
-    cell.lblLikeBack.layer.borderWidth=1;
-    cell.lblLikeBack.layer.cornerRadius=6;
-    cell.layer.masksToBounds=YES;
+    cell.lblLikeBack.backgroundColor = [UIColor whiteColor];
+    cell.lblLikeBack.layer.borderColor = [AnimatedMethods colorFromHexString:@"#cacaca"].CGColor;
+    cell.lblLikeBack.layer.borderWidth = 1;
+    cell.lblLikeBack.layer.cornerRadius = 6;
+    cell.layer.masksToBounds = YES;
     
-    cell.lblComentBack.backgroundColor=[UIColor whiteColor];
-    cell.lblComentBack.layer.borderColor=[AnimatedMethods colorFromHexString:@"#cacaca"].CGColor;
-    cell.lblComentBack.layer.borderWidth=1;
-    cell.lblComentBack.layer.cornerRadius=6;
-    cell.layer.masksToBounds=YES;
+    cell.lblComentBack.backgroundColor = [UIColor whiteColor];
+    cell.lblComentBack.layer.borderColor = [AnimatedMethods colorFromHexString:@"#cacaca"].CGColor;
+    cell.lblComentBack.layer.borderWidth = 1;
+    cell.lblComentBack.layer.cornerRadius = 6;
+    cell.layer.masksToBounds = YES;
     
-    cell.imgLike.image=[UIImage imageNamed:@"like_icon"];
+    cell.imgLike.image = [UIImage imageNamed:@"like_icon"];
     if(photoClass.isLike){
-        cell.imgLike.image=[UIImage imageNamed:@"likeselect"];
+        cell.imgLike.image = [UIImage imageNamed:@"likeselect"];
     }
     
     /*
@@ -873,24 +890,25 @@ NSLog(@"url=%@",userURL);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    CollectionViewCellimage *currentCell=(CollectionViewCellimage *)[collectionView cellForItemAtIndexPath:indexPath];
+    CollectionViewCellimage *currentCell = (CollectionViewCellimage *)[collectionView cellForItemAtIndexPath:indexPath];
     //CollectionViewCellimage *PreivousCell=(CollectionViewCellimage *)[collectionView cellForItemAtIndexPath:previousIndexPath];
     
     //tapCellIndex=indexPath.row;
     
-    if(currentCell.imgView.image==nil){
+    if(currentCell.imgView.image == nil){
         NSLog(@"cont tab");
         return;
     }
     
-    UIImage *img=[UIImage imageNamed:@"spining"];
+    UIImage *img = [UIImage imageNamed:@"spining"];
     if([AnimatedMethods firstimage:img isEqualTo:currentCell.imgView.image]){
         return;
     }
-    tapCellIndex=indexPath.row;
-    PhotoClass *photoClass=[arrPhotsList objectAtIndex:indexPath.row];
-    photoViewController.photoURL=photoClass.photo;
-    photoViewController.view.frame=appDelegate.window.frame;
+    tapCellIndex = indexPath.row;
+    PhotoClass *photoClass = [arrPhotsList objectAtIndex:indexPath.row];
+    photoViewController.photoURL = photoClass.photo;
+    photoViewController.view.frame = appDelegate.window.frame;
+    
     [appDelegate.window addSubview:photoViewController.view];
 
     /*
@@ -928,69 +946,69 @@ NSLog(@"url=%@",userURL);
 
 -(void)onCommentList:(CustomButton*)sender{
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
-    CollectionViewCellimage *currentCell=(CollectionViewCellimage *)[collectionVW cellForItemAtIndexPath:indexPath];
+    CollectionViewCellimage *currentCell = (CollectionViewCellimage *)[collectionVW cellForItemAtIndexPath:indexPath];
     
     PhotoClass *photoClass;
     
-    photoClass=[arrPhotsList objectAtIndex:sender.tag];
+    photoClass = [arrPhotsList objectAtIndex:sender.tag];
     
-    SupportViewController *supportViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"SupportViewController"];
+    SupportViewController *supportViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SupportViewController"];
     
     if([currentCell.lblComments.text isEqualToString:@"0"]){
         return;
     }
     
-    supportViewController.pageTitle=@"COMMENTS";
+    supportViewController.pageTitle = @"Comments";
     
-    supportViewController.arrDetails=photoClass.comment_set.copy;
+    supportViewController.arrDetails = photoClass.comment_set.copy;
     [self.navigationController pushViewController:supportViewController animated:YES];
 }
 
 -(void)onLikeList:(CustomButton*)sender{
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
-    CollectionViewCellimage *currentCell=(CollectionViewCellimage *)[collectionVW cellForItemAtIndexPath:indexPath];
+    CollectionViewCellimage *currentCell = (CollectionViewCellimage *)[collectionVW cellForItemAtIndexPath:indexPath];
     
     PhotoClass *photoClass;
     
-    photoClass=[arrPhotsList objectAtIndex:sender.tag];
+    photoClass = [arrPhotsList objectAtIndex:sender.tag];
     
-    SupportViewController *supportViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"SupportViewController"];
+    SupportViewController *supportViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SupportViewController"];
     
     if([currentCell.lblLikes.text isEqualToString:@"0"]){
         return;
     }
     
-    supportViewController.pageTitle=@"LIKERS";
-    supportViewController.arrDetails=photoClass.likers.copy;
+    supportViewController.pageTitle = @"Likers";
+    supportViewController.arrDetails = photoClass.likers.copy;
     [self.navigationController pushViewController:supportViewController animated:YES];
 }
 
 -(void)showUser:(CustomButton*)sender{
-  PhotoClass *photoClass=[arrPhotsList objectAtIndex:sender.tag];
-    ProfileViewController *profileViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
+  PhotoClass *photoClass = [arrPhotsList objectAtIndex:sender.tag];
+    ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
     
     if([photoClass.creator_url isEqualToString:userURL]){
         return;
     }
     
-    profileViewController.userURL=photoClass.creator_url;
+    profileViewController.userURL = photoClass.creator_url;
     [self.navigationController pushViewController:profileViewController animated:YES];
 }
 
 -(void)onComment:(CustomButton*)sender{
     //SetisComment(YES);
     PhotoClass *photoClass;
-    photoClass=[arrPhotsList objectAtIndex:sender.tag];
-    commentViewController.selectRow=(int)sender.tag;
-    commentViewController.photoClass=photoClass;
+    photoClass = [arrPhotsList objectAtIndex:sender.tag];
+    commentViewController.selectRow = (int)sender.tag;
+    commentViewController.photoClass = photoClass;
     [self.navigationController pushViewController:commentViewController animated:YES];
 }
 
 -(void)setComment:(int)selectIndex commentCount:(NSString *)countStr{
-    if(selectIndex>=0){
+    if(selectIndex >= 0){
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:selectIndex inSection:0];
-        CollectionViewCellimage *currentCell=(CollectionViewCellimage *)[collectionVW cellForItemAtIndexPath:indexPath];
-        currentCell.lblComments.text=countStr;
+        CollectionViewCellimage *currentCell = (CollectionViewCellimage *)[collectionVW cellForItemAtIndexPath:indexPath];
+        currentCell.lblComments.text = countStr;
         
     }
     [self.navigationController popViewControllerAnimated:YES];
@@ -998,22 +1016,22 @@ NSLog(@"url=%@",userURL);
 
 -(void)onLike:(CustomButton*)sender{
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
-    CollectionViewCellimage *currentCell=(CollectionViewCellimage *)[collectionVW cellForItemAtIndexPath:indexPath];
+    CollectionViewCellimage *currentCell = (CollectionViewCellimage *)[collectionVW cellForItemAtIndexPath:indexPath];
     
     PhotoClass *photoClass;
     photoClass=[arrPhotsList objectAtIndex:sender.tag];
 
-    Reachability *reachability=[Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus=[reachability currentReachabilityStatus];
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
     if(networkStatus == NotReachable) {
-        [self showMessage:@"Please check your internet connection."];
+        [self showMessage:@"Please check your network connection"];
         return;
     }
 
-    int likecount=(int)[photoClass.like_count integerValue];
+    int likecount = (int)[photoClass.like_count integerValue];
     if(photoClass.isLike){
-        for(int i=0;i<photoClass.likers.count;i++){
-            NSMutableDictionary *dict=[photoClass.likers objectAtIndex:i];
+        for(int i = 0; i < photoClass.likers.count; i++){
+            NSMutableDictionary *dict = [photoClass.likers objectAtIndex:i];
             
             if ([[dict objectForKey:@"user__username"]isEqualToString:GetUserName]){
                 [photoClass.likers removeObjectAtIndex:i];
@@ -1022,14 +1040,14 @@ NSLog(@"url=%@",userURL);
         
         likecount--;
     }else{
-        NSMutableDictionary *dictUser=[[NSMutableDictionary alloc]init];
+        NSMutableDictionary *dictUser = [[NSMutableDictionary alloc]init];
         [dictUser setValue:GetProifilePic forKey:@"user__profile_picture"];
         [dictUser setValue:GetUserName forKey:@"user__username"];
         [dictUser setValue:GetUserFullName forKey:@"full_name"];
         
         NSString *fullString;
-        NSString *fullName=[dictUser objectForKey:@"user__username"];
-        NSString *userName=[dictUser objectForKey:@"full_name"];
+        NSString *fullName = [dictUser objectForKey:@"user__username"];
+        NSString *userName = [dictUser objectForKey:@"full_name"];
         
         fullString=[NSString stringWithFormat:@"%@ %@",fullName,userName];
         
@@ -1046,14 +1064,14 @@ NSLog(@"url=%@",userURL);
         likecount++;
     }
     
-    photoClass.like_count=[NSString stringWithFormat:@"%d",likecount];
-    photoClass.isLike=!photoClass.isLike;
+    photoClass.like_count = [NSString stringWithFormat:@"%d",likecount];
+    photoClass.isLike =! photoClass.isLike;
     
-    currentCell.imgLike.image=[UIImage imageNamed:@"like_icon"];
+    currentCell.imgLike.image = [UIImage imageNamed:@"like_icon"];
     if(photoClass.isLike){
-        currentCell.imgLike.image=[UIImage imageNamed:@"likeselect"];
+        currentCell.imgLike.image = [UIImage imageNamed:@"likeselect"];
     }
-    currentCell.lblLikes.text=[NSString stringWithFormat:@"%@",photoClass.like_count];
+    currentCell.lblLikes.text = [NSString stringWithFormat:@"%@",photoClass.like_count];
     
     [self doLike:photoClass selectCell:currentCell];
     
@@ -1081,15 +1099,15 @@ NSLog(@"url=%@",userURL);
         
         //Call the Login Web services
         [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-             if(error!=nil){
+             if(error != nil){
                  NSLog(@"%@",error);
              }
             
              if ([data length] > 0 && error == nil){
-                 NSDictionary *JSONValue=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-                 if(JSONValue!=nil){
+                 NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                 if(JSONValue != nil){
                      //  NSLog(@"Jsonvalue=%@",JSONValue);
-                     if([[JSONValue allKeys]count]>5){
+                     if([[JSONValue allKeys]count] > 5){
                          /*
                           int likecount=(int)[photoClass.like_count integerValue];
                           if(photoClass.isLike){
@@ -1108,14 +1126,14 @@ NSLog(@"url=%@",userURL);
                           selectCell.lblLikes.text=[NSString stringWithFormat:@"%@",photoClass.like_count];
                           */
                          // [collectionVWHome reloadData];
-                     }else{
+                     } else {
                          //[self showMessage:SERVER_ERROR];
                      }
-                 }else{
+                 } else {
                      // [self showMessage:SERVER_ERROR];
                  }
                  [self setBusy:NO];
-             }else{
+             } else {
                  [self setBusy:NO];
                  //[self showMessage:SERVER_ERROR];
              }
@@ -1151,16 +1169,16 @@ NSLog(@"url=%@",userURL);
 }
 
 -(void)viewUp{
-    if(isViewUp==NO){
-        isViewUp=YES;
+    if(isViewUp == NO){
+        isViewUp = YES;
         
         CGFloat viewTopHeight = viewTOP.frame.size.height;
-        CGRect newFrame =CGRectMake(0, -viewTopHeight+20, self.view.frame.size.width, viewTopHeight);
+        CGRect newFrame = CGRectMake(0, -viewTopHeight+20, self.view.frame.size.width, viewTopHeight);
         
-        collVwOldFrame=collectionVW.frame;
+        collVwOldFrame = collectionVW.frame;
         
         [self moveView:viewTOP fromFrame:viewTOP.frame toFrame:newFrame];
-        CGRect collFrame =CGRectMake(0, 40, self.view.frame.size.width, self.view.frame.size.height-40);
+        CGRect collFrame = CGRectMake(0, 40, self.view.frame.size.width, self.view.frame.size.height-40);
         [AnimatedMethods animatedMovingView:collectionVW fromFrame:collVwOldFrame toFrame:collFrame];
     }
 }
@@ -1174,8 +1192,8 @@ NSLog(@"url=%@",userURL);
                          fromView.frame = toFrame;
                      }
                      completion:^(BOOL finished){
-                         viewSwipeFront.hidden=YES;
-                         btnTopBar.hidden=NO;
+                         viewSwipeFront.hidden = YES;
+                         btnTopBar.hidden = NO;
                          NSLog(@"completion block");
                      }
      ];
@@ -1191,7 +1209,7 @@ NSLog(@"url=%@",userURL);
                          fromView.frame = toFrame;
                      }
                      completion:^(BOOL finished){
-                         viewSwipeFront.hidden=NO;
+                         viewSwipeFront.hidden = NO;
                          NSLog(@"completion block");
                      }
      ];
@@ -1202,11 +1220,11 @@ NSLog(@"url=%@",userURL);
 }
 
 - (IBAction)onTopBarClick:(id)sender {
-    isViewUp=NO;
-    btnTopBar.hidden=YES;
+    isViewUp = NO;
+    btnTopBar.hidden = YES;
     CGFloat viewTopHeight = viewTOP.frame.size.height;
-    CGRect newFrame =CGRectMake(0, 0, self.view.frame.size.width, viewTopHeight);
-    CGRect collFrame =CGRectMake(0, 40+btnTopBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height-20-btnTopBar.frame.size.height);
+    CGRect newFrame = CGRectMake(0, 0, self.view.frame.size.width, viewTopHeight);
+    CGRect collFrame = CGRectMake(0, 40+btnTopBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height-20-btnTopBar.frame.size.height);
     
     [self moveingView:viewTOP fromFrame:viewTOP.frame toFrame:newFrame];
     [AnimatedMethods animatedMovingView:collectionVW fromFrame:collFrame toFrame:collVwOldFrame];

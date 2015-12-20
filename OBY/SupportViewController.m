@@ -11,7 +11,6 @@
 
 
 @interface SupportViewController (){
-    
     AppDelegate *appDelegate;
     __weak IBOutlet UILabel *lblPageTitle;
 }
@@ -26,11 +25,11 @@
 - (void)viewDidLoad {
     appDelegate=[AppDelegate getDelegate];
     
-    UISwipeGestureRecognizer *viewRight=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
-    viewRight.direction=UISwipeGestureRecognizerDirectionRight;
+    UISwipeGestureRecognizer *viewRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
+    viewRight.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:viewRight];
     
-    lblPageTitle.text=pageTitle;
+    lblPageTitle.text = pageTitle;
     
    // NSLog(@"%@",arrDetails);
     
@@ -84,12 +83,12 @@
     
     NSMutableDictionary *dictUser=[arrDetails objectAtIndex:indexPath.row];
     
-    cell.txtNotification.attributedText=[dictUser objectForKey:@"usernameText"];
+    cell.txtNotification.attributedText = [dictUser objectForKey:@"usernameText"];
     cell.txtNotification.editable = NO;
     if([[dictUser objectForKey:@"user__username"]isEqualToString:GetUserName]){
         [dictUser setObject:GetProifilePic forKey:@"user__profile_picture"];
         [cell.imgProfile loadImageFromURL:GetProifilePic withTempImage:@"avatar"];
-    }else{
+    } else {
         
     [cell.imgProfile loadImageFromURL:[dictUser objectForKey:@"user__profile_picture"] withTempImage:@"avatar"];
     }
@@ -102,14 +101,14 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-   // UITableViewCell *cell=[tblVw cellForRowAtIndexPath:indexPath];
+   // UITableViewCell *cell = [tblVw cellForRowAtIndexPath:indexPath];
     
-    ProfileViewController *profileViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
-    NSDictionary *dictUserDeatil=[arrDetails objectAtIndex:indexPath.row];
+    ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
+    NSDictionary *dictUserDeatil = [arrDetails objectAtIndex:indexPath.row];
     
-    NSString *usrURL=[NSString stringWithFormat:@"%@%@/",PROFILEURL,[dictUserDeatil objectForKey:@"user__username"]];
+    NSString *usrURL = [NSString stringWithFormat:@"%@%@/",PROFILEURL,[dictUserDeatil objectForKey:@"user__username"]];
     
-    profileViewController.userURL=usrURL;
+    profileViewController.userURL = usrURL;
     
     [self.navigationController pushViewController:profileViewController animated:YES];
 }
