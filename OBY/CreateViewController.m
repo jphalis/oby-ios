@@ -6,6 +6,7 @@
 #import "AppDelegate.h"
 #import "CategoryViewController.h"
 #import "defs.h"
+#import "Message.h"
 #import "IBActionSheet.h"
 #import "StringUtil.h"
 #import "CustomeImagePicker.h"
@@ -67,10 +68,11 @@
         imgView.frame = CGRectMake(imgView.frame.origin.x+5, imgView.frame.origin.y, 100, 100);
     }
     
-    imgView.layer.cornerRadius = imgView.frame.size.width / 2;
+//    imgView.layer.cornerRadius = imgView.frame.size.width / 2;
+    imgView.layer.cornerRadius = 7;
     imgView.layer.masksToBounds = YES;
     
-    UISwipeGestureRecognizer *viewRight=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
+    UISwipeGestureRecognizer *viewRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
     viewRight.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:viewRight];
 }
@@ -132,7 +134,7 @@
 
 - (void) animateTextView: (UITextView*) textView up: (BOOL) up{
     float val;
-    if(self.view.frame.size.height==480){
+    if(self.view.frame.size.height == 480){
         val = 0.75;
     } else {
         val = kOFFSET_FOR_KEYBOARD;
@@ -171,12 +173,11 @@
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView{
     UIToolbar * keyboardToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
-    keyboardToolBar.tag=textView.tag;
-    
+    keyboardToolBar.tag = textView.tag;
     keyboardToolBar.barStyle = UIBarStyleDefault;
     
     UIBarButtonItem *bar2 = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStyleBordered target:self action:@selector(nextTextField:)];
-    bar2.tag=textView.tag;
+    bar2.tag = textView.tag;
     
     UIBarButtonItem *bar3 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     bar3.tag = textView.tag;
@@ -211,8 +212,8 @@
     [cip setShowOnlyPhotosWithGPS:NO];
     
     [self presentViewController:cip animated:YES completion:^{
-    }
-     ];
+    
+    }];
 }
 
 -(void)imageSelectionCancelled{
@@ -228,7 +229,7 @@
         for(NSString *imageURLString in arrayOfImages){
             // Asset URLs
             ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
-            [assetsLibrary assetForURL:[NSURL URLWithString:imageURLString] resultBlock:^(ALAsset *asset) {
+            [assetsLibrary assetForURL:[NSURL URLWithString:imageURLString] resultBlock:^(ALAsset *asset){
                 ALAssetRepresentation *representation = [asset defaultRepresentation];
                 CGImageRef imageRef = [representation fullScreenImage];
                 UIImage *image = [UIImage imageWithCGImage:imageRef];
@@ -263,11 +264,10 @@
     if ([[txtCategory.text Trim] isEmpty]){
         [self showMessage:EMPTY_CATEGORY];
         return NO;
-    }else if (check){
+    } else if (check){
         [self showMessage:EMPTY_PHOTO];
         return NO;
     }
-
     return YES;
 }
 
@@ -290,7 +290,7 @@
     
     switch(i) {
         case 0: {
-            if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
                 [AppDelegate showMessage:@"No camera available"];
             } else {
                 [self ShowImagePickerForType:UIImagePickerControllerSourceTypeCamera];
@@ -302,8 +302,7 @@
                 //UIImagePickerControllerSourceTypePhotoLibrary
               
                 [self ShowImagePickerForType:UIImagePickerControllerSourceTypePhotoLibrary];
-                
-                // [self launchImagePickerViewController                 ];
+                // [self launchImagePickerViewController];
             }];
         }
             break;
@@ -328,9 +327,9 @@
     originalImage = (UIImage *) [info objectForKey:
                                  UIImagePickerControllerOriginalImage];
     
-    if (editedImage) {
+    if (editedImage){
         imageToSave = editedImage;
-    } else if (originalImage) {
+    } else if (originalImage){
         imageToSave = originalImage;
     }
     
@@ -352,7 +351,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
     //[[UIApplication sharedApplication] setStatusBarHidden:NO];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -379,11 +378,11 @@
 }
 
 // optional delegate methods
-- (void)actionSheet:(IBActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex {
+- (void)actionSheet:(IBActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex{
     NSLog(@"Will dismiss with button index %ld", (long)buttonIndex);
 }
 
-- (void)actionSheet:(IBActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
+- (void)actionSheet:(IBActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
     NSLog(@"Dismissed with button index %ld", (long)buttonIndex);
 }
 
@@ -391,7 +390,7 @@
     Reachability *reachability=[Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus=[reachability currentReachabilityStatus];
     if(networkStatus == NotReachable) {
-        [self showMessage:@"Please check your network connection"];
+        [self showMessage:NETWORK_UNAVAILABLE];
         return;
     }
     
@@ -445,7 +444,7 @@
     
     // add image data
     NSData *imageData = UIImageJPEGRepresentation(imgView.image, 1.0);
-    if (imageData) {
+    if (imageData){
         [body appendData:[[NSString stringWithFormat:@"--%@\r\n", BoundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@.jpg\"\r\n", FileParamConstant,myUniqueName] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];

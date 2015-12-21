@@ -6,6 +6,7 @@
 #import "AppDelegate.h"
 #import "ProfileViewController.h"
 #import "defs.h"
+#import "Message.h"
 #import "Reachability.h"
 #import "ChangePassViewController.h"
 #import "EditProfileViewController.h"
@@ -104,7 +105,7 @@ enum{
             Reachability *reachability = [Reachability reachabilityForInternetConnection];
             NetworkStatus networkStatus = [reachability currentReachabilityStatus];
             if(networkStatus == NotReachable) {
-                [self showMessage:@"Please check your network connection"];
+                [self showMessage:NETWORK_UNAVAILABLE];
                 return;
             }
             // Opens TERMSURL in a modal view
@@ -129,7 +130,7 @@ enum{
             Reachability *reachability = [Reachability reachabilityForInternetConnection];
             NetworkStatus networkStatus = [reachability currentReachabilityStatus];
             if(networkStatus == NotReachable) {
-                [self showMessage:@"Please check your network connection"];
+                [self showMessage:NETWORK_UNAVAILABLE];
                 return;
             }
             

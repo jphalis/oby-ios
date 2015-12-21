@@ -548,7 +548,7 @@
     Reachability *reachability=[Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus=[reachability currentReachabilityStatus];
     if(networkStatus == NotReachable){
-        [self showMessage:@"Please check your network connection"];
+        [self showMessage:NETWORK_UNAVAILABLE];
         return;
     }
     

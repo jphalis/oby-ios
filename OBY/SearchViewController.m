@@ -4,6 +4,7 @@
 
 #import "SearchViewController.h"
 #import "defs.h"
+#import "Message.h"
 #import "StringUtil.h"
 #import "AppDelegate.h"
 #import "ProfileViewController.h"
@@ -88,7 +89,7 @@
     Reachability *reachability=[Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus=[reachability currentReachabilityStatus];
     if(networkStatus == NotReachable) {
-        [self showMessage:@"Please check your internet connection."];
+        [self showMessage:NETWORK_UNAVAILABLE];
         return;
     }
     

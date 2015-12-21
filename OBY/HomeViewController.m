@@ -5,6 +5,7 @@
 #import "HomeViewController.h"
 #import "AppDelegate.h"
 #import "defs.h"
+#import "Message.h"
 #import "AFHTTPClient.h"
 #import <UIKit/UIKit.h>
 #import "CollectionViewCellimage.h"
@@ -337,7 +338,7 @@
     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
     if(networkStatus == NotReachable) {
         [refreshControl endRefreshing];
-        [self showMessage:@"Please check your network connection"];
+        [self showMessage:NETWORK_UNAVAILABLE];
         return;
     }
     
@@ -547,7 +548,7 @@
     Reachability *reachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
     if(networkStatus == NotReachable) {
-        [self showMessage:@"Please check your network connection"];
+        [self showMessage:NETWORK_UNAVAILABLE];
         return;
     }
     
@@ -618,7 +619,7 @@
     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
     if(networkStatus == NotReachable) {
         [refreshControl endRefreshing];
-        [self showMessage:@"Please check your network connection"];
+        [self showMessage:NETWORK_UNAVAILABLE];
         return;
     }
     
@@ -1080,7 +1081,7 @@
     Reachability *reachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
     if(networkStatus == NotReachable) {
-        [self showMessage:@"Please check your network connection"];
+        [self showMessage:NETWORK_UNAVAILABLE];
         return;
     }
     

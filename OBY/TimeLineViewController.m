@@ -6,6 +6,7 @@
 #import "AppDelegate.h"
 #import "CollectionViewCellimage.h"
 #import "defs.h"
+#import "Message.h"
 #import "PhotoClass.h"
 #import "AnimatedMethods.h"
 #import "UIImageView+WebCache.h"
@@ -317,7 +318,7 @@
     Reachability *reachability=[Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus=[reachability currentReachabilityStatus];
     if(networkStatus == NotReachable) {
-        [self showMessage:@"Please check your network connection."];
+        [self showMessage:NETWORK_UNAVAILABLE];
         return;
     }
 
@@ -440,7 +441,7 @@
     Reachability *reachability=[Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus=[reachability currentReachabilityStatus];
     if(networkStatus == NotReachable) {
-        [self showMessage:@"Please check your network connection."];
+        [self showMessage:NETWORK_UNAVAILABLE];
         [refreshControl endRefreshing];
         return;
     }

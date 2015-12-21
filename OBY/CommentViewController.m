@@ -7,6 +7,7 @@
 #import "AppDelegate.h"
 #import "UIViewControllerAdditions.h"
 #import "defs.h"
+#import "Message.h"
 #import "NSString+Additions.h"
 #import "StringUtil.h"
 #import "Reachability.h"
@@ -95,7 +96,7 @@
     NetworkStatus networkStatus=[reachability currentReachabilityStatus];
     if(networkStatus == NotReachable) {
         
-        [self showMessage:@"Please check your internet connection."];
+        [self showMessage:NETWORK_UNAVAILABLE];
         return;
     }
     

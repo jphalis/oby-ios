@@ -7,6 +7,7 @@
 #import "CreateViewController.h"
 #import "AppDelegate.h"
 #import "defs.h"
+#import "Message.h"
 #import "PhotoClass.h"
 #import "ProfileClass.h"
 #import "SDIAsyncImageView.h"
@@ -365,7 +366,7 @@ NSLog(@"url=%@",userURL);
     Reachability *reachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
     if(networkStatus == NotReachable) {
-        [self showMessage:@"Please check your network connection"];
+        [self showMessage:NETWORK_UNAVAILABLE];
         return;
     }
     
@@ -485,7 +486,7 @@ NSLog(@"url=%@",userURL);
     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
     if(networkStatus == NotReachable) {
         [refreshControl endRefreshing];
-        [self showMessage:@"Please check your network connection"];
+        [self showMessage:NETWORK_UNAVAILABLE];
         return;
     }
 
@@ -1008,7 +1009,7 @@ NSLog(@"url=%@",userURL);
     Reachability *reachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
     if(networkStatus == NotReachable) {
-        [self showMessage:@"Please check your network connection"];
+        [self showMessage:NETWORK_UNAVAILABLE];
         return;
     }
 
