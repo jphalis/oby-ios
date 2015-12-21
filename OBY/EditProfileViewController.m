@@ -44,9 +44,9 @@
 @implementation EditProfileViewController
 
 - (void)viewDidLoad {
-    appDelegate=[AppDelegate getDelegate];
-    if(self.view.frame.size.height==480 &&self.view.frame.size.width==320){
-        imgProfile.frame=CGRectMake(imgProfile.frame.origin.x+8, imgProfile.frame.origin.y, 60, 60);
+    appDelegate = [AppDelegate getDelegate];
+    if(self.view.frame.size.height == 480 &&self.view.frame.size.width == 320){
+        imgProfile.frame = CGRectMake(imgProfile.frame.origin.x+8, imgProfile.frame.origin.y, 60, 60);
     }
     imgProfile.layer.cornerRadius = imgProfile.frame.size.width / 2;
     imgProfile.layer.masksToBounds = YES;
@@ -55,36 +55,31 @@
     
     [super viewDidLoad];
     
-    UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chooseImage:)];
-    tapGesture.numberOfTapsRequired=1;
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chooseImage:)];
+    tapGesture.numberOfTapsRequired = 1;
     [imgProfile addGestureRecognizer:tapGesture];
     [imgProfile setUserInteractionEnabled:YES];
     
-    UITapGestureRecognizer *tapGestureScroll=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapScroll:)];
-    tapGestureScroll.numberOfTapsRequired=1;
+    UITapGestureRecognizer *tapGestureScroll = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapScroll:)];
+    tapGestureScroll.numberOfTapsRequired = 1;
     [scrolVW addGestureRecognizer:tapGestureScroll];
     [scrolVW setUserInteractionEnabled:YES];
     
-    arrGender=[NSMutableArray arrayWithObjects:@"-----",@"Dude",
-                       @"Betty",
-                       nil];
+    arrGender=[NSMutableArray arrayWithObjects:@"---",@"Dude",@"Betty",nil];
     _selectedGender = [arrGender objectAtIndex:0];
-    
-    //[appDelegate.window bringSubviewToFront:imgProfile];
     
     // Do any additional setup after loading the view.
     
-    choosePhotoViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"ChoosePhotoViewController"];
+    choosePhotoViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ChoosePhotoViewController"];
     
-    choosePhotoViewController.delegate=self;
+    choosePhotoViewController.delegate = self;
     
-    UISwipeGestureRecognizer *viewRight=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
-    viewRight.direction=UISwipeGestureRecognizerDirectionRight;
+    UISwipeGestureRecognizer *viewRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
+    viewRight.direction = UISwipeGestureRecognizerDirectionRight;
     [scrolVW addGestureRecognizer:viewRight];
 }
 
--(void)swipeRight:(UISwipeGestureRecognizer *)gestureRecognizer
-{
+-(void)swipeRight:(UISwipeGestureRecognizer *)gestureRecognizer{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -94,9 +89,7 @@
 }
 
 -(void)chooseImage:(UITapGestureRecognizer *)gestureRecognizer{
-   // CGPoint p = [gestureRecognizer locationInView:imgProfile];
-    //[self uploadImage];
-        [self choosingImage];
+    [self choosingImage];
 }
 
 -(void)choosingImage{
@@ -108,8 +101,8 @@
     [cip setShowOnlyPhotosWithGPS:NO];
     
     [self presentViewController:cip animated:YES completion:^{
-    }
-     ];
+        
+    }];
 }
 
 -(void)imageSelectionCancelled{
@@ -122,8 +115,7 @@
             [self.view showActivityView];
         }); // Main Queue to Display the Activity View
         int count = 0;
-        for(NSString *imageURLString in arrayOfImages)
-        {
+        for(NSString *imageURLString in arrayOfImages){
             // Asset URLs
             ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
             [assetsLibrary assetForURL:[NSURL URLWithString:imageURLString] resultBlock:^(ALAsset *asset) {
@@ -132,17 +124,14 @@
                 UIImage *image = [UIImage imageWithCGImage:imageRef];
                 if (imageRef) {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        if(count==0)
-                        {
+                        if(count == 0){
                             [imgProfile setImage:image];
                             //[imageView1 setImage:image];
                         }
-                        if(count==1)
-                        {
+                        if(count == 1){
                             // [imageView2 setImage:image];
                         }
-                        if(count==2)
-                        {
+                        if(count == 2){
                             // [imageView3 setImage:image];
                         }
                     });
@@ -159,7 +148,6 @@
 
 -(void)tapScroll:(UITapGestureRecognizer *)gestureRecognizer{
     // CGPoint p = [gestureRecognizer locationInView:imgProfile];
-    
     [self.view endEditing:YES];
 }
 
@@ -177,89 +165,87 @@
     NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
     NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
-    NSString *authValue =[NSString stringWithFormat:@"Basic %@", base64String];
+    NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
     [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
     
     //[_request setValue:[NSString stringWithFormat:@"Token %@",GetUserToken] forHTTPHeaderField:@"Authorization"];
     
     [_request setHTTPMethod:@"GET"];
     
-    [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-     {
-         if(error!=nil){
+    [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+         if(error != nil){
              NSLog(@"%@",error);
              [self setBusy:NO];
          }
          if ([data length] > 0 && error == nil){
-             NSDictionary *JSONValue=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+             NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
              //NSLog(@"%@",JSONValue);
              if([JSONValue isKindOfClass:[NSDictionary class]]){
-                 
-                 if([JSONValue allKeys].count==1 && [JSONValue objectForKey:@"detail"]){
+                 if([JSONValue allKeys].count == 1 && [JSONValue objectForKey:@"detail"]){
                      [self setBusy:NO];
                      [self showMessage:SERVER_ERROR];
                      return;
                  }
-                 if([JSONValue objectForKey:@"username"]==[NSNull null]){
-                     txtUserName.text=@"";
-                 }else{
-                     txtUserName.text=[JSONValue objectForKey:@"username"];
+                 if([JSONValue objectForKey:@"username"] == [NSNull null]){
+                     txtUserName.text = @"";
+                 } else {
+                     txtUserName.text = [JSONValue objectForKey:@"username"];
                  }
                  
-                 if([JSONValue objectForKey:@"email"]==[NSNull null]){
-                     txtEmail.text=@"";
-                 }else{
-                     txtEmail.text=[JSONValue objectForKey:@"email"];
+                 if([JSONValue objectForKey:@"email"] == [NSNull null]){
+                     txtEmail.text = @"";
+                 } else {
+                     txtEmail.text = [JSONValue objectForKey:@"email"];
                  }
                  
-                 if([JSONValue objectForKey:@"edu_email"]==[NSNull null]){
-                     txtEduEmail.text=@"";
-                 }else{
-                     txtEduEmail.text=[JSONValue objectForKey:@"edu_email"];
+                 if([JSONValue objectForKey:@"edu_email"] == [NSNull null]){
+                     txtEduEmail.text = @"";
+                 } else {
+                     txtEduEmail.text = [JSONValue objectForKey:@"edu_email"];
                  }
                  
-                 if([JSONValue objectForKey:@"full_name"]==[NSNull null]){
-                     txtFullName.text=@"";
-                 }else{
-                     txtFullName.text=[JSONValue objectForKey:@"full_name"];
+                 if([JSONValue objectForKey:@"full_name"] == [NSNull null]){
+                     txtFullName.text = @"";
+                 } else {
+                     txtFullName.text = [JSONValue objectForKey:@"full_name"];
                  }
                  
-                 if([JSONValue objectForKey:@"bio"]==[NSNull null]){
-                     txtBio.text=@"";
-                 }else{
-                     txtBio.text=[JSONValue objectForKey:@"bio"];
+                 if([JSONValue objectForKey:@"bio"] == [NSNull null]){
+                     txtBio.text = @"";
+                 } else {
+                     txtBio.text = [JSONValue objectForKey:@"bio"];
                  }
                  
-                 if([JSONValue objectForKey:@"website"]==[NSNull null]){
-                     txtWebsite.text=@"";
-                 }else{
-                     txtWebsite.text=[JSONValue objectForKey:@"website"];
+                 if([JSONValue objectForKey:@"website"] == [NSNull null]){
+                     txtWebsite.text = @"";
+                 } else {
+                     txtWebsite.text = [JSONValue objectForKey:@"website"];
                  }
                 
-                 if([JSONValue objectForKey:@"gender"]==[NSNull null]){
-                     txtGender.text=@"-----";
-                 }else{
+                 if([JSONValue objectForKey:@"gender"] == [NSNull null]){
+                     txtGender.text = @"---";
+                 } else {
                      if([[JSONValue objectForKey:@"gender"] isEqualToString:@""]){
-                          txtGender.text=@"-----";
-                     }else{
-                     txtGender.text=[JSONValue objectForKey:@"gender"];
+                          txtGender.text = @"---";
+                     } else {
+                         txtGender.text = [JSONValue objectForKey:@"gender"];
                      }
                  }
                  NSString *profilePicUrl;
                  
-                 if([JSONValue objectForKey:@"profile_picture"]==[NSNull null]){
-                     profilePicUrl=@"";
-                 }else{
-                     profilePicUrl=[JSONValue objectForKey:@"profile_picture"];
+                 if([JSONValue objectForKey:@"profile_picture"] == [NSNull null]){
+                     profilePicUrl = @"";
+                 } else {
+                     profilePicUrl = [JSONValue objectForKey:@"profile_picture"];
                  }
                  
                  [imgProfile loadImageFromURL:profilePicUrl withTempImage:@"avatar"];
                  [self setBusy:NO];
-             }else{
+             } else {
                  [self setBusy:NO];
                  [self showMessage:SERVER_ERROR];
              }
-         }else{
+         } else {
              [self setBusy:NO];
              [self showMessage:SERVER_ERROR];
          }
@@ -267,7 +253,7 @@
 }
 
 -(void)showGender{
-    NSArray *arr=[arrGender copy];
+    NSArray *arr = [arrGender copy];
     [self resignKeyboard];
   //  [self animateTextField: txtGender up: YES];
   
@@ -284,7 +270,7 @@
                                          MMtextAlignment:@1}
                             completion:^(NSString *selectedString) {
                               
-                                txtGender.text=selectedString;
+                                txtGender.text = selectedString;
                                 _selectedGender = selectedString;
                             } ];
 }
@@ -311,20 +297,18 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-        if (textField.tag==1)
-        {
+        if (textField.tag == 1){
             [txtEmail becomeFirstResponder];
-        }else if(textField.tag==2){
+        } else if(textField.tag == 2){
             [txtFullName becomeFirstResponder];
-        }else if(textField.tag==3){
+        } else if(textField.tag == 3){
             [txtBio becomeFirstResponder];
-        }else if(textField.tag==4){
+        } else if(textField.tag == 4){
             [txtEduEmail becomeFirstResponder];
-        }else if(textField.tag==5){
+        } else if(textField.tag == 5){
              [txtEduEmail resignFirstResponder];
             [self showGender];
         }
-    
     return YES;
 }
 
@@ -401,7 +385,8 @@
 
 - (void) animateTextField: (UITextField*) textField up: (BOOL) up{
     float val;
-    if(self.view.frame.size.height==480){
+    
+    if(self.view.frame.size.height == 480){
         val = 0.75;
     } else {
         val = kOFFSET_FOR_KEYBOARD;
@@ -424,6 +409,7 @@
 
 - (void) animateTextView: (UITextView*) textView up: (BOOL) up{
     float val;
+    
     if(self.view.frame.size.height == 480){
         val = 0.75;
     } else {
@@ -449,19 +435,19 @@
         if(sender.tag == 1){
             [txtUserName resignFirstResponder];
             [txtEmail becomeFirstResponder];
-        } else if(sender.tag == 2) {
+        } else if(sender.tag == 2){
             [txtEmail resignFirstResponder];
             [txtFullName becomeFirstResponder];
-        } else if(sender.tag == 3) {
+        } else if(sender.tag == 3){
             [txtFullName resignFirstResponder];
             [txtBio becomeFirstResponder];
-        } else if(sender.tag == 4) {
+        } else if(sender.tag == 4){
             [txtWebsite resignFirstResponder];
             [txtEduEmail becomeFirstResponder];
-        } else if(sender.tag == 7) {
+        } else if(sender.tag == 7){
             [txtBio resignFirstResponder];
             [txtWebsite becomeFirstResponder];
-        } else if(sender.tag == 5) {
+        } else if(sender.tag == 5){
             [txtEduEmail resignFirstResponder];
             [self showGender];
         }
@@ -481,16 +467,16 @@
         if(sender.tag == 5){
             [txtEduEmail resignFirstResponder];
             [txtWebsite becomeFirstResponder];
-        } else if(sender.tag == 4) {
+        } else if(sender.tag == 4){
             [txtWebsite resignFirstResponder];
             [txtBio becomeFirstResponder];
-        } else if(sender.tag == 3) {
+        } else if(sender.tag == 3){
             [txtFullName resignFirstResponder];
             [txtEmail becomeFirstResponder];
-        } else if(sender.tag == 2) {
+        } else if(sender.tag == 2){
             [txtEmail resignFirstResponder];
             [txtUserName becomeFirstResponder];
-        } else if(sender.tag == 7) {
+        } else if(sender.tag == 7){
             [txtBio resignFirstResponder];
             [txtFullName becomeFirstResponder];
         }
@@ -498,15 +484,6 @@
 
 -(void)resignKeyboard {
     [self.view endEditing:YES];
-    /*
-    [txtUserName resignFirstResponder];
-    [txtWebsite resignFirstResponder];
-    [txtGender resignFirstResponder];
-    [txtFullName resignFirstResponder];
-    [txtEmail resignFirstResponder];
-    [txtEduEmail resignFirstResponder];
-    [txtBio resignFirstResponder];
-     */
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -516,10 +493,9 @@
 -(BOOL)ValidateFields{
     NSString *code;
     
-    if([[txtEduEmail.text Trim] length ] > 3){
+    if([[txtEduEmail.text Trim] length] > 3){
         code = [[txtEduEmail.text Trim] substringFromIndex: [[txtEduEmail.text Trim] length] - 4];
     }
-   
     if ([[txtUserName.text Trim] isEmpty]){
         [self showMessage:EMPTY_USERNAME];
         return NO;
@@ -529,7 +505,7 @@
     } else if ([[txtEmail.text Trim] isEmpty]){
         [self showMessage:EMPTY_EMAIL];
         return NO;
-    } else if ([AppDelegate validateEmail:[txtEmail.text Trim]] == NO) {
+    } else if ([AppDelegate validateEmail:[txtEmail.text Trim]] == NO){
         [self showMessage:INVALID_EMAIL];
         return NO;
     } else if (![[txtEduEmail.text Trim] isEmpty] && [AppDelegate validateEmail:[txtEduEmail.text Trim]] == NO){
@@ -537,6 +513,9 @@
     } else if (![[txtEduEmail.text Trim] isEmpty] && ![code isEqualToString:@".edu"]){
         [self showMessage:INVALID_EDU_EMAIL];
          return NO;
+    } else if([[txtBio.text Trim] length] > 200){
+        [self showMessage:@"Bio may not contain more than 200 characters"];
+        return NO;
     }
     return  YES;
 }
@@ -568,7 +547,7 @@
 -(void)doUpdate{
     Reachability *reachability=[Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus=[reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable) {
+    if(networkStatus == NotReachable){
         [self showMessage:@"Please check your network connection"];
         return;
     }
@@ -586,7 +565,7 @@
     [_params setObject:[txtBio.text Trim] forKey:@"bio"];
     [_params setObject:[txtWebsite.text Trim] forKey:@"website"];
     [_params setObject:[txtEduEmail.text Trim] forKey:@"edu_email"];
-    if([txtGender.text isEqualToString:@"-----"]){
+    if([txtGender.text isEqualToString:@"---"]){
         [_params setObject:@"" forKey:@"gender"];
     } else {
         [_params setObject:[txtGender.text Trim] forKey:@"gender"];
@@ -632,7 +611,7 @@
     UIImage *img = [UIImage imageNamed:@"avatar"];
     if([AnimatedMethods firstimage:img isEqualTo:imgProfile.image]){
         imageData = nil;
-    }else{
+    } else {
         imageData = UIImageJPEGRepresentation(imgProfile.image, 1.0);
     }
     if (imageData){
@@ -687,16 +666,15 @@
                      SetProifilePic(profilePic);
                      
                      [self showMessage:@"Your profile has been updated successfully"];
-                 } else if ([JSONValue objectForKey:@"username"]) {
+                 } else if ([JSONValue objectForKey:@"username"]){
                      [self showMessage:USER_EXISTS_ANOTHER_USER];
-                 } else if ([JSONValue objectForKey:@"email"]) {
+                 } else if ([JSONValue objectForKey:@"email"]){
                      [self showMessage:EMAIL_EXISTS_ANOTHER_USER];
-                 } else if ([JSONValue objectForKey:@"edu_email"]) {
+                 } else if ([JSONValue objectForKey:@"edu_email"]){
                      [self showMessage:@"Sorry, this university isn't registered with us yet. Email us to get it signed up! universities@obystudio.com"];
-                 } else if ([JSONValue objectForKey:@"gender"]) {
+                 } else if ([JSONValue objectForKey:@"gender"]){
                      [self showMessage:@"This is not a valid gender choice"];
                  }
-                 
              } else {
                  [self showMessage:SERVER_ERROR];
              }
@@ -783,7 +761,7 @@
     
     if (editedImage){
         imageToSave = editedImage;
-    } else if (originalImage) {
+    } else if (originalImage){
         imageToSave = originalImage;
     }
 

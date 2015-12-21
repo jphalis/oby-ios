@@ -23,7 +23,7 @@
 @synthesize arrDetails,pageTitle;
 
 - (void)viewDidLoad {
-    appDelegate=[AppDelegate getDelegate];
+    appDelegate = [AppDelegate getDelegate];
     
     UISwipeGestureRecognizer *viewRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
     viewRight.direction = UISwipeGestureRecognizerDirectionRight;
@@ -31,14 +31,12 @@
     
     lblPageTitle.text = pageTitle;
     
-   // NSLog(@"%@",arrDetails);
-    
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    appDelegate.tabbar.tabView.hidden=YES;
+    appDelegate.tabbar.tabView.hidden = YES;
     [super viewWillAppear:YES];
 }
 
@@ -71,38 +69,32 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [arrDetails count];    //count number of row from counting array hear cataGorry is An Array
+    return [arrDetails count];    //count number of row from counting array hear catagory is An Array
 }
-
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    TableViewCellNotification *cell=[tableView dequeueReusableCellWithIdentifier:@"SupportCell" forIndexPath:indexPath];
-    //SupportCell
+    TableViewCellNotification *cell = [tableView dequeueReusableCellWithIdentifier:@"SupportCell" forIndexPath:indexPath];
     
-    NSMutableDictionary *dictUser=[arrDetails objectAtIndex:indexPath.row];
+    NSMutableDictionary *dictUser = [arrDetails objectAtIndex:indexPath.row];
     
     cell.txtNotification.attributedText = [dictUser objectForKey:@"usernameText"];
     cell.txtNotification.editable = NO;
+    
     if([[dictUser objectForKey:@"user__username"]isEqualToString:GetUserName]){
         [dictUser setObject:GetProifilePic forKey:@"user__profile_picture"];
         [cell.imgProfile loadImageFromURL:GetProifilePic withTempImage:@"avatar"];
     } else {
-        
-    [cell.imgProfile loadImageFromURL:[dictUser objectForKey:@"user__profile_picture"] withTempImage:@"avatar"];
+        [cell.imgProfile loadImageFromURL:[dictUser objectForKey:@"user__profile_picture"] withTempImage:@"avatar"];
     }
     cell.imgProfile.layer.cornerRadius = cell.imgProfile.frame.size.width / 2;
     cell.imgProfile.layer.masksToBounds = YES;
     
     return cell;
-    
-    return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-   // UITableViewCell *cell = [tblVw cellForRowAtIndexPath:indexPath];
-    
     ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
     NSDictionary *dictUserDeatil = [arrDetails objectAtIndex:indexPath.row];
     

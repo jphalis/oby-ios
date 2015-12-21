@@ -28,12 +28,12 @@
 
 - (void)setHasShadow:(BOOL)hasShadow{
     CALayer *layer = [self layer];
-    if (hasShadow) {
+    if (hasShadow){
         layer.shadowOpacity = 0.5;
         layer.shadowColor = [UIColor blackColor].CGColor;
         layer.shadowOffset = CGSizeMake(1, 2);
         layer.masksToBounds = NO;
-    }else{
+    } else {
         layer.masksToBounds = YES;
     }
 }
@@ -44,7 +44,7 @@
 
 - (void)setHasGloss:(BOOL)hasGloss{
     if (hasGloss) {
-        if (gloss == nil) {
+        if (gloss == nil){
             CALayer *layer = [self layer];
             gloss = [[CAGradientLayer alloc] init];
             gloss.frame = layer.bounds;
@@ -56,10 +56,10 @@
             gloss.startPoint = CGPointMake(0.5, -0.15);
             gloss.endPoint = CGPointMake(0.5, 0.65);
             [layer addSublayer:gloss];
-        }else{
+        } else {
             gloss.hidden = NO;
         }
-    }else{
+    } else {
         if (gloss) gloss.hidden = YES;
     }
 }

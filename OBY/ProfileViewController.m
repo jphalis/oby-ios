@@ -203,17 +203,15 @@ NSLog(@"url=%@",userURL);
         if(self.view.frame.size.height == 480 &&self.view.frame.size.width == 320){
             
         }
-        
-        imgSuportTypes.image = [UIImage imageNamed:@"editsquare"];
+        imgSuportTypes.image = [UIImage imageNamed:@"setting_icon_profile"];
         btnSupport.tag = 1;
-        
-    }else{
+    } else {
         NSString *profileUserName = [userURL lastPathComponent];
         
         if([appDelegate.arrSupports containsObject:profileUserName]){
             imgSuportTypes.image = [UIImage imageNamed:@"supporting.png"];
             btnSupport.tag = 2;
-        }else{
+        } else {
             imgSuportTypes.image = [UIImage imageNamed:@"support.png"];
             btnSupport.tag = 3;
         }

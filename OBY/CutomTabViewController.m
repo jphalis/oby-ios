@@ -102,7 +102,7 @@ enum{
     
     NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
-    NSString *authValue =[NSString stringWithFormat:@"Basic %@", base64String];
+    NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
     [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
     [_request setHTTPMethod:@"GET"];
     
@@ -121,7 +121,7 @@ enum{
                  NSArray *arrNotifResult = [JSONValue objectForKey:@"results"];
                  int notifCount = 0;
 
-                 for (int i = 0; i < arrNotifResult.count; i++) {
+                 for (int i = 0; i < arrNotifResult.count; i++){
                      NSMutableDictionary *dictNoti = [arrNotifResult objectAtIndex:i];
                      int rd = (int)[[dictNoti objectForKey:@"read"]integerValue];
                      
@@ -133,12 +133,11 @@ enum{
                  dispatch_async(dispatch_get_main_queue(),
                                 ^{
                                     // Display number of unread notifications
-//                                    self.badgeLabel.text = [NSString stringWithFormat:@"%ld",(long)appDelegate.notificationCount];
+                                    // self.badgeLabel.text = [NSString stringWithFormat:@"%ld",(long)appDelegate.notificationCount];
                                     // Blank circle
                                     self.badgeLabel.text = @" ";
-                                    
-                                    self.badgeLabel.hidden= (appDelegate.notificationCount > 0)? NO:YES;
-                                    if (self.badgeLabel.hidden == NO) {
+                                    self.badgeLabel.hidden = (appDelegate.notificationCount > 0)? NO:YES;
+                                    if (self.badgeLabel.hidden == NO){
                                         [self viewWillLayoutSubviews];
                                     }
                   });
@@ -184,6 +183,7 @@ enum{
     specialViewController = vc;
     CGRect frame = vc.view.frame;
     frame.origin = CGPointMake(0, 0);
+    // view is 40 pixels short of reaching tabbar
     frame.size.height = frame.size.height + 40;
     vc.view.frame = frame;
     [self.view addSubview:vc.view];
@@ -225,7 +225,7 @@ enum{
     
     if (btn.tag == previousIndex){
        // return;
-    }else{
+    } else {
         if (previousIndex != 0){
             UIButton *btnpreviousIndex = (UIButton*)[tabView viewWithTag:previousIndex];
             
@@ -244,37 +244,30 @@ enum{
     }
     appDelegate.currentTab = currentIndex;
     
-    switch (currentIndex)
-    {
-        case TABHOME:
-        {
+    switch (currentIndex) {
+        case TABHOME: {
             UINavigationController *navController = [appDelegate.arrViewControllers objectAtIndex:0];
             navController.navigationBarHidden = YES;
             [navController popToRootViewControllerAnimated:NO];
             [self presentThisView: navController];
         }
             break;
-            
-        case TABTIMELINE:
-        {
+        case TABTIMELINE: {
             //self.badge.hidden = YES;
             UINavigationController *navController = [appDelegate.arrViewControllers objectAtIndex:1];
             [self presentThisView: navController];
         }
             break;
-        case TABNOTIFICATION:
-        {
+        case TABNOTIFICATION: {
             //self.badge.hidden = YES;
             UINavigationController *navController = [appDelegate.arrViewControllers objectAtIndex:2];
             [self presentThisView: navController];
             break;
         }
-        case TABMISCELLANEOUS:
-        {
+        case TABMISCELLANEOUS: {
             //self.badge.hidden = YES;
             UINavigationController *navController = [appDelegate.arrViewControllers objectAtIndex:3];
             [self presentThisView: navController];
-            
             break;
         }
         default:
