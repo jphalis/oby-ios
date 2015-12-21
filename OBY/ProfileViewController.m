@@ -186,7 +186,7 @@ NSLog(@"url=%@",userURL);
     
     if([[userURL lastPathComponent]isEqualToString:GetUserName]){
         btnAdd.hidden = NO;
-    }else{
+    } else {
         btnAdd.hidden = YES;
     }
 
@@ -194,7 +194,7 @@ NSLog(@"url=%@",userURL);
     
     if(GetisUpdate == YES){
         SetisUpdate(NO);
-    [self getProfileDetails];
+        [self getProfileDetails];
     }
 }
 
@@ -310,7 +310,7 @@ NSLog(@"url=%@",userURL);
         }
         supportViewController.pageTitle = @"Supporters";
         supportViewController.arrDetails = profileClass.arrfollowers.copy;
-    }else{
+    } else {
         if([lblSupporting.text isEqualToString:@"0"]){
             return;
         }
@@ -334,7 +334,7 @@ NSLog(@"url=%@",userURL);
 //        }
         
         // Use with modal view
-        if ([urlString hasPrefix:@"http://"] || [urlString hasPrefix:@"https://"]) {
+        if ([urlString hasPrefix:@"http://"] || [urlString hasPrefix:@"https://"]){
             modalWebpageUrl = [NSString stringWithFormat:@"%@",urlString];
         } else {
             modalWebpageUrl = [NSString stringWithFormat:@"http://%@", urlString];
@@ -349,13 +349,13 @@ NSLog(@"url=%@",userURL);
     }
 }
 
-- (IBAction)onSupport:(id)sender {
+- (IBAction)onSupport:(id)sender{
     if([sender tag] == 1){
         NSLog(@"user");
         
         EditProfileViewController *editProfileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"EditProfileViewController"];
         [self.navigationController pushViewController:editProfileViewController animated:YES];
-    }else{
+    } else {
         //return;
         [self doSupport:(int)[sender tag]];
     }
@@ -399,7 +399,7 @@ NSLog(@"url=%@",userURL);
                  if([[JSONValue allKeys]count] > 1){
                      NSMutableArray *arrFollower = [JSONValue objectForKey:@"get_followers_info"];
 
-                     int followerCount=arrFollower.count;
+                     int followerCount = arrFollower.count;
                      
                      profileClass.followers_count = [NSString stringWithFormat:@"%d",followerCount];
                      
@@ -419,22 +419,20 @@ NSLog(@"url=%@",userURL);
                          
                          if([dictUserDetail objectForKey:@"user__profile_picture"] == [NSNull null]){
                              [dictFollowerInfo setObject:@"" forKey:@"user__profile_picture"];
-                             
-                         }else{
+                         } else {
                              NSString *proflURL = [NSString stringWithFormat:@"%@%@",@"https://oby.s3.amazonaws.com/media/",[dictUserDetail objectForKey:@"user__profile_picture"]];
                              
                              [dictFollowerInfo setValue:proflURL forKey:@"user__profile_picture"];
                          }
-                         
                          if([dictUserDetail objectForKey:@"user__username"] == [NSNull null]){
                              [dictFollowerInfo setObject:@"" forKey:@"user__username"];
                              
-                         }else{
+                         } else {
                              [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"user__username"] forKey:@"user__username"];
                          }
                          if([dictUserDetail objectForKey:@"user__full_name"] == [NSNull null]){
                              [dictFollowerInfo setObject:@"" forKey:@"user__full_name"];
-                         }else{
+                         } else {
                              [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"user__full_name"] forKey:@"user__full_name"];
                          }
                          
@@ -461,20 +459,20 @@ NSLog(@"url=%@",userURL);
                                  [appDelegate.arrSupports removeObjectAtIndex:i];
                              }
                          }
-                     }else{
+                     } else {
                          [appDelegate.arrSupports addObject:profileClass.username];
                      }
   
                      [self checkUser];
                      [self showProfileInfo];
-                 }else{
+                 } else {
                      [self showMessage:SERVER_ERROR];
                  }
-             }else{
+             } else {
                  [self showMessage:SERVER_ERROR];
              }
              [self setBusy:NO];
-         }else{
+         } else {
              [self setBusy:NO];
              [self showMessage:SERVER_ERROR];
          }
@@ -539,260 +537,252 @@ NSLog(@"url=%@",userURL);
                      [self showMessage:SERVER_ERROR];
                      return;
                  }
-                     
-                     ProfileClass *profileClass = [[ProfileClass alloc]init];
+                 ProfileClass *profileClass = [[ProfileClass alloc]init];
                  
-                        int profileId = [[JSONValue objectForKey:@"id"]intValue];
+                 int profileId = [[JSONValue objectForKey:@"id"]intValue];
                  
-                     profileClass.Id = [NSString stringWithFormat:@"%d",profileId];
-                     profileClass.username = [JSONValue objectForKey:@"username"];
-                     profileClass.account_url = [JSONValue objectForKey:@"account_url"];
-                     profileClass.email = [JSONValue objectForKey:@"email"];
-                     profileClass.full_name = [JSONValue objectForKey:@"full_name"];
-                     profileClass.bio = [JSONValue objectForKey:@"bio"];
-                     profileClass.website = [JSONValue objectForKey:@"website"];
-                     profileClass.gender = [JSONValue objectForKey:@"gender"];
-                     profileClass.arrphoto_set = [[NSMutableArray alloc]init];
+                 profileClass.Id = [NSString stringWithFormat:@"%d",profileId];
+                 profileClass.username = [JSONValue objectForKey:@"username"];
+                 profileClass.account_url = [JSONValue objectForKey:@"account_url"];
+                 profileClass.email = [JSONValue objectForKey:@"email"];
+                 profileClass.full_name = [JSONValue objectForKey:@"full_name"];
+                 profileClass.bio = [JSONValue objectForKey:@"bio"];
+                 profileClass.website = [JSONValue objectForKey:@"website"];
+                 profileClass.gender = [JSONValue objectForKey:@"gender"];
+                 profileClass.arrphoto_set = [[NSMutableArray alloc]init];
                      
-                     NSArray *arrPhotoset=[JSONValue objectForKey:@"photo_set"];
-                     for(int i = 0; i < arrPhotoset.count; i++){
-                         NSMutableDictionary *dictResult;
-                         dictResult = [[NSMutableDictionary alloc]init];
-                         dictResult = [arrPhotoset objectAtIndex:i];
+                 NSArray *arrPhotoset=[JSONValue objectForKey:@"photo_set"];
+                 for(int i = 0; i < arrPhotoset.count; i++){
+                     NSMutableDictionary *dictResult;
+                     dictResult = [[NSMutableDictionary alloc]init];
+                     dictResult = [arrPhotoset objectAtIndex:i];
                        
-                         PhotoClass *phClas = [[PhotoClass alloc]init];
-                         phClas.category_url = [dictResult objectForKey:@"category_url"];
-                         phClas.photo = [dictResult objectForKey:@"photo"];
-                         phClas.comment_count = [dictResult objectForKey:@"comment_count"];
-                        // phClas.comment_set = [dictResult objectForKey:@"comment_set"];
-                         phClas.created = [dictResult objectForKey:@"created"];
-                         phClas.creator = [[dictResult objectForKey:@"creator"] uppercaseString];
-                         phClas.creator_url = [dictResult objectForKey:@"creator_url"];
-                         phClas.description = [dictResult objectForKey:@"description"];
+                     PhotoClass *phClas = [[PhotoClass alloc]init];
+                     phClas.category_url = [dictResult objectForKey:@"category_url"];
+                     phClas.photo = [dictResult objectForKey:@"photo"];
+                     phClas.comment_count = [dictResult objectForKey:@"comment_count"];
+                  // phClas.comment_set = [dictResult objectForKey:@"comment_set"];
+                     phClas.created = [dictResult objectForKey:@"created"];
+                     phClas.creator = [[dictResult objectForKey:@"creator"] uppercaseString];
+                     phClas.creator_url = [dictResult objectForKey:@"creator_url"];
+                     phClas.description = [dictResult objectForKey:@"description"];
                          
-                         int userId = [[dictResult objectForKey:@"id"]intValue];
-                         int linke_Count = [[dictResult objectForKey:@"like_count"]intValue];
+                     int userId = [[dictResult objectForKey:@"id"]intValue];
+                     int linke_Count = [[dictResult objectForKey:@"like_count"]intValue];
                          
-                         phClas.PhotoId = [NSString stringWithFormat:@"%d",userId];
+                     phClas.PhotoId = [NSString stringWithFormat:@"%d",userId];
+                     phClas.like_count = [NSString stringWithFormat:@"%d",linke_Count];
+                 //  phClas.likers = [dictResult objectForKey:@"likers"];
+                     phClas.likers = [[NSMutableArray alloc]init];
+                     phClas.comment_set = [[NSMutableArray alloc]init];
                          
-                         phClas.like_count = [NSString stringWithFormat:@"%d",linke_Count];
+                     NSArray *arrLiker = [dictResult objectForKey:@"get_likers_info"];
                          
-                       //  phClas.likers = [dictResult objectForKey:@"likers"];
-                         
-                         phClas.likers = [[NSMutableArray alloc]init];
-                         phClas.comment_set = [[NSMutableArray alloc]init];
-                         
-                         NSArray *arrLiker = [dictResult objectForKey:@"get_likers_info"];
-                         
-                         phClas.isLike = NO;
-                         if([[dictResult objectForKey:@"get_likers_info"] count] > 0){
-                             for(int l = 0; l < [arrLiker count]; l++){
-                                 NSDictionary *dictUsers = [arrLiker objectAtIndex:l];
-                                 if([[dictUsers objectForKey:@"username"] isEqualToString:GetUserName]){
-                                     phClas.isLike = YES;
-                                     break;
-                                 }
+                     phClas.isLike = NO;
+                     if([[dictResult objectForKey:@"get_likers_info"] count] > 0){
+                         for(int l = 0; l < [arrLiker count]; l++){
+                             NSDictionary *dictUsers = [arrLiker objectAtIndex:l];
+                             if([[dictUsers objectForKey:@"username"] isEqualToString:GetUserName]){
+                                 phClas.isLike = YES;
+                                 break;
                              }
                          }
-
-                         for(int j=0;j<arrLiker.count;j++){
-                             NSMutableDictionary *dictFollowerInfo=[[NSMutableDictionary alloc]init];
-                             NSDictionary *dictUserDetail=[arrLiker objectAtIndex:j];
-                             
-                             if([dictUserDetail objectForKey:@"profile_picture"] == [NSNull null]){
-                                 [dictFollowerInfo setObject:@"" forKey:@"user__profile_picture"];
-                             }else{
-                                 NSString *proflURL=[NSString stringWithFormat:@"%@%@",@"https://oby.s3.amazonaws.com/media/",[dictUserDetail objectForKey:@"profile_picture"]];
-                                 [dictFollowerInfo setValue:proflURL forKey:@"user__profile_picture"];
-                             }
-
-                             if([dictUserDetail objectForKey:@"username"] == [NSNull null]){
-                                 [dictFollowerInfo setObject:@"" forKey:@"user__username"];
-                             }else{
-                                 [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"username"] forKey:@"user__username"];
-                             }
-                             
-                             if([dictUserDetail objectForKey:@"full_name"] == [NSNull null]){
-                                 [dictFollowerInfo setObject:@"" forKey:@"full_name"];
-                             }else{
-                                 [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"full_name"] forKey:@"full_name"];
-                             }
-                             
-                             NSString *fullString;
-                             NSString *userName=[dictFollowerInfo objectForKey:@"user__username"];
-                             NSString *fullName=[dictFollowerInfo objectForKey:@"full_name"];
-                             
-                             fullString=[NSString stringWithFormat:@"%@ %@",fullName,userName];
-                             
-                             NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
-                             
-                             NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
-                             
-                             [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
-                             
-                             [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
-                             
-                             [phClas.likers addObject:dictFollowerInfo];
-                         }
-                         
-                         NSArray *arrCommentSet=[dictResult objectForKey:@"comment_set"];
-                         
-                         for(int k=0;k<arrCommentSet.count;k++){
-                             NSMutableDictionary *dictFollowerInfo=[[NSMutableDictionary alloc]init];
-                             NSDictionary *dictUserDetail=[arrCommentSet objectAtIndex:k];
-                             
-                             if([dictUserDetail objectForKey:@"profile_picture"] == [NSNull null]){
-                                 [dictFollowerInfo setObject:@"" forKey:@"user__profile_picture"];
-                             }else{
-                                 NSString *proflURL=[NSString stringWithFormat:@"%@%@",@"https://oby.s3.amazonaws.com/media/",[dictUserDetail objectForKey:@"profile_picture"]];
-                                 [dictFollowerInfo setValue:proflURL forKey:@"user__profile_picture"];
-                             }
-                             
-                             if([dictUserDetail objectForKey:@"user"] == [NSNull null]){
-                                 [dictFollowerInfo setObject:@"" forKey:@"user__username"];
-                             }else{
-                                 [dictFollowerInfo setObject:[[dictUserDetail objectForKey:@"user"]lastPathComponent] forKey:@"user__username"];
-                             }
-                             
-                             if([dictUserDetail objectForKey:@"text"] == [NSNull null]){
-                                 [dictFollowerInfo setObject:@"" forKey:@"text"];
-                             }else{
-                                 [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"text"] forKey:@"text"];
-                             }
-                             
-                             NSString *fullString;
-                             NSString *fullName=[[dictFollowerInfo objectForKey:@"user__username"]lastPathComponent];
-                             NSString *userName=[dictFollowerInfo objectForKey:@"text"];
-                             
-                             fullString=[NSString stringWithFormat:@"%@ %@",fullName,userName];
-                             
-                             NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
-                             
-                             NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
-                             
-                             [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
-                             
-                             [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
-                             
-                             [phClas.comment_set addObject:dictFollowerInfo];
-                         }
-
-                         phClas.modified=[dictResult objectForKey:@"modified"];
-                         phClas.photo=[dictResult objectForKey:@"photo"];
-                         phClas.slug=[dictResult objectForKey:@"slug"];
-
-                         [arrPhotsList addObject:phClas];
                      }
+
+                     for(int j = 0; j < arrLiker.count; j++){
+                         NSMutableDictionary *dictFollowerInfo=[[NSMutableDictionary alloc]init];
+                         NSDictionary *dictUserDetail=[arrLiker objectAtIndex:j];
+                             
+                         if([dictUserDetail objectForKey:@"profile_picture"] == [NSNull null]){
+                             [dictFollowerInfo setObject:@"" forKey:@"user__profile_picture"];
+                         } else {
+                             NSString *proflURL=[NSString stringWithFormat:@"%@%@",@"https://oby.s3.amazonaws.com/media/",[dictUserDetail objectForKey:@"profile_picture"]];
+                             [dictFollowerInfo setValue:proflURL forKey:@"user__profile_picture"];
+                         }
+
+                         if([dictUserDetail objectForKey:@"username"] == [NSNull null]){
+                             [dictFollowerInfo setObject:@"" forKey:@"user__username"];
+                         } else {
+                             [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"username"] forKey:@"user__username"];
+                         }
+                             
+                         if([dictUserDetail objectForKey:@"full_name"] == [NSNull null]){
+                             [dictFollowerInfo setObject:@"" forKey:@"full_name"];
+                         } else {
+                             [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"full_name"] forKey:@"full_name"];
+                         }
+                             
+                         NSString *fullString;
+                         NSString *userName = [dictFollowerInfo objectForKey:@"user__username"];
+                         NSString *fullName = [dictFollowerInfo objectForKey:@"full_name"];
+                             
+                         fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
+                             
+                         NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
+                             
+                         NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
+                             
+                         [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
+                             
+                         [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
+                             
+                         [phClas.likers addObject:dictFollowerInfo];
+                     }
+                         
+                     NSArray *arrCommentSet=[dictResult objectForKey:@"comment_set"];
+                         
+                     for(int k = 0; k < arrCommentSet.count; k++){
+                         NSMutableDictionary *dictFollowerInfo=[[NSMutableDictionary alloc]init];
+                         NSDictionary *dictUserDetail=[arrCommentSet objectAtIndex:k];
+                             
+                         if([dictUserDetail objectForKey:@"profile_picture"] == [NSNull null]){
+                             [dictFollowerInfo setObject:@"" forKey:@"user__profile_picture"];
+                         } else {
+                             NSString *proflURL=[NSString stringWithFormat:@"%@%@",@"https://oby.s3.amazonaws.com/media/",[dictUserDetail objectForKey:@"profile_picture"]];
+                             [dictFollowerInfo setValue:proflURL forKey:@"user__profile_picture"];
+                         }
+                         if([dictUserDetail objectForKey:@"user"] == [NSNull null]){
+                             [dictFollowerInfo setObject:@"" forKey:@"user__username"];
+                         } else {
+                             [dictFollowerInfo setObject:[[dictUserDetail objectForKey:@"user"]lastPathComponent] forKey:@"user__username"];
+                         }
+                         if([dictUserDetail objectForKey:@"text"] == [NSNull null]){
+                             [dictFollowerInfo setObject:@"" forKey:@"text"];
+                         } else {
+                             [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"text"] forKey:@"text"];
+                         }
+                             
+                         NSString *fullString;
+                         NSString *fullName=[[dictFollowerInfo objectForKey:@"user__username"]lastPathComponent];
+                         NSString *userName=[dictFollowerInfo objectForKey:@"text"];
+                             
+                         fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
+                             
+                         NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
+                             
+                         NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
+                             
+                         [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
+                             
+                         [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
+                             
+                         [phClas.comment_set addObject:dictFollowerInfo];
+                     }
+
+                     phClas.modified = [dictResult objectForKey:@"modified"];
+                     phClas.photo = [dictResult objectForKey:@"photo"];
+                     phClas.slug = [dictResult objectForKey:@"slug"];
+
+                     [arrPhotsList addObject:phClas];
+                 }
                      
-                     if([JSONValue objectForKey:@"profile_picture"]==[NSNull null]){
-                         profileClass.profile_picture=@"";
-                     }else{
-                         profileClass.profile_picture=[JSONValue objectForKey:@"profile_picture"];
-                     }
+                 if([JSONValue objectForKey:@"profile_picture"]==[NSNull null]){
+                     profileClass.profile_picture=@"";
+                 } else {
+                     profileClass.profile_picture = [JSONValue objectForKey:@"profile_picture"];
+                 }
             
-                     if([JSONValue objectForKey:@"follower"]==[NSNull null]){
-                         profileClass.followers_count=@"0";
-                         profileClass.following_count=@"0";
-                     }else{
-                         NSDictionary *dictFollower=[JSONValue objectForKey:@"follower"];
-                         NSMutableArray *arrFollower=[dictFollower objectForKey:@"get_followers_info"];
-                         NSMutableArray *arrFollowing=[dictFollower objectForKey:@"get_following_info"];
+                 if([JSONValue objectForKey:@"follower"] == [NSNull null]){
+                     profileClass.followers_count = @"0";
+                     profileClass.following_count = @"0";
+                 } else {
+                     NSDictionary *dictFollower = [JSONValue objectForKey:@"follower"];
+                     NSMutableArray *arrFollower = [dictFollower objectForKey:@"get_followers_info"];
+                     NSMutableArray *arrFollowing = [dictFollower objectForKey:@"get_following_info"];
                          
-                         // Change this to a Django field that abbreviates extensions
-                         int followerCount=arrFollower.count;
-                         int followingCount=arrFollowing.count;
+                     // Change this to a Django field that abbreviates extensions
+                     int followerCount = arrFollower.count;
+                     int followingCount = arrFollowing.count;
                          
-                         profileClass.followers_count=[NSString stringWithFormat:@"%d",followerCount];
-                         profileClass.following_count=[NSString stringWithFormat:@"%d",followingCount];
-                         profileClass.arrfollowers=[[NSMutableArray alloc]init];
-                         profileClass.arrfollowings=[[NSMutableArray alloc]init];
+                     profileClass.followers_count = [NSString stringWithFormat:@"%d",followerCount];
+                     profileClass.following_count = [NSString stringWithFormat:@"%d",followingCount];
+                     profileClass.arrfollowers = [[NSMutableArray alloc]init];
+                     profileClass.arrfollowings = [[NSMutableArray alloc]init];
                          
-                         for(int j=0;j<arrFollower.count;j++){
-                             NSMutableDictionary *dictFollowerInfo=[[NSMutableDictionary alloc]init];
-                             NSDictionary *dictUserDetail=[arrFollower objectAtIndex:j];
+                     for(int j = 0; j < arrFollower.count; j++){
+                         NSMutableDictionary *dictFollowerInfo = [[NSMutableDictionary alloc]init];
+                         NSDictionary *dictUserDetail = [arrFollower objectAtIndex:j];
                              
-                            // NSLog(@"%@",[dictUserDetail objectForKey:@"user__username"]);
+                     // NSLog(@"%@",[dictUserDetail objectForKey:@"user__username"]);
 
-                             if([dictUserDetail objectForKey:@"user__profile_picture"] == [NSNull null]){
-                                 [dictFollowerInfo setObject:@"" forKey:@"user__profile_picture"];
-                             }else{
-                                 NSString *proflURL=[NSString stringWithFormat:@"%@%@",@"https://oby.s3.amazonaws.com/media/",[dictUserDetail objectForKey:@"user__profile_picture"]];
-                                 [dictFollowerInfo setValue:proflURL forKey:@"user__profile_picture"];
-                             }
-                             
-                             if([dictUserDetail objectForKey:@"user__username"] == [NSNull null]){
-                                 [dictFollowerInfo setObject:@"" forKey:@"user__username"];
-                             }else{
-                                 [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"user__username"] forKey:@"user__username"];
-                             }
-                             
-                             if([dictUserDetail objectForKey:@"user__full_name"] == [NSNull null]){
-                                 [dictFollowerInfo setObject:@"" forKey:@"user__full_name"];
-                             }else{
-                              [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"user__full_name"] forKey:@"user__full_name"];
-                             }
-                             
-                             NSString *fullString;
-                             NSString *userName=[dictFollowerInfo objectForKey:@"user__username"];
-                             NSString *fullName=[dictFollowerInfo objectForKey:@"user__full_name"];
-                             fullString=[NSString stringWithFormat:@"%@ %@",fullName,userName];
-                             NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
-                             NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
-                             [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
-                             [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
-                             [profileClass.arrfollowers addObject:dictFollowerInfo];
+                         if([dictUserDetail objectForKey:@"user__profile_picture"] == [NSNull null]){
+                             [dictFollowerInfo setObject:@"" forKey:@"user__profile_picture"];
+                         } else {
+                             NSString *proflURL = [NSString stringWithFormat:@"%@%@",@"https://oby.s3.amazonaws.com/media/",[dictUserDetail objectForKey:@"user__profile_picture"]];
+                             [dictFollowerInfo setValue:proflURL forKey:@"user__profile_picture"];
                          }
-                         for(int k=0;k<arrFollowing.count;k++){
-                             NSMutableDictionary *dictFollowerInfo=[[NSMutableDictionary alloc]init];
-                             NSDictionary *dictUserDetail=[arrFollowing objectAtIndex:k];
-
-                             if([dictUserDetail objectForKey:@"user__profile_picture"] == [NSNull null]){
-                                 [dictFollowerInfo setObject:@"" forKey:@"user__profile_picture"];
-                             }else{
-                                 NSString *proflURL=[NSString stringWithFormat:@"%@%@",@"https://oby.s3.amazonaws.com/media/",[dictUserDetail objectForKey:@"user__profile_picture"]];
-                                 [dictFollowerInfo setValue:proflURL forKey:@"user__profile_picture"];
-                             }
-
-                             if([dictUserDetail objectForKey:@"user__username"] == [NSNull null]){
-                                 [dictFollowerInfo setObject:@"" forKey:@"user__username"];
-                             }else{
-                                 [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"user__username"] forKey:@"user__username"];
-                             }
                              
-                             if([dictUserDetail objectForKey:@"user__full_name"] == [NSNull null]){
-                                 [dictFollowerInfo setObject:@"" forKey:@"user__full_name"];
-                             }else{
-                                 [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"user__full_name"] forKey:@"user__full_name"];
-                             }
-                             
-                             NSString *fullString;
-                             NSString *userName=[dictFollowerInfo objectForKey:@"user__username"];
-                             NSString *fullName=[dictFollowerInfo objectForKey:@"user__full_name"];
-                             fullString=[NSString stringWithFormat:@"%@ %@",fullName,userName];
-                             NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
-                             NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
-                             [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
-
-                             [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
-                             
-                             [profileClass.arrfollowings addObject:dictFollowerInfo];
+                         if([dictUserDetail objectForKey:@"user__username"] == [NSNull null]){
+                             [dictFollowerInfo setObject:@"" forKey:@"user__username"];
+                         } else {
+                             [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"user__username"] forKey:@"user__username"];
                          }
+                             
+                         if([dictUserDetail objectForKey:@"user__full_name"] == [NSNull null]){
+                             [dictFollowerInfo setObject:@"" forKey:@"user__full_name"];
+                         } else {
+                         [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"user__full_name"] forKey:@"user__full_name"];
+                         }
+                             
+                         NSString *fullString;
+                         NSString *userName = [dictFollowerInfo objectForKey:@"user__username"];
+                         NSString *fullName = [dictFollowerInfo objectForKey:@"user__full_name"];
+                         fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
+                         NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
+                         NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
+                         [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
+                         [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
+                         [profileClass.arrfollowers addObject:dictFollowerInfo];
                      }
+                     for(int k = 0; k < arrFollowing.count; k++){
+                         NSMutableDictionary *dictFollowerInfo = [[NSMutableDictionary alloc]init];
+                         NSDictionary *dictUserDetail = [arrFollowing objectAtIndex:k];
+
+                         if([dictUserDetail objectForKey:@"user__profile_picture"] == [NSNull null]){
+                             [dictFollowerInfo setObject:@"" forKey:@"user__profile_picture"];
+                         } else {
+                             NSString *proflURL = [NSString stringWithFormat:@"%@%@",@"https://oby.s3.amazonaws.com/media/",[dictUserDetail objectForKey:@"user__profile_picture"]];
+                             [dictFollowerInfo setValue:proflURL forKey:@"user__profile_picture"];
+                         }
+                         if([dictUserDetail objectForKey:@"user__username"] == [NSNull null]){
+                             [dictFollowerInfo setObject:@"" forKey:@"user__username"];
+                         } else {
+                             [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"user__username"] forKey:@"user__username"];
+                         }
+                         if([dictUserDetail objectForKey:@"user__full_name"] == [NSNull null]){
+                             [dictFollowerInfo setObject:@"" forKey:@"user__full_name"];
+                         } else {
+                             [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"user__full_name"] forKey:@"user__full_name"];
+                         }
+                             
+                         NSString *fullString;
+                         NSString *userName = [dictFollowerInfo objectForKey:@"user__username"];
+                         NSString *fullName = [dictFollowerInfo objectForKey:@"user__full_name"];
+                         fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
+                         NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
+                         NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
+                         [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
+
+                         [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
+                             
+                         [profileClass.arrfollowings addObject:dictFollowerInfo];
+                     }
+                 }
                      
-                     [dictProfileInformation setObject:profileClass forKey:@"ProfileInfo"];
-                     [self setBusy:NO];
-                     [self showProfileInfo];
-             }else{
-                 [refreshControl endRefreshing];
+                 [dictProfileInformation setObject:profileClass forKey:@"ProfileInfo"];
                  [self setBusy:NO];
-                 [self showMessage:SERVER_ERROR];
-             }
-         }else{
+                 [self showProfileInfo];
+         } else {
              [refreshControl endRefreshing];
              [self setBusy:NO];
              [self showMessage:SERVER_ERROR];
          }
-     }];
+     } else {
+         [refreshControl endRefreshing];
+         [self setBusy:NO];
+         [self showMessage:SERVER_ERROR];
+     }
+ }];
 }
 
 -(void)removeImage{
@@ -947,7 +937,6 @@ NSLog(@"url=%@",userURL);
     CollectionViewCellimage *currentCell = (CollectionViewCellimage *)[collectionVW cellForItemAtIndexPath:indexPath];
     
     PhotoClass *photoClass;
-    
     photoClass = [arrPhotsList objectAtIndex:sender.tag];
     
     SupportViewController *supportViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SupportViewController"];
@@ -957,7 +946,6 @@ NSLog(@"url=%@",userURL);
     }
     
     supportViewController.pageTitle = @"Comments";
-    
     supportViewController.arrDetails = photoClass.comment_set.copy;
     [self.navigationController pushViewController:supportViewController animated:YES];
 }
@@ -967,7 +955,6 @@ NSLog(@"url=%@",userURL);
     CollectionViewCellimage *currentCell = (CollectionViewCellimage *)[collectionVW cellForItemAtIndexPath:indexPath];
     
     PhotoClass *photoClass;
-    
     photoClass = [arrPhotsList objectAtIndex:sender.tag];
     
     SupportViewController *supportViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SupportViewController"];
@@ -1007,7 +994,6 @@ NSLog(@"url=%@",userURL);
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:selectIndex inSection:0];
         CollectionViewCellimage *currentCell = (CollectionViewCellimage *)[collectionVW cellForItemAtIndexPath:indexPath];
         currentCell.lblComments.text = countStr;
-        
     }
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -1017,8 +1003,8 @@ NSLog(@"url=%@",userURL);
     CollectionViewCellimage *currentCell = (CollectionViewCellimage *)[collectionVW cellForItemAtIndexPath:indexPath];
     
     PhotoClass *photoClass;
-    photoClass=[arrPhotsList objectAtIndex:sender.tag];
-
+    photoClass = [arrPhotsList objectAtIndex:sender.tag];
+    
     Reachability *reachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
     if(networkStatus == NotReachable) {
@@ -1037,7 +1023,7 @@ NSLog(@"url=%@",userURL);
         }
         
         likecount--;
-    }else{
+    } else {
         NSMutableDictionary *dictUser = [[NSMutableDictionary alloc]init];
         [dictUser setValue:GetProifilePic forKey:@"user__profile_picture"];
         [dictUser setValue:GetUserName forKey:@"user__username"];
@@ -1054,7 +1040,6 @@ NSLog(@"url=%@",userURL);
         NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
         
         [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
-        
         [dictUser setValue:hogan forKey:@"usernameText"];
         
         [photoClass.likers addObject:dictUser];
@@ -1072,7 +1057,6 @@ NSLog(@"url=%@",userURL);
     currentCell.lblLikes.text = [NSString stringWithFormat:@"%@",photoClass.like_count];
     
     [self doLike:photoClass selectCell:currentCell];
-    
     NSLog(@"Like Click");
 }
 
@@ -1090,7 +1074,7 @@ NSLog(@"url=%@",userURL);
         NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
         NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
         NSString *base64String = [plainData base64EncodedStringWithOptions:0];
-        NSString *authValue =[NSString stringWithFormat:@"Basic %@", base64String];
+        NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
         
         [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
         [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
@@ -1176,6 +1160,7 @@ NSLog(@"url=%@",userURL);
         collVwOldFrame = collectionVW.frame;
         
         [self moveView:viewTOP fromFrame:viewTOP.frame toFrame:newFrame];
+        
         CGRect collFrame = CGRectMake(0, 40, self.view.frame.size.width, self.view.frame.size.height-40);
         [AnimatedMethods animatedMovingView:collectionVW fromFrame:collVwOldFrame toFrame:collFrame];
     }
@@ -1195,7 +1180,6 @@ NSLog(@"url=%@",userURL);
                          NSLog(@"completion block");
                      }
      ];
-    
 }
 
 -(void)moveingView:(UIView *)fromView fromFrame:(CGRect) fromFrame toFrame:(CGRect) toFrame{

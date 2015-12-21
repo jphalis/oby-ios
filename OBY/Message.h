@@ -5,10 +5,12 @@
 #ifndef OBY_Message_h
 #define OBY_Message_h
 
+// General
 #define UPLOAD_PHOTO @"Thank you for submitting your photo, we will post it shortly"
 #define INCORRECTOLDPASS @"Incorrect old password"
 #define SERVER_ERROR @"Something went wrong! Please try again later!"
 #define LOGIN_ERROR  @"Unable to login with provided credentials"
+#define NETWORK_UNAVAILABLE  @"Please check your network connection"
 
 // Sign in
 #define USER_NOTREGISTERED @"Invalid username or password"
@@ -60,6 +62,6 @@
 #define UPDATEPROFILE_SUCCESS @"Your profile has been updated"
 
 // Notiifcations
-#define NO_NOTIFICATION @"There are no notifications ):"
+#define NO_NOTIFICATION @"There are no notifications"
 
 #endif
