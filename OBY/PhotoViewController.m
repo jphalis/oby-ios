@@ -77,19 +77,16 @@
 
 -(void)moveView:(UIView *)fromView fromFrame:(CGRect) fromFrame toFrame:(CGRect) toFrame{
     fromView.frame = fromFrame;
-    [UIView animateWithDuration:0.4
+    [UIView animateWithDuration:0.3
                           delay:0.0
-                        options:UIViewAnimationOptionTransitionFlipFromTop
+                        options:UIViewAnimationOptionTransitionCurlDown
                      animations:^{
                          fromView.frame = toFrame;
-                         
                      }
                      completion:^(BOOL finished){
                          CGRect newFrame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-                         
                          self.view.frame = newFrame;
                          [self.delegate removeImage];
-                        // NSLog(@"completion block");
                      }
      ];
 }
@@ -165,15 +162,12 @@
     [imageScrollView setContentMode:UIViewContentModeScaleAspectFit];
     //[imageView sizeToFit];
     [imageScrollView setContentSize:CGSizeMake(imageView.frame.size.width, imageView.frame.size.height)];
-
-//    NSLog(@"%@",photoURL);
     
     SetisFullView(YES);
     [AnimatedMethods zoomIn:self.view];
     
-    //[imageView loadImageFromURL:photoURL withTempImage:@""];
     SetIsImageView(YES);
-  [imageView loadImageFromURL:photoURL withTempImage:@""];
+    [imageView loadImageFromURL:photoURL withTempImage:@""];
     imageView.shouldShowLoader = YES;
     
     [super viewWillAppear:YES];

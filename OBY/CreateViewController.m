@@ -27,6 +27,7 @@
     __weak IBOutlet UITextField *txtCategory;
     BOOL isImageChoosed;
     __weak IBOutlet UIImageView *imgView;
+    __weak IBOutlet UIButton *createBtn;
     int selectedCode;
     
     ChoosePhotoViewController *choosePhotoViewController;
@@ -96,6 +97,8 @@
     
     lblCat.layer.borderWidth = 0.5;
     lblCat.layer.borderColor = [[UIColor lightGrayColor] CGColor];;
+    
+    createBtn.layer.cornerRadius = 6;
   
     [super viewWillAppear:YES];
 }
