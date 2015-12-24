@@ -8,6 +8,7 @@
 #import "StringUtil.h"
 #import "AppDelegate.h"
 #import "Reachability.h"
+#import "TWMessageBarManager.h"
 
 
 #define kOFFSET_FOR_KEYBOARD 0.65
@@ -173,8 +174,8 @@
 }
 
 - (void)nextTextField:(UIBarButtonItem *)sender {
-    NSLog(@"%ld",(long)sender.tag);
-        
+//    NSLog(@"%ld",(long)sender.tag);
+    
         if(sender.tag == 1){
             [txtOldPass resignFirstResponder];
             [txtNewPass becomeFirstResponder];
@@ -205,18 +206,13 @@
 }
 
 -(void)doSubmit{
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable){
-        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
+    [self checkNetworkReachability];
     [self.view endEditing:YES];
     [self setBusy:YES];
     
     NSString *params =[NSString stringWithFormat:@"{\"old_password\":\"%@\",\"new_password1\":\"%@\",\"new_password2\":\"%@\"}",[txtOldPass.text Trim],[txtNewPass.text Trim],[txtNewConfrmPass.text Trim]];
     
-    NSLog(@"%@",params);
+//    NSLog(@"%@",params);
     NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[params length]];
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",CHANGEPASSURL]];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
@@ -239,13 +235,13 @@
     //Call the Login Web services
     [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
         
-         if(error != nil){
-             NSLog(@"%@",error);
-         }
+//         if(error != nil){
+//             NSLog(@"%@",error);
+//         }
          if ([data length] > 0 && error == nil){
              NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
              if(JSONValue != nil){
-                 NSLog(@"%@",JSONValue);
+//                 NSLog(@"%@",JSONValue);
                  
                  if([JSONValue objectForKey:@"success"]){
                      [self showMessage:PASS_SUCCESS];
@@ -255,12 +251,12 @@
                  }
                  [self resetFields];
              } else {
-                 [self showMessage:SERVER_ERROR];
+                 [self showServerError];
              }
              [self setBusy:NO];
          } else {
              [self setBusy:NO];
-             [self showMessage:SERVER_ERROR];
+             [self showServerError];
          }
          [self setBusy:NO];
      }];
@@ -270,6 +266,27 @@
     txtNewPass.text = @"";
     txtNewConfrmPass.text = @"";
     txtOldPass.text = @"";
+}
+
+-(void)checkNetworkReachability{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    if(networkStatus == NotReachable) {
+        [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Network Error"
+                                                       description:NETWORK_UNAVAILABLE
+                                                              type:TWMessageBarMessageTypeError
+                                                          duration:6.0];
+        //        [self showMessage:NETWORK_UNAVAILABLE];
+        return;
+    }
+    
+}
+
+-(void)showServerError{
+    [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Server Error"
+                                                   description:SERVER_ERROR
+                                                          type:TWMessageBarMessageTypeError
+                                                      duration:4.0];
 }
 
 @end

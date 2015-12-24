@@ -31,7 +31,7 @@
     
     self.view.backgroundColor = [UIColor colorWithHue:1 saturation:1 brightness:0 alpha:0.95];
     [super viewDidLoad];
-    NSLog(@"%@",photoURL);
+//    NSLog(@"%@",photoURL);
     
    // UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(ClickImage:)];
    //[imageView addGestureRecognizer:tapGesture];
@@ -166,7 +166,7 @@
     //[imageView sizeToFit];
     [imageScrollView setContentSize:CGSizeMake(imageView.frame.size.width, imageView.frame.size.height)];
 
-    NSLog(@"%@",photoURL);
+//    NSLog(@"%@",photoURL);
     
     SetisFullView(YES);
     [AnimatedMethods zoomIn:self.view];

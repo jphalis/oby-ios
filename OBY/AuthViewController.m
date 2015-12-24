@@ -1,9 +1,9 @@
 //
-//  ViewController.m
+//  AuthViewController.m
 //  OBY
 //
 
-#import "ViewController.h"
+#import "AuthViewController.h"
 #import "ForgotViewController.h"
 #import "UIViewControllerAdditions.h"
 #import "StringUtil.h"
@@ -14,12 +14,14 @@
 #import "Reachability.h"
 //#import "SVWebViewController.h"
 #import "SVModalWebViewController.h"
+#import "TWMessageBarManager.h"
 
 
 #define kOFFSET_FOR_KEYBOARD 0.65
 
 
-@interface ViewController ()<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>{
+@interface AuthViewController ()<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>{
+    
     __weak IBOutlet UILabel *pageTitle;
     __weak IBOutlet UIView *viewLogin;
     __weak IBOutlet UIView *viewSignUp;
@@ -28,7 +30,7 @@
     __weak IBOutlet NSLayoutConstraint *consSignupX;
     __weak IBOutlet NSLayoutConstraint *consLoginX;
     
-      //Signup Txtfields
+    //Signup Txtfields
     __weak IBOutlet UITextField *txtSignupVerifyPass;
     __weak IBOutlet UITextField *txtSignupPass;
     __weak IBOutlet UITextField *txtSignupUsrName;
@@ -47,7 +49,7 @@
 
 @end
 
-@implementation ViewController
+@implementation AuthViewController
 
 - (void)viewDidLoad {
     //[self pushingView:NO];
@@ -244,7 +246,7 @@
 
 
 - (void)nextTextField:(UIBarButtonItem *)sender {
-    NSLog(@"%ld",(long)sender.tag);
+//    NSLog(@"%ld",(long)sender.tag);
     
     if(viewLogin.hidden == NO){
         if (txtLoginUsrName){
@@ -299,22 +301,10 @@
 }
 
 - (IBAction)doSignIn:(id)sender{
-    /*
-    CutomTabViewController *cutomTabViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"CutomTabViewController"];
-    [self.navigationController pushViewController:cutomTabViewController animated:YES];
-    return;
-     */
-    
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable) {
-        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
+    [self checkNetworkReachability];
     
     if ([self validateFields] == YES){
         [self doLogin];
-       // NSLog(@"Successfully");
     }
 }
 
@@ -327,7 +317,6 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         NSString *params = [NSString stringWithFormat:@"username=%@&password=%@",[txtLoginUsrName.text Trim],[txtLoginPass.text Trim]];
-        NSLog(@"Login Params : %@",params);
         
         NSMutableData *bodyData = [[NSMutableData alloc] initWithData:[params dataUsingEncoding:NSUTF8StringEncoding]];
         NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[bodyData length]];
@@ -344,34 +333,32 @@
         //NSOperationQueue *queue = [[NSOperationQueue alloc] init];
         
         //Call the Login Web services
-        [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-         {
-             dispatch_async(dispatch_get_main_queue(),
-                            ^{
-                                [self setBusy:NO];
-                                
-                                if ([data length] > 0 && error == nil){
-                                    NSDictionary * JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-                                    NSLog(@"JSONValue %@",JSONValue);
-                                    
-                                    if([[JSONValue objectForKey:@"userid"]integerValue]>0){
-                                        SetUserName([JSONValue objectForKey:@"user"]);
-                                        SetUserID([[JSONValue objectForKey:@"userid"]integerValue]);
-                                        SetUserToken([JSONValue objectForKey:@"token"]);
-                                        SetUserActive([[JSONValue objectForKey:@"userid"]integerValue]);
-                                        SetUserPassword([txtLoginPass.text Trim]);
-                                        [self performSelectorInBackground:@selector(getProfileDetails) withObject:nil];
+        [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+            
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 [self setBusy:NO];
 
-                                        [self pushingView:YES];
-                                    } else {
-                                        [self showMessage:LOGIN_ERROR];
-                                    }
-                                    
-                                } else {
-                                    [self showMessage:SERVER_ERROR];
-                                    [self setBusy:NO];
-                                }
-                            });
+                 if ([data length] > 0 && error == nil){
+                     NSDictionary * JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+//                     NSLog(@"JSONValue %@",JSONValue);
+                     
+                     if([[JSONValue objectForKey:@"userid"]integerValue]>0){
+                         SetUserName([JSONValue objectForKey:@"user"]);
+                         SetUserID([[JSONValue objectForKey:@"userid"]integerValue]);
+                         SetUserToken([JSONValue objectForKey:@"token"]);
+                         SetUserActive([[JSONValue objectForKey:@"userid"]integerValue]);
+                         SetUserPassword([txtLoginPass.text Trim]);
+                         [self performSelectorInBackground:@selector(getProfileDetails) withObject:nil];
+
+                         [self pushingView:YES];
+                     } else {
+                         [self showMessage:LOGIN_ERROR];
+                     }
+                 } else {
+                     [self showServerError];
+                     [self setBusy:NO];
+                 }
+             });
          }];
     });
 }
@@ -394,7 +381,7 @@
     
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
          if(error != nil){
-             NSLog(@"%@",error);
+//             NSLog(@"%@",error);
              [self setBusy:NO];
          }
          if ([data length] > 0 && error == nil){
@@ -441,18 +428,12 @@
     
     if ([self validateFields] == YES){
         [self doRegister];
-        //NSLog(@"Successfully");
     }
 }
 
 - (IBAction)onTermsClick:(id)sender{
     if([sender tag] == 22){
-        Reachability *reachability = [Reachability reachabilityForInternetConnection];
-        NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-        if(networkStatus == NotReachable){
-            [self showMessage:NETWORK_UNAVAILABLE];
-            return;
-        }
+        [self checkNetworkReachability];
         
         // Opens TERMSURL in a modal view
         SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithAddress:[NSString stringWithFormat:@"%@",TERMSURL]];
@@ -461,12 +442,7 @@
         // Opens TERMSURL in Safari
         // [[UIApplication sharedApplication]openURL:[NSURL URLWithString:TERMSURL]];
     } else {
-        Reachability *reachability = [Reachability reachabilityForInternetConnection];
-        NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-        if(networkStatus == NotReachable) {
-            [self showMessage:NETWORK_UNAVAILABLE];
-            return;
-        }
+        [self checkNetworkReachability];
         
         // Opens PRIVACYURL in a modal view
         SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithAddress:[NSString stringWithFormat:@"%@",PRIVACYURL]];
@@ -478,12 +454,7 @@
 }
 
 -(void)doRegister{
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable) {
-        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
+    [self checkNetworkReachability];
     [self.view endEditing:YES];
     [self setBusy:YES];
     
@@ -491,22 +462,21 @@
     
     NSString *params = [NSString stringWithFormat:@"{\"username\":\"%@\",\"email\":\"%@\",\"password\":\"%@\"}",usname,[txtSignupEmail.text Trim],[txtSignupPass.text Trim]];
     
-    NSLog(@"%@",params);
+//    NSLog(@"%@",params);
     NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[params length]];
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",SIGNUPURL]];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setTimeoutInterval:60];
-    
     [urlRequest setHTTPMethod:@"POST"];
     
-     NSString *authStr = [NSString stringWithFormat:@"%@:%@", @"cutesaro", @"malliga"];
-    // NSData *authData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
-    //NSString *authValue = [NSString stringWithFormat:@"Basic %@", [authData base64Encoding]];
-    NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *base64String = [plainData base64EncodedStringWithOptions:0];
-    NSString *authValue =[NSString stringWithFormat:@"Basic %@", base64String];
+//    NSString *authStr = [NSString stringWithFormat:@"%@:%@", @"jphalis", @"Hockey18"];
+//    NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
+//    NSString *base64String = [plainData base64EncodedStringWithOptions:0];
+//    NSString *authValue =[NSString stringWithFormat:@"Basic %@", base64String];
+    //NSString *authValue = [NSString stringWithFormat:@"Basic %@", [plainData base64Encoding]];
     
-    [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
+//    [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
+    [urlRequest setValue:@"" forHTTPHeaderField:@"Authorization"];
     [urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     // [urlRequest setValue:@"multipart/form-data" forHTTPHeaderField:@"enctype"];
@@ -515,13 +485,13 @@
     //Call the Login Web services
     [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
      {
-         if(error != nil){
-             NSLog(@"%@",error);
-         }
+//         if(error != nil){
+//             NSLog(@"%@",error);
+//         }
          if ([data length] > 0 && error == nil){
              NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
              if(JSONValue != nil){
-                 NSLog(@"Jsonvalue=%@",JSONValue);
+//                 NSLog(@"Jsonvalue=%@",JSONValue);
                  
                  if([[JSONValue allKeys]count] > 1){
                      
@@ -544,16 +514,16 @@
                      } else if([[[JSONValue allKeys]objectAtIndex:0]isEqualToString:@"email"]) {
                          [self showMessage:EMAIL_EXISTS_ANOTHER_USER];
                      } else {
-                         [self showMessage:SERVER_ERROR];
+                         [self showServerError];
                      }
                  }
              } else {
-                 [self showMessage:SERVER_ERROR];
+                 [self showServerError];
              }
             [self setBusy:NO];
          } else {
             [self setBusy:NO];
-             [self showMessage:SERVER_ERROR];
+             [self showServerError];
          }
          [self setBusy:NO];
      }];
@@ -617,6 +587,27 @@
         }
         return YES;
     }
+}
+
+-(void)checkNetworkReachability{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    if(networkStatus == NotReachable) {
+        [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Network Error"
+                                                       description:NETWORK_UNAVAILABLE
+                                                              type:TWMessageBarMessageTypeError
+                                                          duration:6.0];
+        //        [self showMessage:NETWORK_UNAVAILABLE];
+        return;
+    }
+
+}
+
+-(void)showServerError{
+    [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Server Error"
+                                                   description:SERVER_ERROR
+                                                          type:TWMessageBarMessageTypeError
+                                                      duration:4.0];
 }
 
 @end

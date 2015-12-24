@@ -14,6 +14,7 @@
 #import "AnimatedMethods.h"
 #import "CustomButton.h"
 #import "ProfileViewController.h"
+#import "TWMessageBarManager.h"
 
 
 @interface NotificationViewController ()<PhotoViewControllerDelegate>{
@@ -81,12 +82,7 @@
 }
 
 -(void)getNotificDetails:(NSString *)requestURL{
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable) {
-        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
+    [self checkNetworkReachability];
     
      [appDelegate showHUDAddedToView:self.view message:@""];
     //[self setBusy:YES];
@@ -96,7 +92,7 @@
                                                              timeoutInterval:60];
     
     NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
-    NSLog(@"auth string =%@",authStr);
+//    NSLog(@"auth string =%@",authStr);
     
     NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
@@ -106,7 +102,7 @@
     
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
          if(error != nil){
-             NSLog(@"%@",error);
+//             NSLog(@"%@",error);
              [appDelegate hideHUDForView2:self.view];
              //[self setBusy:NO];
          }
@@ -186,12 +182,12 @@
              } else {
                  [appDelegate hideHUDForView2:self.view];
                  //[self setBusy:NO];
-                 [self showMessage:SERVER_ERROR];
+                 [self showServerError];
              }
          } else {
              [appDelegate hideHUDForView2:self.view];
              //[self setBusy:NO];
-             [self showMessage:SERVER_ERROR];
+             [self showServerError];
          }
      }];
 }
@@ -227,7 +223,7 @@
     } else {
         cell.txtNotification.textColor = [UIColor blackColor];
     }
-    NSLog(@"SenderURL: %@",notificationClass.sender_profile_picture);
+//    NSLog(@"SenderURL: %@",notificationClass.sender_profile_picture);
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapResponse:)];
     singleTap.numberOfTapsRequired = 1;
@@ -254,22 +250,17 @@
     NSIndexPath *indexPath = [tblVW indexPathForRowAtPoint:p];
     
     if (indexPath == nil){
-        NSLog(@"couldn't find index path");
+//        NSLog(@"couldn't find index path");
     } else {
         NotificationClass *notificationClass = [arrNotification objectAtIndex:indexPath.row];
-        NSLog(@"%@",notificationClass.target_url);
+//        NSLog(@"%@",notificationClass.target_url);
         
-        Reachability *reachability = [Reachability reachabilityForInternetConnection];
-        NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-        if(networkStatus == NotReachable) {
-            [self showMessage:NETWORK_UNAVAILABLE];
-            return;
-        }
+        [self checkNetworkReachability];
         
         if([notificationClass.target_photo isEqualToString:@""]){
             return;
         } else {
-            NSLog(@"target photo;; %@",notificationClass.target_photo);
+//            NSLog(@"target photo;; %@",notificationClass.target_photo);
             photoViewController.photoURL = notificationClass.target_photo;
             photoViewController.view.frame = appDelegate.window.frame;
             [self.view addSubview:photoViewController.view];
@@ -281,19 +272,14 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NotificationClass *notificationClass = [arrNotification objectAtIndex:indexPath.row];
-    NSLog(@"%@",notificationClass.target_url);
+//    NSLog(@"%@",notificationClass.target_url);
     
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable) {
-        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
+    [self checkNetworkReachability];
    
     if([notificationClass.target_photo isEqualToString:@""]){
         return;
     } else {
-        NSLog(@"target photo;; %@",notificationClass.target_photo);
+//        NSLog(@"target photo;; %@",notificationClass.target_photo);
         photoViewController.photoURL = notificationClass.target_photo;
         photoViewController.view.frame = appDelegate.window.frame;
         [self.view addSubview:photoViewController.view];
@@ -322,5 +308,26 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+-(void)checkNetworkReachability{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    if(networkStatus == NotReachable) {
+        [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Network Error"
+                                                       description:NETWORK_UNAVAILABLE
+                                                              type:TWMessageBarMessageTypeError
+                                                          duration:6.0];
+        //        [self showMessage:NETWORK_UNAVAILABLE];
+        return;
+    }
+    
+}
+
+-(void)showServerError{
+    [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Server Error"
+                                                   description:SERVER_ERROR
+                                                          type:TWMessageBarMessageTypeError
+                                                      duration:4.0];
+}
 
 @end

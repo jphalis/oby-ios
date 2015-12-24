@@ -99,7 +99,7 @@ enum{
                                                                  timeoutInterval:60];
     
         NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
-        NSLog(@"auth string =%@",authStr);
+//        NSLog(@"auth string =%@",authStr);
     
         NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
         NSString *base64String = [plainData base64EncodedStringWithOptions:0];
@@ -108,9 +108,9 @@ enum{
         [_request setHTTPMethod:@"GET"];
     
         [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-            if(error != nil){
-                NSLog(@"%@",error);
-            }
+//            if(error != nil){
+//                NSLog(@"%@",error);
+//            }
             if ([data length] > 0 && error == nil){
                 NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
              

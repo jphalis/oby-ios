@@ -7,6 +7,7 @@
 #import "Message.h"
 #import "StringUtil.h"
 #import "Reachability.h"
+#import "TWMessageBarManager.h"
 
 
 @interface ForgotViewController (){
@@ -23,8 +24,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    UISwipeGestureRecognizer *viewRight=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
-    viewRight.direction=UISwipeGestureRecognizerDirectionRight;
+    UISwipeGestureRecognizer *viewRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
+    viewRight.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:viewRight];
 }
 
@@ -87,24 +88,15 @@
 }
 
 -(void)clearFileds{
-    txtEmail.text=@"";
+    txtEmail.text = @"";
 }
 
 -(void)doSubmit{
-    Reachability *reachability=[Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus=[reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable) {
-        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
-    
+    [self checkNetworkReachability];
     [self.view endEditing:YES];
     [self setBusy:YES];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
         NSString *params = [NSString stringWithFormat:@"email=%@",[txtEmail.text Trim]];
-        NSLog(@"Login Params : %@",params);
-        
         NSMutableData *bodyData = [[NSMutableData alloc] initWithData:[params dataUsingEncoding:NSUTF8StringEncoding]];
         NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[bodyData length]];
         
@@ -121,33 +113,51 @@
         
         //Call the Login Web services
         [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-             dispatch_async(dispatch_get_main_queue(),
-                            ^{
-                                [self setBusy:NO];
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 [self setBusy:NO];
                                 
-                                if ([data length] > 0 && error == nil){
-                                    NSDictionary * JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-                                    
-                                    NSLog(@"JSONValue %@",JSONValue);
-                                    if([JSONValue isKindOfClass:[NSDictionary class]]){
-                                        
-                                        if([[JSONValue objectForKey:@"success"]isEqualToString:@"Password reset e-mail has been sent."]){
-                                             [self showMessage:PASS_SENT];
-                                        }else{
-                                            [self showMessage:PASS_FAILURE];
-                                        }
-                                        [self clearFileds];
-                                        
-                                    }else{
-                                        [self showMessage:SERVER_ERROR];
-                                    }
-                                }else{
-                                    [self showMessage:SERVER_ERROR];
-                                    [self setBusy:NO];
-                                }
-                            });
-         }];
+                 if ([data length] > 0 && error == nil){
+                     NSDictionary * JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+
+//                    NSLog(@"JSONValue %@",JSONValue);
+                     if([JSONValue isKindOfClass:[NSDictionary class]]){
+                         if([[JSONValue objectForKey:@"success"]isEqualToString:@"Password reset e-mail has been sent."]){
+                             [self showMessage:PASS_SENT];
+                         } else {
+                             [self showMessage:PASS_FAILURE];
+                         }
+                         [self clearFileds];
+                     } else {
+                         [self showServerError];
+                     }
+                 } else {
+                     [self showServerError];
+                     [self setBusy:NO];
+                 }
+             });
+        }];
     });
+}
+
+-(void)checkNetworkReachability{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    if(networkStatus == NotReachable) {
+        [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Network Error"
+                                                       description:NETWORK_UNAVAILABLE
+                                                              type:TWMessageBarMessageTypeError
+                                                          duration:6.0];
+        //        [self showMessage:NETWORK_UNAVAILABLE];
+        return;
+    }
+    
+}
+
+-(void)showServerError{
+    [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Server Error"
+                                                   description:SERVER_ERROR
+                                                          type:TWMessageBarMessageTypeError
+                                                      duration:4.0];
 }
 
 @end

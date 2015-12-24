@@ -20,7 +20,7 @@
 @implementation ChoosePhotoViewController
 
 - (void)viewDidLoad {
-    arrOptions=[[NSMutableArray alloc]initWithObjects:@"Photo Gallery",@"All Photos", nil];
+    arrOptions = [[NSMutableArray alloc]initWithObjects:@"Photo Gallery",@"All Photos", nil];
     
    // [self showCustomPicker];
     
@@ -67,26 +67,24 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:MyIdentifier];
     }
-    
-    cell.textLabel.text =[arrOptions objectAtIndex:indexPath.row];
-    
+    cell.textLabel.text = [arrOptions objectAtIndex:indexPath.row];
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(indexPath.row==1){
+    if(indexPath.row == 1){
         [self showCustomPicker];
-    }else{
+    } else {
         [self ShowImagePickerForType:UIImagePickerControllerSourceTypeSavedPhotosAlbum];
     }
 }
 
 -(void)ShowImagePickerForType:(int)type{
-    UIImagePickerController *picker=[[UIImagePickerController alloc]init];
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
     [self ResetNavigationColor:picker];
-    picker.sourceType=type;
-    picker.delegate=self;
-    //picker.allowsEditing=YES;
+    picker.sourceType = type;
+    picker.delegate = self;
+    //picker.allowsEditing = YES;
     [self presentViewController:picker animated:NO completion:nil];
 }
 
@@ -94,7 +92,7 @@
     //Set appareance.
     NSDictionary *dictionary;
     
-        dictionary=[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont fontWithName:@"Rockwell" size:20.0], NSFontAttributeName, nil];
+        dictionary = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont fontWithName:@"Rockwell" size:20.0], NSFontAttributeName, nil];
    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     UIColor *lightBlue = [UIColor colorWithPatternImage:[UIImage imageNamed:@"header.png"]];
@@ -107,7 +105,7 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
 
-    NSLog(@"info=%@",info);
+//    NSLog(@"info=%@",info);
     UIImage *originalImage, *editedImage, *imageToSave;
     editedImage = (UIImage *) [info objectForKey:UIImagePickerControllerEditedImage];
     originalImage = (UIImage *) [info objectForKey:
@@ -167,21 +165,22 @@
                 UIImage *image = [UIImage imageWithCGImage:imageRef];
                 if (imageRef){
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        if(count==0){
+                        if(count == 0){
                             [self.delegate selectImage:image];
                             [self.navigationController popViewControllerAnimated:NO];
                            
                            // [imgView setImage:image];
                         }
-                        if(count==1){
+                        if(count == 1){
                             // [imageView2 setImage:image];
                         }
-                        if(count==2){
+                        if(count == 2){
                             // [imageView3 setImage:image];
                         }
                     });
                 } // Valid Image URL
             } failureBlock:^(NSError *error) {
+                
             }];
             count++;
         } // All Images I got

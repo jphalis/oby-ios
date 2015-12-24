@@ -7,7 +7,7 @@
 #import "UIViewControllerAdditions.h"
 #import "defs.h"
 #import "MBProgressHUD.h"
-#import "ViewController.h"
+#import "AuthViewController.h"
 
 
 MBProgressHUD *hud;
@@ -177,7 +177,7 @@ MBProgressHUD *hud;
 
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
     UINavigationController *navController = [storyboard instantiateViewControllerWithIdentifier:@"NavigationControllerOBY"];
-    ViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"ViewController"];
+    AuthViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"AuthViewController"];
     navController.viewControllers = @[vc];
     [self.window setRootViewController:navController];
 }

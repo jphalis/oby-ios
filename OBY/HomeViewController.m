@@ -22,6 +22,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Reachability.h"
 #import "SupportViewController.h"
+#import "TWMessageBarManager.h"
 #import <KiipSDK/KiipSDK.h>
 
 
@@ -120,7 +121,7 @@
     
     NSIndexPath *indexPath = [collectionVWHome indexPathForItemAtPoint:p];
     if (indexPath == nil){
-        NSLog(@"couldn't find index path");
+//        NSLog(@"couldn't find index path");
     } else {
         [self collectionView:collectionVWHome didSelectItemAtIndexPath:indexPath];
     }
@@ -131,7 +132,7 @@
         
     NSIndexPath *indexPath = [collectionVWHome indexPathForItemAtPoint:p];
     if (indexPath == nil){
-        NSLog(@"couldn't find index path");
+//        NSLog(@"couldn't find index path");
     } else {
         static int i = 0;
         i++;
@@ -160,7 +161,7 @@
     
     NSIndexPath *indexPath = [collectionVWHome indexPathForItemAtPoint:p];
     if (indexPath == nil){
-        NSLog(@"couldn't find index path");
+//        NSLog(@"couldn't find index path");
     } else {
         PhotoClass *photoClass;
         
@@ -308,14 +309,7 @@
 }
 
 -(void)getCategoryDeatils:(NSString *)subCategoryURL{
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable){
-        [refreshControl endRefreshing];
-        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
-    
+    [self checkNetworkReachability];
     [appDelegate showHUDAddedToView:self.view message:@""];
    
     //[self setBusy:YES];
@@ -333,13 +327,13 @@
 
     //[_request setValue:[NSString stringWithFormat:@"Token %@",GetUserToken] forHTTPHeaderField:@"Authorization"];
     
-    NSLog(@"%@",GetUserToken);
+//    NSLog(@"%@",GetUserToken);
     
     [_request setHTTPMethod:@"GET"];
     
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
          if(error != nil){
-             NSLog(@"%@",error);
+//             NSLog(@"%@",error);
               [appDelegate hideHUDForView2:self.view];
              //[self setBusy:NO];
          }
@@ -494,30 +488,25 @@
                      [refreshControl endRefreshing];
                      [appDelegate hideHUDForView2:self.view];
                      //[self setBusy:NO];
-                     [self showMessage:SERVER_ERROR];
+                     [self showServerError];
                  }
              } else {
                  [refreshControl endRefreshing];
                  [appDelegate hideHUDForView2:self.view];
                  //[self setBusy:NO];
-                 [self showMessage:SERVER_ERROR];
+                 [self showServerError];
              }
          } else {
              [refreshControl endRefreshing];
              [appDelegate hideHUDForView2:self.view];
              //[self setBusy:NO];
-             [self showMessage:SERVER_ERROR];
+             [self showServerError];
          }
      }];
 }
 
 -(void)getSupportList{
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable){
-        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
+    [self checkNetworkReachability];
     NSString *urlString = [NSString stringWithFormat:@"%@%@/",PROFILEURL,GetUserName];
     NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                              timeoutInterval:60];
@@ -534,7 +523,7 @@
     
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
          if(error != nil){
-             NSLog(@"%@",error);
+//             NSLog(@"%@",error);
              [self setBusy:NO];
          }
          if([data length] > 0 && error == nil){
@@ -570,27 +559,19 @@
                  [self setBusy:NO];
              } else {
                  [self setBusy:NO];
-                 [self showMessage:SERVER_ERROR];
+                 [self showServerError];
              }
          } else {
              [self setBusy:NO];
-             [self showMessage:SERVER_ERROR];
+             [self showServerError];
          }
      }];
 }
 
 // NSURLConnection Delegates
 -(void)getHomePageDetails{
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable){
-        [refreshControl endRefreshing];
-        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
-    
-   // [self setBusy:YES];
-     [appDelegate showHUDAddedToView:self.view message:@""];
+    [self checkNetworkReachability];
+    [appDelegate showHUDAddedToView:self.view message:@""];
     //[appDelegate hideHUDForView2:self.view];
     
     NSString *urlString = [NSString stringWithFormat:@"%@",HOMEPAGEURL];
@@ -606,20 +587,20 @@
     
     //[_request setValue:[NSString stringWithFormat:@"Token %@",GetUserToken] forHTTPHeaderField:@"Authorization"];
 
-    NSLog(@"%@",GetUserToken);
+//    NSLog(@"%@",GetUserToken);
     
     [_request setHTTPMethod:@"GET"];
     
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
          if(error != nil){
-             NSLog(@"%@",error);
+//             NSLog(@"%@",error);
             // [self setBusy:NO];
              [appDelegate hideHUDForView2:self.view];
          }
          if ([data length] > 0 && error == nil){
              NSArray *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             // NSLog(@"%@",JSONValue);
-             NSLog(@"Images count: %lu",(unsigned long)[JSONValue count]);
+//             NSLog(@"Images count: %lu",(unsigned long)[JSONValue count]);
              
              if([JSONValue isKindOfClass:[NSArray class]]){
                  if( appDelegate.arrPhotos.count > 0){
@@ -674,8 +655,8 @@
                          }
 
                          for(int j = 0; j < arrLiker.count; j++){
-                             NSMutableDictionary *dictFollowerInfo=[[NSMutableDictionary alloc]init];
-                             NSDictionary *dictUserDetail=[arrLiker objectAtIndex:j];
+                             NSMutableDictionary *dictFollowerInfo = [[NSMutableDictionary alloc]init];
+                             NSDictionary *dictUserDetail = [arrLiker objectAtIndex:j];
                   
                              if([dictUserDetail objectForKey:@"profile_picture"] == [NSNull null]){
                                  [dictFollowerInfo setObject:@"" forKey:@"user__profile_picture"];
@@ -764,13 +745,13 @@
                  [refreshControl endRefreshing];
                  //[self setBusy:NO];
                  [appDelegate hideHUDForView2:self.view];
-                  [self showMessage:SERVER_ERROR];
+                  [self showServerError];
              }
          } else {
              [refreshControl endRefreshing];
              //[self setBusy:NO];
              [appDelegate hideHUDForView2:self.view];
-             [self showMessage:SERVER_ERROR];
+             [self showServerError];
          }
      }];
 }
@@ -881,7 +862,6 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     CollectionViewCellimage *currentCell = (CollectionViewCellimage *)[collectionView cellForItemAtIndexPath:indexPath];
     if(currentCell.imgView.image == nil){
-        NSLog(@"cont tab");
         return;
     }
 
@@ -980,12 +960,7 @@
         photoClass = [appDelegate.arrPhotos objectAtIndex:sender.tag];
     }
     
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable) {
-        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
+    [self checkNetworkReachability];
     
     int likecount = (int)[photoClass.like_count integerValue];
     if(photoClass.isLike){
@@ -1030,7 +1005,8 @@
     currentCell.lblLikes.text = [NSString stringWithFormat:@"%@",photoClass.like_count];
     
     [self doLike:photoClass selectCell:currentCell];
-    NSLog(@"Like click");
+
+//    NSLog(@"Like click");
 }
 
 -(void)doLike:(PhotoClass *)photoClass selectCell:(CollectionViewCellimage *)selectCell{
@@ -1053,9 +1029,9 @@
     
     //Call the Login Web services
     [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-         if(error != nil){
-             NSLog(@"%@",error);
-         }
+//         if(error != nil){
+//             NSLog(@"%@",error);
+//         }
          if ([data length] > 0 && error == nil){
              NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
              if(JSONValue != nil){
@@ -1128,20 +1104,20 @@
         [_request setHTTPMethod:@"GET"];
         
         [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-            if(error != nil){
-                NSLog(@"%@",error);
-            }
+//            if(error != nil){
+//                NSLog(@"%@",error);
+//            }
             if ([data length] > 0 && error == nil){
                 NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
                 NSString *rewardResult = [JSONValue objectForKey:@"deserves_reward"];
                 if([rewardResult boolValue] == YES){
                     [[Kiip sharedInstance] saveMoment:@"putting others before yourself!" withCompletionHandler:^(KPPoptart *poptart, NSError *error){
                         if (error){
-                            NSLog(@"Something's wrong");
+//                            NSLog(@"Something's wrong");
                             // handle with an Alert dialog.
                         }
                         if (poptart){
-                            NSLog(@"Successful moment save. Showing reward.");
+//                            NSLog(@"Successful moment save. Showing reward.");
                             [poptart show];
                             
                             NSString *urlString = [NSString stringWithFormat:@"%@",REWARDREDEEMEDURL];
@@ -1158,13 +1134,34 @@
                             }];
                         }
                         if (!poptart){
-                            NSLog(@"Successful moment save, but no reward available.");
+//                            NSLog(@"Successful moment save, but no reward available.");
                         }
                     }];
                 }
             }
         }];
     });
+}
+
+-(void)checkNetworkReachability{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    if(networkStatus == NotReachable) {
+        [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Network Error"
+                                                       description:NETWORK_UNAVAILABLE
+                                                              type:TWMessageBarMessageTypeError
+                                                          duration:6.0];
+        //        [self showMessage:NETWORK_UNAVAILABLE];
+        return;
+    }
+    
+}
+
+-(void)showServerError{
+    [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Server Error"
+                                                   description:SERVER_ERROR
+                                                          type:TWMessageBarMessageTypeError
+                                                      duration:4.0];
 }
 
 @end

@@ -14,6 +14,7 @@
 #import "ChoosePhotoViewController.h"
 #import "UIView+RNActivityView.h"
 #import "Reachability.h"
+#import "TWMessageBarManager.h"
 
 
 #define kOFFSET_FOR_KEYBOARD 0.65
@@ -179,7 +180,7 @@
     
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
          if(error != nil){
-             NSLog(@"%@",error);
+//             NSLog(@"%@",error);
              [self setBusy:NO];
          }
          if ([data length] > 0 && error == nil){
@@ -188,7 +189,7 @@
              if([JSONValue isKindOfClass:[NSDictionary class]]){
                  if([JSONValue allKeys].count == 1 && [JSONValue objectForKey:@"detail"]){
                      [self setBusy:NO];
-                     [self showMessage:SERVER_ERROR];
+                     [self showServerError];
                      return;
                  }
                  if([JSONValue objectForKey:@"username"] == [NSNull null]){
@@ -248,11 +249,11 @@
                  [self setBusy:NO];
              } else {
                  [self setBusy:NO];
-                 [self showMessage:SERVER_ERROR];
+                 [self showServerError];
              }
          } else {
              [self setBusy:NO];
-             [self showMessage:SERVER_ERROR];
+             [self showServerError];
          }
      }];
 }
@@ -548,13 +549,7 @@
 }
 
 -(void)doUpdate{
-    Reachability *reachability=[Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus=[reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable){
-        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
-    
+    [self checkNetworkReachability];
     [self.view endEditing:YES];
     [self setBusy:YES];
     
@@ -650,7 +645,7 @@
              NSDictionary * JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
 //             NSString *strResponse = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
              
-            NSLog(@"json value=%@",JSONValue);
+//            NSLog(@"json value=%@",JSONValue);
              // NSLog(@"Response=%@",strResponse);
              if([JSONValue isKindOfClass:[NSDictionary class]]){
                  if([JSONValue allKeys].count > 5){
@@ -678,11 +673,11 @@
                      [self showMessage:@"This is not a valid gender choice"];
                  }
              } else {
-                 [self showMessage:SERVER_ERROR];
+                 [self showServerError];
              }
          } else {
              [self setBusy:NO];
-             [self showMessage:SERVER_ERROR];
+             [self showServerError];
          }
          [self setBusy:NO];
      }];
@@ -712,11 +707,11 @@
 
 // optional delegate methods
 - (void)actionSheet:(IBActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex {
-    NSLog(@"Will dismiss with button index %ld", (long)buttonIndex);
+//    NSLog(@"Will dismiss with button index %ld", (long)buttonIndex);
 }
 
 - (void)actionSheet:(IBActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    NSLog(@"Dismissed with button index %ld", (long)buttonIndex);
+//    NSLog(@"Dismissed with button index %ld", (long)buttonIndex);
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -735,7 +730,7 @@
         case 1: {
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 [self ShowImagePickerForType:UIImagePickerControllerSourceTypePhotoLibrary];
-                // [self launchImagePickerViewController                 ];
+                // [self launchImagePickerViewController];
             }];
         }
             break;
@@ -754,7 +749,7 @@
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    NSLog(@"info=%@",info);
+//    NSLog(@"info=%@",info);
     UIImage *originalImage, *editedImage, *imageToSave;
     editedImage = (UIImage *) [info objectForKey:UIImagePickerControllerEditedImage];
     originalImage = (UIImage *) [info objectForKey:
@@ -787,6 +782,27 @@
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     //[[UIApplication sharedApplication] setStatusBarHidden:NO];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)checkNetworkReachability{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    if(networkStatus == NotReachable) {
+        [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Network Error"
+                                                       description:NETWORK_UNAVAILABLE
+                                                              type:TWMessageBarMessageTypeError
+                                                          duration:6.0];
+        //        [self showMessage:NETWORK_UNAVAILABLE];
+        return;
+    }
+    
+}
+
+-(void)showServerError{
+    [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Server Error"
+                                                   description:SERVER_ERROR
+                                                          type:TWMessageBarMessageTypeError
+                                                      duration:4.0];
 }
 
 @end

@@ -10,6 +10,7 @@
 #import "ProfileViewController.h"
 #import "TableViewCellNotification.h"
 #import "Reachability.h"
+#import "TWMessageBarManager.h"
 
 
 @interface SearchViewController (){
@@ -86,12 +87,7 @@
 }
 
 -(void)doSearch{
-    Reachability *reachability=[Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus=[reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable) {
-        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
+    [self checkNetworkReachability];
     
     //[txtSearch resignFirstResponder];
    
@@ -111,7 +107,7 @@
     
     //[_request setValue:[NSString stringWithFormat:@"Token %@",GetUserToken] forHTTPHeaderField:@"Authorization"];
     
-    NSLog(@"%@",GetUserToken);
+//    NSLog(@"%@",GetUserToken);
     
     [_request setHTTPMethod:@"GET"];
     
@@ -130,7 +126,7 @@
                 
                 if([JSONValue isKindOfClass:[NSNull class]]){
                     [self setBusy:NO];
-                    [self showMessage:SERVER_ERROR];
+                    [self showServerError];
                     return;
                 }
                 if([JSONValue isKindOfClass:[NSArray class]]){
@@ -185,12 +181,11 @@
                         }
                         
                         lastCount = (int)[txtSearch.text length];
-                        lblWaterMark.text=@"";
+                        lblWaterMark.text = @"";
                         [self setBusy:NO];
                         [self showUsers];
                     } else {
                         isEmpty = YES;
-                        // [self showMessage:@"No results found"];
                         lblWaterMark.text = @"No results found";
                         [self showUsers];
                         //[tblVW reloadData];
@@ -198,7 +193,7 @@
                     }
                 } else {
                     [self setBusy:NO];
-                    [self showMessage:SERVER_ERROR];
+                    [self showServerError];
                 }
             });
         }
@@ -206,11 +201,11 @@
 }
 
 -(void)showUsers{
-    if([txtSearch.text length]==0){
-        if(arrUsers.count>0){
+    if([txtSearch.text length] == 0){
+        if(arrUsers.count > 0){
             [arrUsers removeAllObjects];
         }
-        lblWaterMark.text=@"";
+        lblWaterMark.text = @"";
     }
     
     [self doFilter];
@@ -332,6 +327,27 @@
     [tblVW reloadData];
   //  NSLog(@"%@",arrUsers);
    // NSLog(@"%@",arrFileterUsers);
+}
+
+-(void)checkNetworkReachability{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    if(networkStatus == NotReachable) {
+        [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Network Error"
+                                                       description:NETWORK_UNAVAILABLE
+                                                              type:TWMessageBarMessageTypeError
+                                                          duration:6.0];
+        //        [self showMessage:NETWORK_UNAVAILABLE];
+        return;
+    }
+    
+}
+
+-(void)showServerError{
+    [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Server Error"
+                                                   description:SERVER_ERROR
+                                                          type:TWMessageBarMessageTypeError
+                                                      duration:4.0];
 }
 
 @end

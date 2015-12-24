@@ -68,7 +68,7 @@ enum{
 - (IBAction)onClick:(id)sender {
     switch ([sender tag]) {
         case BTNCREATE:{
-            NSLog(@"create");
+//            NSLog(@"create");
             
             CreateViewController *createViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"CreateViewController"];
             [self.navigationController pushViewController:createViewController animated:YES];
@@ -78,7 +78,7 @@ enum{
             SearchViewController *SearchViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"SearchViewController"];
             [self.navigationController pushViewController:SearchViewController animated:YES];
             
-            NSLog(@"search");
+//            NSLog(@"search");
         }
             break;
         case BTNPROFILE:{
@@ -87,14 +87,14 @@ enum{
            
             profileViewController.userURL=[NSString stringWithFormat:@"%@%@/",PROFILEURL,GetUserName];
             [self.navigationController pushViewController:profileViewController animated:YES];
-            NSLog(@"Profile");
+//            NSLog(@"Profile");
         }
             break;
         case BTNSETTING:{
             SettingViewController *settingViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"SettingViewController"];
             [self.navigationController pushViewController:settingViewController animated:YES];
             
-            NSLog(@"setting");
+//            NSLog(@"setting");
         }
             break;
             

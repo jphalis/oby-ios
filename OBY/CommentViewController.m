@@ -10,6 +10,7 @@
 #import "NSString+Additions.h"
 #import "StringUtil.h"
 #import "Reachability.h"
+#import "TWMessageBarManager.h"
 #import <KiipSDK/KiipSDK.h>
 
 
@@ -90,13 +91,7 @@
 }
 
 -(void)doSubmit{
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable) {
-        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
-    
+    [self checkNetworkReachability];
     [self.view endEditing:YES];
     [self setBusy:YES];
     
@@ -107,7 +102,7 @@
     
     NSString *params = [NSString stringWithFormat:@"{\"user\":\"%@\",\"parent\":\"%@\",\"photo\":\"%@\",\"text\":\"%@\"}",user,parent,photo,text];
     
-    NSLog(@"%@",params);
+//    NSLog(@"%@",params);
     NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[params length]];
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",COMMENTURL]];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
@@ -129,14 +124,18 @@
     
     //Call the Login Web services
     [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-         if(error != nil){
-             NSLog(@"%@",error);
-         }
+//         if(error != nil){
+//             NSLog(@"%@",error);
+//         }
          if ([data length] > 0 && error == nil){
              NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
              if(JSONValue != nil){
-                 NSLog(@"%@",JSONValue);
-                 [self showMessage:@"Thank you for the comment!"];
+//                 NSLog(@"%@",JSONValue);
+                 [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"New comment"
+                                                                description:@"Thank you for the comment!"
+                                                                       type:TWMessageBarMessageTypeSuccess
+                                                                   duration:3.0];
+//                 [self showMessage:@"Thank you for the comment!"];
                  int commentCount = (int)[photoClass.comment_count integerValue];
                  commentCount++;
                  photoClass.comment_count = [NSString stringWithFormat:@"%d",commentCount];
@@ -166,13 +165,21 @@
                  
                  [self doRewardCheck];
              } else {
-                 [self showMessage:SERVER_ERROR];
+                 [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Server Error"
+                                                                description:SERVER_ERROR
+                                                                       type:TWMessageBarMessageTypeError
+                                                                   duration:4.0];
+//                 [self showMessage:SERVER_ERROR];
                  [self.delegate setComment:-1 commentCount:@""];
              }
              [self setBusy:NO];
          } else {
              [self setBusy:NO];
-             [self showMessage:SERVER_ERROR];
+             [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Server Error"
+                                                            description:SERVER_ERROR
+                                                                   type:TWMessageBarMessageTypeError
+                                                               duration:4.0];
+//             [self showMessage:SERVER_ERROR];
              [self.delegate setComment:-1 commentCount:@""];
              
          }
@@ -198,20 +205,20 @@
         [_request setHTTPMethod:@"GET"];
         
         [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-            if(error != nil){
-                NSLog(@"%@",error);
-            }
+//            if(error != nil){
+//                NSLog(@"%@",error);
+//            }
             if ([data length] > 0 && error == nil){
                 NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
                 NSString *rewardResult = [JSONValue objectForKey:@"deserves_reward"];
                 if([rewardResult boolValue] == YES){
                     [[Kiip sharedInstance] saveMoment:@"putting others before yourself!" withCompletionHandler:^(KPPoptart *poptart, NSError *error){
                         if (error){
-                            NSLog(@"Something's wrong");
+//                            NSLog(@"Something's wrong");
                             // handle with an Alert dialog.
                         }
                         if (poptart){
-                            NSLog(@"Successful moment save. Showing reward.");
+//                            NSLog(@"Successful moment save. Showing reward.");
                             [poptart show];
                             
                             NSString *urlString = [NSString stringWithFormat:@"%@",REWARDREDEEMEDURL];
@@ -228,13 +235,27 @@
                             }];
                         }
                         if (!poptart){
-                            NSLog(@"Successful moment save, but no reward available.");
+//                            NSLog(@"Successful moment save, but no reward available.");
                         }
                     }];
                 }
             }
         }];
     });
+}
+
+-(void)checkNetworkReachability{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    if(networkStatus == NotReachable) {
+        [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Network Error"
+                                                       description:NETWORK_UNAVAILABLE
+                                                              type:TWMessageBarMessageTypeError
+                                                          duration:6.0];
+        //        [self showMessage:NETWORK_UNAVAILABLE];
+        return;
+    }
+    
 }
 
 @end
