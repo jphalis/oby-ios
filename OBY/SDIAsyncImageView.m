@@ -181,37 +181,32 @@ static SDIAsyncImageDownloadManager *_defaultManger=nil;
     return _defaultManger;
 }
 
--(void)LoadCatche
-{
-    dicCatache=[[NSMutableDictionary alloc] init];
-    dicCatacheDelegate=[[NSMutableDictionary alloc] init];
-    dicCatacheUDID=[[NSMutableDictionary alloc] init];
+-(void)LoadCatche{
+    dicCatache = [[NSMutableDictionary alloc] init];
+    dicCatacheDelegate = [[NSMutableDictionary alloc] init];
+    dicCatacheUDID = [[NSMutableDictionary alloc] init];
 }
 
--(void)DownloadImageForURL:(NSString *)strURL withDelegate:(id<SDIAsyncImageDownloaderDelegate>)delegate andUDID:(NSString *)stUDIDKey
-{
-    if(strURL!=nil && strURL.length>0 && stUDIDKey!=nil)
-    {
-       
+-(void)DownloadImageForURL:(NSString *)strURL withDelegate:(id<SDIAsyncImageDownloaderDelegate>)delegate andUDID:(NSString *)stUDIDKey{
+    
+    if(strURL != nil && strURL.length > 0 && stUDIDKey!=nil){
         NSString *lpath =[strURL lastPathComponent];
         [dicCatacheDelegate setValue:lpath forKey:stUDIDKey];
         [dicCatache setValue:delegate forKey:stUDIDKey];
         [dicCatacheUDID setValue:stUDIDKey forKey:lpath];
         
-        SDIAsyncImageDownloader *downloader =[[SDIAsyncImageDownloader alloc]init];
+        SDIAsyncImageDownloader *downloader = [[SDIAsyncImageDownloader alloc]init];
         [downloader setDelegate:self];
         [downloader DownloadImageForURL:strURL];
         //[arrDownloader addObject:downloader];
 #ifdef WITHOUT_ARC
         [downloader release];
 #endif
-        downloader=nil;
-        
+        downloader = nil;
     }
 }
 
--(void)RemoveDelegate:(id<SDIAsyncImageDownloaderDelegate>)delegate
-{
+-(void)RemoveDelegate:(id<SDIAsyncImageDownloaderDelegate>)delegate{
     
 }
 /*
@@ -250,74 +245,60 @@ static SDIAsyncImageDownloadManager *_defaultManger=nil;
 @end
 
 @implementation SDIAsyncImageView (cache)
-static NSString *strCachePath=nil;
 
-+(NSString *)GetCatchPath
-{
-    if(strCachePath==nil)
-    {
+static NSString *strCachePath = nil;
+
++(NSString *)GetCatchPath{
+    if(strCachePath == nil){
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
         NSString *documentsDirectory = [paths objectAtIndex:0];
 
         NSString *categoryFolder =[NSString stringWithFormat:@"%@/BridgeImages",documentsDirectory];
-        BOOL isDir=YES;
-        if(![[NSFileManager defaultManager] fileExistsAtPath:categoryFolder isDirectory:&isDir])
-        {
-            NSError *error=nil;
+        BOOL isDir = YES;
+        if(![[NSFileManager defaultManager] fileExistsAtPath:categoryFolder isDirectory:&isDir]){
+            NSError *error = nil;
             [[NSFileManager defaultManager]createDirectoryAtPath:categoryFolder withIntermediateDirectories:YES attributes:nil error:&error];
         }
-        
-        strCachePath=[[NSString alloc]initWithFormat:@"%@",categoryFolder];
+        strCachePath = [[NSString alloc]initWithFormat:@"%@",categoryFolder];
         
     }
     return strCachePath;
 }
 #pragma mark - Image Utilities
 
--(UIImage*)GetImageFromStroage:(NSString *)strID
-{
-    NSString *file=[NSString stringWithFormat:@"%@/%@",strCachePath,strID];
+-(UIImage*)GetImageFromStroage:(NSString *)strID{
+    NSString *file = [NSString stringWithFormat:@"%@/%@",strCachePath,strID];
     NSLog(@"FILE: %@",file);
-    NSFileManager *fmg=[NSFileManager defaultManager];
-    if([fmg fileExistsAtPath:file])
-    {
-        UIImage*img =[UIImage imageWithContentsOfFile:file];
+    NSFileManager *fmg = [NSFileManager defaultManager];
+    if([fmg fileExistsAtPath:file]){
+        UIImage*img = [UIImage imageWithContentsOfFile:file];
         return img;
     }
     return nil;
 }
 
--(UIImage *)GetImageFromStroageForURL:(NSString *)strURL
-{
-    
-    NSFileManager *fmg=[NSFileManager defaultManager];
-    if([fmg fileExistsAtPath:strURL])
-    {
-        UIImage*img =[UIImage imageWithContentsOfFile:strURL];
+-(UIImage *)GetImageFromStroageForURL:(NSString *)strURL{
+    NSFileManager *fmg = [NSFileManager defaultManager];
+    if([fmg fileExistsAtPath:strURL]){
+        UIImage *img = [UIImage imageWithContentsOfFile:strURL];
         return img;
     }
     return nil;
 }
 
--(UIImage *)GetImageFromStroageForLiveURL:(NSString *)strURL
-{
+-(UIImage *)GetImageFromStroageForLiveURL:(NSString *)strURL{
+    NSString *lpath = [strURL lastPathComponent];
+    NSString *path = [NSString stringWithFormat:@"%@/%@",strCachePath,lpath];
     
-    NSString *lpath =[strURL lastPathComponent];
-    
-    NSString * path =[NSString stringWithFormat:@"%@/%@",strCachePath,lpath];
-    
-    NSFileManager *fm=[NSFileManager defaultManager];
-    if([fm fileExistsAtPath:path])
-    {
-        UIImage*img =[UIImage imageWithContentsOfFile:strLocalFilePath];
+    NSFileManager *fm = [NSFileManager defaultManager];
+    if([fm fileExistsAtPath:path]){
+        UIImage *img = [UIImage imageWithContentsOfFile:strLocalFilePath];
         return img;
     }
-    
     return nil;
 }
 
 @end
-
 
 @implementation SDIAsyncImageView
 @synthesize shouldMask;
@@ -326,19 +307,17 @@ static NSString *strCachePath=nil;
 @synthesize intRow;
 @synthesize type;
 @synthesize cell;
--(id)initWithFrame:(CGRect)frame
-{
-    self=[super initWithFrame:frame];
-    if(self)
-    {
-        
-        arrDownloader=[[NSMutableArray alloc]init];
-  }
+
+-(id)initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
+    if(self){
+        arrDownloader = [[NSMutableArray alloc]init];
+    }
     return self;
 }
 
-- (void)dealloc {
-    delegate=nil;
+- (void)dealloc{
+    delegate = nil;
     Destroy(strLocalFilePath);
     [self CancelAllDownload];
 #ifdef WITHOUT_ARC
@@ -346,18 +325,16 @@ static NSString *strCachePath=nil;
 #endif
 }
 
--(void)removeFromSuperview
-{
-      delegate=nil;
+-(void)removeFromSuperview{
+      delegate = nil;
     [self CancelAllDownload];
-    isRemoved=YES;
+    isRemoved = YES;
     //XLog(@"Removed from superView ");
 }
 
--(void)AdddGestureWithDelegate:(id<SDIAsyncImageViewDelegate>)delegate
-{
+-(void)AdddGestureWithDelegate:(id<SDIAsyncImageViewDelegate>)delegate{
     self.userInteractionEnabled = YES;
-    self.delegate=delegate;
+    self.delegate = delegate;
     UITapGestureRecognizer *oneTouch=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(OneTouchHandeler)];
    [oneTouch setNumberOfTouchesRequired:1];
     [oneTouch setNumberOfTapsRequired:1];
@@ -367,326 +344,256 @@ static NSString *strCachePath=nil;
 #endif
 }
 
--(void)OneTouchHandeler
-{
-    if(delegate && [delegate respondsToSelector:@selector(asynchImageViewDidTapped:)])
-    {
+-(void)OneTouchHandeler{
+    if(delegate && [delegate respondsToSelector:@selector(asynchImageViewDidTapped:)]){
         [delegate asynchImageViewDidTapped:self];
     }
 }
 
--(void)CancelAllDownload
-{
-   // NSLog(@"Cancel Downloader count:%d",[arrDownloader count]);
-    for(int i =0; i<[arrDownloader count];i++)
-    {
-        SDIAsyncImageDownloader *downloder =[arrDownloader objectAtIndex:i];
-        downloder.delegate=nil;
+-(void)CancelAllDownload{
+    for(int i = 0; i < [arrDownloader count]; i++){
+        SDIAsyncImageDownloader *downloder = [arrDownloader objectAtIndex:i];
+        downloder.delegate = nil;
         [downloder CancelDownload];
         [arrDownloader removeObjectAtIndex:i];
-        i=0;
+        i = 0;
     }
 }
 
-- (void)Setimage:(UIImage*)image withTempImageURL:(NSString*)tempImage
-{
-   
+- (void)Setimage:(UIImage*)image withTempImageURL:(NSString*)tempImage{
    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        if(image==nil)
-        {
+        if(image == nil){
               dispatch_async(dispatch_get_main_queue(), ^{
-            self.image=[UIImage imageNamed:tempImage];
+                  self.image = [UIImage imageNamed:tempImage];
               });
             return;
         }
         
-        if(shouldMask)
-        {
-            
-            UIImage *mask =[UIImage imageNamed:@"mask_bg"];
-            UIImage *mgMasked =[self maskImage:image withMask:mask];
-            mgMasked=[mgMasked ScaleImageToRect:mgMasked displaySize:self.frame.size];
-            //self.image=mgMasked;
+        if(shouldMask){
+            UIImage *mask = [UIImage imageNamed:@"mask_bg"];
+            UIImage *mgMasked = [self maskImage:image withMask:mask];
+            mgMasked = [mgMasked ScaleImageToRect:mgMasked displaySize:self.frame.size];
             dispatch_async(dispatch_get_main_queue(), ^{
-               // 
-                  self.image=mgMasked;
+                self.image = mgMasked;
                 [self setNeedsDisplay];
             });
-            //[self setImage:mgMasked];
-            //[self performSelectorOnMainThread:@selector(setImage:) withObject:mgMasked waitUntilDone:YES];
-        }
-        else
-        {
-            //self.contentMode=UIViewContentModeScaleAspectFit;
+        } else {
               dispatch_async(dispatch_get_main_queue(), ^{
-            [self setImage:image];
+                  [self setImage:image];
               });
         }
     });
 }
 
 - (void)loadImageFromURL:(NSString*)imageURL withTempImage:(NSString*)tempImage {
-    
     //myQueue=[del GetDownloadQueue];
     
-    if(imageURL!=nil && imageURL.length>0)
-    {
-        self.backgroundColor=[UIColor clearColor];
-        NSString *lpath =[imageURL lastPathComponent];
+    if(imageURL != nil && imageURL.length > 0){
+        self.backgroundColor = [UIColor clearColor];
+        NSString *lpath = [imageURL lastPathComponent];
         Destroy(strLocalFilePath);
-        strLocalFilePath =[[NSString alloc] initWithFormat:@"%@/%@",[SDIAsyncImageView GetCatchPath],lpath];
-        NSFileManager *fm=[NSFileManager defaultManager];
+        strLocalFilePath = [[NSString alloc] initWithFormat:@"%@/%@",[SDIAsyncImageView GetCatchPath],lpath];
+        NSFileManager *fm = [NSFileManager defaultManager];
         
-        if(![fm fileExistsAtPath:strLocalFilePath])
-        {
-            if(tempImage!=nil)
-            {
-              //tws
-                // self.contentMode=UIViewContentModeScaleAspectFit;
-              self.contentMode=UIViewContentModeScaleAspectFill;
-               // self.contentMode=UIViewContentModeCenter;
-                self.image=[UIImage imageNamed:tempImage];
-            }
-            else
-            {
-                self.image=nil;
+        if(![fm fileExistsAtPath:strLocalFilePath]){
+            if(tempImage != nil){
+              self.contentMode = UIViewContentModeScaleAspectFill;
+                self.image = [UIImage imageNamed:tempImage];
+            } else {
+                self.image = nil;
             }
            [self.superview setNeedsDisplay];
             
-            if(shouldShowLoader==YES)
-            {
+            if(shouldShowLoader == YES){
                 [self performSelectorOnMainThread:@selector(HidProgressBar) withObject:nil waitUntilDone:YES];
                 HUD = [MBProgressHUD showHUDAddedTo:self animated:YES];
-                HUD.mode=MBProgressHUDModeIndeterminate;
+                HUD.mode = MBProgressHUDModeIndeterminate;
                // HUD.mode=MBProgressHUDModeAnnularDeterminate;
                 
             }
-            //NSLog(@"New download :%@",imageURL);
             
-            SDIAsyncImageDownloader *downloader =[[SDIAsyncImageDownloader alloc]init];
+            SDIAsyncImageDownloader *downloader = [[SDIAsyncImageDownloader alloc]init];
             [downloader setDelegate:self];
             [downloader DownloadImageForURL:imageURL];
             [arrDownloader addObject:downloader];
             #ifdef WITHOUT_ARC
-            [downloader release];
-#endif
-        }
-        else
-        {
-            self.backgroundColor=[UIColor clearColor];
+                [downloader release];
+            #endif
+        } else {
+            self.backgroundColor = [UIColor clearColor];
            // dispatch_async(myQueue, ^{
                 
-                if(shouldMask)
-                {
-                    UIImage *mg=[UIImage imageWithContentsOfFile:strLocalFilePath];
-                    UIImage *mask =[UIImage imageNamed:@"mask_bg@2x.png"];
-                    UIImage *mgMasked =[self maskImage:mg withMask:mask];
+                if(shouldMask){
+                    UIImage *mg = [UIImage imageWithContentsOfFile:strLocalFilePath];
+                    UIImage *mask = [UIImage imageNamed:@"mask_bg@2x.png"];
+                    UIImage *mgMasked = [self maskImage:mg withMask:mask];
                     
                     //mgMasked=[mgMasked ScaleImageToRect:mgMasked displaySize:self.frame.size];
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        self.image=mgMasked;
-
+                        self.image = mgMasked;
                         [self setNeedsDisplay];
                     });
                     //[self setImage:mgMasked];
                     //[self performSelectorOnMainThread:@selector(setImage:) withObject:mgMasked waitUntilDone:YES];
-                }
-                else
-                {
+                } else {
                    //self.contentMode=UIViewContentModeScaleToFill;
                     //self.contentMode=UIViewContentModeScaleAspectFit;
                     dispatch_async(dispatch_get_main_queue(), ^{
                         //NSLog(@"PATH:%@",strLocalFilePath);
                        // NSString *strpathing=@"/Users/sdi/Library/Developer/CoreSimulator/Devices/D53ECC1D-D72A-47A5-A32C-88D940CA2FAF/data/Containers/Data/Application/3E98DE99-4724-4E61-8E3C-E9F7890D95F2/Library/Caches/BridgeImages/1.png";/Volumes/DATA/Saravanan/Project/Casting/source/jul 1/Casting july 7.zip
-                        UIImage *mg =[self GetImageFromStroageForURL:strLocalFilePath];//strLocalFilePath
-                        if(mg!=nil)
-                        {
+                        UIImage *mg = [self GetImageFromStroageForURL:strLocalFilePath];//strLocalFilePath
+                        if(mg != nil){
                            //saravanan
                            //  self.contentMode=UIViewContentModeCenter;
                            // if(GetIsIpad==YES){
                                    // mg =[mg cropCenterAndScaleImageToSize:self.frame.size];
                             
-                            if(GetsFullView==YES){
-                                self.contentMode=UIViewContentModeScaleAspectFit;
+                            if(GetsFullView == YES){
+                                self.contentMode = UIViewContentModeScaleAspectFit;
                                 SetisFullView(NO);
-                            }else{
+                            } else {
                                 
-                               //mg =[mg cropCenterAndScaleImageToSize:self.frame.size];
-                             mg=[mg imageByScalingAndCroppingForSize:self.frame.size];
+                               //mg = [mg cropCenterAndScaleImageToSize:self.frame.size];
+                             mg = [mg imageByScalingAndCroppingForSize:self.frame.size];
                                
-                               // mg=[mg ScaleImageToRect:mg displaySize:self.frame.size];
-                                //self.contentMode=UIViewContentModeTop;
+                               // mg = [mg ScaleImageToRect:mg displaySize:self.frame.size];
+                                //self.contentMode = UIViewContentModeTop;
                                 
-                                  //  self.contentMode=UIViewContentModeScaleToFill;
+                                  //  self.contentMode = UIViewContentModeScaleToFill;
                             }
-                            
-                            self.image=mg;
+                            self.image = mg;
                             [self setNeedsDisplay];
-                        }
-                        else
-                        {
-                            NSLog(@"IMAG IS NILL");
+                        } else {
+                            NSLog(@"Img is nil");
                         }
                     });
                     
-                    //self.image =[UIImage imageWithContentsOfFile:strLocalFilePath];
+                    //self.image = [UIImage imageWithContentsOfFile:strLocalFilePath];
                 }
            // });
         }
-    }
-    else
-    {
-        if(tempImage!=nil)
-        {
+    } else {
+        if(tempImage != nil){
             // NSLog(@"Temp image loaded");
-            //self.contentMode=UIViewContentModeCenter;
-                self.contentMode=UIViewContentModeScaleToFill;
-            //self.contentMode=UIViewContentModeScaleAspectFit;
-            self.image=[UIImage imageNamed:tempImage];
+            //self.contentMode = UIViewContentModeCenter;
+                self.contentMode = UIViewContentModeScaleToFill;
+            //self.contentMode = UIViewContentModeScaleAspectFit;
+            self.image = [UIImage imageNamed:tempImage];
         }
-        //self.image=nil;
-        
+        //self.image = nil;
     }
 }
 
 - (void)loadImageFromURL:(NSString*)imageURL withthumbImage:(NSString*)thumbImage {
-    
     //myQueue=[del GetDownloadQueue];
     
-    if(imageURL!=nil && imageURL.length>0)
-    {
-        self.backgroundColor=[UIColor lightGrayColor];
-        NSString *lpath =[imageURL lastPathComponent];
+    if(imageURL != nil && imageURL.length > 0){
+        self.backgroundColor = [UIColor lightGrayColor];
+        NSString *lpath = [imageURL lastPathComponent];
         Destroy(strLocalFilePath);
-        strLocalFilePath =[[NSString alloc] initWithFormat:@"%@/%@",strCachePath,lpath];
-        NSFileManager *fm=[NSFileManager defaultManager];
+        strLocalFilePath = [[NSString alloc] initWithFormat:@"%@/%@",strCachePath,lpath];
+        NSFileManager *fm = [NSFileManager defaultManager];
      
-        if(![fm fileExistsAtPath:strLocalFilePath])
-        {
-            if(thumbImage!=nil)
-            {
-                //self.contentMode=UIViewContentModeCenter;
-                 NSString *lpath2 =[thumbImage lastPathComponent];
-                NSString *mgURL =[NSString stringWithFormat:@"%@/%@",strCachePath,lpath2];
-                self.image=[UIImage imageWithContentsOfFile:mgURL];
+        if(![fm fileExistsAtPath:strLocalFilePath]){
+            if(thumbImage != nil){
+                //self.contentMode = UIViewContentModeCenter;
+                 NSString *lpath2 = [thumbImage lastPathComponent];
+                NSString *mgURL = [NSString stringWithFormat:@"%@/%@",strCachePath,lpath2];
+                self.image = [UIImage imageWithContentsOfFile:mgURL];
             }
-            
-            if(shouldShowLoader==YES)
-            {
+            if(shouldShowLoader == YES){
                 [self performSelectorOnMainThread:@selector(HidProgressBar) withObject:nil waitUntilDone:YES];
                 HUD = [MBProgressHUD showHUDAddedTo:self animated:YES];
-              //  HUD.mode=MBProgressHUDModeAnnularDeterminate;
-                HUD.mode=MBProgressHUDModeIndeterminate;
+              //  HUD.mode = MBProgressHUDModeAnnularDeterminate;
+                HUD.mode = MBProgressHUDModeIndeterminate;
             }
            // NSLog(@"New download :%@",imageURL);
             
-            SDIAsyncImageDownloader *downloader =[[SDIAsyncImageDownloader alloc]init];
+            SDIAsyncImageDownloader *downloader = [[SDIAsyncImageDownloader alloc]init];
             [downloader setDelegate:self];
             [downloader DownloadImageForURL:imageURL];
-            if(arrDownloader==nil )
-                arrDownloader=[[NSMutableArray alloc]init];
+            if(arrDownloader == nil )
+                arrDownloader = [[NSMutableArray alloc]init];
             
             [arrDownloader addObject:downloader];
             //NSLog(@"Downloader count:%@",arrDownloader);
-             #ifdef WITHOUT_ARC
-            [downloader release];
-#endif
-        }
-        else
-        {
-            self.backgroundColor=[UIColor clearColor];
+            #ifdef WITHOUT_ARC
+                [downloader release];
+            #endif
+        } else {
+            self.backgroundColor = [UIColor clearColor];
             // dispatch_async(myQueue, ^{
             
-            if(shouldMask)
-            {
-                UIImage *mg=[UIImage imageWithContentsOfFile:strLocalFilePath];
-                UIImage *mask =[UIImage imageNamed:@"mask_bg@2x.png"];
-                UIImage *mgMasked =[self maskImage:mg withMask:mask];
-                mgMasked=[mgMasked ScaleImageToRect:mgMasked displaySize:self.frame.size];
+            if(shouldMask){
+                UIImage *mg = [UIImage imageWithContentsOfFile:strLocalFilePath];
+                UIImage *mask = [UIImage imageNamed:@"mask_bg@2x.png"];
+                UIImage *mgMasked = [self maskImage:mg withMask:mask];
+                mgMasked = [mgMasked ScaleImageToRect:mgMasked displaySize:self.frame.size];
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    self.image=mgMasked;
+                    self.image = mgMasked;
                     [self setNeedsDisplay];
                 });
                 //[self setImage:mgMasked];
                 //[self performSelectorOnMainThread:@selector(setImage:) withObject:mgMasked waitUntilDone:YES];
-            }
-            else
-            {
+            } else {
                 // self.contentMode=UIViewContentModeScaleToFill;
-                UIImage *mg =[self GetImageFromStroageForURL:strLocalFilePath];
+                UIImage *mg = [self GetImageFromStroageForURL:strLocalFilePath];
                 
-                self.image=mg;
-                //self.image =[UIImage imageWithContentsOfFile:strLocalFilePath];
+                self.image = mg;
+                //self.image = [UIImage imageWithContentsOfFile:strLocalFilePath];
             }
             // });
         }
-    }
-    else
-    {
-        if(thumbImage!=nil)
-        {
-            NSString *lpath2 =[thumbImage lastPathComponent];
-            NSString *mgURL =[NSString stringWithFormat:@"%@/%@",strCachePath,lpath2];
-            self.image=[UIImage imageWithContentsOfFile:mgURL];
+    } else {
+        if(thumbImage != nil){
+            NSString *lpath2 = [thumbImage lastPathComponent];
+            NSString *mgURL = [NSString stringWithFormat:@"%@/%@",strCachePath,lpath2];
+            self.image = [UIImage imageWithContentsOfFile:mgURL];
         }
     }
 }
 
--(void)RemoveHude
-{
+-(void)RemoveHude{
     
 }
 
 -(void) asyncConnection :(NSURLConnection *) connection
- didReceiveResponse:(NSURLResponse *) response
-{
-    if(shouldShowLoader==YES)
-    {
+ didReceiveResponse:(NSURLResponse *) response{
+
+    if(shouldShowLoader == YES){
         expectedLength = [response expectedContentLength];
         currentLength = 0;
-        //saro
         //HUD.mode = MBProgressHUDModeDeterminate;
     }
-    
     // NSLog(@"download response");
 }
 
 //the URL connection calls this repeatedly as data arrives
 - (void)asyncConnection:(NSURLConnection *)theConnection didReceiveData:(NSData *)incrementalData {
-	
-    currentLength +=incrementalData.length;
+    currentLength += incrementalData.length;
     //NSLog(@"download len:%d",incrementalData.length);
-    if(shouldShowLoader==YES && HUD!=nil)
-    {
+    if(shouldShowLoader == YES && HUD != nil){
         HUD.progress = currentLength / (float)expectedLength;
     }
 }
 
--(void)asyncImageDownloader:(SDIAsyncImageDownloader *)asimage didcompletedWithLocalURL:(NSString *)strURL
-{
+-(void)asyncImageDownloader:(SDIAsyncImageDownloader *)asimage didcompletedWithLocalURL:(NSString *)strURL{
     [self performSelectorOnMainThread:@selector(HidProgressBar) withObject:nil waitUntilDone:YES];
 	//Destroy(connection)
     //NSLog(@"%@=>%@",strLocalFilePath,strURL);
-    NSFileManager *defMngr=[NSFileManager defaultManager];
+//    NSFileManager *defMngr = [NSFileManager defaultManager];
   
-    if([strLocalFilePath isEqualToString:strURL])
-    {
-        //MQ_
-        if(delegate && [delegate respondsToSelector:@selector(asynchImageView:didCachedImage:)])
-        {
+    if([strLocalFilePath isEqualToString:strURL]){
+        if(delegate && [delegate respondsToSelector:@selector(asynchImageView:didCachedImage:)]){
             [delegate asynchImageView:self didCachedImage:strURL];
         }
         NSLog(@"Download URL:%@",strURL);
         self.autoresizingMask = ( UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight );
-        if(isRemoved==YES){NSLog(@"PREVENTING CRASH"); return;}
+        if(isRemoved == YES){NSLog(@"PREVENTING CRASH"); return;}
         [self UpdateImage:strURL];
-        
-       // _MQ
+    } else {
+         NSLog(@"Not found");
     }
-     else
-     {
-         NSLog(@"Not Found");
-     }
 }
 
 //the URL connection calls this once all the data has downloaded
@@ -703,69 +610,53 @@ static NSString *strCachePath=nil;
 	//NSLog(@"end");
 }
 
--(void)RemoveHud
-{
-    if(shouldShowLoader==YES)
-    {
-        shouldShowLoader=NO;
-        NSLog(@"Hud Removed");
+-(void)RemoveHud{
+    if(shouldShowLoader == YES){
+        shouldShowLoader = NO;
+        NSLog(@"Hud removed");
         [MBProgressHUD hideHUDForView:self animated:YES];
-        HUD=nil;
+        HUD = nil;
     }
 }
 
--(void)HidProgressBar
-{
-    if(shouldShowLoader==YES)
-    {
-        NSLog(@"Hud Removed");
+-(void)HidProgressBar{
+    if(shouldShowLoader == YES){
+        NSLog(@"Hud removed");
         [MBProgressHUD hideHUDForView:self animated:YES];
-        HUD=nil;
+        HUD = nil;
     }
 }
 
--(void)asyncconnection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
+-(void)asyncconnection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
    [self performSelectorOnMainThread:@selector(HidProgressBar) withObject:nil waitUntilDone:NO];
 }
 
--(void)UpdateImage:(NSString*)filename
-{
+-(void)UpdateImage:(NSString*)filename{
    //self.contentMode=UIViewContentModeScaleToFill;
-   // MQ_
-    if(isRemoved==YES){NSLog(@"PREVENTING CRASH"); return;}
+    if(isRemoved == YES){NSLog(@"PREVENTING CRASH"); return;}
     
-    self.backgroundColor=[UIColor clearColor];
-    if(shouldMask)
-    {
-        UIImage *mg=[UIImage imageWithContentsOfFile:filename];
-        UIImage *mask =[UIImage imageNamed:@"mask_bg"];
-        UIImage *mgMasked =[self maskImage:mg withMask:mask];
+    self.backgroundColor = [UIColor clearColor];
+    if(shouldMask){
+        UIImage *mg = [UIImage imageWithContentsOfFile:filename];
+        UIImage *mask = [UIImage imageNamed:@"mask_bg"];
+        UIImage *mgMasked = [self maskImage:mg withMask:mask];
         [self performSelectorOnMainThread:@selector(setImage:) withObject:mgMasked waitUntilDone:YES];
-    }
-    else
-    {
-        UIImage *mg =[UIImage imageWithContentsOfFile:filename];
+    } else {
+        UIImage *mg = [UIImage imageWithContentsOfFile:filename];
         
-        //saro change
-        if(GetsFullView==YES){
-            self.contentMode=UIViewContentModeScaleAspectFit;
+        if(GetsFullView == YES){
+            self.contentMode = UIViewContentModeScaleAspectFit;
             SetisFullView(NO);
-        }else{
-        mg=[mg imageByScalingAndCroppingForSize:self.frame.size];
-        self.contentMode=UIViewContentModeScaleToFill;
+        } else {
+            mg = [mg imageByScalingAndCroppingForSize:self.frame.size];
+            self.contentMode=UIViewContentModeScaleToFill;
         }
-        
         [self performSelectorOnMainThread:@selector(setImage:) withObject:mg waitUntilDone:YES];
     }
-    //_MQ
-    //XLog(@"image updated");
 }
 
 - (UIImage*) maskImage:(UIImage *)image withMask:(UIImage *)maskImage {
-    
     CGImageRef maskRef = maskImage.CGImage;
-    
     CGImageRef mask = CGImageMaskCreate(CGImageGetWidth(maskRef),
                                         CGImageGetHeight(maskRef),
                                         CGImageGetBitsPerComponent(maskRef),
@@ -786,7 +677,6 @@ static NSString *strCachePath=nil;
 /*
 //just in case you want to get the image directly, here it is in subviews
 - (UIImage*) image {
-	
 	return [self image];
 }
 

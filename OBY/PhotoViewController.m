@@ -13,6 +13,7 @@
 
 #define ZOOM_STEP 2.0
 
+
 @interface PhotoViewController ()<UIScrollViewDelegate>{
     AppDelegate *appDelegate;
     
@@ -26,13 +27,13 @@
 @synthesize photoURL;
 
 - (void)viewDidLoad {
-    appDelegate=[AppDelegate getDelegate];
+    appDelegate = [AppDelegate getDelegate];
     
-    self.view.backgroundColor=[UIColor colorWithHue:1 saturation:1 brightness:0 alpha:0.95];
+    self.view.backgroundColor = [UIColor colorWithHue:1 saturation:1 brightness:0 alpha:0.95];
     [super viewDidLoad];
     NSLog(@"%@",photoURL);
     
-   // UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(ClickImage:)];
+   // UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(ClickImage:)];
    //[imageView addGestureRecognizer:tapGesture];
     
     // Do any additional setup after loading the view.
@@ -54,7 +55,6 @@
     imageScrollView.decelerationRate = UIScrollViewDecelerationRateFast;
     
     //UITapGestureRecognizer set up
-
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
     UITapGestureRecognizer *twoFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTwoFingerTap:)];
     
@@ -65,20 +65,19 @@
     [imageView addGestureRecognizer:doubleTap];
     [imageView addGestureRecognizer:twoFingerTap];
     
-    UISwipeGestureRecognizer *viewDown=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeDown:)];
-    viewDown.direction=UISwipeGestureRecognizerDirectionDown;
-    
+    UISwipeGestureRecognizer *viewDown = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeDown:)];
+    viewDown.direction = UISwipeGestureRecognizerDirectionDown;
     [self.view addGestureRecognizer:viewDown];
 }
 
 -(void)swipeDown:(UISwipeGestureRecognizer *)gestureRecognizer{
-    CGRect toFrame=CGRectMake(0, +self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
+    CGRect toFrame = CGRectMake(0, +self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
     [self moveView:self.view fromFrame:self.view.frame toFrame:toFrame];
 }
 
 -(void)moveView:(UIView *)fromView fromFrame:(CGRect) fromFrame toFrame:(CGRect) toFrame{
     fromView.frame = fromFrame;
-    [UIView animateWithDuration:0.5
+    [UIView animateWithDuration:0.4
                           delay:0.0
                         options:UIViewAnimationOptionTransitionFlipFromTop
                      animations:^{
@@ -86,10 +85,10 @@
                          
                      }
                      completion:^(BOOL finished){
-                         CGRect newFrame=CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+                         CGRect newFrame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
                          
-                         self.view.frame=newFrame;
-                          [self.delegate removeImage];
+                         self.view.frame = newFrame;
+                         [self.delegate removeImage];
                         // NSLog(@"completion block");
                      }
      ];
@@ -106,7 +105,7 @@
 
 - (void)viewDidUnload {
     imageScrollView = nil;
-   imageView = nil;
+    imageView = nil;
 }
 
 #pragma mark UIScrollViewDelegate methods
@@ -124,13 +123,10 @@
     if (newScale > imageScrollView.maximumZoomScale){
         newScale = imageScrollView.minimumZoomScale;
         CGRect zoomRect = [self zoomRectForScale:newScale withCenter:[gestureRecognizer locationInView:gestureRecognizer.view]];
-        
         [imageScrollView zoomToRect:zoomRect animated:YES];
-    }
-    else{
+    } else {
         newScale = imageScrollView.maximumZoomScale;
         CGRect zoomRect = [self zoomRectForScale:newScale withCenter:[gestureRecognizer locationInView:gestureRecognizer.view]];
-        
         [imageScrollView zoomToRect:zoomRect animated:YES];
     }
 }
@@ -154,8 +150,8 @@
     zoomRect.size.width  = [imageScrollView frame].size.width  / scale;
     
     // choose an origin so as to get the right center.
-    zoomRect.origin.x    = center.x - (zoomRect.size.width  / 2.0);
-    zoomRect.origin.y    = center.y - (zoomRect.size.height / 2.0);
+    zoomRect.origin.x = center.x - (zoomRect.size.width  / 2.0);
+    zoomRect.origin.y = center.y - (zoomRect.size.height / 2.0);
     
     return zoomRect;
 }
@@ -178,7 +174,7 @@
     //[imageView loadImageFromURL:photoURL withTempImage:@""];
     SetIsImageView(YES);
   [imageView loadImageFromURL:photoURL withTempImage:@""];
-    imageView.shouldShowLoader=YES;
+    imageView.shouldShowLoader = YES;
     
     [super viewWillAppear:YES];
    // appDelegate.tabbar.tabView.hidden=YES;
@@ -191,7 +187,7 @@
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     SetIsImageView(NO);
-    imageView.image=nil;
+    imageView.image = nil;
     [self.delegate removeImage];
 }
 

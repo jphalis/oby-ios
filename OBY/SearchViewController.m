@@ -34,14 +34,14 @@
 @implementation SearchViewController
 
 - (void)viewDidLoad {
-    appDelegate=[AppDelegate getDelegate];
+    appDelegate = [AppDelegate getDelegate];
     
-    arrUsers=[[NSMutableArray alloc]init];
-    arrFileterUsers=[[NSArray alloc]init];
+    arrUsers = [[NSMutableArray alloc]init];
+    arrFileterUsers = [[NSArray alloc]init];
     
     [super viewDidLoad];
-    UISwipeGestureRecognizer *viewRight=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
-    viewRight.direction=UISwipeGestureRecognizerDirectionRight;
+    UISwipeGestureRecognizer *viewRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
+    viewRight.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:viewRight];
 }
 
@@ -55,8 +55,8 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    appDelegate.tabbar.tabView.hidden=YES;
-    lblWaterMark.text=@"";
+    appDelegate.tabbar.tabView.hidden = YES;
+    lblWaterMark.text = @"";
     [super viewWillAppear:YES];
 }
 
@@ -72,14 +72,14 @@
 
 - (IBAction)onSearch:(id)sender {
     if([self validateFields]){
-        isEmpty=NO;
+        isEmpty = NO;
         [self doSearch];
     }
 }
 
 -(BOOL)validateFields{
     if([[txtSearch.text Trim]isEmpty]){
-        [self showMessage:@"Please enter search text"];
+        [self showMessage:@"Please enter text in the search bar"];
         return NO;
     }
     return YES;
@@ -100,13 +100,13 @@
     }
     
     [self setBusy:YES];
-    NSString *urlString=[NSString stringWithFormat:@"%@%@",SEARCH_URL,txtSearch.text];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",SEARCH_URL,txtSearch.text];
     NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                              timeoutInterval:60];
     NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
     NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
-    NSString *authValue =[NSString stringWithFormat:@"Basic %@", base64String];
+    NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
     [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
     
     //[_request setValue:[NSString stringWithFormat:@"Token %@",GetUserToken] forHTTPHeaderField:@"Authorization"];
@@ -117,13 +117,13 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSURLResponse *response = nil;
-        NSError *error=nil;
+        NSError *error = nil;
         NSData *data = [NSURLConnection sendSynchronousRequest:_request returningResponse:&response error:&error];
         
         if ( error == nil && [data length] > 0){
             dispatch_sync(dispatch_get_main_queue(), ^{
                 
-                NSArray *JSONValue=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                NSArray *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
                 //NSString *strResponse = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
                 
                // NSLog(@"jsno value=%@",JSONValue);
@@ -133,15 +133,14 @@
                     [self showMessage:SERVER_ERROR];
                     return;
                 }
-                
                 if([JSONValue isKindOfClass:[NSArray class]]){
                     [self setBusy:NO];
-                    if( arrUsers.count>0){
+                    
+                    if( arrUsers.count > 0){
                         [arrUsers removeAllObjects];
                     }
-                    
-                    if([JSONValue count]>0){
-                        for (int i=0; i<JSONValue.count; i++) {
+                    if([JSONValue count] > 0){
+                        for (int i = 0; i < JSONValue.count; i++) {
                             
                             NSMutableDictionary *dictResult;
                             // dictResult=[[NSMutableDictionary alloc]init];
@@ -152,18 +151,17 @@
                             
                             if([dictResult objectForKey:@"account_url"] == [NSNull null]){
                                 [dictSearch setValue:@"" forKey:@"account_url"];
-                            }else{
+                            } else {
                                 [dictSearch setValue:[dictResult objectForKey:@"account_url"] forKey:@"account_url"];
                             }
-                            
                             if([dictResult objectForKey:@"username"] == [NSNull null]){
                                 [dictSearch setValue:@"" forKey:@"username"];
-                            }else{
+                            } else {
                                 [dictSearch setValue:[dictResult objectForKey:@"username"] forKey:@"username"];
                             }
                             if([dictResult objectForKey:@"full_name"] == [NSNull null]){
                                 [dictSearch setValue:@"" forKey:@"full_name"];
-                            }else{
+                            } else {
                                 [dictSearch setValue:[dictResult objectForKey:@"full_name"] forKey:@"full_name"];
                             }
                             
@@ -179,7 +177,7 @@
                             
                             if([dictResult objectForKey:@"profile_picture"] == [NSNull null]){
                                 [dictSearch setValue:@"" forKey:@"profile_picture"];
-                            }else{
+                            } else {
                                 [dictSearch setValue:[dictResult objectForKey:@"profile_picture"] forKey:@"profile_picture"];
                             }
                             
@@ -190,15 +188,15 @@
                         lblWaterMark.text=@"";
                         [self setBusy:NO];
                         [self showUsers];
-                    }else{
-                        isEmpty=YES;
+                    } else {
+                        isEmpty = YES;
                         // [self showMessage:@"No results found"];
-                        lblWaterMark.text=@"No results found";
+                        lblWaterMark.text = @"No results found";
                         [self showUsers];
                         //[tblVW reloadData];
                         [self setBusy:NO];
                     }
-                }else{
+                } else {
                     [self setBusy:NO];
                     [self showMessage:SERVER_ERROR];
                 }
@@ -258,8 +256,9 @@
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell=[tblVW cellForRowAtIndexPath:indexPath];
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+//    UITableViewCell *cell = [tblVW cellForRowAtIndexPath:indexPath];
     
     [self.view endEditing:YES];
     
@@ -267,57 +266,53 @@
     //account_url
     NSMutableDictionary *dictUser;
     
-    if(isFilter==YES){
-        dictUser=[arrFileterUsers objectAtIndex:indexPath.row];
-    }else{
-        dictUser=[arrUsers objectAtIndex:indexPath.row];
+    if(isFilter == YES){
+        dictUser = [arrFileterUsers objectAtIndex:indexPath.row];
+    } else {
+        dictUser = [arrUsers objectAtIndex:indexPath.row];
     }
-    profileViewController.userURL=[dictUser objectForKey:@"account_url"];
+    profileViewController.userURL = [dictUser objectForKey:@"account_url"];
     [self.navigationController pushViewController:profileViewController animated:YES];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     [searchBar resignFirstResponder];
     if([self validateFields]){
-        isEmpty=NO;
+        isEmpty = NO;
         [self doSearch];
     }
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    if([searchText length]==0){
-        isFilter=NO;
-        if(arrUsers.count>0){
+    if([searchText length] == 0){
+        isFilter = NO;
+        if(arrUsers.count > 0){
             [arrUsers removeAllObjects];
         }
-    
-        isEmpty=NO;
-        lblWaterMark.text=@"";
+        isEmpty = NO;
+        lblWaterMark.text = @"";
         [tblVW reloadData];
-    }else{
-        if(searchText.length==1){
+    } else {
+        if(searchText.length == 1){
             [self doSearch];
-        }else{
+        } else {
             [self doFilter];
         }
     }
 }
 
 -(void)doFilter{
-    isFilter=YES;
-    arrFileterUsers=nil;
-    NSString *searchString=txtSearch.text;
+    isFilter = YES;
+    arrFileterUsers = nil;
+    NSString *searchString = txtSearch.text;
     
-    if([searchString length]==0){
-        
-        if(arrUsers.count>0){
+    if([searchString length] == 0){
+        if(arrUsers.count > 0){
             [arrUsers removeAllObjects];
         }
-        
-        isEmpty=NO;
-        lblWaterMark.text=@"";
+        isEmpty = NO;
+        lblWaterMark.text = @"";
         [tblVW reloadData];
-        
         return;
     }
     
@@ -327,12 +322,12 @@
     
    // NSLog(@"%@",searchString);
     
-    arrFileterUsers=[arrUsers filteredArrayUsingPredicate:predicate];
+    arrFileterUsers = [arrUsers filteredArrayUsingPredicate:predicate];
     
-    if(arrFileterUsers.count>0){
-        lblWaterMark.text=@"";
-    }else{
-        lblWaterMark.text=@"No result found";
+    if(arrFileterUsers.count > 0){
+        lblWaterMark.text = @"";
+    } else {
+        lblWaterMark.text = @"No results found";
     }
     [tblVW reloadData];
   //  NSLog(@"%@",arrUsers);

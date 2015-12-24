@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 47;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -159,6 +159,7 @@
 		BEE123061C08109100FCB60C /* form_format.png in Resources */ = {isa = PBXBuildFile; fileRef = BEE123051C08109100FCB60C /* form_format.png */; };
 		BEE990B71C08534C009F6C97 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEE990B61C08534C009F6C97 /* CommentViewController.m */; };
 		BEF41B651C0D5FE400BF957E /* likeselect.png in Resources */ = {isa = PBXBuildFile; fileRef = BEF41B641C0D5FE400BF957E /* likeselect.png */; };
+		D006BB3A1C2B8885005C7B1E /* ARDESTINE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D006BB391C2B8334005C7B1E /* ARDESTINE.ttf */; };
 		D0461F581C2766440024738F /* SVWebViewController.strings in Resources */ = {isa = PBXBuildFile; fileRef = D0461F391C2766440024738F /* SVWebViewController.strings */; };
 		D0461F591C2766440024738F /* SVModalWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0461F431C2766440024738F /* SVModalWebViewController.m */; };
 		D0461F5A1C2766440024738F /* SVWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D0461F441C2766440024738F /* SVWebViewController.bundle */; };
@@ -172,6 +173,14 @@
 		D0461F621C2766440024738F /* SVWebViewControllerActivitySafari.m in Sources */ = {isa = PBXBuildFile; fileRef = D0461F521C2766440024738F /* SVWebViewControllerActivitySafari.m */; };
 		D0461F631C2766440024738F /* SVWebViewControllerActivitySafari@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0461F531C2766440024738F /* SVWebViewControllerActivitySafari@2x.png */; };
 		D0461F641C2766440024738F /* SVWebViewControllerActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = D0461F551C2766440024738F /* SVWebViewControllerActivity.m */; };
+		D0461F661C2882420024738F /* KiipSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0461F651C2882420024738F /* KiipSDK.framework */; };
+		D0461F681C28838B0024738F /* KiipSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D0461F671C28838B0024738F /* KiipSDKResources.bundle */; };
+		D0C6C5081C288716002E5B5F /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C6C5021C2886DA002E5B5F /* CoreTelephony.framework */; };
+		D0C6C5091C28871C002E5B5F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C6C5041C2886E4002E5B5F /* QuartzCore.framework */; };
+		D0C6C50A1C288723002E5B5F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C6C5061C2886EF002E5B5F /* SystemConfiguration.framework */; };
+		D0C6C50C1C288729002E5B5F /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C6C50B1C288729002E5B5F /* AdSupport.framework */; };
+		D0C6C50E1C28872E002E5B5F /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C6C50D1C28872E002E5B5F /* PassKit.framework */; };
+		D0C6C5101C288739002E5B5F /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C6C50F1C288739002E5B5F /* MediaPlayer.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -431,6 +440,7 @@
 		BEE990B51C08534C009F6C97 /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
 		BEE990B61C08534C009F6C97 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
 		BEF41B641C0D5FE400BF957E /* likeselect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = likeselect.png; sourceTree = "<group>"; };
+		D006BB391C2B8334005C7B1E /* ARDESTINE.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ARDESTINE.ttf; sourceTree = "<group>"; };
 		D0461F3A1C2766440024738F /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
 		D0461F3B1C2766440024738F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
 		D0461F3C1C2766440024738F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
@@ -458,6 +468,15 @@
 		D0461F551C2766440024738F /* SVWebViewControllerActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebViewControllerActivity.m; sourceTree = "<group>"; };
 		D0461F561C2766440024738F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/SVWebViewController.strings"; sourceTree = "<group>"; };
 		D0461F571C2766440024738F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/SVWebViewController.strings"; sourceTree = "<group>"; };
+		D0461F651C2882420024738F /* KiipSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KiipSDK.framework; sourceTree = "<group>"; };
+		D0461F671C28838B0024738F /* KiipSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = KiipSDKResources.bundle; sourceTree = "<group>"; };
+		D0C6C5021C2886DA002E5B5F /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		D0C6C5041C2886E4002E5B5F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		D0C6C5061C2886EF002E5B5F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		D0C6C50B1C288729002E5B5F /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		D0C6C50D1C28872E002E5B5F /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
+		D0C6C50F1C288739002E5B5F /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		D0C6C5111C28C720002E5B5F /* OBY-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OBY-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -465,6 +484,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0C6C5101C288739002E5B5F /* MediaPlayer.framework in Frameworks */,
+				D0C6C50E1C28872E002E5B5F /* PassKit.framework in Frameworks */,
+				D0C6C50C1C288729002E5B5F /* AdSupport.framework in Frameworks */,
+				D0C6C50A1C288723002E5B5F /* SystemConfiguration.framework in Frameworks */,
+				D0C6C5091C28871C002E5B5F /* QuartzCore.framework in Frameworks */,
+				D0C6C5081C288716002E5B5F /* CoreTelephony.framework in Frameworks */,
+				D0461F661C2882420024738F /* KiipSDK.framework in Frameworks */,
 				BE54C1E41BFF1784001380A0 /* AssetsLibrary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -526,6 +552,7 @@
 				BEAD574A1BF4A23A00289E4E /* Default@2x.png */,
 				A5B6C3C41BE8E942004F295C /* Info.plist */,
 				A5B6C3C51BE8E942004F295C /* main.m */,
+				D0C6C5111C28C720002E5B5F /* OBY-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -601,7 +628,7 @@
 				BE446C8C1BF9A85A0048DAB4 /* CustomButton */,
 				BE20457E1BF5A87300288548 /* SDWebImage */,
 				BEAD57411BF48D2100289E4E /* Fonts */,
-				BEBD0E251BEDC23800A62198 /* HorizontalScrool */,
+				BEBD0E251BEDC23800A62198 /* HorizontalScroll */,
 				BE0300521BEB84420005183F /* AFHttp */,
 				BE03004A1BEB5F430005183F /* CustomActionSheet */,
 				BED44BDA1BEB0DF200A1330E /* Uiviewcontroledition */,
@@ -723,6 +750,14 @@
 		BE03007E1BEB89570005183F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D0C6C50F1C288739002E5B5F /* MediaPlayer.framework */,
+				D0C6C50D1C28872E002E5B5F /* PassKit.framework */,
+				D0C6C50B1C288729002E5B5F /* AdSupport.framework */,
+				D0C6C5061C2886EF002E5B5F /* SystemConfiguration.framework */,
+				D0C6C5041C2886E4002E5B5F /* QuartzCore.framework */,
+				D0C6C5021C2886DA002E5B5F /* CoreTelephony.framework */,
+				D0461F671C28838B0024738F /* KiipSDKResources.bundle */,
+				D0461F651C2882420024738F /* KiipSDK.framework */,
 				BE54C1E31BFF1784001380A0 /* AssetsLibrary.framework */,
 			);
 			name = Frameworks;
@@ -933,6 +968,7 @@
 		BEAD57411BF48D2100289E4E /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				D006BB391C2B8334005C7B1E /* ARDESTINE.ttf */,
 				BEAD57421BF48D3600289E4E /* GIBSON-BOLD.OTF */,
 				BEAD57431BF48D3600289E4E /* GIBSON-REGULAR.OTF */,
 				BEAD57441BF48D3600289E4E /* GIBSON-SEMIBOLD.OTF */,
@@ -957,7 +993,7 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		BEBD0E251BEDC23800A62198 /* HorizontalScrool */ = {
+		BEBD0E251BEDC23800A62198 /* HorizontalScroll */ = {
 			isa = PBXGroup;
 			children = (
 				BEBD0E261BEDC24600A62198 /* HTHorizontalSelectionList.h */,
@@ -965,7 +1001,7 @@
 				BEBD0E281BEDC24600A62198 /* HTHorizontalSelectionListScrollView.h */,
 				BEBD0E291BEDC24600A62198 /* HTHorizontalSelectionListScrollView.m */,
 			);
-			name = HorizontalScrool;
+			name = HorizontalScroll;
 			sourceTree = "<group>";
 		};
 		BECF7AD01C2297CD008627B9 /* CustomImagePicker */ = {
@@ -1107,7 +1143,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0640;
-				ORGANIZATIONNAME = "Mac Mini i7 #1";
+				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					A5B6C3BF1BE8E942004F295C = {
 						CreatedOnToolsVersion = 6.4;
@@ -1119,7 +1155,7 @@
 				};
 			};
 			buildConfigurationList = A5B6C3BB1BE8E942004F295C /* Build configuration list for PBXProject "OBY" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -1151,6 +1187,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D006BB3A1C2B8885005C7B1E /* ARDESTINE.ttf in Resources */,
 				BEA44D9A1BF319500024BF55 /* avatar_img.png in Resources */,
 				BE0300B71BEB900E0005183F /* 15.png in Resources */,
 				BE20463C1BF6189C00288548 /* sep.png in Resources */,
@@ -1222,6 +1259,7 @@
 				D0461F631C2766440024738F /* SVWebViewControllerActivitySafari@2x.png in Resources */,
 				D0461F5C1C2766440024738F /* SVWebViewControllerActivityChrome-iPad.png in Resources */,
 				BE1AC11B1C0C150400A3A4CD /* Image2.png in Resources */,
+				D0461F681C28838B0024738F /* KiipSDKResources.bundle in Resources */,
 				D0461F5F1C2766440024738F /* SVWebViewControllerActivityChrome@2x.png in Resources */,
 				BEB30E2F1BEC6416002EC0D8 /* miss_screeen.png in Resources */,
 			);
@@ -1476,6 +1514,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OBY/OBY-Prefix.pch";
 				INFOPLIST_FILE = OBY/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1494,6 +1534,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OBY/OBY-Prefix.pch";
 				INFOPLIST_FILE = OBY/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

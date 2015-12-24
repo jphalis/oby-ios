@@ -13,11 +13,11 @@ extern AppDelegate *appDelegate;
 
 #define trim(x) [x stringByTrimmingCharactersInSet:WSset]
 #if __LP64__ || (TARGET_OS_EMBEDDED && !TARGET_OS_IPHONE) || TARGET_OS_WIN32 || NS_BUILD_32_LIKE_64
-#define SetSInt(x) [NSString stringWithFormat:@"%d",x]
-#define SetInt(x) [NSString stringWithFormat:@"%ld",x]
+    #define SetSInt(x) [NSString stringWithFormat:@"%d",x]
+    #define SetInt(x) [NSString stringWithFormat:@"%ld",x]
 #else
-#define SetSInt(x) [NSString stringWithFormat:@"%d",x]
-#define SetInt(x) SetSInt(x)
+    #define SetSInt(x) [NSString stringWithFormat:@"%d",x]
+    #define SetInt(x) SetSInt(x)
 #endif
 
 #define DQ_  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -57,11 +57,13 @@ extern AppDelegate *appDelegate;
     #define CATEGORYURL @"http://127.0.0.1:8000/hide/oby/api/categories/"
     #define NOTIFICATIONURL @"http://127.0.0.1:8000/hide/oby/api/notifications/"
     #define NOTIFICATIONUNREADURL @"http://127.0.0.1:8000/hide/oby/api/notifications/unread/"
+    #define REWARDCHECKURL @"http://127.0.0.1:8000/hide/oby/api/shop/rewards/check/"
+    #define REWARDREDEEMEDURL @"http://127.0.0.1:8000/hide/oby/api/shop/rewards/redeemed/"
     #define CREATEURL @"http://127.0.0.1:8000/hide/oby/api/photos/create/"
     #define TIMELINEURL @"http://127.0.0.1:8000/hide/oby/api/timeline/"
     #define PROFILEURL @"http://127.0.0.1:8000/hide/oby/api/accounts/"
-    #define TERMSURL @"http://127.0.0.1:8000/terms"
-    #define PRIVACYURL @"http://127.0.0.1:8000/privacy"
+    #define TERMSURL @"http://127.0.0.1:8000/terms/"
+    #define PRIVACYURL @"http://127.0.0.1:8000/privacy/"
 #else
     // PROD URLS
     #define LIKEURL @"https://www.obystudio.com/hide/oby/api/like/"
@@ -75,11 +77,14 @@ extern AppDelegate *appDelegate;
     #define HOMEPAGEURL @"https://www.obystudio.com/hide/oby/api/homepage/"
     #define CATEGORYURL @"https://www.obystudio.com/hide/oby/api/categories/"
     #define NOTIFICATIONURL @"https://www.obystudio.com/hide/oby/api/notifications/"
+    #define NOTIFICATIONUNREADURL @"https://www.obystudio.com/hide/oby/api/notifications/unread/"
+    #define REWARDCHECKURL @"https://www.obystudio.com/hide/oby/api/shop/rewards/check/"
+    #define REWARDREDEEMEDURL @"https://www.obystudio.com/hide/oby/api/shop/rewards/redeemed/"
     #define CREATEURL @"https://www.obystudio.com/hide/oby/api/photos/create/"
     #define TIMELINEURL @"https://www.obystudio.com/hide/oby/api/timeline/"
     #define PROFILEURL @"https://www.obystudio.com/hide/oby/api/accounts/"
-    #define TERMSURL @"https://www.obystudio.com/terms"
-    #define PRIVACYURL @"https://www.obystudio.com/privacy"
+    #define TERMSURL @"https://www.obystudio.com/terms/"
+    #define PRIVACYURL @"https://www.obystudio.com/privacy/"
 #endif
 
 #define    SetisComment(x)        [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"isComment"]

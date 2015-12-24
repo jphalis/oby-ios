@@ -171,7 +171,7 @@
         //[button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%d.png",index]] forState:UIControlStateNormal];
         
         //[button setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"%d.png",index]] forState:UIControlStateNormal];
-        button.backgroundColor=[UIColor clearColor];
+        button.backgroundColor = [UIColor clearColor];
         button.layer.borderWidth = 2;
         button.layer.cornerRadius = 5.0;
         switch (index) {

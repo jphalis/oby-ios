@@ -396,8 +396,7 @@ CGImageRef CopyImageAndAddAlphaChannel(CGImageRef sourceImage) {
 }
 //-----------------------------------
 
-+ (UIImage *)newImageNotCached:(NSString *)filename 
-{
++ (UIImage *)newImageNotCached:(NSString *)filename {
 	//NSString* imagePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"png"];
 //	UIImage *image = [UIImage imageWithContentsOfFile: imagePath];
 //	return image;
@@ -406,7 +405,7 @@ CGImageRef CopyImageAndAddAlphaChannel(CGImageRef sourceImage) {
     UIImage *image = [UIImage imageWithContentsOfFile:imageFile];
     return image;
 }
-- (UIImage *)fixOrientation {
+- (UIImage *)fixOrientation{
     
     // No-op if the orientation is already correct
     if (self.imageOrientation == UIImageOrientationUp) return self;
@@ -415,7 +414,7 @@ CGImageRef CopyImageAndAddAlphaChannel(CGImageRef sourceImage) {
     // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
     CGAffineTransform transform = CGAffineTransformIdentity;
     
-    switch (self.imageOrientation) {
+    switch (self.imageOrientation){
         case UIImageOrientationDown:
         case UIImageOrientationDownMirrored:
             transform = CGAffineTransformTranslate(transform, self.size.width, self.size.height);
@@ -435,7 +434,7 @@ CGImageRef CopyImageAndAddAlphaChannel(CGImageRef sourceImage) {
             break;
     }
     
-    switch (self.imageOrientation) {
+    switch (self.imageOrientation){
         case UIImageOrientationUpMirrored:
         case UIImageOrientationDownMirrored:
             transform = CGAffineTransformTranslate(transform, self.size.width, 0);
@@ -477,13 +476,11 @@ CGImageRef CopyImageAndAddAlphaChannel(CGImageRef sourceImage) {
     CGImageRelease(cgimg);
     return img;
 }
--(UIImage *)ScaleImageToRect:(UIImage *)img displaySize:(CGSize)viewSize
-{
+-(UIImage *)ScaleImageToRect:(UIImage *)img displaySize:(CGSize)viewSize{
     
 	BOOL isWidthlarger = (img.size.width > img.size.height)?YES :NO;
 	
-	if( isWidthlarger )
-	{
+	if(isWidthlarger){
 		CGFloat reducePer = (img.size.width / img.size.height);
 		CGFloat widthValue = (( img.size.width * reducePer ) / 100);
 		CGFloat heightValue = ((img.size.height * reducePer )/ 100);
@@ -493,8 +490,7 @@ CGImageRef CopyImageAndAddAlphaChannel(CGImageRef sourceImage) {
 		
 		CGFloat newWidth = img.size.width - ( widthValue * noOfIterations);
 		CGFloat newHeight = img.size.height - ( heightValue * noOfIterations);
-		if( newWidth < viewSize.width )
-		{
+		if(newWidth < viewSize.width){
 			NSInteger errFac = viewSize.width - newWidth;
 			CGFloat errPer = ( (errFac * 100) / newWidth);
 			
@@ -504,9 +500,7 @@ CGImageRef CopyImageAndAddAlphaChannel(CGImageRef sourceImage) {
 		img = [img rescaleImageToSize:CGSizeMake(newWidth, newHeight)];
 		
 		//		return CGSizeMake(newWidth, newHeight);
-	}	
-	else
-	{
+    } else {
 		CGFloat reducePer = (img.size.height / img.size.width);
 		CGFloat widthValue = (( img.size.width * reducePer ) / 100);
 		CGFloat heightValue = ((img.size.height * reducePer )/ 100);
@@ -517,8 +511,7 @@ CGImageRef CopyImageAndAddAlphaChannel(CGImageRef sourceImage) {
 		CGFloat newWidth = img.size.width - ( widthValue * noOfIterations);
 		CGFloat newHeight = img.size.height - ( heightValue * noOfIterations);
 		
-		if( newHeight < viewSize.height )
-		{
+		if(newHeight < viewSize.height){
 			NSInteger errFac = viewSize.height - newHeight;
 			CGFloat errPer = ( (errFac * 100) / newHeight);
 			

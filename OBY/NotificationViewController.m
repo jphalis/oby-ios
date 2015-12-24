@@ -24,8 +24,8 @@
     NSMutableArray *arrNotification;
     
     __weak IBOutlet UILabel *lblWaterMark;
-    
     __weak IBOutlet UITableView *tblVW;
+    
     PhotoViewController *photoViewController;
     UIRefreshControl *refreshControl;
 }
@@ -34,12 +34,13 @@
 @implementation NotificationViewController
 
 - (void)viewDidLoad {
-    arrNotification=[[NSMutableArray alloc]init];
+    arrNotification = [[NSMutableArray alloc]init];
     [super viewDidLoad];
-    appDelegate=[AppDelegate getDelegate];
-    refreshControl= [[UIRefreshControl alloc] init];
+    appDelegate = [AppDelegate getDelegate];
+    refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(startRefresh)
              forControlEvents:UIControlEventValueChanged];
+
     [tblVW addSubview:refreshControl];
     
     [self getNotificDetails:NOTIFICATIONURL];
@@ -63,8 +64,6 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     appDelegate.tabbar.tabView.hidden = NO;
-    
-    //[self getNotificDetails:NOTIFICATIONURL];
     
     if(arrNotification.count > 0){
         [self scrollToTop];
@@ -105,8 +104,7 @@
     [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
     [_request setHTTPMethod:@"GET"];
     
-    [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-     {
+    [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
          if(error != nil){
              NSLog(@"%@",error);
              [appDelegate hideHUDForView2:self.view];
@@ -152,7 +150,6 @@
                          } else {
                              notificationClass.read=@"No";
                          }
-                        
                          notificationClass.recipient = [[arrNotifResult objectAtIndex:i]valueForKey:@"recipient"];
                          notificationClass.created = [[arrNotifResult objectAtIndex:i]valueForKey:@"created"];
                          notificationClass.modified = [[arrNotifResult objectAtIndex:i]valueForKey:@"modified"];
@@ -177,14 +174,12 @@
                          } else {
                              notificationClass.target_photo = @"";
                          }
-                         
                          if(![[arrNotifResult objectAtIndex:i]valueForKey:@"target_photo"]){
                              notificationClass.target_photo = @"";
                          }
                          
                          [arrNotification addObject:notificationClass];
                      }
-                         
                      [appDelegate hideHUDForView2:self.view];
                  //[self setBusy:NO];
                     [self showNotifications];
@@ -217,7 +212,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath{
  
-    TableViewCellNotification *cell=[tableView dequeueReusableCellWithIdentifier:@"TableViewCellNotification" forIndexPath:indexPath];
+    TableViewCellNotification *cell = [tableView dequeueReusableCellWithIdentifier:@"TableViewCellNotification" forIndexPath:indexPath];
  
     if(arrNotification.count <= 0){
         return  cell;
@@ -245,12 +240,11 @@
     [cell.btnUsrProfile setTag:indexPath.row];
     [cell.btnUsrProfile addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
     
-        int c = (int)[arrNotification count];
+    int c = (int)[arrNotification count];
     
     if([nextURL isKindOfClass:[NSString class]] && ![nextURL isEqualToString:@""] && ![nextURL isEqual:NULL] && (c%10 == 0) && (indexPath.row == (c-1))){
       [self getNotificDetails:nextURL];
     }
-    
     return cell;
 }
 

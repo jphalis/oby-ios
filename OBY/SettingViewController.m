@@ -13,6 +13,12 @@
 //#import "SVWebViewController.h"
 #import "SVModalWebViewController.h"
 
+// SEND MAIL FOR SUPPORT TAB
+//#define URLEMail @"mailto:team@obystudio.com?subject=Support inquiry&body=content"
+//
+//NSString *url = [URLEMail stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding ];
+//[[UIApplication sharedApplication]  openURL: [NSURL URLWithString: url]];
+
 
 @interface SettingViewController (){
     AppDelegate *appDelegate;

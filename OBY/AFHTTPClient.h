@@ -22,7 +22,6 @@
 
 #import <Foundation/Foundation.h>
 #import "AFURLConnectionOperation.h"
-
 #import <Availability.h>
 
 /**

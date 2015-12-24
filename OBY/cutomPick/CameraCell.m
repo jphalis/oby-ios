@@ -6,65 +6,57 @@
 #import "CameraCell.h"
 
 @interface CameraCell ()
-// 1
+
 @property(nonatomic, weak) IBOutlet UIImageView *photoImageView;
 @property(nonatomic, weak) IBOutlet UIImageView *tickView;
 
 @end
 
 @implementation CameraCell
-- (UIImageView*) getImageView;
-{
-  return self.photoImageView;
+
+- (UIImageView*) getImageView;{
+    return self.photoImageView;
 }
 
 - (id)initWithFrame:(CGRect)frame {
-  self = [super initWithFrame:frame];
+    self = [super initWithFrame:frame];
   
-  if (self) {
-    // Initialization code
-    NSArray *arrayOfViews = Nil;
+    if (self){
+        // Initialization code
+        NSArray *arrayOfViews = Nil;
 
-    if(IS_IPHONE_6||IS_IPHONE_6P)
-      arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"CameraCell" owner:self options:nil];
-    else
-      arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"CameraCell_5" owner:self options:nil];
+        if(IS_IPHONE_6||IS_IPHONE_6P){
+            arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"CameraCell" owner:self options:nil];
+        } else {
+            arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"CameraCell_5" owner:self options:nil];
+        }
+        if ([arrayOfViews count] < 1){
+            return nil;
+        }
+        if (![[arrayOfViews objectAtIndex:0] isKindOfClass:[UICollectionViewCell class]]) {
+            return nil;
+        }
     
-    if ([arrayOfViews count] < 1) {
-      return nil;
+        self = [arrayOfViews objectAtIndex:0];
     }
-    
-    if (![[arrayOfViews objectAtIndex:0] isKindOfClass:[UICollectionViewCell class]]) {
-      return nil;
-    }
-    
-    self = [arrayOfViews objectAtIndex:0];
-    
-  }
-  
-  return self;
+    return self;
 }
 
--(void) showTick
-{
-  [self.tickView setHidden:NO];
+-(void) showTick{
+    [self.tickView setHidden:NO];
 }
 
--(void) hideTick
-{
-  [self.tickView setHidden:YES];
+-(void) hideTick{
+    [self.tickView setHidden:YES];
 }
 
-- (void) setAsset:(ALAsset *)asset
-{
-  // 2
-  _asset = asset;
-  self.photoImageView.image = [UIImage imageWithCGImage:[asset thumbnail]];
+- (void) setAsset:(ALAsset *)asset{
+    _asset = asset;
+    self.photoImageView.image = [UIImage imageWithCGImage:[asset thumbnail]];
 }
 
-- (void) setImage:(UIImage *)image
-{
-  [self.photoImageView setImage:image];
+- (void) setImage:(UIImage *)image{
+    [self.photoImageView setImage:image];
 }
 
 @end

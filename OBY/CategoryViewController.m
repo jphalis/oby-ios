@@ -58,7 +58,7 @@
                                        reuseIdentifier:MyIdentifier];
     }
     cell.textLabel.text = [arrCategory objectAtIndex:indexPath.row];
-    
+
     return cell;
 }
 
@@ -67,7 +67,6 @@
     
     if(indexPath.row == 9){
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        //cell.selectionStyle=UITableViewCellEditingStyleNone;
         return;
     }
     [cell setAccessoryType:UITableViewCellAccessoryCheckmark];

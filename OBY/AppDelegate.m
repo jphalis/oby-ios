@@ -33,6 +33,11 @@ MBProgressHUD *hud;
     arrPhotos = [[NSMutableArray alloc]init];
     arrTimeLinePhotos = [[NSMutableArray alloc]init];
     dictProfileInfo = [[NSMutableDictionary alloc]init];
+    
+    Kiip *kiip = [[Kiip alloc] initWithAppKey:@"300fc8335c0e0080476bb09b9866d185" andSecret:@"a5a34e72cc8efc14a93a6b276cd968d1"];
+    kiip.delegate = self;
+    [Kiip setSharedInstance:kiip];
+
     return YES;
 }
 
@@ -135,7 +140,7 @@ MBProgressHUD *hud;
     mobileNumber = [mobileNumber stringByReplacingOccurrencesOfString:@" " withString:@""];
     mobileNumber = [mobileNumber stringByReplacingOccurrencesOfString:@"-" withString:@""];
     mobileNumber = [mobileNumber stringByReplacingOccurrencesOfString:@"+" withString:@""];
-    int length = [mobileNumber length];
+    NSInteger length = [mobileNumber length];
     if(length > 10) {
         mobileNumber = [mobileNumber substringFromIndex: length-10];
     }
@@ -148,13 +153,11 @@ MBProgressHUD *hud;
     mobileNumber = [mobileNumber stringByReplacingOccurrencesOfString:@" " withString:@""];
     mobileNumber = [mobileNumber stringByReplacingOccurrencesOfString:@"-" withString:@""];
     mobileNumber = [mobileNumber stringByReplacingOccurrencesOfString:@"+" withString:@""];
-    int length = [mobileNumber length];
+    NSInteger length = [mobileNumber length];
     return length;
 }
 
--(void)userLogout{
-    //LoginID,EmailID,Password,isMobileRegistered,UserName,FBID,MobileNum
-    
+-(void)userLogout{    
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"UserName"];
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"UserID"];
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"UserToken"];

@@ -16,6 +16,7 @@
 #import "CommentViewController.h"
 #import "Reachability.h"
 #import "SupportViewController.h"
+#import <KiipSDK/KiipSDK.h>
 
 
 @interface TimeLineViewController ()<PhotoViewControllerDelegate,CommentViewControllerDelegate>{
@@ -112,7 +113,7 @@
     if(selectIndex >= 0){
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:selectIndex inSection:0];
         CollectionViewCellimage *currentCell=(CollectionViewCellimage *)[colltionVw cellForItemAtIndexPath:indexPath];
-        currentCell.lblComments.text=countStr;
+        currentCell.lblComments.text = countStr;
         
     }
     [self.navigationController popViewControllerAnimated:YES];
@@ -269,7 +270,7 @@
         return;
     }
     
-    supportViewController.pageTitle=@"COMMENTS";
+    supportViewController.pageTitle=@"Comments";
     supportViewController.arrDetails=photoClass.comment_set.copy;
     [self.navigationController pushViewController:supportViewController animated:YES];
 }
@@ -287,14 +288,14 @@
         return;
     }
     
-    supportViewController.pageTitle=@"LIKERS";
-    supportViewController.arrDetails=photoClass.likers.copy;
+    supportViewController.pageTitle = @"Likers";
+    supportViewController.arrDetails = photoClass.likers.copy;
     [self.navigationController pushViewController:supportViewController animated:YES];
 }
 
 -(void)showUser:(CustomButton*)sender{
-    PhotoClass *photoClass=[arrTimelinePhotos objectAtIndex:sender.tag];
-    ProfileViewController *profileViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
+    PhotoClass *photoClass = [arrTimelinePhotos objectAtIndex:sender.tag];
+    ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
     profileViewController.userURL=photoClass.creator_url;
     [self.navigationController pushViewController:profileViewController animated:YES];
 }
@@ -302,48 +303,47 @@
 -(void)onComment:(CustomButton*)sender{
     SetisComment(YES);
     PhotoClass *photoClass;
-    photoClass=[arrTimelinePhotos objectAtIndex:sender.tag];
-    commentViewController.selectRow=(int)sender.tag;
-    commentViewController.photoClass=photoClass;
+    photoClass = [arrTimelinePhotos objectAtIndex:sender.tag];
+    commentViewController.selectRow = (int)sender.tag;
+    commentViewController.photoClass = photoClass;
     [self.navigationController pushViewController:commentViewController animated:YES];
 }
 
 -(void)onLike:(CustomButton*)sender{
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
-    CollectionViewCellimage *currentCell=(CollectionViewCellimage *)[colltionVw cellForItemAtIndexPath:indexPath];
+    CollectionViewCellimage *currentCell = (CollectionViewCellimage *)[colltionVw cellForItemAtIndexPath:indexPath];
     
     PhotoClass *photoClass;
-    photoClass=[arrTimelinePhotos objectAtIndex:sender.tag];
+    photoClass = [arrTimelinePhotos objectAtIndex:sender.tag];
     
-    Reachability *reachability=[Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus=[reachability currentReachabilityStatus];
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
     if(networkStatus == NotReachable) {
         [self showMessage:NETWORK_UNAVAILABLE];
         return;
     }
 
-    int likecount=(int)[photoClass.like_count integerValue];
+    int likecount = (int)[photoClass.like_count integerValue];
     if(photoClass.isLike){
-        for(int i=0;i<photoClass.likers.count;i++){
-            NSMutableDictionary *dict=[photoClass.likers objectAtIndex:i];
+        for(int i = 0; i < photoClass.likers.count; i++){
+            NSMutableDictionary *dict = [photoClass.likers objectAtIndex:i];
             
             if ([[dict objectForKey:@"user__username"]isEqualToString:GetUserName]){
                 [photoClass.likers removeObjectAtIndex:i];
             }
         }
-        
         likecount--;
-    }else{
-        NSMutableDictionary *dictUser=[[NSMutableDictionary alloc]init];
+    } else {
+        NSMutableDictionary *dictUser = [[NSMutableDictionary alloc]init];
         [dictUser setValue:GetProifilePic forKey:@"user__profile_picture"];
         [dictUser setValue:GetUserName forKey:@"user__username"];
         [dictUser setValue:GetUserFullName forKey:@"full_name"];
         
         NSString *fullString;
-        NSString *fullName=[dictUser objectForKey:@"user__username"];
-        NSString *userName=[dictUser objectForKey:@"full_name"];
+        NSString *fullName = [dictUser objectForKey:@"user__username"];
+        NSString *userName = [dictUser objectForKey:@"full_name"];
         
-        fullString=[NSString stringWithFormat:@"%@ %@",fullName,userName];
+        fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
         
         NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
         
@@ -356,16 +356,17 @@
         [photoClass.likers addObject:dictUser];
         
         likecount++;
+        [self doRewardCheck];
     }
     
-    photoClass.like_count=[NSString stringWithFormat:@"%d",likecount];
-    photoClass.isLike=!photoClass.isLike;
+    photoClass.like_count = [NSString stringWithFormat:@"%d",likecount];
+    photoClass.isLike = !photoClass.isLike;
     
-    currentCell.imgLike.image=[UIImage imageNamed:@"like_icon"];
+    currentCell.imgLike.image = [UIImage imageNamed:@"like_icon"];
     if(photoClass.isLike){
-        currentCell.imgLike.image=[UIImage imageNamed:@"likeselect"];
+        currentCell.imgLike.image = [UIImage imageNamed:@"likeselect"];
     }
-    currentCell.lblLikes.text=[NSString stringWithFormat:@"%@",photoClass.like_count];
+    currentCell.lblLikes.text = [NSString stringWithFormat:@"%@",photoClass.like_count];
     
     [self doLike:photoClass selectCell:currentCell];
     
@@ -376,10 +377,7 @@
     [self.view endEditing:YES];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        // [self setBusy:YES];
-        NSString *strURL=[NSString stringWithFormat:@"%@%@/",LIKEURL,photoClass.PhotoId];
-        
+        NSString *strURL = [NSString stringWithFormat:@"%@%@/",LIKEURL,photoClass.PhotoId];
         NSURL *url = [NSURL URLWithString:strURL];
         NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
         [urlRequest setTimeoutInterval:60];
@@ -387,22 +385,20 @@
         NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
         NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
         NSString *base64String = [plainData base64EncodedStringWithOptions:0];
-        NSString *authValue =[NSString stringWithFormat:@"Basic %@", base64String];
+        NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
         
         [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
         [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         
         //Call the Login Web services
-        [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-         {
+        [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
              if(error!=nil){
                  NSLog(@"%@",error);
              }
              if ([data length] > 0 && error == nil){
-                 NSDictionary *JSONValue=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-                 if(JSONValue!=nil){
-                     //  NSLog(@"Jsonvalue=%@",JSONValue);
-                     if([[JSONValue allKeys]count]>5){
+                 NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                 if(JSONValue != nil){
+                     if([[JSONValue allKeys]count] > 5){
                          /*
                           int likecount=(int)[photoClass.like_count integerValue];
                           if(photoClass.isLike){
@@ -421,14 +417,14 @@
                           selectCell.lblLikes.text=[NSString stringWithFormat:@"%@",photoClass.like_count];
                           */
                          // [collectionVWHome reloadData];
-                     }else{
+                     } else {
                          //[self showMessage:SERVER_ERROR];
                      }
-                 }else{
+                 } else {
                      // [self showMessage:SERVER_ERROR];
                  }
                  [self setBusy:NO];
-             }else{
+             } else {
                  [self setBusy:NO];
                  //[self showMessage:SERVER_ERROR];
              }
@@ -438,8 +434,8 @@
 }
 
 -(void)getTimeLineDetails{
-    Reachability *reachability=[Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus=[reachability currentReachabilityStatus];
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
     if(networkStatus == NotReachable) {
         [self showMessage:NETWORK_UNAVAILABLE];
         [refreshControl endRefreshing];
@@ -448,7 +444,7 @@
     
     [appDelegate showHUDAddedToView:self.view message:@""];
    // [self setBusy:YES];
-    NSString *urlString=[NSString stringWithFormat:@"%@",TIMELINEURL];
+    NSString *urlString = [NSString stringWithFormat:@"%@",TIMELINEURL];
     
     NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                              timeoutInterval:60];
@@ -456,7 +452,7 @@
     NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
     NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
-    NSString *authValue =[NSString stringWithFormat:@"Basic %@", base64String];
+    NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
     [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
     
     //[_request setValue:[NSString stringWithFormat:@"Token %@",GetUserToken] forHTTPHeaderField:@"Authorization"];
@@ -467,89 +463,83 @@
     
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
      {
-         if(error!=nil){
+         if(error != nil){
              NSLog(@"%@",error);
             // [self setBusy:NO];
              [appDelegate hideHUDForView2:self.view];
          }
          if ([data length] > 0 && error == nil){
-             NSArray *JSONValue=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+             NSArray *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
              // NSLog(@"%@",JSONValue);
-             NSLog(@"Images count: %d",[JSONValue count]);
+             NSLog(@"Images count: %lu",(unsigned long)[JSONValue count]);
              
              if([JSONValue isKindOfClass:[NSArray class]]){
-                 if([JSONValue count]>0){
-                     if(arrTimelinePhotos.count>0){
+                 if([JSONValue count] > 0){
+                     if(arrTimelinePhotos.count > 0){
                          [arrTimelinePhotos removeAllObjects];
                      }
                      
-                     for (int i=0; i<JSONValue.count; i++) {
+                     for (int i = 0; i < JSONValue.count; i++) {
                          NSMutableDictionary *dictResult;
-                         dictResult=[[NSMutableDictionary alloc]init];
-                         dictResult=[JSONValue objectAtIndex:i];
-                         PhotoClass *photoClass=[[PhotoClass alloc]init];
-                         photoClass.category_url=[dictResult objectForKey:@"category_url"];
-                         photoClass.comment_count=[dictResult objectForKey:@"comment_count"];
-                         //photoClass.comment_set=[dictResult objectForKey:@"comment_set"];
-                         photoClass.created=[dictResult objectForKey:@"created"];
-                         photoClass.creator=[[dictResult objectForKey:@"creator"] uppercaseString];
-                         photoClass.creator_url=[dictResult objectForKey:@"creator_url"];
-                         photoClass.description=[dictResult objectForKey:@"description"];
+                         dictResult = [[NSMutableDictionary alloc]init];
+                         dictResult = [JSONValue objectAtIndex:i];
+                         PhotoClass *photoClass = [[PhotoClass alloc]init];
+                         photoClass.category_url = [dictResult objectForKey:@"category_url"];
+                         photoClass.comment_count = [dictResult objectForKey:@"comment_count"];
+                         //photoClass.comment_set = [dictResult objectForKey:@"comment_set"];
+                         photoClass.created = [dictResult objectForKey:@"created"];
+                         photoClass.creator = [[dictResult objectForKey:@"creator"] uppercaseString];
+                         photoClass.creator_url = [dictResult objectForKey:@"creator_url"];
+                         photoClass.description = [dictResult objectForKey:@"description"];
                          
-                         int userId=[[dictResult objectForKey:@"id"]intValue];
-                         int linke_Count=[[dictResult objectForKey:@"like_count"]intValue];
+                         int userId = [[dictResult objectForKey:@"id"]intValue];
+                         int linke_Count = [[dictResult objectForKey:@"like_count"]intValue];
                          
-                         photoClass.PhotoId=[NSString stringWithFormat:@"%d",userId];
+                         photoClass.PhotoId = [NSString stringWithFormat:@"%d",userId];
+                         photoClass.like_count = [NSString stringWithFormat:@"%d",linke_Count];
+                         photoClass.likers = [[NSMutableArray alloc]init];
+                         photoClass.comment_set = [[NSMutableArray alloc]init];
                          
-                         photoClass.like_count=[NSString stringWithFormat:@"%d",linke_Count];
+                         NSArray *arrLiker = [dictResult objectForKey:@"get_likers_info"];
                          
-                         //photoClass.likers=[dictResult objectForKey:@"likers"];
-                         
-                         photoClass.likers=[[NSMutableArray alloc]init];
-                         photoClass.comment_set=[[NSMutableArray alloc]init];
-                         
-                         NSArray *arrLiker=[dictResult objectForKey:@"get_likers_info"];
-                         
-                         photoClass.isLike=NO;
-                         if([[dictResult objectForKey:@"get_likers_info"] count]>0){
-                             for(int l=0;l<[arrLiker count];l++){
+                         photoClass.isLike = NO;
+                         if([[dictResult objectForKey:@"get_likers_info"] count] > 0){
+                             for(int l = 0; l < [arrLiker count]; l++){
                                  NSDictionary *dictUsers= [arrLiker objectAtIndex:l];
                                  if([[dictUsers objectForKey:@"username"] isEqualToString:GetUserName]){
-                                     photoClass.isLike=YES;
+                                     photoClass.isLike = YES;
                                      break;
                                  }
                              }
                          }
  
-                         for(int j=0;j<arrLiker.count;j++){
-                             NSMutableDictionary *dictFollowerInfo=[[NSMutableDictionary alloc]init];
-                             NSDictionary *dictUserDetail=[arrLiker objectAtIndex:j];
+                         for(int j = 0; j < arrLiker.count; j++){
+                             NSMutableDictionary *dictFollowerInfo = [[NSMutableDictionary alloc]init];
+                             NSDictionary *dictUserDetail = [arrLiker objectAtIndex:j];
                              
                              if([dictUserDetail objectForKey:@"profile_picture"] == [NSNull null]){
                                  [dictFollowerInfo setObject:@"" forKey:@"user__profile_picture"];
-                             }else{
-                                 NSString *proflURL=[NSString stringWithFormat:@"%@%@",@"https://oby.s3.amazonaws.com/media/",[dictUserDetail objectForKey:@"profile_picture"]];
+                             } else {
+                                 NSString *proflURL = [NSString stringWithFormat:@"%@%@",@"https://oby.s3.amazonaws.com/media/",[dictUserDetail objectForKey:@"profile_picture"]];
                                  
                                  [dictFollowerInfo setValue:proflURL forKey:@"user__profile_picture"];
                              }
-                             
                              if([dictUserDetail objectForKey:@"username"] == [NSNull null]){
                                  [dictFollowerInfo setObject:@"" forKey:@"user__username"];
-                             }else{
+                             } else {
                                  [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"username"] forKey:@"user__username"];
                              }
-                             
                              if([dictUserDetail objectForKey:@"full_name"] == [NSNull null]){
                                  [dictFollowerInfo setObject:@"" forKey:@"full_name"];
-                             }else{
+                             } else {
                                  [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"full_name"] forKey:@"full_name"];
                              }
                              
                              NSString *fullString;
-                             NSString *userName=[dictFollowerInfo objectForKey:@"user__username"];
-                             NSString *fullName=[dictFollowerInfo objectForKey:@"full_name"];
+                             NSString *userName = [dictFollowerInfo objectForKey:@"user__username"];
+                             NSString *fullName = [dictFollowerInfo objectForKey:@"full_name"];
                              
-                             fullString=[NSString stringWithFormat:@"%@ %@",fullName,userName];
+                             fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
                              
                              NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
                              
@@ -562,38 +552,36 @@
                              [photoClass.likers addObject:dictFollowerInfo];
                          }
 
-                         NSArray *arrCommentSet=[dictResult objectForKey:@"comment_set"];
+                         NSArray *arrCommentSet = [dictResult objectForKey:@"comment_set"];
 
-                         for(int k=0;k<arrCommentSet.count;k++){
-                             NSMutableDictionary *dictFollowerInfo=[[NSMutableDictionary alloc]init];
-                             NSDictionary *dictUserDetail=[arrCommentSet objectAtIndex:k];
+                         for(int k = 0; k < arrCommentSet.count; k++){
+                             NSMutableDictionary *dictFollowerInfo = [[NSMutableDictionary alloc]init];
+                             NSDictionary *dictUserDetail = [arrCommentSet objectAtIndex:k];
                              
                              if([dictUserDetail objectForKey:@"profile_picture"] == [NSNull null]){
                                  [dictFollowerInfo setObject:@"" forKey:@"user__profile_picture"];
-                             }else{
-                                 NSString *proflURL=[NSString stringWithFormat:@"%@%@",@"https://oby.s3.amazonaws.com/media/",[dictUserDetail objectForKey:@"profile_picture"]];
+                             } else {
+                                 NSString *proflURL = [NSString stringWithFormat:@"%@%@",@"https://oby.s3.amazonaws.com/media/",[dictUserDetail objectForKey:@"profile_picture"]];
                                  
                                  [dictFollowerInfo setValue:proflURL forKey:@"user__profile_picture"];
                              }
-                             
                              if([dictUserDetail objectForKey:@"user"] == [NSNull null]){
                                  [dictFollowerInfo setObject:@"" forKey:@"user__username"];
                                  
-                             }else{
+                             } else {
                                  [dictFollowerInfo setObject:[[dictUserDetail objectForKey:@"user"]lastPathComponent] forKey:@"user__username"];
                              }
-                             
                              if([dictUserDetail objectForKey:@"text"] == [NSNull null]){
                                  [dictFollowerInfo setObject:@"" forKey:@"text"];
-                             }else{
+                             } else {
                                  [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"text"] forKey:@"text"];
                              }
                              
                              NSString *fullString;
-                             NSString *fullName=[[dictFollowerInfo objectForKey:@"user__username"]lastPathComponent];
-                             NSString *userName=[dictFollowerInfo objectForKey:@"text"];
+                             NSString *fullName = [[dictFollowerInfo objectForKey:@"user__username"]lastPathComponent];
+                             NSString *userName = [dictFollowerInfo objectForKey:@"text"];
                              
-                             fullString=[NSString stringWithFormat:@"%@ %@",fullName,userName];
+                             fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
                              
                              NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
                              
@@ -605,20 +593,18 @@
                              
                              [photoClass.comment_set addObject:dictFollowerInfo];
                          }
-
-                         photoClass.modified=[dictResult objectForKey:@"modified"];
-                         photoClass.photo=[dictResult objectForKey:@"photo"];
-                         photoClass.slug=[dictResult objectForKey:@"slug"];
+                         photoClass.modified = [dictResult objectForKey:@"modified"];
+                         photoClass.photo = [dictResult objectForKey:@"photo"];
+                         photoClass.slug = [dictResult objectForKey:@"slug"];
 
                          [arrTimelinePhotos addObject:photoClass];
                      }
-                     
                      [appDelegate hideHUDForView2:self.view];
                      //[self setBusy:NO];
                     [self showImages];
                  }
              }
-         }else{
+         } else {
              [refreshControl endRefreshing];
             [appDelegate hideHUDForView2:self.view];
              //[self setBusy:NO];
@@ -630,6 +616,67 @@
 -(void)showImages{
     [colltionVw reloadData];
     [refreshControl endRefreshing];
+}
+
+#pragma mark - KIIP
+
+-(void)doRewardCheck{
+    // Check REWARDCHECKURL
+    // If `deserves_reward` == True, show Kiip reward
+    // Subtract reward amount from user's available points
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSString *urlString = [NSString stringWithFormat:@"%@",REWARDCHECKURL];
+        
+        NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+                                                                 timeoutInterval:60];
+        NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
+        NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
+        NSString *base64String = [plainData base64EncodedStringWithOptions:0];
+        NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
+        
+        [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
+        [_request setHTTPMethod:@"GET"];
+        
+        [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+            if(error != nil){
+                NSLog(@"%@",error);
+            }
+            if ([data length] > 0 && error == nil){
+                NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                
+                NSString *rewardResult = [JSONValue objectForKey:@"deserves_reward"];
+                if([rewardResult boolValue] == YES){
+                    [[Kiip sharedInstance] saveMoment:@"putting others before yourself!" withCompletionHandler:^(KPPoptart *poptart, NSError *error){
+                        if (error){
+                            NSLog(@"Something's wrong");
+                            // handle with an Alert dialog.
+                        }
+                        if (poptart){
+                            NSLog(@"Successful moment save. Showing reward.");
+                            [poptart show];
+                            
+                            NSString *urlString = [NSString stringWithFormat:@"%@",REWARDREDEEMEDURL];
+                            NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+                                                           timeoutInterval:60];
+                            NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
+                            NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
+                            NSString *base64String = [plainData base64EncodedStringWithOptions:0];
+                            NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
+                            
+                            [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
+                            [_request setHTTPMethod:@"GET"];
+                            
+                            [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+                            }];
+                        }
+                        if (!poptart){
+                            NSLog(@"Successful moment save, but no reward available.");
+                        }
+                    }];
+                }
+            }
+        }];
+    });
 }
 
 /*

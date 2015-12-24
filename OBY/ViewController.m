@@ -23,7 +23,6 @@
     __weak IBOutlet UILabel *pageTitle;
     __weak IBOutlet UIView *viewLogin;
     __weak IBOutlet UIView *viewSignUp;
-    
     __weak IBOutlet UIButton *btnSignupInner;
     __weak IBOutlet UIButton *btnSignInner;
     __weak IBOutlet NSLayoutConstraint *consSignupX;
@@ -192,8 +191,6 @@
     UIToolbar * keyboardToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
     keyboardToolBar.tag = textField.tag;
     
-    int tag = textField.tag;
-    
     keyboardToolBar.barStyle = UIBarStyleDefault;
     
     UIBarButtonItem *bar1 = [[UIBarButtonItem alloc]initWithTitle:@"Previous" style:UIBarButtonItemStyleBordered target:self action:@selector(previousTextField:)];
@@ -247,7 +244,7 @@
 
 
 - (void)nextTextField:(UIBarButtonItem *)sender {
-    NSLog(@"%d",sender.tag);
+    NSLog(@"%ld",(long)sender.tag);
     
     if(viewLogin.hidden == NO){
         if (txtLoginUsrName){

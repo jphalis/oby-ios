@@ -29,10 +29,12 @@
     __weak IBOutlet UITextView *txtBio;
     __weak IBOutlet UITextField *txtEduEmail;
     __weak IBOutlet UITextField *txtGender;
+    __weak IBOutlet UIButton *updateBtn;
     
     ChoosePhotoViewController *choosePhotoViewController;
     
     __weak IBOutlet UIScrollView *scrolVW;
+    
     AppDelegate *appDelegate;
 }
 - (IBAction)onBack:(id)sender;
@@ -45,11 +47,14 @@
 
 - (void)viewDidLoad {
     appDelegate = [AppDelegate getDelegate];
-    if(self.view.frame.size.height == 480 &&self.view.frame.size.width == 320){
+    
+    if(self.view.frame.size.height == 480 && self.view.frame.size.width == 320){
         imgProfile.frame = CGRectMake(imgProfile.frame.origin.x+8, imgProfile.frame.origin.y, 60, 60);
     }
     imgProfile.layer.cornerRadius = imgProfile.frame.size.width / 2;
     imgProfile.layer.masksToBounds = YES;
+    
+    updateBtn.layer.cornerRadius = 20;
 
     [self getProfileInfo];
     
@@ -65,7 +70,7 @@
     [scrolVW addGestureRecognizer:tapGestureScroll];
     [scrolVW setUserInteractionEnabled:YES];
     
-    arrGender=[NSMutableArray arrayWithObjects:@"---",@"Dude",@"Betty",nil];
+    arrGender = [NSMutableArray arrayWithObjects:@"---",@"Dude",@"Betty",nil];
     _selectedGender = [arrGender objectAtIndex:0];
     
     // Do any additional setup after loading the view.
@@ -83,7 +88,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -317,8 +322,6 @@
     UIToolbar * keyboardToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
     keyboardToolBar.tag = textField.tag;
     
-    int tag = textField.tag;
-    
     keyboardToolBar.barStyle = UIBarStyleDefault;
     
     UIBarButtonItem *bar1 = [[UIBarButtonItem alloc]initWithTitle:@"Previous" style:UIBarButtonItemStyleBordered target:self action:@selector(previousTextField:)];
@@ -348,7 +351,7 @@
     UIToolbar * keyboardToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
     keyboardToolBar.tag = textView.tag;
     
-    int tag = textView.tag;
+//    int tag = textView.tag;
     
     keyboardToolBar.barStyle = UIBarStyleDefault;
     
@@ -555,7 +558,7 @@
     [self.view endEditing:YES];
     [self setBusy:YES];
     
-    NSString *myUniqueName = [NSString stringWithFormat:@"%@-%u", @"image", (NSUInteger)([[NSDate date] timeIntervalSince1970]*10.0)];
+    NSString *myUniqueName = [NSString stringWithFormat:@"%@-%lu", @"image", (unsigned long)([[NSDate date] timeIntervalSince1970]*10.0)];
 
     // Dictionary that holds post parameters. You can set your post parameters that your server accepts or programmed to accept.
     NSMutableDictionary* _params = [[NSMutableDictionary alloc] init];
@@ -582,7 +585,7 @@
     NSString* FileParamConstant = @"profile_picture";
     
     // the server url to which the image (or the media) is uploaded. Use your server url here
-    NSString *urlStr=[NSString stringWithFormat:@"%@%@/",PROFILEURL,GetUserName];
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@/",PROFILEURL,GetUserName];
     NSURL* requestURL = [NSURL URLWithString:urlStr];
     
     // create request
@@ -633,9 +636,8 @@
     NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
     [request setValue:authValue forHTTPHeaderField:@"Authorization"];
     
-    
     // set the content-length
-    NSString *postLength = [NSString stringWithFormat:@"%d", [body length]];
+    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[body length]];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     
     // set URL
@@ -646,9 +648,9 @@
              [self setBusy:NO];
              
              NSDictionary * JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-             NSString *strResponse = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+//             NSString *strResponse = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
              
-            NSLog(@"jsno value=%@",JSONValue);
+            NSLog(@"json value=%@",JSONValue);
              // NSLog(@"Response=%@",strResponse);
              if([JSONValue isKindOfClass:[NSDictionary class]]){
                  if([JSONValue allKeys].count > 5){
@@ -748,7 +750,6 @@
     picker.sourceType = type;
     picker.delegate = self;
     picker.allowsEditing = YES;
-    
     [self presentViewController:picker animated:YES completion:nil];
 }
 

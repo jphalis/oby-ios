@@ -22,6 +22,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Reachability.h"
 #import "SupportViewController.h"
+#import <KiipSDK/KiipSDK.h>
 
 
 @interface HomeViewController ()<HTHorizontalSelectionListDataSource,HTHorizontalSelectionListDelegate,PhotoViewControllerDelegate,CommentViewControllerDelegate>{
@@ -35,9 +36,9 @@
     NSInteger tapCellIndex;
     NSIndexPath *previousIndexPath;
     NSMutableArray *arrCategoryPhotos;
-       UIRefreshControl *refreshControl;
+    UIRefreshControl *refreshControl;
     NSString *CategoryURL;
-      PhotoViewController *photoViewController;
+    PhotoViewController *photoViewController;
     CommentViewController *commentViewController;
 }
 
@@ -66,7 +67,6 @@
     commentViewController.delegate = self;
     
     arrCategoryPhotos = [[NSMutableArray alloc]init];
-    self.edgesForExtendedLayout = UIRectEdgeNone;
     
     self.selectionList = [[HTHorizontalSelectionList alloc] initWithFrame:CGRectMake(0, scrolVw.frame.origin.y, self.view.frame.size.width, scrolVw.frame.size.height)];
     self.selectionList.backgroundColor = [UIColor clearColor];
@@ -98,24 +98,11 @@
     [collectionVWHome addSubview:refreshControl];
     
     collectionVWHome.alwaysBounceVertical = YES;
-    
-    /*
-    UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(ClickCell:)];
-    tapGesture.numberOfTapsRequired=1;
-    [collectionVWHome addGestureRecognizer:tapGesture];
-    
-    UITapGestureRecognizer *doubleTap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doubleClick:)];
-    doubleTap.numberOfTapsRequired=2;
-    [collectionVWHome addGestureRecognizer:doubleTap];
-    
-    */
 
     UILongPressGestureRecognizer *longPressCollectionView = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
     longPressCollectionView.minimumPressDuration = 1;
-    //[collectionVWHome addGestureRecognizer:longPressCollectionView];
     
     [self performSelectorInBackground:@selector(getSupportList) withObject:nil];
-    
     [self getHomePageDetails];
 }
 
@@ -134,61 +121,58 @@
     NSIndexPath *indexPath = [collectionVWHome indexPathForItemAtPoint:p];
     if (indexPath == nil){
         NSLog(@"couldn't find index path");
-    }else{
+    } else {
         [self collectionView:collectionVWHome didSelectItemAtIndexPath:indexPath];
     }
 }
 
 -(void)longPress:(UILongPressGestureRecognizer *)gestureRecognizer{
-        CGPoint p = [gestureRecognizer locationInView:collectionVWHome];
+    CGPoint p = [gestureRecognizer locationInView:collectionVWHome];
         
-        NSIndexPath *indexPath = [collectionVWHome indexPathForItemAtPoint:p];
-        if (indexPath == nil){
-            NSLog(@"couldn't find index path");
-        } else {
-            static int i = 0;
-            i++;
-            if(i == 1){
-                return;
-            }
-            PhotoClass *photoClass;
-            
-            if(isMenuChoosed){
-                photoClass = [arrCategoryPhotos objectAtIndex:indexPath.row];
-            } else {
-                photoClass = [appDelegate.arrPhotos objectAtIndex:indexPath.row];
-            }
-            
-            photoViewController.photoURL = photoClass.photo;
-            photoViewController.view.frame = appDelegate.window.frame;
-            
-            [appDelegate.window addSubview:photoViewController.view];
-            
-            //[self.view addSubview:photoViewController.view];
+    NSIndexPath *indexPath = [collectionVWHome indexPathForItemAtPoint:p];
+    if (indexPath == nil){
+        NSLog(@"couldn't find index path");
+    } else {
+        static int i = 0;
+        i++;
+        if(i == 1){
+            return;
         }
+        PhotoClass *photoClass;
+        
+        if(isMenuChoosed){
+            photoClass = [arrCategoryPhotos objectAtIndex:indexPath.row];
+        } else {
+            photoClass = [appDelegate.arrPhotos objectAtIndex:indexPath.row];
+        }
+        
+        photoViewController.photoURL = photoClass.photo;
+        photoViewController.view.frame = appDelegate.window.frame;
+        
+        [appDelegate.window addSubview:photoViewController.view];
+        
+        //[self.view addSubview:photoViewController.view];
+    }
 }
 
 -(void)doubleClick:(UITapGestureRecognizer *)gestureDouble{
-        CGPoint p = [gestureDouble locationInView:collectionVWHome];
-            
-        NSIndexPath *indexPath = [collectionVWHome indexPathForItemAtPoint:p];
-        if (indexPath == nil){
-            NSLog(@"couldn't find index path");
+    CGPoint p = [gestureDouble locationInView:collectionVWHome];
+    
+    NSIndexPath *indexPath = [collectionVWHome indexPathForItemAtPoint:p];
+    if (indexPath == nil){
+        NSLog(@"couldn't find index path");
+    } else {
+        PhotoClass *photoClass;
+        
+        if(isMenuChoosed){
+            photoClass = [arrCategoryPhotos objectAtIndex:indexPath.row];
         } else {
-            PhotoClass *photoClass;
-                
-            if(isMenuChoosed){
-                photoClass = [arrCategoryPhotos objectAtIndex:indexPath.row];
-            } else {
-                photoClass = [appDelegate.arrPhotos objectAtIndex:indexPath.row];
-            }
-                
-            photoViewController.photoURL = photoClass.photo;
-            photoViewController.view.frame = appDelegate.window.frame;
-                
-            [self.view addSubview:photoViewController.view];
-                
+            photoClass = [appDelegate.arrPhotos objectAtIndex:indexPath.row];
         }
+        photoViewController.photoURL = photoClass.photo;
+        photoViewController.view.frame = appDelegate.window.frame;
+        [self.view addSubview:photoViewController.view];
+    }
 }
 
 -(void)removeImage{
@@ -237,12 +221,6 @@
     [UIView animateWithDuration:0.3 animations:^(void){
         [collectionVWHome scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
     }];
-
-    //[collectionVWHome setContentOffset:CGPointZero animated:YES];
-
-//        [collectionVWHome scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]
-//                                 atScrollPosition:UICollectionViewScrollPositionBottom
-//                                         animated:YES];
 }
 
 /*
@@ -269,10 +247,6 @@
 
 - (void)selectionList:(HTHorizontalSelectionList *)selectionList didSelectButtonWithIndex:(NSInteger)index{
     // update the view for the corresponding index
-    
-  //  NSLog(@"%d",index);
-    
-    //NSLog(@"Selected Button = %@",self.categoryList[index]);
     
     NSString *subCategoryURL = @"";
     tapCellIndex = -1;
@@ -325,7 +299,7 @@
         }
             break;
         default: {
-            subCategoryURL=[NSString stringWithFormat:@"%@%@/",CATEGORYURL,@"just-because"];
+            subCategoryURL = [NSString stringWithFormat:@"%@%@/",CATEGORYURL,@"just-because"];
         }
             break;
     }
@@ -336,13 +310,13 @@
 -(void)getCategoryDeatils:(NSString *)subCategoryURL{
     Reachability *reachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable) {
+    if(networkStatus == NotReachable){
         [refreshControl endRefreshing];
         [self showMessage:NETWORK_UNAVAILABLE];
         return;
     }
     
-     [appDelegate showHUDAddedToView:self.view message:@""];
+    [appDelegate showHUDAddedToView:self.view message:@""];
    
     //[self setBusy:YES];
     
@@ -363,8 +337,7 @@
     
     [_request setHTTPMethod:@"GET"];
     
-    [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-     {
+    [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
          if(error != nil){
              NSLog(@"%@",error);
               [appDelegate hideHUDForView2:self.view];
@@ -383,7 +356,7 @@
                          [arrCategoryPhotos removeAllObjects];
                      }
                      
-                     for (int i = 0; i < arrPhotoSet.count; i++) {
+                     for (int i = 0; i < arrPhotoSet.count; i++){
                          NSMutableDictionary *dictResult;
                          dictResult = [[NSMutableDictionary alloc]init];
                          dictResult = [arrPhotoSet objectAtIndex:i];
@@ -398,13 +371,10 @@
                          photoClass.description = [dictResult objectForKey:@"description"];
                          
                          int photoID = [[dictResult objectForKey:@"id"]intValue];
-                         int linke_Count = [[dictResult objectForKey:@"like_count"]intValue];
+                         int like_Count = [[dictResult objectForKey:@"like_count"]intValue];
                          
                          photoClass.PhotoId = [NSString stringWithFormat:@"%d",photoID];
-                         photoClass.like_count = [NSString stringWithFormat:@"%d",linke_Count];
-                         
-                         //photoClass.likers = [dictResult objectForKey:@"likers"];
-                         
+                         photoClass.like_count = [NSString stringWithFormat:@"%d",like_Count];
                          photoClass.likers = [[NSMutableArray alloc]init];
                          photoClass.comment_set = [[NSMutableArray alloc]init];
                          
@@ -432,7 +402,6 @@
                                  
                                  [dictFollowerInfo setValue:proflURL forKey:@"user__profile_picture"];
                              }
-                             
                              if([dictUserDetail objectForKey:@"username"] == [NSNull null]){
                                  [dictFollowerInfo setObject:@"" forKey:@"user__username"];
                              } else {
@@ -474,13 +443,11 @@
                                  
                                  [dictFollowerInfo setValue:proflURL forKey:@"user__profile_picture"];
                              }
-
                              if([dictUserDetail objectForKey:@"user"] == [NSNull null]){
                                  [dictFollowerInfo setObject:@"" forKey:@"user__username"];
                              } else {
                                  [dictFollowerInfo setObject:[[dictUserDetail objectForKey:@"user"]lastPathComponent] forKey:@"user__username"];
                              }
-
                              if([dictUserDetail objectForKey:@"text"] == [NSNull null]){
                                  [dictFollowerInfo setObject:@"" forKey:@"text"];
                              } else {
@@ -503,7 +470,6 @@
                              
                              [photoClass.comment_set addObject:dictFollowerInfo];
                          }
-
                          photoClass.modified = [dictResult objectForKey:@"modified"];
                          photoClass.photo = [dictResult objectForKey:@"photo"];
                          photoClass.slug = [dictResult objectForKey:@"slug"];
@@ -513,11 +479,13 @@
                      } //for loop end
                  
                      if([titlePage isEqualToString:@""]){
+                         [lblTitle setFont:[UIFont fontWithName:@"ARDESTINE" size:30]];
                          lblTitle.text = @"OBY";
                      } else {
-                         lblTitle.text = [titlePage uppercaseString];
+                         [lblTitle setFont:[UIFont fontWithName:@"Gibson-Semibold" size:21]];
+                         lblTitle.text = [titlePage capitalizedString];
+                         // lblTitle.text = [titlePage uppercaseString];
                      }
-                     
                      [appDelegate hideHUDForView2:self.view];
                      //[self setBusy:NO];
                      isMenuChoosed = YES;
@@ -528,7 +496,6 @@
                      //[self setBusy:NO];
                      [self showMessage:SERVER_ERROR];
                  }
-                
              } else {
                  [refreshControl endRefreshing];
                  [appDelegate hideHUDForView2:self.view];
@@ -547,11 +514,10 @@
 -(void)getSupportList{
     Reachability *reachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable) {
+    if(networkStatus == NotReachable){
         [self showMessage:NETWORK_UNAVAILABLE];
         return;
     }
-    
     NSString *urlString = [NSString stringWithFormat:@"%@%@/",PROFILEURL,GetUserName];
     NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                              timeoutInterval:60];
@@ -575,10 +541,11 @@
              NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             //NSLog(@"%@",JSONValue);
              
-      [self setBusy:NO];
+             [self setBusy:NO];
              
              if([JSONValue isKindOfClass:[NSDictionary class]]){
                  if([JSONValue objectForKey:@"follower"] == [NSNull null]){
+                     
                  } else {
                      if(appDelegate.arrSupports.count > 0){
                          [appDelegate.arrSupports removeAllObjects];
@@ -600,7 +567,6 @@
                          [appDelegate.arrSupports addObject:userName];
                      }
                  }
-
                  [self setBusy:NO];
              } else {
                  [self setBusy:NO];
@@ -617,7 +583,7 @@
 -(void)getHomePageDetails{
     Reachability *reachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable) {
+    if(networkStatus == NotReachable){
         [refreshControl endRefreshing];
         [self showMessage:NETWORK_UNAVAILABLE];
         return;
@@ -653,7 +619,7 @@
          if ([data length] > 0 && error == nil){
              NSArray *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             // NSLog(@"%@",JSONValue);
-             NSLog(@"Images count: %d",[JSONValue count]);
+             NSLog(@"Images count: %lu",(unsigned long)[JSONValue count]);
              
              if([JSONValue isKindOfClass:[NSArray class]]){
                  if( appDelegate.arrPhotos.count > 0){
@@ -684,10 +650,10 @@
                          photoClass.description = [dictResult objectForKey:@"description"];
                          
                          int photoID = [[dictResult objectForKey:@"id"]intValue];
-                         int linke_Count = [[dictResult objectForKey:@"like_count"]intValue];
+                         int like_Count = [[dictResult objectForKey:@"like_count"]intValue];
                          
                          photoClass.PhotoId = [NSString stringWithFormat:@"%d",photoID];
-                         photoClass.like_count = [NSString stringWithFormat:@"%d",linke_Count];
+                         photoClass.like_count = [NSString stringWithFormat:@"%d",like_Count];
                          //photoClass.likers = [dictResult objectForKey:@"get_likers_info"];
                          
                          photoClass.likers = [[NSMutableArray alloc]init];
@@ -699,7 +665,6 @@
                          if([[dictResult objectForKey:@"get_likers_info"] count] > 0){
                             
                              for(int l = 0; l < [arrLiker count]; l++){
-                                 
                                  NSDictionary *dictUsers = [arrLiker objectAtIndex:l];
                                  if([[dictUsers objectForKey:@"username"] isEqualToString:GetUserName]){
                                      photoClass.isLike = YES;
@@ -746,7 +711,6 @@
                              
                              [photoClass.likers addObject:dictFollowerInfo];
                          }
-
                          NSArray *arrCommentSet = [dictResult objectForKey:@"comment_set"];
 
                          for(int k = 0; k < arrCommentSet.count; k++){
@@ -770,7 +734,6 @@
                              } else {
                                  [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"text"] forKey:@"text"];
                              }
-                             
                              NSString *fullString;
                              NSString *fullName = [[dictFollowerInfo objectForKey:@"user__username"]lastPathComponent];
                              NSString *userName = [dictFollowerInfo objectForKey:@"text"];
@@ -787,7 +750,6 @@
                              
                              [photoClass.comment_set addObject:dictFollowerInfo];
                          }
-                         
                          photoClass.modified = [dictResult objectForKey:@"modified"];
                          photoClass.photo = [dictResult objectForKey:@"photo"];
                          photoClass.slug = [dictResult objectForKey:@"slug"];
@@ -824,7 +786,8 @@
     } else {
         if(appDelegate.arrPhotos.count > 0){
             [self scrollToTop];
-             lblTitle.text=@"OBY";
+            [lblTitle setFont:[UIFont fontWithName:@"ARDESTINE" size:30]];
+            lblTitle.text = @"OBY";
         }
     }
 }
@@ -839,16 +802,12 @@
     if(isMenuChoosed){
         return  [arrCategoryPhotos count];
     } else {
-    return [appDelegate.arrPhotos count];
+        return [appDelegate.arrPhotos count];
     }
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     CollectionViewCellimage *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCellimage" forIndexPath:indexPath];
-    
-//    cell.imgView.image=[UIImage imageNamed:[NSString stringWithFormat:@"%d.png",indexPath.row]];
-//    
-//    return cell;
     
     PhotoClass *photoClass;
     
@@ -893,7 +852,6 @@
     
    // cell.imgView.shouldShowLoader=YES;
     
-    
     if(tapCellIndex == indexPath.row){
         cell.imgView.hidden = YES;
         cell.viewInfo.hidden = NO;
@@ -902,7 +860,6 @@
         cell.viewInfo.hidden = YES;
     }
     
-
     [cell.btnUserName setTag:indexPath.row];
     [cell.btnUserName addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -927,8 +884,7 @@
         NSLog(@"cont tab");
         return;
     }
-    
-    //spinning icon if image is not there
+
     UIImage *img = [UIImage imageNamed:@"spining"];
     if([self firstimage:img isEqualTo:currentCell.imgView.image]){
         return;
@@ -944,43 +900,8 @@
     
     photoViewController.photoURL = photoClass.photo;
     photoViewController.view.frame = appDelegate.window.frame;
-    [appDelegate.window addSubview:photoViewController.view];
 
-    /*
-    CollectionViewCellimage *PreivousCell=(CollectionViewCellimage *)[collectionView cellForItemAtIndexPath:previousIndexPath];
-    
-    tapCellIndex=indexPath.row;
-   
-    if(previousIndexPath==nil){
-        currentCell.imgView.hidden=YES;
-        currentCell.viewInfo.hidden=NO;
-        
-        [AnimatedMethods animatedFlipFromRight:currentCell.imgView secondView:currentCell.viewInfo];
-        
-        previousIndexPath=indexPath;
-        return;
-    }
-    
-    if (previousIndexPath.row!=indexPath.row) {
-        currentCell.imgView.hidden=YES;
-        currentCell.viewInfo.hidden=NO;
-       
-       [AnimatedMethods animatedFlipFromRight:currentCell.imgView secondView:currentCell.viewInfo];
-        
-        if(previousIndexPath!=nil){
-            PreivousCell.imgView.hidden=NO;
-            PreivousCell.viewInfo.hidden=YES;
-           // [AnimatedMethods animatedFlipFrombottom:PreivousCell.imgView secondView:PreivousCell.viewInfo];
-        }
-        previousIndexPath=indexPath;
-    }else{
-        currentCell.imgView.hidden=NO;
-        currentCell.viewInfo.hidden=YES;
-        [AnimatedMethods animatedFlipFromLeft:currentCell.imgView secondView:currentCell.viewInfo];
-  
-        previousIndexPath=nil;
-    }
-     */
+    [appDelegate.window addSubview:photoViewController.view];
 }
 
 -(void)onCommentList:(CustomButton*)sender{
@@ -1000,7 +921,7 @@
     if([currentCell.lblComments.text isEqualToString:@"0"]){
         return;
     }
-    supportViewController.pageTitle = @"COMMENTS";
+    supportViewController.pageTitle = @"Comments";
     supportViewController.arrDetails = photoClass.comment_set.copy;
     [self.navigationController pushViewController:supportViewController animated:YES];
 }
@@ -1022,7 +943,7 @@
         if([currentCell.lblLikes.text isEqualToString:@"0"]){
             return;
         }
-        supportViewController.pageTitle = @"LIKERS";
+        supportViewController.pageTitle = @"Likers";
         supportViewController.arrDetails = photoClass.likers.copy;
         [self.navigationController pushViewController:supportViewController animated:YES];
 }
@@ -1030,29 +951,10 @@
 -(BOOL)firstimage:(UIImage *)image1 isEqualTo:(UIImage *)image2 {
     NSData *data1 = UIImagePNGRepresentation(image1);
     NSData *data2 = UIImagePNGRepresentation(image2);
-    
     return [data1 isEqualToData:data2];
 }
 
-//
-//- (UIEdgeInsets)collectionView:(UICollectionView *) collectionView
-//                        layout:(UICollectionViewLayout *) collectionViewLayout
-//        insetForSectionAtIndex:(NSInteger) section {
-//    
-//    return UIEdgeInsetsMake(0, 0, 0, 0); // top, left, bottom, right
-//}
-//
-//- (CGFloat)collectionView:(UICollectionView *) collectionView
-//                   layout:(UICollectionViewLayout *) collectionViewLayout
-//minimumInteritemSpacingForSectionAtIndex:(NSInteger) section {
-//    return 0.0;
-//}
-//
-
 -(void)onComment:(CustomButton*)sender{
-   // NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
-  //  CollectionViewCellimage *currentCell=(CollectionViewCellimage *)[collectionVWHome cellForItemAtIndexPath:indexPath];
-    
     SetisComment(YES);
     PhotoClass *photoClass;
     
@@ -1094,7 +996,6 @@
                 [photoClass.likers removeObjectAtIndex:i];
             }
         }
-       
         likecount--;
     } else {
         NSMutableDictionary *dictUser = [[NSMutableDictionary alloc]init];
@@ -1109,16 +1010,14 @@
         fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
         
         NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
-        
         NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
-        
         [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
-        
         [dictUser setValue:hogan forKey:@"usernameText"];
         
         [photoClass.likers addObject:dictUser];
         
         likecount++;
+        [self doRewardCheck];
     }
     
     photoClass.like_count = [NSString stringWithFormat:@"%d",likecount];
@@ -1131,18 +1030,16 @@
     currentCell.lblLikes.text = [NSString stringWithFormat:@"%@",photoClass.like_count];
     
     [self doLike:photoClass selectCell:currentCell];
-    
-    NSLog(@"Like Click");
+    NSLog(@"Like click");
 }
 
--(void)doLike:(PhotoClass *)photoClass selectCell:(CollectionViewCellimage *)selectCell {
+-(void)doLike:(PhotoClass *)photoClass selectCell:(CollectionViewCellimage *)selectCell{
     [self.view endEditing:YES];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     
    // [self setBusy:YES];
     NSString *strURL = [NSString stringWithFormat:@"%@%@/",LIKEURL,photoClass.PhotoId];
-    
     NSURL *url = [NSURL URLWithString:strURL];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setTimeoutInterval:60];
@@ -1151,7 +1048,6 @@
     NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
     NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
-    
     [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
     [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
@@ -1210,9 +1106,65 @@
     }
     ProfileViewController *profileViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
     profileViewController.userURL = photoClass.creator_url;
-   // NSLog(@"crater url = %@",photoClass.creator_url);
     
     [self.navigationController pushViewController:profileViewController animated:YES];
+}
+
+#pragma mark - KIIP
+
+-(void)doRewardCheck{
+    // Check REWARDCHECKURL
+    // If `deserves_reward` == True, show Kiip reward
+    // Subtract reward amount from user's available points
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSString *urlString = [NSString stringWithFormat:@"%@",REWARDCHECKURL];
+        NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+                                                                 timeoutInterval:60];
+        NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
+        NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
+        NSString *base64String = [plainData base64EncodedStringWithOptions:0];
+        NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
+        [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
+        [_request setHTTPMethod:@"GET"];
+        
+        [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+            if(error != nil){
+                NSLog(@"%@",error);
+            }
+            if ([data length] > 0 && error == nil){
+                NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                NSString *rewardResult = [JSONValue objectForKey:@"deserves_reward"];
+                if([rewardResult boolValue] == YES){
+                    [[Kiip sharedInstance] saveMoment:@"putting others before yourself!" withCompletionHandler:^(KPPoptart *poptart, NSError *error){
+                        if (error){
+                            NSLog(@"Something's wrong");
+                            // handle with an Alert dialog.
+                        }
+                        if (poptart){
+                            NSLog(@"Successful moment save. Showing reward.");
+                            [poptart show];
+                            
+                            NSString *urlString = [NSString stringWithFormat:@"%@",REWARDREDEEMEDURL];
+                            NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+                                                           timeoutInterval:60];
+                            NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
+                            NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
+                            NSString *base64String = [plainData base64EncodedStringWithOptions:0];
+                            NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
+                            [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
+                            [_request setHTTPMethod:@"GET"];
+                            
+                            [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+                            }];
+                        }
+                        if (!poptart){
+                            NSLog(@"Successful moment save, but no reward available.");
+                        }
+                    }];
+                }
+            }
+        }];
+    });
 }
 
 @end

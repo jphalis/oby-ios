@@ -42,6 +42,7 @@
 @end
 
 @implementation CreateViewController
+
 @synthesize lblCat;
 
 - (void) changeTextColorForUIActionSheet:(UIActionSheet*)actionSheet {
@@ -397,7 +398,7 @@
     [self.view endEditing:YES];
     [self setBusy:YES];
     
-    NSString *myUniqueName = [NSString stringWithFormat:@"%@-%u", @"img", (NSUInteger)([[NSDate date] timeIntervalSince1970]*10.0)];
+    NSString *myUniqueName = [NSString stringWithFormat:@"%@-%lu", @"img", (unsigned long)([[NSDate date] timeIntervalSince1970]*10.0)];
     
     NSString *description;
     
@@ -463,7 +464,7 @@
     [request setValue:authValue forHTTPHeaderField:@"Authorization"];
     
     // set the content-length
-    NSString *postLength = [NSString stringWithFormat:@"%d", [body length]];
+    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[body length]];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     
     // set URL
@@ -526,13 +527,13 @@
     [self.view endEditing:YES];
 }
 
-- (void)showcamera {
+- (void)showcamera{
     UIImagePickerController *imagePicker;
     imagePicker = [[UIImagePickerController alloc] init];
     [imagePicker setDelegate:self];
     [imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
     [imagePicker setAllowsEditing:YES];
-    [self presentModalViewController:imagePicker animated:YES];
+    [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
 @end
