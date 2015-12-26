@@ -42,7 +42,7 @@
     
     appDelegate = [AppDelegate getDelegate];
     
-     refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(startRefresh)
              forControlEvents:UIControlEventValueChanged];
     [colltionVw addSubview:refreshControl];
@@ -57,7 +57,6 @@
     
     UILongPressGestureRecognizer *longPressCollectionView = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
     longPressCollectionView.minimumPressDuration = 1;
-    //[colltionVw addGestureRecognizer:longPressCollectionView];
     
     [self getTimeLineDetails];
     
@@ -83,6 +82,7 @@
         [self.view addSubview:photoViewController.view];
     }
 }
+
 -(void)startRefresh{
     [self getTimeLineDetails];
 }
@@ -147,18 +147,19 @@
     PhotoClass *photoClass = [arrTimelinePhotos objectAtIndex:indexPath.row];
     
     // Change words that start with # to blue
-    NSString *aString = [NSString stringWithFormat:@"%@", photoClass.description];
-    NSMutableAttributedString *attribString = [[NSMutableAttributedString alloc] initWithString:aString];
-    NSArray *words = [aString componentsSeparatedByString:@" "];
-    for (NSString *word in words){
-        if ([word hasPrefix:@"#"]) {
-            NSRange range = [aString rangeOfString:word];
-            [attribString addAttribute:NSForegroundColorAttributeName value:[AnimatedMethods colorFromHexString:@"#47A8F2"] range:range];
-        }
-    }
+//    NSString *aString = [NSString stringWithFormat:@"%@", photoClass.description];
+//    NSMutableAttributedString *attribString = [[NSMutableAttributedString alloc] initWithString:aString];
+//    NSArray *words = [aString componentsSeparatedByString:@" "];
+//    for (NSString *word in words){
+//        if ([word hasPrefix:@"#"]) {
+//            NSRange range = [aString rangeOfString:word];
+//            [attribString addAttribute:NSForegroundColorAttributeName value:[AnimatedMethods colorFromHexString:@"#185b8b"] range:range];
+//        }
+//    }
+//    cell.lblDescription.attributedText = attribString;
     
     cell.lblName.text = photoClass.creator;
-    cell.lblDescription.attributedText = attribString;
+    cell.lblDescription.text = photoClass.description;
     cell.lblLikes.text = [NSString stringWithFormat:@"%@",photoClass.like_count];
     cell.lblComments.text = [NSString stringWithFormat:@"%@",photoClass.comment_count];
     [cell.imgView loadImageFromURL:photoClass.photo withTempImage:@""];

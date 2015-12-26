@@ -34,7 +34,9 @@
 
 - (void)viewDidLoad {
     arrNotification = [[NSMutableArray alloc]init];
+    
     [super viewDidLoad];
+    
     appDelegate = [AppDelegate getDelegate];
     refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(startRefresh)
@@ -86,8 +88,6 @@
                                                              timeoutInterval:60];
     
     NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
-//    NSLog(@"auth string =%@",authStr);
-    
     NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
     NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
@@ -131,7 +131,7 @@
                          
                          NSString *str = [[arrNotifResult objectAtIndex:i]valueForKey:@"sender_profile_picture"];
                          NSString *newStr = [NSString stringWithFormat:@"https:%@",str];
-                         notificationClass.sender_profile_picture=newStr;
+                         notificationClass.sender_profile_picture = newStr;
                          
                          notificationClass.display_thread = [[arrNotifResult objectAtIndex:i]valueForKey:@"display_thread"];
                          
@@ -210,7 +210,7 @@
     }
     
     NotificationClass *notificationClass = [arrNotification objectAtIndex:indexPath.row];
-
+    
     cell.txtNotification.text = notificationClass.display_thread;
     
     if([notificationClass.target_url isEqualToString:@""]){
@@ -256,8 +256,6 @@
             photoViewController.photoURL = notificationClass.target_photo;
             photoViewController.view.frame = appDelegate.window.frame;
             [self.view addSubview:photoViewController.view];
-            
-            //[[UIApplication sharedApplication]openURL:[NSURL URLWithString:notificationClass.target_url]];
         }
     }
 }

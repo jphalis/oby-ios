@@ -582,8 +582,6 @@
     [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
     
     //[_request setValue:[NSString stringWithFormat:@"Token %@",GetUserToken] forHTTPHeaderField:@"Authorization"];
-
-//    NSLog(@"%@",GetUserToken);
     
     [_request setHTTPMethod:@"GET"];
     
@@ -795,18 +793,19 @@
     }
 
     // Change words that start with # to blue
-    NSString *aString = [NSString stringWithFormat:@"%@", photoClass.description];
-    NSMutableAttributedString *attribString = [[NSMutableAttributedString alloc] initWithString:aString];
-    NSArray *words = [aString componentsSeparatedByString:@" "];
-    for (NSString *word in words){
-        if ([word hasPrefix:@"#"]) {
-            NSRange range = [aString rangeOfString:word];
-            [attribString addAttribute:NSForegroundColorAttributeName value:[AnimatedMethods colorFromHexString:@"#47A8F2"] range:range];
-        }
-    }
+//    NSString *aString = [NSString stringWithFormat:@"%@", photoClass.description];
+//    NSMutableAttributedString *attribString = [[NSMutableAttributedString alloc] initWithString:aString];
+//    NSArray *words = [aString componentsSeparatedByString:@" "];
+//    for (NSString *word in words){
+//        if ([word hasPrefix:@"#"]) {
+//            NSRange range = [aString rangeOfString:word];
+//            [attribString addAttribute:NSForegroundColorAttributeName value:[AnimatedMethods colorFromHexString:@"#185b8b"] range:range];
+//        }
+//    }
+//    cell.lblDescription.attributedText = attribString;
     
     cell.lblName.text = photoClass.creator;
-    cell.lblDescription.attributedText = attribString;
+    cell.lblDescription.text = photoClass.description;
     cell.lblLikes.text = [NSString stringWithFormat:@"%@",photoClass.like_count];
     cell.lblComments.text = [NSString stringWithFormat:@"%@",photoClass.comment_count];
     

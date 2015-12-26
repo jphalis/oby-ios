@@ -189,6 +189,7 @@
 		D0C6C50E1C28872E002E5B5F /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C6C50D1C28872E002E5B5F /* PassKit.framework */; };
 		D0C6C5101C288739002E5B5F /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C6C50F1C288739002E5B5F /* MediaPlayer.framework */; };
 		D0F8DD061C2EE89000B911B4 /* GlobalFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F8DD051C2EE89000B911B4 /* GlobalFunctions.m */; };
+		D0F8DD0A1C2F0CDF00B911B4 /* KILabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F8DD091C2F0CDF00B911B4 /* KILabel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -495,6 +496,8 @@
 		D0C6C5111C28C720002E5B5F /* OBY-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OBY-Prefix.pch"; sourceTree = "<group>"; };
 		D0F8DD041C2EE86400B911B4 /* GlobalFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalFunctions.h; sourceTree = "<group>"; };
 		D0F8DD051C2EE89000B911B4 /* GlobalFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalFunctions.m; sourceTree = "<group>"; };
+		D0F8DD081C2F0CDF00B911B4 /* KILabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KILabel.h; sourceTree = "<group>"; };
+		D0F8DD091C2F0CDF00B911B4 /* KILabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KILabel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -640,6 +643,7 @@
 		A5B6C3EA1BE8E96A004F295C /* External */ = {
 			isa = PBXGroup;
 			children = (
+				D0F8DD071C2F0CCF00B911B4 /* AlertView */,
 				D0AC4C6C1C2C506A00A110AE /* StatusBarNotifications */,
 				D0461F381C2766440024738F /* WebViewController */,
 				BECF7B0E1C229C66008627B9 /* OLGhostAlertView.h */,
@@ -1145,6 +1149,15 @@
 			path = Icons;
 			sourceTree = "<group>";
 		};
+		D0F8DD071C2F0CCF00B911B4 /* AlertView */ = {
+			isa = PBXGroup;
+			children = (
+				D0F8DD081C2F0CDF00B911B4 /* KILabel.h */,
+				D0F8DD091C2F0CDF00B911B4 /* KILabel.m */,
+			);
+			name = AlertView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1354,6 +1367,7 @@
 				BE0909111BEE10140077DFE8 /* TableViewCellNotification.m in Sources */,
 				BECF7AE61C229818008627B9 /* CameraCell.m in Sources */,
 				BEBD0E2B1BEDC24600A62198 /* HTHorizontalSelectionListScrollView.m in Sources */,
+				D0F8DD0A1C2F0CDF00B911B4 /* KILabel.m in Sources */,
 				BE54C1EA1BFF455E001380A0 /* SDIAsyncImageView.m in Sources */,
 				BE2045A51BF5A89600288548 /* SDWebImageDownloader.m in Sources */,
 				BE2045A71BF5A89600288548 /* SDWebImageManager.m in Sources */,
