@@ -5,6 +5,7 @@
 #import "defs.h"
 #import "ForgotViewController.h"
 #import "GlobalFunctions.h"
+#import "SCLAlertView.h"
 #import "StringUtil.h"
 #import "TWMessageBarManager.h"
 
@@ -76,11 +77,17 @@
 }
 
 -(BOOL)validateFields{
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    
     if ([[txtEmail.text Trim] isEmpty]){
-        [self showMessage:EMPTY_EMAIL];
+        alert.showAnimationType = SlideInFromLeft;
+        alert.hideAnimationType = SlideOutToBottom;
+        [alert showNotice:self title:@"Notice" subTitle:EMPTY_EMAIL closeButtonTitle:@"OK" duration:0.0f];
         return NO;
-    }else if ([AppDelegate validateEmail:[txtEmail.text Trim]] == NO) {
-        [self showMessage:INVALID_EMAIL];
+    }else if ([AppDelegate validateEmail:[txtEmail.text Trim]] == NO){
+        alert.showAnimationType = SlideInFromLeft;
+        alert.hideAnimationType = SlideOutToBottom;
+        [alert showNotice:self title:@"Notice" subTitle:INVALID_EMAIL closeButtonTitle:@"OK" duration:0.0f];
         return NO;
     }
     return YES;
@@ -94,6 +101,9 @@
     checkNetworkReachability();
     [self.view endEditing:YES];
     [self setBusy:YES];
+    
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSString *params = [NSString stringWithFormat:@"email=%@",[txtEmail.text Trim]];
         NSMutableData *bodyData = [[NSMutableData alloc] initWithData:[params dataUsingEncoding:NSUTF8StringEncoding]];
@@ -118,12 +128,15 @@
                  if ([data length] > 0 && error == nil){
                      NSDictionary * JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
 
-//                    NSLog(@"JSONValue %@",JSONValue);
                      if([JSONValue isKindOfClass:[NSDictionary class]]){
                          if([[JSONValue objectForKey:@"success"]isEqualToString:@"Password reset e-mail has been sent."]){
-                             [self showMessage:PASS_SENT];
+                             alert.showAnimationType = SlideInFromLeft;
+                             alert.hideAnimationType = SlideOutToBottom;
+                             [alert showSuccess:self title:@"Success" subTitle:PASS_SENT closeButtonTitle:@"Done" duration:0.0f];
                          } else {
-                             [self showMessage:PASS_FAILURE];
+                             alert.showAnimationType = SlideInFromLeft;
+                             alert.hideAnimationType = SlideOutToBottom;
+                             [alert showNotice:self title:@"Notice" subTitle:PASS_FAILURE closeButtonTitle:@"OK" duration:0.0f];
                          }
                          [self clearFileds];
                      } else {

@@ -6,11 +6,12 @@
 #define OBY_Message_h
 
 // General
-#define UPLOAD_PHOTO @"Thank you for submitting your photo, we will post it shortly"
-#define INCORRECTOLDPASS @"Incorrect old password"
-#define SERVER_ERROR @"That's our bad. Please try again later!"
-#define LOGIN_ERROR  @"Unable to login with provided credentials"
-#define NETWORK_UNAVAILABLE  @"Please check your network connection"
+#define UPLOAD_PHOTO @"Your photo has been uploaded successfully."
+#define INCORRECTOLDPASS @"Incorrect old password."
+#define SERVER_ERROR @"That's our bad. Please try again later."
+#define LOGIN_ERROR  @"Unable to login with provided credentials."
+#define NETWORK_UNAVAILABLE  @"Please check your network connection."
+#define EMPTY_SEARCH @"Please enter text into the search bar."
 
 // Sign in
 #define USER_NOTREGISTERED @"Invalid username or password"
@@ -21,47 +22,48 @@
 #define INVALID_EDU_ID @"Please use a valid university (.edu) email"
 
 // Sign up
-#define INVALID_USERNAME @"Please enter a valid username"
-#define INVALID_EMAIL @"Please enter a valid email"
-#define INVALID_EDU_EMAIL @"Please enter a valid .edu email"
-#define INVALID_MOBILENO @"Please enter valid mobile number"
-#define INVALID_COUNTRYCODE @"Please enter valid country code"
-#define EMPTY_USERNAME @"Please enter a username"
-#define EMPTY_CATEGORY @"Please choose a category"
-#define EMPTY_PHOTO @"Please choose or take a photo"
-#define EMPTY_EMAIL @"Please enter your email"
-#define EMPTY_PASSWORD @"Please enter your password"
-#define EMPTY_CNF_PASSWORD @"Please verify your password"
-#define EMPTY_COUNTRYCODE @"Please enter your country code"
-#define EMPTY_MOBILENUM @"Please enter your mobile number"
-#define EMAIL_EXISTS @"Email Address already exists"
-#define MOBILE_EXISTS @"Mobile number already exists"
+#define INVALID_USERNAME @"Please enter a valid username."
+#define INVALID_EMAIL @"Please enter a valid email."
+#define INVALID_EDU_EMAIL @"Please enter a valid .edu email."
+#define INVALID_MOBILENO @"Please enter valid mobile number."
+#define INVALID_COUNTRYCODE @"Please enter valid country code."
+#define EMPTY_USERNAME @"Please enter a username into the designated field."
+#define EMPTY_CATEGORY @"Please choose a category."
+#define EMPTY_PHOTO @"Please choose or take a photo."
+#define EMPTY_EMAIL @"Please enter your email."
+#define EMPTY_PASSWORD @"Please enter your password."
+#define EMPTY_CNF_PASSWORD @"Please verify your password."
+#define EMPTY_COUNTRYCODE @"Please enter your country code."
+#define EMPTY_MOBILENUM @"Please enter your cell phone number."
+#define EMAIL_EXISTS @"Email Address already exists."
+#define MOBILE_EXISTS @"Phone number already exists."
 #define SIGNUP_SUCCESS @"Thank you for signing up!"
 
 // Forgot Password
-#define EMPTY_OLD_PASSWORD @"Please enter your old password"
-#define EMPTY_NEW_PASSWORD @"Please enter your new password"
-#define EMPTY_CNF_NEW_PASSWORD @"Please confirm your password"
-#define PASS_MIN_LEGTH @"Password must be longer than 5 characters"
-#define USERNAME_MIN_LEGTH @"Username must be longer than 3 characters"
-#define PASS_SAME @"Your old password and new password must be different"
-#define PASS_MISMATCH @"The passwords do not match"
-#define PASS_SUCCESS @"Your password has been reset successfully"
-#define PASS_FAILURE @"Email address does not exists"
-#define PASS_SENT @"Password reset e-mail has been sent"
+#define EMPTY_OLD_PASSWORD @"Please enter your old password."
+#define EMPTY_NEW_PASSWORD @"Please enter your new password."
+#define EMPTY_CNF_NEW_PASSWORD @"Please confirm your password."
+#define PASS_MIN_LEGTH @"Password must be longer than 5 characters."
+#define USERNAME_MIN_LEGTH @"Username must be longer than 3 characters."
+#define PASS_SAME @"Your old password and new password must be different."
+#define PASS_MISMATCH @"The passwords do not match."
+#define PASS_SUCCESS @"Your password has been reset successfully."
+#define PASS_FAILURE @"Email address does not exists."
+#define PASS_SENT @"Password reset e-mail has been sent."
 
 // Verify Mobile Number
-#define VERIFICATION_MOBILE_SUCCESS @"Your number has been updated successfully"
-#define VERIFICATION_MOBILE_EXISTS @"This mobile number is already registered. Please try a different number"
+#define VERIFICATION_MOBILE_SUCCESS @"Your number has been updated successfully."
+#define VERIFICATION_MOBILE_EXISTS @"This mobile number is already registered. Please try a different number."
 
 // Change Password
-#define CHANGE_PASS_SUCCESS @"Your password has been updated successfully"
-#define CHANGE_PASS_MISMATCH @"Incorrect old password"
+#define CHANGE_PASS_SUCCESS @"Your password has been updated successfully."
+#define CHANGE_PASS_MISMATCH @"Incorrect old password."
 
 // Settings
-#define UPDATEPROFILE_SUCCESS @"Your profile has been updated"
+#define UPDATEPROFILE_SUCCESS @"Your profile has been updated successfully."
+#define MAX_BIO_LENGTH @"Bio may not contain more than 200 characters."
 
 // Notiifcations
-#define NO_NOTIFICATION @"There are no notifications"
+#define NO_NOTIFICATION @"There are no notifications."
 
 #endif

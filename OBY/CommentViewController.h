@@ -13,6 +13,7 @@
 @end
 
 @interface CommentViewController : UIViewController
+
 @property (nonatomic,assign)int selectRow;
 @property (strong,nonatomic)PhotoClass *photoClass;
 @property (nonatomic,assign) id<CommentViewControllerDelegate> delegate;

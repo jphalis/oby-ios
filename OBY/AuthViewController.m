@@ -9,6 +9,7 @@
 #import "defs.h"
 #import "ForgotViewController.h"
 #import "GlobalFunctions.h"
+#import "SCLAlertView.h"
 #import "StringUtil.h"
 #import "SVModalWebViewController.h"
 //#import "SVWebViewController.h"
@@ -132,6 +133,7 @@
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
     NSUInteger length = [textField.text length] + [string length] - range.length;
    
     if(textField == txtLoginUsrName || textField == txtSignupUsrName){
@@ -209,7 +211,7 @@
     
     textField.inputAccessoryView = keyboardToolBar;
     
-        [self animateTextField: textField up: YES];
+    [self animateTextField: textField up: YES];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
@@ -225,8 +227,6 @@
     }
     
     const int movementDistance = val * textField.frame.origin.y;
-    
-    // tweak as needed
     const float movementDuration = 0.3f;
     
     int movement = (up ? -movementDistance : movementDistance);
@@ -241,14 +241,12 @@
 
 
 - (void)nextTextField:(UIBarButtonItem *)sender {
-//    NSLog(@"%ld",(long)sender.tag);
-    
     if(viewLogin.hidden == NO){
         if (txtLoginUsrName){
             [txtLoginUsrName resignFirstResponder];
             [txtLoginPass becomeFirstResponder];
         }
-    }else{
+    } else {
         if(sender.tag == 1){
             [txtSignupUsrName resignFirstResponder];
             [txtSignupEmail becomeFirstResponder];
@@ -306,6 +304,9 @@
 -(void)doLogin{
     [self.view endEditing:YES];
     [self setBusy:YES];
+    
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    
     txtLoginUsrName.text = [txtLoginUsrName.text lowercaseString];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -324,7 +325,6 @@
         [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
         [urlRequest setValue:@"multipart/form-data" forHTTPHeaderField:@"enctype"];
         [urlRequest setHTTPBody:bodyData];
-        //NSOperationQueue *queue = [[NSOperationQueue alloc] init];
         
         //Call the Login Web services
         [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
@@ -334,7 +334,6 @@
 
                  if ([data length] > 0 && error == nil){
                      NSDictionary * JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-//                     NSLog(@"JSONValue %@",JSONValue);
                      
                      if([[JSONValue objectForKey:@"userid"]integerValue]>0){
                          SetUserName([JSONValue objectForKey:@"user"]);
@@ -346,7 +345,9 @@
 
                          [self pushingView:YES];
                      } else {
-                         [self showMessage:LOGIN_ERROR];
+                         alert.showAnimationType = SlideInFromLeft;
+                         alert.hideAnimationType = SlideOutToBottom;
+                         [alert showNotice:self title:@"Notice" subTitle:LOGIN_ERROR closeButtonTitle:@"OK" duration:0.0f];
                      }
                  } else {
                      showServerError();
@@ -359,10 +360,8 @@
 
 -(void)getProfileDetails{
     NSString *urlString = [NSString stringWithFormat:@"%@%@/",PROFILEURL,GetUserName];
-    
     NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                              timeoutInterval:60];
-    
     NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
     NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
@@ -372,7 +371,6 @@
     
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
          if(error != nil){
-//             NSLog(@"%@",error);
              [self setBusy:NO];
          }
          if ([data length] > 0 && error == nil){
@@ -447,24 +445,15 @@
     [self.view endEditing:YES];
     [self setBusy:YES];
     
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    
     NSString *usname = [[txtSignupUsrName.text Trim] lowercaseString];
-    
     NSString *params = [NSString stringWithFormat:@"{\"username\":\"%@\",\"email\":\"%@\",\"password\":\"%@\"}",usname,[txtSignupEmail.text Trim],[txtSignupPass.text Trim]];
-    
-//    NSLog(@"%@",params);
     NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[params length]];
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",SIGNUPURL]];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setTimeoutInterval:60];
     [urlRequest setHTTPMethod:@"POST"];
-    
-//    NSString *authStr = [NSString stringWithFormat:@"%@:%@", @"jphalis", @"Hockey18"];
-//    NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
-//    NSString *base64String = [plainData base64EncodedStringWithOptions:0];
-//    NSString *authValue =[NSString stringWithFormat:@"Basic %@", base64String];
-    //NSString *authValue = [NSString stringWithFormat:@"Basic %@", [plainData base64Encoding]];
-    
-//    [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
     [urlRequest setValue:@"" forHTTPHeaderField:@"Authorization"];
     [urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
@@ -472,15 +461,11 @@
     [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
     
     //Call the Login Web services
-    [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-     {
-//         if(error != nil){
-//             NSLog(@"%@",error);
-//         }
+    [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+        
          if ([data length] > 0 && error == nil){
              NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
              if(JSONValue != nil){
-//                 NSLog(@"Jsonvalue=%@",JSONValue);
                  
                  if([[JSONValue allKeys]count] > 1){
                      
@@ -494,14 +479,19 @@
                          [self performSelectorInBackground:@selector(getProfileDetails) withObject:nil];
                          [self pushingView:YES];
                      } else {
-                         [self showMessage:USER_EXISTS_ANOTHER_USER];
+                         alert.showAnimationType = SlideInFromLeft;
+                         alert.hideAnimationType = SlideOutToBottom;
+                         [alert showNotice:self title:@"Notice" subTitle:USER_EXISTS_ANOTHER_USER closeButtonTitle:@"OK" duration:0.0f];
                      }
                  } else {
                      if([[[JSONValue allKeys]objectAtIndex:0]isEqualToString:@"username"]){
-                          [self showMessage:USER_EXISTS_ANOTHER_USER];
-                         
-                     } else if([[[JSONValue allKeys]objectAtIndex:0]isEqualToString:@"email"]) {
-                         [self showMessage:EMAIL_EXISTS_ANOTHER_USER];
+                         alert.showAnimationType = SlideInFromLeft;
+                         alert.hideAnimationType = SlideOutToBottom;
+                         [alert showNotice:self title:@"Notice" subTitle:USER_EXISTS_ANOTHER_USER closeButtonTitle:@"OK" duration:0.0f];
+                     } else if([[[JSONValue allKeys]objectAtIndex:0]isEqualToString:@"email"]){
+                         alert.showAnimationType = SlideInFromLeft;
+                         alert.hideAnimationType = SlideOutToBottom;
+                         [alert showNotice:self title:@"Notice" subTitle:EMAIL_EXISTS_ANOTHER_USER closeButtonTitle:@"OK" duration:0.0f];
                      } else {
                          showServerError();
                      }
@@ -532,45 +522,71 @@
 }
 
 -(BOOL)validateFields{
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    
     if(viewSignUp.hidden == YES){
         if ([[txtLoginUsrName.text Trim] isEmpty]){
-            [self showMessage:EMPTY_USERNAME];
+            alert.showAnimationType = SlideInFromLeft;
+            alert.hideAnimationType = SlideOutToBottom;
+            [alert showNotice:self title:@"Notice" subTitle:EMPTY_USERNAME closeButtonTitle:@"OK" duration:0.0f];
             return NO;
         } else if ([[txtLoginUsrName.text Trim] length] < 3) {
-            [self showMessage:USERNAME_MIN_LEGTH];
+            alert.showAnimationType = SlideInFromLeft;
+            alert.hideAnimationType = SlideOutToBottom;
+            [alert showNotice:self title:@"Notice" subTitle:USERNAME_MIN_LEGTH closeButtonTitle:@"OK" duration:0.0f];
             return NO;
         } else if ([[txtLoginPass.text Trim] isEmpty]) {
-            [self showMessage:EMPTY_PASSWORD];
+            alert.showAnimationType = SlideInFromLeft;
+            alert.hideAnimationType = SlideOutToBottom;
+            [alert showNotice:self title:@"Notice" subTitle:EMPTY_PASSWORD closeButtonTitle:@"OK" duration:0.0f];
             return NO;
         } else if ([[txtLoginPass.text Trim] length] < 5 ) {
-            [self showMessage:PASS_MIN_LEGTH];
+            alert.showAnimationType = SlideInFromLeft;
+            alert.hideAnimationType = SlideOutToBottom;
+            [alert showNotice:self title:@"Notice" subTitle:PASS_MIN_LEGTH closeButtonTitle:@"OK" duration:0.0f];
             return NO ;
         }
         return YES;
     } else {
         if ([[txtSignupUsrName.text Trim] isEmpty]){
-            [self showMessage:EMPTY_USERNAME];
+            alert.showAnimationType = SlideInFromLeft;
+            alert.hideAnimationType = SlideOutToBottom;
+            [alert showNotice:self title:@"Notice" subTitle:EMPTY_USERNAME closeButtonTitle:@"OK" duration:0.0f];
             return NO;
         } else if ([[txtSignupUsrName.text Trim] length] < 3){
-            [self showMessage:USERNAME_MIN_LEGTH];
+            alert.showAnimationType = SlideInFromLeft;
+            alert.hideAnimationType = SlideOutToBottom;
+            [alert showNotice:self title:@"Notice" subTitle:USERNAME_MIN_LEGTH closeButtonTitle:@"OK" duration:0.0f];
             return NO;
-        } else if ([[txtSignupEmail.text Trim] isEmpty]) {
-            [self showMessage:EMPTY_EMAIL];
+        } else if ([[txtSignupEmail.text Trim] isEmpty]){
+            alert.showAnimationType = SlideInFromLeft;
+            alert.hideAnimationType = SlideOutToBottom;
+            [alert showNotice:self title:@"Notice" subTitle:EMPTY_EMAIL closeButtonTitle:@"OK" duration:0.0f];
             return NO;
-        } else if ([AppDelegate validateEmail:[txtSignupEmail.text Trim]] == NO) {
-            [self showMessage:INVALID_EMAIL];
+        } else if ([AppDelegate validateEmail:[txtSignupEmail.text Trim]] == NO){
+            alert.showAnimationType = SlideInFromLeft;
+            alert.hideAnimationType = SlideOutToBottom;
+            [alert showNotice:self title:@"Notice" subTitle:INVALID_EMAIL closeButtonTitle:@"OK" duration:0.0f];
             return NO;
-        } else if ([[txtSignupPass.text Trim] isEmpty]) {
-            [self showMessage:EMPTY_PASSWORD];
+        } else if ([[txtSignupPass.text Trim] isEmpty]){
+            alert.showAnimationType = SlideInFromLeft;
+            alert.hideAnimationType = SlideOutToBottom;
+            [alert showNotice:self title:@"Notice" subTitle:EMPTY_PASSWORD closeButtonTitle:@"OK" duration:0.0f];
             return NO;
-        } else if ([[txtSignupVerifyPass.text Trim] isEmpty]) {
-            [self showMessage:EMPTY_CNF_PASSWORD];
+        } else if ([[txtSignupVerifyPass.text Trim] isEmpty]){
+            alert.showAnimationType = SlideInFromLeft;
+            alert.hideAnimationType = SlideOutToBottom;
+            [alert showNotice:self title:@"Notice" subTitle:EMPTY_CNF_PASSWORD closeButtonTitle:@"OK" duration:0.0f];
             return NO;
         } else if ([[txtSignupPass.text Trim] length] < 5 || [[txtSignupVerifyPass.text Trim] length] < 5 ){
-            [self showMessage:PASS_MIN_LEGTH];
+            alert.showAnimationType = SlideInFromLeft;
+            alert.hideAnimationType = SlideOutToBottom;
+            [alert showNotice:self title:@"Notice" subTitle:PASS_MIN_LEGTH closeButtonTitle:@"OK" duration:0.0f];
             return NO ;
-        } else if (![[txtSignupPass.text Trim] isEqualToString:[txtSignupVerifyPass.text Trim]]) {
-            [self showMessage:PASS_MISMATCH];
+        } else if (![[txtSignupPass.text Trim] isEqualToString:[txtSignupVerifyPass.text Trim]]){
+            alert.showAnimationType = SlideInFromLeft;
+            alert.hideAnimationType = SlideOutToBottom;
+            [alert showNotice:self title:@"Notice" subTitle:PASS_MISMATCH closeButtonTitle:@"OK" duration:0.0f];
             return NO;
         }
         return YES;

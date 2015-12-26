@@ -11,6 +11,7 @@
 #import "defs.h"
 #import "GlobalFunctions.h"
 #import "IBActionSheet.h"
+#import "SCLAlertView.h"
 #import "StringUtil.h"
 #import "TimeLineViewController.h"
 #import "TWMessageBarManager.h"
@@ -59,7 +60,7 @@
 }
 
 - (void)viewDidLoad {
-    appDelegate=[AppDelegate getDelegate];
+    appDelegate = [AppDelegate getDelegate];
     [super viewDidLoad];
     
     choosePhotoViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ChoosePhotoViewController"];
@@ -262,14 +263,20 @@
 }
 
 -(BOOL)validateFields{
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    
     UIImage *img = [UIImage imageNamed:@"gallery_icon"];
     BOOL check = [AnimatedMethods firstimage:img isEqualTo:imgView.image];
     
     if ([[txtCategory.text Trim] isEmpty]){
-        [self showMessage:EMPTY_CATEGORY];
+        alert.showAnimationType = SlideInFromLeft;
+        alert.hideAnimationType = SlideOutToBottom;
+        [alert showNotice:self title:@"Notice" subTitle:EMPTY_CATEGORY closeButtonTitle:@"OK" duration:0.0f];
         return NO;
     } else if (check){
-        [self showMessage:EMPTY_PHOTO];
+        alert.showAnimationType = SlideInFromLeft;
+        alert.hideAnimationType = SlideOutToBottom;
+        [alert showNotice:self title:@"Notice" subTitle:EMPTY_PHOTO closeButtonTitle:@"OK" duration:0.0f];
         return NO;
     }
     return YES;
@@ -474,13 +481,10 @@
              NSDictionary * JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
 //             NSString *strResponse = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
              
-//             NSLog(@"json value=%@",JSONValue);
-            // NSLog(@"Response=%@",strResponse);
-             
              if([JSONValue isKindOfClass:[NSDictionary class]]){
                  if([JSONValue allKeys].count == 3 && [JSONValue objectForKey:@"photo"]){
                      [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Success"
-                                                                    description:@"Your picture was uploaded!"
+                                                                    description:UPLOAD_PHOTO
                                                                            type:TWMessageBarMessageTypeSuccess
                                                                        duration:3.0];
                      [self.navigationController popViewControllerAnimated:YES];

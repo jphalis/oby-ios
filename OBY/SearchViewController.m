@@ -6,6 +6,7 @@
 #import "defs.h"
 #import "GlobalFunctions.h"
 #import "ProfileViewController.h"
+#import "SCLAlertView.h"
 #import "SearchViewController.h"
 #import "StringUtil.h"
 #import "TableViewCellNotification.h"
@@ -77,8 +78,12 @@
 }
 
 -(BOOL)validateFields{
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    
     if([[txtSearch.text Trim]isEmpty]){
-        [self showMessage:@"Please enter text in the search bar"];
+        alert.showAnimationType = SlideInFromLeft;
+        alert.hideAnimationType = SlideOutToBottom;
+        [alert showNotice:self title:@"Notice" subTitle:EMPTY_SEARCH closeButtonTitle:@"OK" duration:0.0f];
         return NO;
     }
     return YES;
@@ -112,8 +117,6 @@
                 
                 NSArray *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
                 //NSString *strResponse = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-                
-               // NSLog(@"jsno value=%@",JSONValue);
                 
                 if([JSONValue isKindOfClass:[NSNull class]]){
                     [self setBusy:NO];
@@ -214,7 +217,7 @@
         return  [arrFileterUsers count];
     } else {
     return [arrUsers count];
-    } //count number of row from counting array hear cataGorry is An Array
+    }           //count number of row from counting array hear cataGorry is An Array
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{

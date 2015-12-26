@@ -11,6 +11,7 @@
 #import "IBActionSheet.h"
 #import "Message.h"
 #import "MMPickerView.h"
+#import "SCLAlertView.h"
 #import "SDIAsyncImageView.h"
 #import "StringUtil.h"
 #import "TWMessageBarManager.h"
@@ -494,28 +495,44 @@
 -(BOOL)ValidateFields{
     NSString *code;
     
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    
     if([[txtEduEmail.text Trim] length] > 3){
         code = [[txtEduEmail.text Trim] substringFromIndex: [[txtEduEmail.text Trim] length] - 4];
     }
     if ([[txtUserName.text Trim] isEmpty]){
-        [self showMessage:EMPTY_USERNAME];
+        alert.showAnimationType = SlideInFromLeft;
+        alert.hideAnimationType = SlideOutToBottom;
+        [alert showNotice:self title:@"Notice" subTitle:EMPTY_USERNAME closeButtonTitle:@"OK" duration:0.0f];
         return NO;
     } else if ([[txtUserName.text Trim] length] < 3){
-        [self showMessage:USERNAME_MIN_LEGTH];
+        alert.showAnimationType = SlideInFromLeft;
+        alert.hideAnimationType = SlideOutToBottom;
+        [alert showNotice:self title:@"Notice" subTitle:USERNAME_MIN_LEGTH closeButtonTitle:@"OK" duration:0.0f];
         return NO;
     } else if ([[txtEmail.text Trim] isEmpty]){
-        [self showMessage:EMPTY_EMAIL];
+        alert.showAnimationType = SlideInFromLeft;
+        alert.hideAnimationType = SlideOutToBottom;
+        [alert showNotice:self title:@"Notice" subTitle:EMPTY_EMAIL closeButtonTitle:@"OK" duration:0.0f];
         return NO;
     } else if ([AppDelegate validateEmail:[txtEmail.text Trim]] == NO){
-        [self showMessage:INVALID_EMAIL];
+        alert.showAnimationType = SlideInFromLeft;
+        alert.hideAnimationType = SlideOutToBottom;
+        [alert showNotice:self title:@"Notice" subTitle:INVALID_EMAIL closeButtonTitle:@"OK" duration:0.0f];
         return NO;
     } else if (![[txtEduEmail.text Trim] isEmpty] && [AppDelegate validateEmail:[txtEduEmail.text Trim]] == NO){
-        [self showMessage:INVALID_EDU_EMAIL];
+        alert.showAnimationType = SlideInFromLeft;
+        alert.hideAnimationType = SlideOutToBottom;
+        [alert showNotice:self title:@"Notice" subTitle:INVALID_EDU_EMAIL closeButtonTitle:@"OK" duration:0.0f];
     } else if (![[txtEduEmail.text Trim] isEmpty] && ![code isEqualToString:@".edu"]){
-        [self showMessage:INVALID_EDU_EMAIL];
+        alert.showAnimationType = SlideInFromLeft;
+        alert.hideAnimationType = SlideOutToBottom;
+        [alert showNotice:self title:@"Notice" subTitle:INVALID_EDU_EMAIL closeButtonTitle:@"OK" duration:0.0f];
          return NO;
     } else if([[txtBio.text Trim] length] > 200){
-        [self showMessage:@"Bio may not contain more than 200 characters"];
+        alert.showAnimationType = SlideInFromLeft;
+        alert.hideAnimationType = SlideOutToBottom;
+        [alert showNotice:self title:@"Notice" subTitle:MAX_BIO_LENGTH closeButtonTitle:@"OK" duration:0.0f];
         return NO;
     }
     return  YES;
@@ -549,6 +566,8 @@
     checkNetworkReachability();
     [self.view endEditing:YES];
     [self setBusy:YES];
+    
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
     
     NSString *myUniqueName = [NSString stringWithFormat:@"%@-%lu", @"image", (unsigned long)([[NSDate date] timeIntervalSince1970]*10.0)];
 
@@ -636,14 +655,13 @@
     [request setURL:requestURL];
     
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+        
          if ([data length] > 0 && error == nil){
              [self setBusy:NO];
              
              NSDictionary * JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
 //             NSString *strResponse = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-             
-//            NSLog(@"json value=%@",JSONValue);
-             // NSLog(@"Response=%@",strResponse);
+
              if([JSONValue isKindOfClass:[NSDictionary class]]){
                  if([JSONValue allKeys].count > 5){
                     // SetUserName(txtUserName.text);
@@ -659,15 +677,25 @@
                      }
                      SetProifilePic(profilePic);
                      
-                     [self showMessage:@"Your profile has been updated successfully"];
+                     alert.showAnimationType = SlideInFromLeft;
+                     alert.hideAnimationType = SlideOutToBottom;
+                     [alert showSuccess:self title:@"Success" subTitle:UPDATEPROFILE_SUCCESS closeButtonTitle:@"Done" duration:0.0f];
                  } else if ([JSONValue objectForKey:@"username"]){
-                     [self showMessage:USER_EXISTS_ANOTHER_USER];
+                     alert.showAnimationType = SlideInFromLeft;
+                     alert.hideAnimationType = SlideOutToBottom;
+                     [alert showNotice:self title:@"Notice" subTitle:USER_EXISTS_ANOTHER_USER closeButtonTitle:@"OK" duration:0.0f];
                  } else if ([JSONValue objectForKey:@"email"]){
-                     [self showMessage:EMAIL_EXISTS_ANOTHER_USER];
+                     alert.showAnimationType = SlideInFromLeft;
+                     alert.hideAnimationType = SlideOutToBottom;
+                     [alert showNotice:self title:@"Notice" subTitle:EMAIL_EXISTS_ANOTHER_USER closeButtonTitle:@"OK" duration:0.0f];
                  } else if ([JSONValue objectForKey:@"edu_email"]){
-                     [self showMessage:@"Sorry, this university isn't registered with us yet. Email us to get it signed up! universities@obystudio.com"];
+                     alert.showAnimationType = SlideInFromLeft;
+                     alert.hideAnimationType = SlideOutToBottom;
+                     [alert showNotice:self title:@"Notice" subTitle:@"Sorry, this university isn't registered with us yet. Email us to get it signed up! universities@obystudio.com" closeButtonTitle:@"OK" duration:0.0f];
                  } else if ([JSONValue objectForKey:@"gender"]){
-                     [self showMessage:@"This is not a valid gender choice"];
+                     alert.showAnimationType = SlideInFromLeft;
+                     alert.hideAnimationType = SlideOutToBottom;
+                     [alert showNotice:self title:@"Notice" subTitle:@"This is not a valid gender choice." closeButtonTitle:@"OK" duration:0.0f];
                  }
              } else {
                  showServerError();

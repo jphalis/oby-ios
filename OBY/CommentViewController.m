@@ -7,6 +7,7 @@
 #import "defs.h"
 #import "GlobalFunctions.h"
 #import "NSString+Additions.h"
+#import "SCLAlertView.h"
 #import "StringUtil.h"
 #import "TWMessageBarManager.h"
 #import "UIViewControllerAdditions.h"
@@ -47,7 +48,7 @@
 }
 
 -(void)resetFields{
-    txtComment.text=@"";
+    txtComment.text = @"";
 }
 
 - (void)didReceiveMemoryWarning {
@@ -76,8 +77,12 @@
 }
 
 -(BOOL)validateFields{
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    
     if ([[txtComment.text Trim] isEmpty]){
-        [self showMessage:@"Please type a comment"];
+        alert.showAnimationType = SlideInFromLeft;
+        alert.hideAnimationType = SlideOutToBottom;
+        [alert showNotice:self title:@"Notice" subTitle:@"Please type a comment into the field." closeButtonTitle:@"OK" duration:0.0f];
         return NO;
     }
     return YES;
@@ -122,18 +127,14 @@
     
     //Call the Login Web services
     [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-//         if(error != nil){
-//             NSLog(@"%@",error);
-//         }
+
          if ([data length] > 0 && error == nil){
              NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
              if(JSONValue != nil){
-//                 NSLog(@"%@",JSONValue);
                  [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"New comment"
                                                                 description:@"Thank you for the comment!"
                                                                        type:TWMessageBarMessageTypeSuccess
                                                                    duration:3.0];
-//                 [self showMessage:@"Thank you for the comment!"];
                  int commentCount = (int)[photoClass.comment_count integerValue];
                  commentCount++;
                  photoClass.comment_count = [NSString stringWithFormat:@"%d",commentCount];

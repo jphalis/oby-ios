@@ -23,6 +23,8 @@
 #import "SupportViewController.h"
 #import "UIImageView+WebCache.h"
 
+#import "KILabel.h"
+
 
 @interface HomeViewController ()<HTHorizontalSelectionListDataSource,HTHorizontalSelectionListDelegate,PhotoViewControllerDelegate,CommentViewControllerDelegate>{
     AppDelegate *appDelegate;
@@ -119,7 +121,7 @@
     
     NSIndexPath *indexPath = [collectionVWHome indexPathForItemAtPoint:p];
     if (indexPath == nil){
-//        NSLog(@"couldn't find index path");
+
     } else {
         [self collectionView:collectionVWHome didSelectItemAtIndexPath:indexPath];
     }
@@ -130,7 +132,7 @@
         
     NSIndexPath *indexPath = [collectionVWHome indexPathForItemAtPoint:p];
     if (indexPath == nil){
-//        NSLog(@"couldn't find index path");
+
     } else {
         static int i = 0;
         i++;
@@ -519,12 +521,10 @@
     
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
          if(error != nil){
-//             NSLog(@"%@",error);
              [self setBusy:NO];
          }
          if([data length] > 0 && error == nil){
              NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-            //NSLog(@"%@",JSONValue);
              
              [self setBusy:NO];
              
@@ -567,6 +567,7 @@
 // NSURLConnection Delegates
 -(void)getHomePageDetails{
     checkNetworkReachability();
+    
     [appDelegate showHUDAddedToView:self.view message:@""];
     //[appDelegate hideHUDForView2:self.view];
     
@@ -587,34 +588,23 @@
     
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
          if(error != nil){
-//             NSLog(@"%@",error);
             // [self setBusy:NO];
              [appDelegate hideHUDForView2:self.view];
          }
          if ([data length] > 0 && error == nil){
              NSArray *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-            // NSLog(@"%@",JSONValue);
-//             NSLog(@"Images count: %lu",(unsigned long)[JSONValue count]);
              
              if([JSONValue isKindOfClass:[NSArray class]]){
+                 
                  if( appDelegate.arrPhotos.count > 0){
                      [appDelegate.arrPhotos removeAllObjects];
                  }
                  
-                 if([JSONValue count] >0 ){
+                 if([JSONValue count] > 0 ){
                      for (int i = 0; i < JSONValue.count; i++) {
                          NSMutableDictionary *dictResult;
                          dictResult = [[NSMutableDictionary alloc]init];
                          dictResult = [JSONValue objectAtIndex:i];
-                         
-                         /*
-                          NSString *key1=[NSString stringWithFormat:@"%@_%@_%@",[dictResult objectForKey:@"slug"],[dictResult objectForKey:@"photo" ],[dictResult objectForKey:@"category_url"]];
-                          
-                          if([appDelegate.dicAllKeys objectForKey:key1]==nil)
-                          {
-                          [appDelegate.dicAllKeys setObject:@"1" forKey:key1];
-                          */
-                         
                          PhotoClass *photoClass = [[PhotoClass alloc]init];
                          photoClass.category_url = [dictResult objectForKey:@"category_url"];
                          photoClass.comment_count = [dictResult objectForKey:@"comment_count"];
@@ -629,7 +619,6 @@
                          
                          photoClass.PhotoId = [NSString stringWithFormat:@"%d",photoID];
                          photoClass.like_count = [NSString stringWithFormat:@"%d",like_Count];
-                         //photoClass.likers = [dictResult objectForKey:@"get_likers_info"];
                          
                          photoClass.likers = [[NSMutableArray alloc]init];
                          photoClass.comment_set = [[NSMutableArray alloc]init];
@@ -638,7 +627,6 @@
                          
                          photoClass.isLike = NO;
                          if([[dictResult objectForKey:@"get_likers_info"] count] > 0){
-                            
                              for(int l = 0; l < [arrLiker count]; l++){
                                  NSDictionary *dictUsers = [arrLiker objectAtIndex:l];
                                  if([[dictUsers objectForKey:@"username"] isEqualToString:GetUserName]){
@@ -686,6 +674,7 @@
                              
                              [photoClass.likers addObject:dictFollowerInfo];
                          }
+                         
                          NSArray *arrCommentSet = [dictResult objectForKey:@"comment_set"];
 
                          for(int k = 0; k < arrCommentSet.count; k++){
@@ -804,6 +793,15 @@
 //    }
 //    cell.lblDescription.attributedText = attribString;
     
+    // Handles gesture taps for mentions, hashtags, and urls
+    KILabel *gestureLabel = (KILabel *)[cell lblDescription];
+    KILinkTapHandler tapHandler = ^(KILabel *label, NSString *string, NSRange range) {
+        [self tappedLink:string cellForRowAtIndexPath:indexPath];
+    };
+    gestureLabel.userHandleLinkTapHandler = tapHandler;
+//    gestureLabel.urlLinkTapHandler = tapHandler;
+//    gestureLabel.hashtagLinkTapHandler = tapHandler;
+    
     cell.lblName.text = photoClass.creator;
     cell.lblDescription.text = photoClass.description;
     cell.lblLikes.text = [NSString stringWithFormat:@"%@",photoClass.like_count];
@@ -865,6 +863,28 @@
     return cell;
 }
 
+- (void)tappedLink:(NSString *)link cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *title = [NSString stringWithFormat:@"%@", link];
+    NSString *newTitle = [title substringFromIndex:1];
+//    NSString *message = [NSString stringWithFormat:@"You tapped %@ in section %@, row %@.",
+//                         link,
+//                         @(indexPath.section),
+//                         @(indexPath.row)];
+//    
+//    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
+//                                                                   message:message
+//                                                            preferredStyle:UIAlertControllerStyleAlert];
+//    [alert addAction:[UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:nil]];
+//    
+//    [self presentViewController:alert animated:YES completion:nil];
+    
+    ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
+    NSString *usrURL = [NSString stringWithFormat:@"%@%@/",PROFILEURL,newTitle];
+    profileViewController.userURL = usrURL;
+    [self.navigationController pushViewController:profileViewController animated:YES];
+}
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     CollectionViewCellimage *currentCell = (CollectionViewCellimage *)[collectionView cellForItemAtIndexPath:indexPath];
     if(currentCell.imgView.image == nil){
@@ -892,7 +912,7 @@
 
 -(void)onCommentList:(CustomButton*)sender{
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
-    CollectionViewCellimage *currentCell=(CollectionViewCellimage *)[collectionVWHome cellForItemAtIndexPath:indexPath];
+    CollectionViewCellimage *currentCell = (CollectionViewCellimage *)[collectionVWHome cellForItemAtIndexPath:indexPath];
     
     PhotoClass *photoClass;
     
@@ -1011,71 +1031,64 @@
     currentCell.lblLikes.text = [NSString stringWithFormat:@"%@",photoClass.like_count];
     
     [self doLike:photoClass selectCell:currentCell];
-
-//    NSLog(@"Like click");
 }
 
 -(void)doLike:(PhotoClass *)photoClass selectCell:(CollectionViewCellimage *)selectCell{
     [self.view endEditing:YES];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSString *strURL = [NSString stringWithFormat:@"%@%@/",LIKEURL,photoClass.PhotoId];
+        NSURL *url = [NSURL URLWithString:strURL];
+        NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+        [urlRequest setTimeoutInterval:60];
+        [urlRequest setHTTPMethod:@"POST"];
+        NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
+        NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
+        NSString *base64String = [plainData base64EncodedStringWithOptions:0];
+        NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
+        [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
+        [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
-   // [self setBusy:YES];
-    NSString *strURL = [NSString stringWithFormat:@"%@%@/",LIKEURL,photoClass.PhotoId];
-    NSURL *url = [NSURL URLWithString:strURL];
-    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
-    [urlRequest setTimeoutInterval:60];
-    [urlRequest setHTTPMethod:@"POST"];
-    NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
-    NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *base64String = [plainData base64EncodedStringWithOptions:0];
-    NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
-    [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
-    [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    
-    //Call the Login Web services
-    [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-//         if(error != nil){
-//             NSLog(@"%@",error);
-//         }
-         if ([data length] > 0 && error == nil){
-             NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-             if(JSONValue != nil){
-               // NSLog(@"Jsonvalue=%@",JSONValue);
-                 if([[JSONValue allKeys]count] > 5){
-                     /*
-                     int likecount=(int)[photoClass.like_count integerValue];
-                     if(photoClass.isLike){
-                         likecount--;
-                     }else{
-                         likecount++;
-                     }
+        //Call the Login Web services
+        [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+        
+            if ([data length] > 0 && error == nil){
+                NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                if(JSONValue != nil){
+
+                    if([[JSONValue allKeys]count] > 5){
+                        /*
+                         int likecount=(int)[photoClass.like_count integerValue];
+                         if(photoClass.isLike){
+                            likecount--;
+                         }else{
+                            likecount++;
+                         }
                      
-                     photoClass.like_count=[NSString stringWithFormat:@"%d",likecount];
-                     photoClass.isLike=!photoClass.isLike;
+                         photoClass.like_count=[NSString stringWithFormat:@"%d",likecount];
+                         photoClass.isLike=!photoClass.isLike;
                      
-                     selectCell.imgLike.image=[UIImage imageNamed:@"like_icon"];
-                     if(photoClass.isLike){
-                         selectCell.imgLike.image=[UIImage imageNamed:@"likeselect"];
-                     }
-                     selectCell.lblLikes.text=[NSString stringWithFormat:@"%@",photoClass.like_count];
-                     
-                     */
-                    // [collectionVWHome reloadData];
-                 } else {
-                     //[self showMessage:SERVER_ERROR];
-                 }
-             } else {
-                // [self showMessage:SERVER_ERROR];
-             }
-             [self setBusy:NO];
-         } else {
-             [self setBusy:NO];
-             //[self showMessage:SERVER_ERROR];
-         }
-         [self setBusy:NO];
-     }];
-     });
+                         selectCell.imgLike.image=[UIImage imageNamed:@"like_icon"];
+                         if(photoClass.isLike){
+                            selectCell.imgLike.image=[UIImage imageNamed:@"likeselect"];
+                         }
+                         selectCell.lblLikes.text=[NSString stringWithFormat:@"%@",photoClass.like_count];
+                         */
+                        // [collectionVWHome reloadData];
+                    } else {
+                        //[self showMessage:SERVER_ERROR];
+                    }
+                } else {
+                    // [self showMessage:SERVER_ERROR];
+                }
+                [self setBusy:NO];
+            } else {
+                [self setBusy:NO];
+                //[self showMessage:SERVER_ERROR];
+            }
+            [self setBusy:NO];
+        }];
+    });
 }
 
 -(void)showUser:(CustomButton*)sender{
@@ -1086,7 +1099,7 @@
     } else {
         photoClass = [appDelegate.arrPhotos objectAtIndex:sender.tag];
     }
-    ProfileViewController *profileViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
+    ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
     profileViewController.userURL = photoClass.creator_url;
     
     [self.navigationController pushViewController:profileViewController animated:YES];

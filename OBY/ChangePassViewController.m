@@ -6,6 +6,7 @@
 #import "ChangePassViewController.h"
 #import "defs.h"
 #import "GlobalFunctions.h"
+#import "SCLAlertView.h"
 #import "StringUtil.h"
 
 
@@ -75,24 +76,39 @@
 
 -(BOOL)validateFields{
     [self.view endEditing:YES];
+    
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    
     if ([[txtOldPass.text Trim] isEmpty]){
-        [self showMessage:EMPTY_OLD_PASSWORD];
+        alert.showAnimationType = SlideInFromLeft;
+        alert.hideAnimationType = SlideOutToBottom;
+        [alert showNotice:self title:@"Notice" subTitle:EMPTY_OLD_PASSWORD closeButtonTitle:@"OK" duration:0.0f];
         [txtOldPass becomeFirstResponder];
         return NO;
     } else if ([[txtNewPass.text Trim] length] < 3){
-        [self showMessage:EMPTY_NEW_PASSWORD];
+        alert.showAnimationType = SlideInFromLeft;
+        alert.hideAnimationType = SlideOutToBottom;
+        [alert showNotice:self title:@"Notice" subTitle:EMPTY_NEW_PASSWORD closeButtonTitle:@"OK" duration:0.0f];
         return NO;
     } else if ([[txtNewConfrmPass.text Trim] isEmpty]){
-        [self showMessage:EMPTY_CNF_NEW_PASSWORD];
+        alert.showAnimationType = SlideInFromLeft;
+        alert.hideAnimationType = SlideOutToBottom;
+        [alert showNotice:self title:@"Notice" subTitle:EMPTY_CNF_NEW_PASSWORD closeButtonTitle:@"OK" duration:0.0f];
         return NO;
     } else if ([[txtNewPass.text Trim] length] < 5 || [[txtNewConfrmPass.text Trim] length] < 5 ){
-        [self showMessage:PASS_MIN_LEGTH];
+        alert.showAnimationType = SlideInFromLeft;
+        alert.hideAnimationType = SlideOutToBottom;
+        [alert showNotice:self title:@"Notice" subTitle:PASS_MIN_LEGTH closeButtonTitle:@"OK" duration:0.0f];
         return NO ;
     } else if (![[txtNewPass.text Trim] isEqualToString:[txtNewConfrmPass.text Trim]]){
-        [self showMessage:PASS_MISMATCH];
+        alert.showAnimationType = SlideInFromLeft;
+        alert.hideAnimationType = SlideOutToBottom;
+        [alert showNotice:self title:@"Notice" subTitle:PASS_MISMATCH closeButtonTitle:@"OK" duration:0.0f];
         return NO;
     } else if ([[txtNewPass.text Trim] isEqualToString:[txtOldPass.text Trim]]){
-        [self showMessage:PASS_SAME];
+        alert.showAnimationType = SlideInFromLeft;
+        alert.hideAnimationType = SlideOutToBottom;
+        [alert showNotice:self title:@"Notice" subTitle:PASS_SAME closeButtonTitle:@"OK" duration:0.0f];
         return NO;
     }
     return YES;
@@ -208,9 +224,9 @@
     [self.view endEditing:YES];
     [self setBusy:YES];
     
-    NSString *params =[NSString stringWithFormat:@"{\"old_password\":\"%@\",\"new_password1\":\"%@\",\"new_password2\":\"%@\"}",[txtOldPass.text Trim],[txtNewPass.text Trim],[txtNewConfrmPass.text Trim]];
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
     
-//    NSLog(@"%@",params);
+    NSString *params =[NSString stringWithFormat:@"{\"old_password\":\"%@\",\"new_password1\":\"%@\",\"new_password2\":\"%@\"}",[txtOldPass.text Trim],[txtNewPass.text Trim],[txtNewConfrmPass.text Trim]];
     NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[params length]];
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",CHANGEPASSURL]];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
@@ -233,19 +249,20 @@
     //Call the Login Web services
     [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
         
-//         if(error != nil){
-//             NSLog(@"%@",error);
-//         }
          if ([data length] > 0 && error == nil){
              NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+             
              if(JSONValue != nil){
-//                 NSLog(@"%@",JSONValue);
                  
                  if([JSONValue objectForKey:@"success"]){
-                     [self showMessage:PASS_SUCCESS];
+                     alert.showAnimationType = SlideInFromLeft;
+                     alert.hideAnimationType = SlideOutToBottom;
+                     [alert showSuccess:@"Success" subTitle:PASS_SUCCESS closeButtonTitle:@"Done" duration:0.0f];
                      SetUserPassword(txtNewPass.text);
                  } else if([JSONValue objectForKey:@"old_password"]){
-                     [self showMessage:INCORRECTOLDPASS];
+                     alert.showAnimationType = SlideInFromLeft;
+                     alert.hideAnimationType = SlideOutToBottom;
+                     [alert showNotice:self title:@"Notice" subTitle:INCORRECTOLDPASS closeButtonTitle:@"OK" duration:0.0f];
                  }
                  [self resetFields];
              } else {

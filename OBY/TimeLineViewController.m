@@ -273,8 +273,7 @@
     CollectionViewCellimage *currentCell=(CollectionViewCellimage *)[colltionVw cellForItemAtIndexPath:indexPath];
     
     PhotoClass *photoClass;
-    
-        photoClass=[arrTimelinePhotos objectAtIndex:sender.tag];
+    photoClass = [arrTimelinePhotos objectAtIndex:sender.tag];
     
     SupportViewController *supportViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"SupportViewController"];
     
@@ -349,17 +348,11 @@
         NSString *fullString;
         NSString *fullName = [dictUser objectForKey:@"user__username"];
         NSString *userName = [dictUser objectForKey:@"full_name"];
-        
         fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
-        
         NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
-        
         NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
-        
         [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
-        
         [dictUser setValue:hogan forKey:@"usernameText"];
-        
         [photoClass.likers addObject:dictUser];
         
         likecount++;
@@ -380,7 +373,7 @@
 //    NSLog(@"Like Click");
 }
 
--(void)doLike : (PhotoClass *)photoClass selectCell:(CollectionViewCellimage *)selectCell {
+-(void)doLike:(PhotoClass *)photoClass selectCell:(CollectionViewCellimage *)selectCell {
     [self.view endEditing:YES];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -393,15 +386,12 @@
         NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
         NSString *base64String = [plainData base64EncodedStringWithOptions:0];
         NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
-        
         [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
         [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         
         //Call the Login Web services
         [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-//             if(error!=nil){
-//                 NSLog(@"%@",error);
-//             }
+            
              if ([data length] > 0 && error == nil){
                  NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
                  if(JSONValue != nil){
@@ -442,6 +432,7 @@
 
 -(void)getTimeLineDetails{
     checkNetworkReachability();
+    
     [appDelegate showHUDAddedToView:self.view message:@""];
    // [self setBusy:YES];
     NSString *urlString = [NSString stringWithFormat:@"%@",TIMELINEURL];
@@ -464,21 +455,19 @@
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
      {
          if(error != nil){
-//             NSLog(@"%@",error);
             // [self setBusy:NO];
              [appDelegate hideHUDForView2:self.view];
          }
          if ([data length] > 0 && error == nil){
              NSArray *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-             // NSLog(@"%@",JSONValue);
-//             NSLog(@"Images count: %lu",(unsigned long)[JSONValue count]);
              
              if([JSONValue isKindOfClass:[NSArray class]]){
+                 
+                 if(arrTimelinePhotos.count > 0){
+                     [arrTimelinePhotos removeAllObjects];
+                 }
+                 
                  if([JSONValue count] > 0){
-                     if(arrTimelinePhotos.count > 0){
-                         [arrTimelinePhotos removeAllObjects];
-                     }
-                     
                      for (int i = 0; i < JSONValue.count; i++) {
                          NSMutableDictionary *dictResult;
                          dictResult = [[NSMutableDictionary alloc]init];
@@ -493,10 +482,11 @@
                          photoClass.description = [dictResult objectForKey:@"description"];
                          
                          int userId = [[dictResult objectForKey:@"id"]intValue];
-                         int linke_Count = [[dictResult objectForKey:@"like_count"]intValue];
+                         int like_Count = [[dictResult objectForKey:@"like_count"]intValue];
                          
                          photoClass.PhotoId = [NSString stringWithFormat:@"%d",userId];
-                         photoClass.like_count = [NSString stringWithFormat:@"%d",linke_Count];
+                         photoClass.like_count = [NSString stringWithFormat:@"%d",like_Count];
+                         
                          photoClass.likers = [[NSMutableArray alloc]init];
                          photoClass.comment_set = [[NSMutableArray alloc]init];
                          

@@ -160,6 +160,13 @@
 		BEE990B71C08534C009F6C97 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEE990B61C08534C009F6C97 /* CommentViewController.m */; };
 		BEF41B651C0D5FE400BF957E /* likeselect.png in Resources */ = {isa = PBXBuildFile; fileRef = BEF41B641C0D5FE400BF957E /* likeselect.png */; };
 		D006BB3A1C2B8885005C7B1E /* ARDESTINE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D006BB391C2B8334005C7B1E /* ARDESTINE.ttf */; };
+		D040B7921C2F2C01001CD53B /* SCLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = D040B7841C2F2C01001CD53B /* SCLAlertView.m */; };
+		D040B7931C2F2C01001CD53B /* SCLAlertViewResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = D040B7861C2F2C01001CD53B /* SCLAlertViewResponder.m */; };
+		D040B7941C2F2C01001CD53B /* SCLAlertViewStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D040B7881C2F2C01001CD53B /* SCLAlertViewStyleKit.m */; };
+		D040B7951C2F2C01001CD53B /* SCLButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D040B78A1C2F2C01001CD53B /* SCLButton.m */; };
+		D040B7961C2F2C01001CD53B /* SCLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D040B78D1C2F2C01001CD53B /* SCLTextView.m */; };
+		D040B7971C2F2C01001CD53B /* SCLTimerDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = D040B78F1C2F2C01001CD53B /* SCLTimerDisplay.m */; };
+		D040B7981C2F2C01001CD53B /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = D040B7911C2F2C01001CD53B /* UIImage+ImageEffects.m */; };
 		D0461F581C2766440024738F /* SVWebViewController.strings in Resources */ = {isa = PBXBuildFile; fileRef = D0461F391C2766440024738F /* SVWebViewController.strings */; };
 		D0461F591C2766440024738F /* SVModalWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0461F431C2766440024738F /* SVModalWebViewController.m */; };
 		D0461F5A1C2766440024738F /* SVWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D0461F441C2766440024738F /* SVWebViewController.bundle */; };
@@ -450,6 +457,21 @@
 		BEE990B61C08534C009F6C97 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
 		BEF41B641C0D5FE400BF957E /* likeselect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = likeselect.png; sourceTree = "<group>"; };
 		D006BB391C2B8334005C7B1E /* ARDESTINE.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ARDESTINE.ttf; sourceTree = "<group>"; };
+		D040B7831C2F2C01001CD53B /* SCLAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertView.h; sourceTree = "<group>"; };
+		D040B7841C2F2C01001CD53B /* SCLAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertView.m; sourceTree = "<group>"; };
+		D040B7851C2F2C01001CD53B /* SCLAlertViewResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertViewResponder.h; sourceTree = "<group>"; };
+		D040B7861C2F2C01001CD53B /* SCLAlertViewResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertViewResponder.m; sourceTree = "<group>"; };
+		D040B7871C2F2C01001CD53B /* SCLAlertViewStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertViewStyleKit.h; sourceTree = "<group>"; };
+		D040B7881C2F2C01001CD53B /* SCLAlertViewStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertViewStyleKit.m; sourceTree = "<group>"; };
+		D040B7891C2F2C01001CD53B /* SCLButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLButton.h; sourceTree = "<group>"; };
+		D040B78A1C2F2C01001CD53B /* SCLButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLButton.m; sourceTree = "<group>"; };
+		D040B78B1C2F2C01001CD53B /* SCLMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLMacros.h; sourceTree = "<group>"; };
+		D040B78C1C2F2C01001CD53B /* SCLTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLTextView.h; sourceTree = "<group>"; };
+		D040B78D1C2F2C01001CD53B /* SCLTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLTextView.m; sourceTree = "<group>"; };
+		D040B78E1C2F2C01001CD53B /* SCLTimerDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLTimerDisplay.h; sourceTree = "<group>"; };
+		D040B78F1C2F2C01001CD53B /* SCLTimerDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLTimerDisplay.m; sourceTree = "<group>"; };
+		D040B7901C2F2C01001CD53B /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		D040B7911C2F2C01001CD53B /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		D0461F3A1C2766440024738F /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
 		D0461F3B1C2766440024738F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
 		D0461F3C1C2766440024738F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
@@ -643,7 +665,8 @@
 		A5B6C3EA1BE8E96A004F295C /* External */ = {
 			isa = PBXGroup;
 			children = (
-				D0F8DD071C2F0CCF00B911B4 /* AlertView */,
+				D040B7821C2F2C01001CD53B /* SCLAlertView */,
+				D0F8DD071C2F0CCF00B911B4 /* KILabel */,
 				D0AC4C6C1C2C506A00A110AE /* StatusBarNotifications */,
 				D0461F381C2766440024738F /* WebViewController */,
 				BECF7B0E1C229C66008627B9 /* OLGhostAlertView.h */,
@@ -1075,6 +1098,28 @@
 			name = Uiviewcontroledition;
 			sourceTree = "<group>";
 		};
+		D040B7821C2F2C01001CD53B /* SCLAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				D040B7831C2F2C01001CD53B /* SCLAlertView.h */,
+				D040B7841C2F2C01001CD53B /* SCLAlertView.m */,
+				D040B7851C2F2C01001CD53B /* SCLAlertViewResponder.h */,
+				D040B7861C2F2C01001CD53B /* SCLAlertViewResponder.m */,
+				D040B7871C2F2C01001CD53B /* SCLAlertViewStyleKit.h */,
+				D040B7881C2F2C01001CD53B /* SCLAlertViewStyleKit.m */,
+				D040B7891C2F2C01001CD53B /* SCLButton.h */,
+				D040B78A1C2F2C01001CD53B /* SCLButton.m */,
+				D040B78B1C2F2C01001CD53B /* SCLMacros.h */,
+				D040B78C1C2F2C01001CD53B /* SCLTextView.h */,
+				D040B78D1C2F2C01001CD53B /* SCLTextView.m */,
+				D040B78E1C2F2C01001CD53B /* SCLTimerDisplay.h */,
+				D040B78F1C2F2C01001CD53B /* SCLTimerDisplay.m */,
+				D040B7901C2F2C01001CD53B /* UIImage+ImageEffects.h */,
+				D040B7911C2F2C01001CD53B /* UIImage+ImageEffects.m */,
+			);
+			path = SCLAlertView;
+			sourceTree = "<group>";
+		};
 		D0461F381C2766440024738F /* WebViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1149,13 +1194,13 @@
 			path = Icons;
 			sourceTree = "<group>";
 		};
-		D0F8DD071C2F0CCF00B911B4 /* AlertView */ = {
+		D0F8DD071C2F0CCF00B911B4 /* KILabel */ = {
 			isa = PBXGroup;
 			children = (
 				D0F8DD081C2F0CDF00B911B4 /* KILabel.h */,
 				D0F8DD091C2F0CDF00B911B4 /* KILabel.m */,
 			);
-			name = AlertView;
+			name = KILabel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1398,8 +1443,12 @@
 				BE4279E61C02D60000E3F50D /* MMPickerView.m in Sources */,
 				BE0909081BEE03FC0077DFE8 /* TimeLineClass.m in Sources */,
 				BE0AC1B71BEB20A3008866EC /* CutomTabViewController.m in Sources */,
+				D040B7951C2F2C01001CD53B /* SCLButton.m in Sources */,
 				BE4074AD1BFB029A0074C151 /* ChangePassViewController.m in Sources */,
+				D040B7961C2F2C01001CD53B /* SCLTextView.m in Sources */,
 				BECF7AF01C229818008627B9 /* YCameraViewController.m in Sources */,
+				D040B7981C2F2C01001CD53B /* UIImage+ImageEffects.m in Sources */,
+				D040B7921C2F2C01001CD53B /* SCLAlertView.m in Sources */,
 				BECF7AE91C229818008627B9 /* CustomeImagePicker.m in Sources */,
 				BECF7AE81C229818008627B9 /* CameraFocusSquare.m in Sources */,
 				BE0300681BEB84550005183F /* AFNetworkActivityIndicatorManager.m in Sources */,
@@ -1422,6 +1471,7 @@
 				BE0BC5F41BEB2FE600C5903E /* HomeViewController.m in Sources */,
 				BE2045A11BF5A89600288548 /* NSData+ImageContentType.m in Sources */,
 				BE2045AB1BF5A89600288548 /* UIImage+MultiFormat.m in Sources */,
+				D040B7931C2F2C01001CD53B /* SCLAlertViewResponder.m in Sources */,
 				BE2045AD1BF5A89600288548 /* UIImageView+HighlightedWebCache.m in Sources */,
 				A5B6C3EE1BE8E994004F295C /* Reachability.m in Sources */,
 				BECF7AF71C229A02008627B9 /* UIView+RNActivityView.m in Sources */,
@@ -1436,9 +1486,11 @@
 				BE0BC5FD1BEB308000C5903E /* MiscellaneousViewController.m in Sources */,
 				BECF7AEE1C229818008627B9 /* PhotoPickerCell.m in Sources */,
 				D0F8DD061C2EE89000B911B4 /* GlobalFunctions.m in Sources */,
+				D040B7971C2F2C01001CD53B /* SCLTimerDisplay.m in Sources */,
 				BE09090B1BEE041A0077DFE8 /* NotificationClass.m in Sources */,
 				BE2045A31BF5A89600288548 /* SDWebImageCompat.m in Sources */,
 				BE148EFC1BFC7CA600248DE8 /* PhotoViewController.m in Sources */,
+				D040B7941C2F2C01001CD53B /* SCLAlertViewStyleKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
