@@ -2,20 +2,19 @@
 //  CreateViewController.m
 //
 
-#import "CreateViewController.h"
+#import "AnimatedMethods.h"
 #import "AppDelegate.h"
 #import "CategoryViewController.h"
+#import "ChoosePhotoViewController.h"
+#import "CreateViewController.h"
+#import "CustomeImagePicker.h"
 #import "defs.h"
-#import "Message.h"
+#import "GlobalFunctions.h"
 #import "IBActionSheet.h"
 #import "StringUtil.h"
-#import "CustomeImagePicker.h"
-#import "UIView+RNActivityView.h"
-#import "ChoosePhotoViewController.h"
 #import "TimeLineViewController.h"
-#import "AnimatedMethods.h"
-#import "Reachability.h"
 #import "TWMessageBarManager.h"
+#import "UIView+RNActivityView.h"
 
 
 #define kOFFSET_FOR_KEYBOARD 0.65
@@ -392,7 +391,7 @@
 }
 
 -(void)doCreate{
-    [self checkNetworkReachability];
+    checkNetworkReachability();
     [self.view endEditing:YES];
     [self setBusy:YES];
     
@@ -486,13 +485,13 @@
                                                                        duration:3.0];
                      [self.navigationController popViewControllerAnimated:YES];
                  } else {
-                     [self showServerError];
+                     showServerError();
                  }
              } else {
-                 [self showServerError];
+                 showServerError();
              }
          } else {
-             [self showServerError];
+             showServerError();
          }
          [self setBusy:NO];
      }];
@@ -535,27 +534,6 @@
     [imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
     [imagePicker setAllowsEditing:YES];
     [self presentViewController:imagePicker animated:YES completion:nil];
-}
-
--(void)checkNetworkReachability{
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable) {
-        [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Network Error"
-                                                       description:NETWORK_UNAVAILABLE
-                                                              type:TWMessageBarMessageTypeError
-                                                          duration:6.0];
-        //        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
-    
-}
-
--(void)showServerError{
-    [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Server Error"
-                                                   description:SERVER_ERROR
-                                                          type:TWMessageBarMessageTypeError
-                                                      duration:4.0];
 }
 
 @end

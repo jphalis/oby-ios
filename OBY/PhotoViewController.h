@@ -12,7 +12,8 @@
 @end
 
 @interface PhotoViewController : UIViewController
-@property (strong,nonatomic) NSString *photoURL;
-@property (nonatomic,assign) id<PhotoViewControllerDelegate> delegate;
+
+@property (strong, nonatomic) NSString *photoURL;
+@property (nonatomic, assign) id<PhotoViewControllerDelegate> delegate;
 
 @end

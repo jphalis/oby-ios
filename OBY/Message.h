@@ -8,13 +8,13 @@
 // General
 #define UPLOAD_PHOTO @"Thank you for submitting your photo, we will post it shortly"
 #define INCORRECTOLDPASS @"Incorrect old password"
-#define SERVER_ERROR @"Something went wrong! Please try again later!"
+#define SERVER_ERROR @"That's our bad. Please try again later!"
 #define LOGIN_ERROR  @"Unable to login with provided credentials"
 #define NETWORK_UNAVAILABLE  @"Please check your network connection"
 
 // Sign in
 #define USER_NOTREGISTERED @"Invalid username or password"
-#define  INCORRECT_PASSWORD @"Incorrect password"
+#define INCORRECT_PASSWORD @"Incorrect password"
 #define FB_NOTREGISTERED @"This is not a registered account"
 #define USER_EXISTS_ANOTHER_USER @"This username is already taken. Please try a different one"
 #define EMAIL_EXISTS_ANOTHER_USER @"This email is already taken. Please try a different one"

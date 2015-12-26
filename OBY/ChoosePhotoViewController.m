@@ -20,7 +20,7 @@
 @implementation ChoosePhotoViewController
 
 - (void)viewDidLoad {
-    arrOptions = [[NSMutableArray alloc]initWithObjects:@"Photo Gallery",@"All Photos", nil];
+    arrOptions = [[NSMutableArray alloc]initWithObjects:@"Albums",@"Camera Roll", nil];
     
    // [self showCustomPicker];
     
@@ -100,7 +100,7 @@
     navgiation.navigationBar.barTintColor = lightBlue;
     navgiation.navigationBar.tintColor = [UIColor whiteColor];
     navgiation.navigationBar.translucent = NO;
-    self.navigationItem.hidesBackButton=YES;
+    self.navigationItem.hidesBackButton = YES;
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
@@ -142,8 +142,8 @@
     [cip setShowOnlyPhotosWithGPS:NO];
     
     [self presentViewController:cip animated:NO completion:^{
-    }
-     ];
+    
+    }];
 }
 
 -(void)doneClick{

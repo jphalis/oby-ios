@@ -6,6 +6,7 @@
 
 
 @interface ProfileClass : NSObject
+
 @property (nonatomic, retain) NSString *Id;
 @property (nonatomic, strong) NSString *account_url;
 @property (nonatomic, retain) NSString *username;
@@ -20,4 +21,5 @@
 @property (nonatomic, retain) NSString *profile_picture;
 @property (nonatomic, retain) NSString *followers_count;
 @property (nonatomic, retain) NSString *following_count;
+
 @end

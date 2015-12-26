@@ -2,28 +2,26 @@
 //  HomeViewController.m
 //
 
-#import "HomeViewController.h"
-#import "AppDelegate.h"
-#import "defs.h"
-#import "Message.h"
-#import "AFHTTPClient.h"
-#import <UIKit/UIKit.h>
-#import "CollectionViewCellimage.h"
-#import "PhotoClass.h"
-#import "SDIAsyncImageView.h"
-#import "HTHorizontalSelectionList.h"
-#import "AnimatedMethods.h"
-#import "UIImageView+WebCache.h"
-#import "CustomButton.h"
-#import "PhotoViewController.h"
-#import "ProfileViewController.h"
-#import "CommentViewController.h"
-#import "ProfileClass.h"
 #import <QuartzCore/QuartzCore.h>
-#import "Reachability.h"
+#import <UIKit/UIKit.h>
+
+#import "AFHTTPClient.h"
+#import "AnimatedMethods.h"
+#import "AppDelegate.h"
+#import "CollectionViewCellimage.h"
+#import "CommentViewController.h"
+#import "CustomButton.h"
+#import "defs.h"
+#import "GlobalFunctions.h"
+#import "HomeViewController.h"
+#import "HTHorizontalSelectionList.h"
+#import "PhotoClass.h"
+#import "PhotoViewController.h"
+#import "ProfileClass.h"
+#import "ProfileViewController.h"
+#import "SDIAsyncImageView.h"
 #import "SupportViewController.h"
-#import "TWMessageBarManager.h"
-#import <KiipSDK/KiipSDK.h>
+#import "UIImageView+WebCache.h"
 
 
 @interface HomeViewController ()<HTHorizontalSelectionListDataSource,HTHorizontalSelectionListDelegate,PhotoViewControllerDelegate,CommentViewControllerDelegate>{
@@ -151,8 +149,6 @@
         photoViewController.view.frame = appDelegate.window.frame;
         
         [appDelegate.window addSubview:photoViewController.view];
-        
-        //[self.view addSubview:photoViewController.view];
     }
 }
 
@@ -309,7 +305,7 @@
 }
 
 -(void)getCategoryDeatils:(NSString *)subCategoryURL{
-    [self checkNetworkReachability];
+    checkNetworkReachability();
     [appDelegate showHUDAddedToView:self.view message:@""];
    
     //[self setBusy:YES];
@@ -488,25 +484,25 @@
                      [refreshControl endRefreshing];
                      [appDelegate hideHUDForView2:self.view];
                      //[self setBusy:NO];
-                     [self showServerError];
+                     showServerError();
                  }
              } else {
                  [refreshControl endRefreshing];
                  [appDelegate hideHUDForView2:self.view];
                  //[self setBusy:NO];
-                 [self showServerError];
+                 showServerError();
              }
          } else {
              [refreshControl endRefreshing];
              [appDelegate hideHUDForView2:self.view];
              //[self setBusy:NO];
-             [self showServerError];
+             showServerError();
          }
      }];
 }
 
 -(void)getSupportList{
-    [self checkNetworkReachability];
+    checkNetworkReachability();
     NSString *urlString = [NSString stringWithFormat:@"%@%@/",PROFILEURL,GetUserName];
     NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                              timeoutInterval:60];
@@ -559,18 +555,18 @@
                  [self setBusy:NO];
              } else {
                  [self setBusy:NO];
-                 [self showServerError];
+                 showServerError();
              }
          } else {
              [self setBusy:NO];
-             [self showServerError];
+             showServerError();
          }
      }];
 }
 
 // NSURLConnection Delegates
 -(void)getHomePageDetails{
-    [self checkNetworkReachability];
+    checkNetworkReachability();
     [appDelegate showHUDAddedToView:self.view message:@""];
     //[appDelegate hideHUDForView2:self.view];
     
@@ -640,7 +636,7 @@
                          photoClass.likers = [[NSMutableArray alloc]init];
                          photoClass.comment_set = [[NSMutableArray alloc]init];
                          
-                          NSArray *arrLiker = [dictResult objectForKey:@"get_likers_info"];
+                         NSArray *arrLiker = [dictResult objectForKey:@"get_likers_info"];
                          
                          photoClass.isLike = NO;
                          if([[dictResult objectForKey:@"get_likers_info"] count] > 0){
@@ -745,13 +741,13 @@
                  [refreshControl endRefreshing];
                  //[self setBusy:NO];
                  [appDelegate hideHUDForView2:self.view];
-                  [self showServerError];
+                  showServerError();
              }
          } else {
              [refreshControl endRefreshing];
              //[self setBusy:NO];
              [appDelegate hideHUDForView2:self.view];
-             [self showServerError];
+             showServerError();
          }
      }];
 }
@@ -797,9 +793,20 @@
     } else {
         photoClass = [appDelegate.arrPhotos objectAtIndex:indexPath.row];
     }
+
+    // Change words that start with # to blue
+    NSString *aString = [NSString stringWithFormat:@"%@", photoClass.description];
+    NSMutableAttributedString *attribString = [[NSMutableAttributedString alloc] initWithString:aString];
+    NSArray *words = [aString componentsSeparatedByString:@" "];
+    for (NSString *word in words){
+        if ([word hasPrefix:@"#"]) {
+            NSRange range = [aString rangeOfString:word];
+            [attribString addAttribute:NSForegroundColorAttributeName value:[AnimatedMethods colorFromHexString:@"#47A8F2"] range:range];
+        }
+    }
     
     cell.lblName.text = photoClass.creator;
-    cell.lblDescription.text = photoClass.description;
+    cell.lblDescription.attributedText = attribString;
     cell.lblLikes.text = [NSString stringWithFormat:@"%@",photoClass.like_count];
     cell.lblComments.text = [NSString stringWithFormat:@"%@",photoClass.comment_count];
     
@@ -960,7 +967,7 @@
         photoClass = [appDelegate.arrPhotos objectAtIndex:sender.tag];
     }
     
-    [self checkNetworkReachability];
+    checkNetworkReachability();
     
     int likecount = (int)[photoClass.like_count integerValue];
     if(photoClass.isLike){
@@ -992,7 +999,7 @@
         [photoClass.likers addObject:dictUser];
         
         likecount++;
-        [self doRewardCheck];
+        doRewardCheck();
     }
     
     photoClass.like_count = [NSString stringWithFormat:@"%d",likecount];
@@ -1084,84 +1091,6 @@
     profileViewController.userURL = photoClass.creator_url;
     
     [self.navigationController pushViewController:profileViewController animated:YES];
-}
-
-#pragma mark - KIIP
-
--(void)doRewardCheck{
-    // Check REWARDCHECKURL
-    // If `deserves_reward` == True, show Kiip reward
-    // Subtract reward amount from user's available points
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *urlString = [NSString stringWithFormat:@"%@",REWARDCHECKURL];
-        NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-                                                                 timeoutInterval:60];
-        NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
-        NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
-        NSString *base64String = [plainData base64EncodedStringWithOptions:0];
-        NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
-        [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
-        [_request setHTTPMethod:@"GET"];
-        
-        [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-//            if(error != nil){
-//                NSLog(@"%@",error);
-//            }
-            if ([data length] > 0 && error == nil){
-                NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-                NSString *rewardResult = [JSONValue objectForKey:@"deserves_reward"];
-                if([rewardResult boolValue] == YES){
-                    [[Kiip sharedInstance] saveMoment:@"putting others before yourself!" withCompletionHandler:^(KPPoptart *poptart, NSError *error){
-                        if (error){
-//                            NSLog(@"Something's wrong");
-                            // handle with an Alert dialog.
-                        }
-                        if (poptart){
-//                            NSLog(@"Successful moment save. Showing reward.");
-                            [poptart show];
-                            
-                            NSString *urlString = [NSString stringWithFormat:@"%@",REWARDREDEEMEDURL];
-                            NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-                                                           timeoutInterval:60];
-                            NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
-                            NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
-                            NSString *base64String = [plainData base64EncodedStringWithOptions:0];
-                            NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
-                            [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
-                            [_request setHTTPMethod:@"GET"];
-                            
-                            [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-                            }];
-                        }
-                        if (!poptart){
-//                            NSLog(@"Successful moment save, but no reward available.");
-                        }
-                    }];
-                }
-            }
-        }];
-    });
-}
-
--(void)checkNetworkReachability{
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable) {
-        [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Network Error"
-                                                       description:NETWORK_UNAVAILABLE
-                                                              type:TWMessageBarMessageTypeError
-                                                          duration:6.0];
-        //        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
-    
-}
-
--(void)showServerError{
-    [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Server Error"
-                                                   description:SERVER_ERROR
-                                                          type:TWMessageBarMessageTypeError
-                                                      duration:4.0];
 }
 
 @end

@@ -5,7 +5,7 @@
 #import <UIKit/UIKit.h>
 
 
-@protocol  CategoryViewControllerDelegate <NSObject>
+@protocol CategoryViewControllerDelegate <NSObject>
 @required
 -(void)chooseCategory:(NSString *)choosedCategory selectedIndex:(int)selectIndex;
 @end

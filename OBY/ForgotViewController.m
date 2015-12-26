@@ -2,11 +2,10 @@
 //  ForgotViewController.m
 //
 
-#import "ForgotViewController.h"
 #import "defs.h"
-#import "Message.h"
+#import "ForgotViewController.h"
+#import "GlobalFunctions.h"
 #import "StringUtil.h"
-#import "Reachability.h"
 #import "TWMessageBarManager.h"
 
 
@@ -92,7 +91,7 @@
 }
 
 -(void)doSubmit{
-    [self checkNetworkReachability];
+    checkNetworkReachability();
     [self.view endEditing:YES];
     [self setBusy:YES];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -128,36 +127,15 @@
                          }
                          [self clearFileds];
                      } else {
-                         [self showServerError];
+                         showServerError();
                      }
                  } else {
-                     [self showServerError];
+                     showServerError();
                      [self setBusy:NO];
                  }
              });
         }];
     });
-}
-
--(void)checkNetworkReachability{
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable) {
-        [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Network Error"
-                                                       description:NETWORK_UNAVAILABLE
-                                                              type:TWMessageBarMessageTypeError
-                                                          duration:6.0];
-        //        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
-    
-}
-
--(void)showServerError{
-    [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Server Error"
-                                                   description:SERVER_ERROR
-                                                          type:TWMessageBarMessageTypeError
-                                                      duration:4.0];
 }
 
 @end

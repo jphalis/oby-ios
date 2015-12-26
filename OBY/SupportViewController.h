@@ -6,6 +6,8 @@
 
 
 @interface SupportViewController : UIViewController
-@property (strong,nonatomic)NSString *pageTitle;
-@property (strong,nonatomic)NSMutableArray *arrDetails;
+
+@property (strong, nonatomic)NSString *pageTitle;
+@property (strong, nonatomic)NSMutableArray *arrDetails;
+
 @end

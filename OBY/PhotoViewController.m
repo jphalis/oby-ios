@@ -2,13 +2,12 @@
 //  PhotoViewController.m
 //
 
-#import "PhotoViewController.h"
-#import "SDIAsyncImageView.h"
 #import "AnimatedMethods.h"
 #import "AppDelegate.h"
 #import "AsyncImageView.h"
 #import "defs.h"
-#import "AnimatedMethods.h"
+#import "PhotoViewController.h"
+#import "SDIAsyncImageView.h"
 
 
 #define ZOOM_STEP 2.0
@@ -77,7 +76,7 @@
 
 -(void)moveView:(UIView *)fromView fromFrame:(CGRect) fromFrame toFrame:(CGRect) toFrame{
     fromView.frame = fromFrame;
-    [UIView animateWithDuration:0.3
+    [UIView animateWithDuration:0.2
                           delay:0.0
                         options:UIViewAnimationOptionTransitionCurlDown
                      animations:^{

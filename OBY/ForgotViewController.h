@@ -6,5 +6,4 @@
 
 
 @interface ForgotViewController : UIViewController
-
 @end

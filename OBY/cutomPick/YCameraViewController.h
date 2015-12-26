@@ -5,18 +5,17 @@
 
 //  ARC Helper
 #ifndef ah_retain
-#if __has_feature(objc_arc)
-#define ah_retain self
-#define ah_dealloc self
-#define release self
-#define autorelease self
-#else
-#define ah_retain retain
-#define ah_dealloc dealloc
-#define __bridge
+    #if __has_feature(objc_arc)
+        #define ah_retain self
+        #define ah_dealloc self
+        #define release self
+        #define autorelease self
+    #else
+        #define ah_retain retain
+        #define ah_dealloc dealloc
+        #define __bridge
+    #endif
 #endif
-#endif
-//  ARC Helper ends
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
@@ -24,6 +23,8 @@
 #import "CameraFocusSquare.h"
 #import "OLGhostAlertView.h"
 #import <MapKit/MapKit.h>
+
+
 @protocol YCameraViewControllerDelegate;
 
 @interface YCameraViewController : UIViewController <UINavigationControllerDelegate,UIGestureRecognizerDelegate>{
@@ -48,7 +49,6 @@
 @property (nonatomic, readwrite) BOOL dontAllowResetRestaurant;
 @property (nonatomic, assign) id delegate;
 
-#pragma mark -
 @property (nonatomic, strong) IBOutlet UIButton *photoCaptureButton;
 @property (nonatomic, strong) IBOutlet UIButton *cancelButton;
 @property (nonatomic, strong) IBOutlet UIButton *cameraToggleButton;

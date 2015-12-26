@@ -2,22 +2,21 @@
 //  TimeLineViewController.m
 //
 
-#import "TimeLineViewController.h"
+#import "AnimatedMethods.h"
 #import "AppDelegate.h"
 #import "CollectionViewCellimage.h"
-#import "defs.h"
-#import "Message.h"
-#import "PhotoClass.h"
-#import "AnimatedMethods.h"
-#import "UIImageView+WebCache.h"
-#import "CustomButton.h"
-#import "ProfileViewController.h"
-#import "PhotoViewController.h"
 #import "CommentViewController.h"
+#import "CustomButton.h"
+#import "defs.h"
+#import "GlobalFunctions.h"
+#import "PhotoClass.h"
+#import "PhotoViewController.h"
+#import "ProfileViewController.h"
 #import "Reachability.h"
 #import "SupportViewController.h"
+#import "TimeLineViewController.h"
 #import "TWMessageBarManager.h"
-#import <KiipSDK/KiipSDK.h>
+#import "UIImageView+WebCache.h"
 
 
 @interface TimeLineViewController ()<PhotoViewControllerDelegate,CommentViewControllerDelegate>{
@@ -146,8 +145,20 @@
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
    CollectionViewCellimage *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"timeLineCollView" forIndexPath:indexPath];
     PhotoClass *photoClass = [arrTimelinePhotos objectAtIndex:indexPath.row];
+    
+    // Change words that start with # to blue
+    NSString *aString = [NSString stringWithFormat:@"%@", photoClass.description];
+    NSMutableAttributedString *attribString = [[NSMutableAttributedString alloc] initWithString:aString];
+    NSArray *words = [aString componentsSeparatedByString:@" "];
+    for (NSString *word in words){
+        if ([word hasPrefix:@"#"]) {
+            NSRange range = [aString rangeOfString:word];
+            [attribString addAttribute:NSForegroundColorAttributeName value:[AnimatedMethods colorFromHexString:@"#47A8F2"] range:range];
+        }
+    }
+    
     cell.lblName.text = photoClass.creator;
-    cell.lblDescription.text = photoClass.description;
+    cell.lblDescription.attributedText = attribString;
     cell.lblLikes.text = [NSString stringWithFormat:@"%@",photoClass.like_count];
     cell.lblComments.text = [NSString stringWithFormat:@"%@",photoClass.comment_count];
     [cell.imgView loadImageFromURL:photoClass.photo withTempImage:@""];
@@ -316,7 +327,7 @@
     PhotoClass *photoClass;
     photoClass = [arrTimelinePhotos objectAtIndex:sender.tag];
     
-    [self checkNetworkReachability];
+    checkNetworkReachability();
 
     int likecount = (int)[photoClass.like_count integerValue];
     if(photoClass.isLike){
@@ -351,7 +362,7 @@
         [photoClass.likers addObject:dictUser];
         
         likecount++;
-        [self doRewardCheck];
+        doRewardCheck();
     }
     
     photoClass.like_count = [NSString stringWithFormat:@"%d",likecount];
@@ -429,7 +440,7 @@
 }
 
 -(void)getTimeLineDetails{
-    [self checkNetworkReachability];
+    checkNetworkReachability();
     [appDelegate showHUDAddedToView:self.view message:@""];
    // [self setBusy:YES];
     NSString *urlString = [NSString stringWithFormat:@"%@",TIMELINEURL];
@@ -596,7 +607,7 @@
              [refreshControl endRefreshing];
             [appDelegate hideHUDForView2:self.view];
              //[self setBusy:NO];
-             [self showServerError];
+             showServerError();
          }
      }];
 }
@@ -604,67 +615,6 @@
 -(void)showImages{
     [colltionVw reloadData];
     [refreshControl endRefreshing];
-}
-
-#pragma mark - KIIP
-
--(void)doRewardCheck{
-    // Check REWARDCHECKURL
-    // If `deserves_reward` == True, show Kiip reward
-    // Subtract reward amount from user's available points
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *urlString = [NSString stringWithFormat:@"%@",REWARDCHECKURL];
-        
-        NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-                                                                 timeoutInterval:60];
-        NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
-        NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
-        NSString *base64String = [plainData base64EncodedStringWithOptions:0];
-        NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
-        
-        [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
-        [_request setHTTPMethod:@"GET"];
-        
-        [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-//            if(error != nil){
-//                NSLog(@"%@",error);
-//            }
-            if ([data length] > 0 && error == nil){
-                NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-                
-                NSString *rewardResult = [JSONValue objectForKey:@"deserves_reward"];
-                if([rewardResult boolValue] == YES){
-                    [[Kiip sharedInstance] saveMoment:@"putting others before yourself!" withCompletionHandler:^(KPPoptart *poptart, NSError *error){
-                        if (error){
-//                            NSLog(@"Something's wrong");
-                            // handle with an Alert dialog.
-                        }
-                        if (poptart){
-//                            NSLog(@"Successful moment save. Showing reward.");
-                            [poptart show];
-                            
-                            NSString *urlString = [NSString stringWithFormat:@"%@",REWARDREDEEMEDURL];
-                            NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-                                                           timeoutInterval:60];
-                            NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
-                            NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
-                            NSString *base64String = [plainData base64EncodedStringWithOptions:0];
-                            NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
-                            
-                            [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
-                            [_request setHTTPMethod:@"GET"];
-                            
-                            [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-                            }];
-                        }
-                        if (!poptart){
-//                            NSLog(@"Successful moment save, but no reward available.");
-                        }
-                    }];
-                }
-            }
-        }];
-    });
 }
 
 /*
@@ -676,26 +626,5 @@
     // Pass the selected object to the new view controller.
 }
 */
-
--(void)checkNetworkReachability{
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable) {
-        [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Network Error"
-                                                       description:NETWORK_UNAVAILABLE
-                                                              type:TWMessageBarMessageTypeError
-                                                          duration:6.0];
-        //        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
-    
-}
-
--(void)showServerError{
-    [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Server Error"
-                                                   description:SERVER_ERROR
-                                                          type:TWMessageBarMessageTypeError
-                                                      duration:4.0];
-}
 
 @end

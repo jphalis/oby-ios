@@ -6,5 +6,4 @@
 
 
 @interface SettingViewController : UIViewController
-
 @end

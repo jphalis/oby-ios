@@ -2,15 +2,13 @@
 //  SearchViewController.m
 //
 
-#import "SearchViewController.h"
-#import "defs.h"
-#import "Message.h"
-#import "StringUtil.h"
 #import "AppDelegate.h"
+#import "defs.h"
+#import "GlobalFunctions.h"
 #import "ProfileViewController.h"
+#import "SearchViewController.h"
+#import "StringUtil.h"
 #import "TableViewCellNotification.h"
-#import "Reachability.h"
-#import "TWMessageBarManager.h"
 
 
 @interface SearchViewController (){
@@ -87,11 +85,9 @@
 }
 
 -(void)doSearch{
-    [self checkNetworkReachability];
-    
-    //[txtSearch resignFirstResponder];
+    checkNetworkReachability();
    
-    if(isEmpty==YES){
+    if(isEmpty == YES){
         return;
     }
     
@@ -104,11 +100,6 @@
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
     NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
     [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
-    
-    //[_request setValue:[NSString stringWithFormat:@"Token %@",GetUserToken] forHTTPHeaderField:@"Authorization"];
-    
-//    NSLog(@"%@",GetUserToken);
-    
     [_request setHTTPMethod:@"GET"];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -126,7 +117,7 @@
                 
                 if([JSONValue isKindOfClass:[NSNull class]]){
                     [self setBusy:NO];
-                    [self showServerError];
+                    showServerError();
                     return;
                 }
                 if([JSONValue isKindOfClass:[NSArray class]]){
@@ -139,10 +130,9 @@
                         for (int i = 0; i < JSONValue.count; i++) {
                             
                             NSMutableDictionary *dictResult;
-                            // dictResult=[[NSMutableDictionary alloc]init];
-                            dictResult=[JSONValue objectAtIndex:i];
+                            dictResult = [JSONValue objectAtIndex:i];
                             
-                            NSMutableDictionary *dictSearch=[[NSMutableDictionary alloc]init];
+                            NSMutableDictionary *dictSearch = [[NSMutableDictionary alloc]init];
                            // NSLog(@"%@",[dictResult objectForKey:@"account_url"]);
                             
                             if([dictResult objectForKey:@"account_url"] == [NSNull null]){
@@ -193,7 +183,7 @@
                     }
                 } else {
                     [self setBusy:NO];
-                    [self showServerError];
+                    showServerError();
                 }
             });
         }
@@ -220,9 +210,9 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if(isFilter==YES){
+    if(isFilter == YES){
         return  [arrFileterUsers count];
-    }else{
+    } else {
     return [arrUsers count];
     } //count number of row from counting array hear cataGorry is An Array
 }
@@ -237,13 +227,13 @@
     //SupportCell
     NSMutableDictionary *dictUser;
     
-    if(isFilter==YES){
-        dictUser=[arrFileterUsers objectAtIndex:indexPath.row];
-    }else{
-        dictUser=[arrUsers objectAtIndex:indexPath.row];
+    if(isFilter == YES){
+        dictUser = [arrFileterUsers objectAtIndex:indexPath.row];
+    } else {
+        dictUser = [arrUsers objectAtIndex:indexPath.row];
     }
 
-    cell.txtNotification.attributedText=[dictUser objectForKey:@"usernameText"];
+    cell.txtNotification.attributedText = [dictUser objectForKey:@"usernameText"];
     [cell.imgProfile loadImageFromURL:[dictUser objectForKey:@"profile_picture"] withTempImage:@"avatar"];
     cell.imgProfile.layer.cornerRadius = cell.imgProfile.frame.size.width / 2;
     cell.imgProfile.layer.masksToBounds = YES;
@@ -257,7 +247,7 @@
     
     [self.view endEditing:YES];
     
-    ProfileViewController *profileViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
+    ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
     //account_url
     NSMutableDictionary *dictUser;
     
@@ -310,13 +300,7 @@
         [tblVW reloadData];
         return;
     }
-    
-   // NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(username = %@)", searchString];
-    
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"username beginswith[c] %@", searchString];
-    
-   // NSLog(@"%@",searchString);
-    
     arrFileterUsers = [arrUsers filteredArrayUsingPredicate:predicate];
     
     if(arrFileterUsers.count > 0){
@@ -325,29 +309,6 @@
         lblWaterMark.text = @"No results found";
     }
     [tblVW reloadData];
-  //  NSLog(@"%@",arrUsers);
-   // NSLog(@"%@",arrFileterUsers);
-}
-
--(void)checkNetworkReachability{
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable) {
-        [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Network Error"
-                                                       description:NETWORK_UNAVAILABLE
-                                                              type:TWMessageBarMessageTypeError
-                                                          duration:6.0];
-        //        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
-    
-}
-
--(void)showServerError{
-    [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Server Error"
-                                                   description:SERVER_ERROR
-                                                          type:TWMessageBarMessageTypeError
-                                                      duration:4.0];
 }
 
 @end

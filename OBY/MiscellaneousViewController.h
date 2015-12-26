@@ -6,5 +6,4 @@
 
 
 @interface MiscellaneousViewController : UIViewController
-
 @end

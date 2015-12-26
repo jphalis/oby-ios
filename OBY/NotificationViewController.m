@@ -2,19 +2,17 @@
 //  NotificationViewController.m
 //
 
-#import "NotificationViewController.h"
-#import "AppDelegate.h"
-#import "defs.h"
-#import "Message.h"
-#import "NotificationClass.h"
-#import "TableViewCellNotification.h"
-#import "SDIAsyncImageView.h"
-#import "Reachability.h"
-#import "PhotoViewController.h"
 #import "AnimatedMethods.h"
+#import "AppDelegate.h"
 #import "CustomButton.h"
+#import "defs.h"
+#import "GlobalFunctions.h"
+#import "NotificationClass.h"
+#import "NotificationViewController.h"
+#import "PhotoViewController.h"
 #import "ProfileViewController.h"
-#import "TWMessageBarManager.h"
+#import "SDIAsyncImageView.h"
+#import "TableViewCellNotification.h"
 
 
 @interface NotificationViewController ()<PhotoViewControllerDelegate>{
@@ -74,15 +72,11 @@
 }
 
 -(void)scrollToTop{
-    //[collectionVWHome setContentOffset:CGPointZero animated:YES];
-    
     [tblVW setContentOffset:CGPointZero animated:YES];
-    
-   // [tblVW scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 
 -(void)getNotificDetails:(NSString *)requestURL{
-    [self checkNetworkReachability];
+    checkNetworkReachability();
     
      [appDelegate showHUDAddedToView:self.view message:@""];
     //[self setBusy:YES];
@@ -142,9 +136,9 @@
                          notificationClass.display_thread = [[arrNotifResult objectAtIndex:i]valueForKey:@"display_thread"];
                          
                          if([[arrNotifResult objectAtIndex:i]valueForKey:@"read"]){
-                             notificationClass.read=@"Yes";
+                             notificationClass.read = @"Yes";
                          } else {
-                             notificationClass.read=@"No";
+                             notificationClass.read = @"No";
                          }
                          notificationClass.recipient = [[arrNotifResult objectAtIndex:i]valueForKey:@"recipient"];
                          notificationClass.created = [[arrNotifResult objectAtIndex:i]valueForKey:@"created"];
@@ -182,12 +176,12 @@
              } else {
                  [appDelegate hideHUDForView2:self.view];
                  //[self setBusy:NO];
-                 [self showServerError];
+                 showServerError();
              }
          } else {
              [appDelegate hideHUDForView2:self.view];
              //[self setBusy:NO];
-             [self showServerError];
+             showServerError();
          }
      }];
 }
@@ -205,13 +199,14 @@
     return [arrNotification count];    //count number of row from counting array hear cataGorry is An Array
 }
 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath{
  
     TableViewCellNotification *cell = [tableView dequeueReusableCellWithIdentifier:@"TableViewCellNotification" forIndexPath:indexPath];
  
     if(arrNotification.count <= 0){
-        return  cell;
+        return cell;
     }
     
     NotificationClass *notificationClass = [arrNotification objectAtIndex:indexPath.row];
@@ -223,13 +218,12 @@
     } else {
         cell.txtNotification.textColor = [UIColor blackColor];
     }
-//    NSLog(@"SenderURL: %@",notificationClass.sender_profile_picture);
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapResponse:)];
     singleTap.numberOfTapsRequired = 1;
     [cell.txtNotification addGestureRecognizer:singleTap];
     
-   [cell.imgProfile loadImageFromURL:notificationClass.sender_profile_picture withTempImage:@"avatar"];
+    [cell.imgProfile loadImageFromURL:notificationClass.sender_profile_picture withTempImage:@"avatar"];
     cell.imgProfile.layer.cornerRadius = cell.imgProfile.frame.size.width / 2;
     cell.imgProfile.layer.masksToBounds = YES;
  
@@ -253,14 +247,12 @@
 //        NSLog(@"couldn't find index path");
     } else {
         NotificationClass *notificationClass = [arrNotification objectAtIndex:indexPath.row];
-//        NSLog(@"%@",notificationClass.target_url);
         
-        [self checkNetworkReachability];
+        checkNetworkReachability();
         
         if([notificationClass.target_photo isEqualToString:@""]){
             return;
         } else {
-//            NSLog(@"target photo;; %@",notificationClass.target_photo);
             photoViewController.photoURL = notificationClass.target_photo;
             photoViewController.view.frame = appDelegate.window.frame;
             [self.view addSubview:photoViewController.view];
@@ -272,19 +264,15 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NotificationClass *notificationClass = [arrNotification objectAtIndex:indexPath.row];
-//    NSLog(@"%@",notificationClass.target_url);
     
-    [self checkNetworkReachability];
+    checkNetworkReachability();
    
     if([notificationClass.target_photo isEqualToString:@""]){
         return;
     } else {
-//        NSLog(@"target photo;; %@",notificationClass.target_photo);
         photoViewController.photoURL = notificationClass.target_photo;
         photoViewController.view.frame = appDelegate.window.frame;
         [self.view addSubview:photoViewController.view];
-
-        //[[UIApplication sharedApplication]openURL:[NSURL URLWithString:notificationClass.target_url]];
     }
 }
 
@@ -308,26 +296,5 @@
     // Pass the selected object to the new view controller.
 }
 */
-
--(void)checkNetworkReachability{
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable) {
-        [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Network Error"
-                                                       description:NETWORK_UNAVAILABLE
-                                                              type:TWMessageBarMessageTypeError
-                                                          duration:6.0];
-        //        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
-    
-}
-
--(void)showServerError{
-    [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Server Error"
-                                                   description:SERVER_ERROR
-                                                          type:TWMessageBarMessageTypeError
-                                                      duration:4.0];
-}
 
 @end

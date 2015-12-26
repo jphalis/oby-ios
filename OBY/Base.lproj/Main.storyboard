@@ -2501,7 +2501,7 @@
                                                             <rect key="frame" x="54.5" y="6" width="238" height="22"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-SemiBold" family="Gibson" pointSize="12"/>
-                                                            <color key="textColor" red="0.2801162646" green="0.65732849810000005" blue="0.95081174369999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="textColor" red="0.27843137254901962" green="0.6588235294117647" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="pretty" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yCD-ZS-YVI">
@@ -2671,7 +2671,7 @@
                                             <action selector="onSearch:" destination="FHi-30-M6Z" eventType="touchUpInside" id="w23-XI-ZHt"/>
                                         </connections>
                                     </button>
-                                    <searchBar contentMode="redraw" placeholder="Search" id="57P-Nd-TVB">
+                                    <searchBar contentMode="redraw" placeholder="Search OBY" id="57P-Nd-TVB">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="search"/>

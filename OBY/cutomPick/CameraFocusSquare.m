@@ -8,8 +8,7 @@
 const float squareLength = 80.0f;
 @implementation CameraFocusSquare
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame{
   self = [super initWithFrame:frame];
   if (self) {
     // Initialization code
@@ -25,7 +24,6 @@ const float squareLength = 80.0f;
     selectionAnimation.repeatCount = 8;
     [self.layer addAnimation:selectionAnimation
                       forKey:@"selectionAnimation"];
-    
   }
   return self;
 }

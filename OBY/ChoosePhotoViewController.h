@@ -6,7 +6,7 @@
 #import <UIKit/UIKit.h>
 
 
-@protocol  ChoosePhotoViewControllerDelegate <NSObject>
+@protocol ChoosePhotoViewControllerDelegate <NSObject>
 @required
 -(void)selectImage :(UIImage*)imgSelect;
 @end

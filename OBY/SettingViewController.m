@@ -2,16 +2,15 @@
 //  SettingViewController.m
 //
 
-#import "SettingViewController.h"
 #import "AppDelegate.h"
-#import "ProfileViewController.h"
-#import "defs.h"
-#import "Message.h"
-#import "Reachability.h"
 #import "ChangePassViewController.h"
+#import "defs.h"
 #import "EditProfileViewController.h"
-//#import "SVWebViewController.h"
+#import "GlobalFunctions.h"
+#import "ProfileViewController.h"
+#import "SettingViewController.h"
 #import "SVModalWebViewController.h"
+//#import "SVWebViewController.h"
 #import "TWMessageBarManager.h"
 
 
@@ -101,16 +100,13 @@ enum{
         case EDITPROFILE:{
             EditProfileViewController *editProfileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"EditProfileViewController"];
             [self.navigationController pushViewController:editProfileViewController animated:YES];
-//            NSLog(@"edit");
         }
             break;
         case HELPCENTER:{
-//            NSLog(@"help");
         }
             break;
         case TERMS:{
-//            NSLog(@"terms");
-            [self checkNetworkReachability];
+            checkNetworkReachability();
             // Opens TERMSURL in a modal view
             SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithAddress:[NSString stringWithFormat:@"%@",TERMSURL]];
             [self presentViewController:webViewController animated:YES completion:NULL];
@@ -120,7 +116,6 @@ enum{
         }
             break;
         case LOGOUT: {
-//            NSLog(@"logout");
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Are you sure you want to logout?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
             alert.delegate = self;
             alert.tag = 100;
@@ -128,8 +123,7 @@ enum{
         }
             break;
         case PRIVACY: {
-//            NSLog(@"privacy");
-            [self checkNetworkReachability];
+                checkNetworkReachability();
             
             // Opens PRIVACYURL in a modal view
             SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithAddress:[NSString stringWithFormat:@"%@",PRIVACYURL]];
@@ -153,20 +147,6 @@ enum{
     if (alertView.tag == 100 && buttonIndex == 1 ) {
         [appDelegate userLogout];
     }
-}
-
--(void)checkNetworkReachability{
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable) {
-        [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Network Error"
-                                                       description:NETWORK_UNAVAILABLE
-                                                              type:TWMessageBarMessageTypeError
-                                                          duration:6.0];
-        //        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
-    
 }
 
 @end

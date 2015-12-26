@@ -2,19 +2,19 @@
 //  EditProfileViewController.m
 //
 
-#import "EditProfileViewController.h"
+#import "AnimatedMethods.h"
+#import "ChoosePhotoViewController.h"
+#import "CustomeImagePicker.h"
 #import "defs.h"
+#import "EditProfileViewController.h"
+#import "GlobalFunctions.h"
+#import "IBActionSheet.h"
 #import "Message.h"
+#import "MMPickerView.h"
 #import "SDIAsyncImageView.h"
 #import "StringUtil.h"
-#import "AnimatedMethods.h"
-#import "IBActionSheet.h"
-#import "MMPickerView.h"
-#import "CustomeImagePicker.h"
-#import "ChoosePhotoViewController.h"
-#import "UIView+RNActivityView.h"
-#import "Reachability.h"
 #import "TWMessageBarManager.h"
+#import "UIView+RNActivityView.h"
 
 
 #define kOFFSET_FOR_KEYBOARD 0.65
@@ -55,7 +55,7 @@
     imgProfile.layer.cornerRadius = imgProfile.frame.size.width / 2;
     imgProfile.layer.masksToBounds = YES;
     
-    updateBtn.layer.cornerRadius = 20;
+    updateBtn.layer.cornerRadius = 12;
 
     [self getProfileInfo];
     
@@ -189,7 +189,7 @@
              if([JSONValue isKindOfClass:[NSDictionary class]]){
                  if([JSONValue allKeys].count == 1 && [JSONValue objectForKey:@"detail"]){
                      [self setBusy:NO];
-                     [self showServerError];
+                     showServerError();
                      return;
                  }
                  if([JSONValue objectForKey:@"username"] == [NSNull null]){
@@ -197,7 +197,7 @@
                  } else {
                      txtUserName.text = [JSONValue objectForKey:@"username"];
                  }
-                 
+
                  if([JSONValue objectForKey:@"email"] == [NSNull null]){
                      txtEmail.text = @"";
                  } else {
@@ -249,11 +249,11 @@
                  [self setBusy:NO];
              } else {
                  [self setBusy:NO];
-                 [self showServerError];
+                 showServerError();
              }
          } else {
              [self setBusy:NO];
-             [self showServerError];
+             showServerError();
          }
      }];
 }
@@ -265,20 +265,19 @@
   
     [MMPickerView showPickerViewInView:appDelegate.window
                            withStrings:arr
-                           withOptions:@{MMbackgroundColor: [UIColor whiteColor],
-                                         MMtextColor: [UIColor blackColor],
+                           withOptions:@{MMbackgroundColor:[UIColor whiteColor],
+                                         MMtextColor:[UIColor blackColor],
                                          MMtoolbarColor:[AnimatedMethods colorFromHexString:@"#009CF3"],
                                          MMbuttonColor:[UIColor whiteColor] ,
-                                         MMfont: [UIFont systemFontOfSize:20],
-                                         MMvalueY: @3,
-                                         MMselectedObject:
-                                             _selectedGender,
+                                         MMfont:[UIFont systemFontOfSize:20],
+                                         MMvalueY:@3,
+                                         MMselectedObject:_selectedGender,
                                          MMtextAlignment:@1}
                             completion:^(NSString *selectedString) {
                               
                                 txtGender.text = selectedString;
                                 _selectedGender = selectedString;
-                            } ];
+                            }];
 }
 
 -(void)callMethod{
@@ -318,8 +317,7 @@
     return YES;
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
     UIToolbar * keyboardToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
     keyboardToolBar.tag = textField.tag;
     
@@ -458,7 +456,6 @@
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-    
     if([text isEqualToString:@"\n"]){
         [textView resignFirstResponder];
         [txtWebsite becomeFirstResponder];
@@ -486,7 +483,7 @@
         }
 }
 
--(void)resignKeyboard {
+-(void)resignKeyboard{
     [self.view endEditing:YES];
 }
 
@@ -549,7 +546,7 @@
 }
 
 -(void)doUpdate{
-    [self checkNetworkReachability];
+    checkNetworkReachability();
     [self.view endEditing:YES];
     [self setBusy:YES];
     
@@ -673,11 +670,11 @@
                      [self showMessage:@"This is not a valid gender choice"];
                  }
              } else {
-                 [self showServerError];
+                 showServerError();
              }
          } else {
              [self setBusy:NO];
-             [self showServerError];
+             showServerError();
          }
          [self setBusy:NO];
      }];
@@ -782,27 +779,6 @@
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     //[[UIApplication sharedApplication] setStatusBarHidden:NO];
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
--(void)checkNetworkReachability{
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable) {
-        [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Network Error"
-                                                       description:NETWORK_UNAVAILABLE
-                                                              type:TWMessageBarMessageTypeError
-                                                          duration:6.0];
-        //        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
-    
-}
-
--(void)showServerError{
-    [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Server Error"
-                                                   description:SERVER_ERROR
-                                                          type:TWMessageBarMessageTypeError
-                                                      duration:4.0];
 }
 
 @end

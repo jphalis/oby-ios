@@ -3,18 +3,16 @@
 //  OBY
 //
 
-#import "AuthViewController.h"
-#import "ForgotViewController.h"
-#import "UIViewControllerAdditions.h"
-#import "StringUtil.h"
-#import "defs.h"
-#import "Message.h"
 #import "AppDelegate.h"
+#import "AuthViewController.h"
 #import "CutomTabViewController.h"
-#import "Reachability.h"
-//#import "SVWebViewController.h"
+#import "defs.h"
+#import "ForgotViewController.h"
+#import "GlobalFunctions.h"
+#import "StringUtil.h"
 #import "SVModalWebViewController.h"
-#import "TWMessageBarManager.h"
+//#import "SVWebViewController.h"
+#import "UIViewControllerAdditions.h"
 
 
 #define kOFFSET_FOR_KEYBOARD 0.65
@@ -52,8 +50,6 @@
 @implementation AuthViewController
 
 - (void)viewDidLoad {
-    //[self pushingView:NO];
-    
     if(GetUserName != nil){
         [self pushingView:NO];
     }
@@ -137,11 +133,10 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSUInteger length = [textField.text length] + [string length] - range.length;
-    
    
     if(textField == txtLoginUsrName || textField == txtSignupUsrName){
         if(textField == txtSignupUsrName){
-            txtSignupUsrName.text=txtSignupUsrName.text.lowercaseString;
+            txtSignupUsrName.text = txtSignupUsrName.text.lowercaseString;
         }
         BOOL isValidChar = [AppDelegate isValidCharacter:string filterCharSet:USERNAME];
         return isValidChar && length < 16;
@@ -162,7 +157,7 @@
      ];
 }
 
-//TextFiled Delegate Methods
+//TextField Delegate Methods
 
 -(BOOL) textFieldShouldBeginEditing:(UITextField*)textField {
     return YES;
@@ -223,9 +218,9 @@
 
 - (void) animateTextField: (UITextField*) textField up: (BOOL) up{
     float val;
-    if(self.view.frame.size.height==480){
+    if(self.view.frame.size.height == 480){
         val = 0.75;
-    }else{
+    } else {
         val = kOFFSET_FOR_KEYBOARD;
     }
     
@@ -301,7 +296,7 @@
 }
 
 - (IBAction)doSignIn:(id)sender{
-    [self checkNetworkReachability];
+    checkNetworkReachability();
     
     if ([self validateFields] == YES){
         [self doLogin];
@@ -309,7 +304,6 @@
 }
 
 -(void)doLogin{
-    
     [self.view endEditing:YES];
     [self setBusy:YES];
     txtLoginUsrName.text = [txtLoginUsrName.text lowercaseString];
@@ -355,7 +349,7 @@
                          [self showMessage:LOGIN_ERROR];
                      }
                  } else {
-                     [self showServerError];
+                     showServerError();
                      [self setBusy:NO];
                  }
              });
@@ -374,9 +368,6 @@
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
     NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
     [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
-    
-    //[_request setValue:[NSString stringWithFormat:@"Token %@",GetUserToken] forHTTPHeaderField:@"Authorization"];
-
     [_request setHTTPMethod:@"GET"];
     
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
@@ -424,8 +415,6 @@
 }
 
 - (IBAction)doSignUp:(id)sender{
-    //[self pushingView];
-    
     if ([self validateFields] == YES){
         [self doRegister];
     }
@@ -433,7 +422,7 @@
 
 - (IBAction)onTermsClick:(id)sender{
     if([sender tag] == 22){
-        [self checkNetworkReachability];
+        checkNetworkReachability();
         
         // Opens TERMSURL in a modal view
         SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithAddress:[NSString stringWithFormat:@"%@",TERMSURL]];
@@ -442,7 +431,7 @@
         // Opens TERMSURL in Safari
         // [[UIApplication sharedApplication]openURL:[NSURL URLWithString:TERMSURL]];
     } else {
-        [self checkNetworkReachability];
+        checkNetworkReachability();
         
         // Opens PRIVACYURL in a modal view
         SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithAddress:[NSString stringWithFormat:@"%@",PRIVACYURL]];
@@ -454,7 +443,7 @@
 }
 
 -(void)doRegister{
-    [self checkNetworkReachability];
+    checkNetworkReachability();
     [self.view endEditing:YES];
     [self setBusy:YES];
     
@@ -514,16 +503,16 @@
                      } else if([[[JSONValue allKeys]objectAtIndex:0]isEqualToString:@"email"]) {
                          [self showMessage:EMAIL_EXISTS_ANOTHER_USER];
                      } else {
-                         [self showServerError];
+                         showServerError();
                      }
                  }
              } else {
-                 [self showServerError];
+                 showServerError();
              }
             [self setBusy:NO];
          } else {
-            [self setBusy:NO];
-             [self showServerError];
+             [self setBusy:NO];
+             showServerError();
          }
          [self setBusy:NO];
      }];
@@ -540,7 +529,6 @@
     txtSignupPass.text = @"";
     txtSignupUsrName.text = @"";
     txtSignupVerifyPass.text = @"";
-    
 }
 
 -(BOOL)validateFields{
@@ -587,27 +575,6 @@
         }
         return YES;
     }
-}
-
--(void)checkNetworkReachability{
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable) {
-        [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Network Error"
-                                                       description:NETWORK_UNAVAILABLE
-                                                              type:TWMessageBarMessageTypeError
-                                                          duration:6.0];
-        //        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
-
-}
-
--(void)showServerError{
-    [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Server Error"
-                                                   description:SERVER_ERROR
-                                                          type:TWMessageBarMessageTypeError
-                                                      duration:4.0];
 }
 
 @end

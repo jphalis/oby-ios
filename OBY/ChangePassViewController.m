@@ -2,13 +2,11 @@
 //  ChangePassViewController.m
 //
 
+#import "AppDelegate.h"
 #import "ChangePassViewController.h"
 #import "defs.h"
-#import "Message.h"
+#import "GlobalFunctions.h"
 #import "StringUtil.h"
-#import "AppDelegate.h"
-#import "Reachability.h"
-#import "TWMessageBarManager.h"
 
 
 #define kOFFSET_FOR_KEYBOARD 0.65
@@ -32,7 +30,7 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    UISwipeGestureRecognizer *viewRight=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
+    UISwipeGestureRecognizer *viewRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
     viewRight.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:viewRight];
 }
@@ -206,7 +204,7 @@
 }
 
 -(void)doSubmit{
-    [self checkNetworkReachability];
+    checkNetworkReachability();
     [self.view endEditing:YES];
     [self setBusy:YES];
     
@@ -251,12 +249,12 @@
                  }
                  [self resetFields];
              } else {
-                 [self showServerError];
+                 showServerError();
              }
              [self setBusy:NO];
          } else {
              [self setBusy:NO];
-             [self showServerError];
+             showServerError();
          }
          [self setBusy:NO];
      }];
@@ -266,27 +264,6 @@
     txtNewPass.text = @"";
     txtNewConfrmPass.text = @"";
     txtOldPass.text = @"";
-}
-
--(void)checkNetworkReachability{
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    if(networkStatus == NotReachable) {
-        [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Network Error"
-                                                       description:NETWORK_UNAVAILABLE
-                                                              type:TWMessageBarMessageTypeError
-                                                          duration:6.0];
-        //        [self showMessage:NETWORK_UNAVAILABLE];
-        return;
-    }
-    
-}
-
--(void)showServerError{
-    [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Server Error"
-                                                   description:SERVER_ERROR
-                                                          type:TWMessageBarMessageTypeError
-                                                      duration:4.0];
 }
 
 @end

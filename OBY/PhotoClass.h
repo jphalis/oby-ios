@@ -6,6 +6,7 @@
 
 
 @interface PhotoClass : NSObject
+
 @property (nonatomic, strong) NSString *category_url;
 @property (nonatomic, retain) NSString *comment_count;
 @property (nonatomic, retain) NSMutableArray *comment_set;
@@ -20,4 +21,5 @@
 @property (nonatomic, retain) NSString *slug;
 @property (nonatomic, retain) NSString *description;
 @property (nonatomic, assign) BOOL isLike;
+
 @end
