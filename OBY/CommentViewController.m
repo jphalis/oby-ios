@@ -19,6 +19,7 @@
     __weak IBOutlet UITextField *txtComment;
     __weak IBOutlet UIButton *btnSubmit;
 }
+
 - (IBAction)onSubmit:(id)sender;
 - (IBAction)onBack:(id)sender;
 
@@ -32,6 +33,11 @@
     
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    UISwipeGestureRecognizer *viewRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
+    viewRight.direction = UISwipeGestureRecognizerDirectionRight;
+    
+    [self.view addGestureRecognizer:viewRight];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -73,6 +79,10 @@
 }
 
 - (IBAction)onBack:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)swipeRight:(UISwipeGestureRecognizer *)gestureRecognizer{
     [self.navigationController popViewControllerAnimated:YES];
 }
 

@@ -16,7 +16,7 @@ MBProgressHUD *hud;
 @end
 
 @implementation AppDelegate
-@synthesize arrPhotos,dicAllKeys,arrTimeLinePhotos,dictProfileInfo,arrSupports;
+@synthesize arrPhotos,dicAllKeys,arrTimeLinePhotos,arrHashtagPhotos,dictProfileInfo,arrSupports;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
     // Override point for customization after application launch.
@@ -32,6 +32,7 @@ MBProgressHUD *hud;
     arrSupports = [[NSMutableArray alloc]init];
     arrPhotos = [[NSMutableArray alloc]init];
     arrTimeLinePhotos = [[NSMutableArray alloc]init];
+    arrHashtagPhotos = [[NSMutableArray alloc]init];
     dictProfileInfo = [[NSMutableDictionary alloc]init];
     
     Kiip *kiip = [[Kiip alloc] initWithAppKey:@"300fc8335c0e0080476bb09b9866d185" andSecret:@"a5a34e72cc8efc14a93a6b276cd968d1"];

@@ -19,23 +19,30 @@
 #import "UIImageView+WebCache.h"
 
 
-@interface HashtagViewController ()<PhotoViewControllerDelegate,CommentViewControllerDelegate>{
+@interface HashtagViewController ()<PhotoViewControllerDelegate,CommentViewControllerDelegate> {
     AppDelegate *appDelegate;
-    NSMutableArray *arrTimelinePhotos;
+    
+    NSMutableArray *arrHashtagPhotos;
     NSInteger tapCellIndex;
     NSIndexPath *previousIndexPath;
     __weak IBOutlet UICollectionView *colltionVw;
     PhotoViewController *photoViewController;
     UIRefreshControl *refreshControl;
     CommentViewController *commentViewController;
+    __weak IBOutlet UILabel *headerLabel;
 }
+
+- (IBAction)onBack:(id)sender;
+
 @end
 
 @implementation HashtagViewController
+@synthesize titleLabel;
+@synthesize tagURL;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    arrTimelinePhotos = [[NSMutableArray alloc]init];
+    arrHashtagPhotos = [[NSMutableArray alloc]init];
     tapCellIndex = -1;
     
     previousIndexPath = nil;
@@ -58,9 +65,37 @@
     UILongPressGestureRecognizer *longPressCollectionView = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
     longPressCollectionView.minimumPressDuration = 1;
     
-    [self getTimeLineDetails];
+    UISwipeGestureRecognizer *viewRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
+    viewRight.direction = UISwipeGestureRecognizerDirectionRight;
+    
+    [self.view addGestureRecognizer:viewRight];
+    
+    [self getHashtagDetails];
     
     // Do any additional setup after loading the view.
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    appDelegate.tabbar.tabView.hidden = NO;
+    [super viewWillAppear:YES];
+    
+    headerLabel.text = titleLabel;
+    
+    if(GetisComment == YES){
+        SetisComment(NO);
+        return;
+    }
+    if(arrHashtagPhotos.count > 0){
+        [self scrollToTop];
+    }
+}
+
+-(void)swipeRight:(UISwipeGestureRecognizer *)gestureRecognizer{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)onBack:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)longPress:(UILongPressGestureRecognizer *)gestureRecognizer{
@@ -68,14 +103,14 @@
     
     NSIndexPath *indexPath = [colltionVw indexPathForItemAtPoint:p];
     if (indexPath == nil){
-        //        NSLog(@"couldn't find index path");
+
     } else {
         static int i = 0;
         i++;
         if(i == 1){
             return;
         }
-        PhotoClass *photoClass=[arrTimelinePhotos objectAtIndex:indexPath.row];
+        PhotoClass *photoClass = [arrHashtagPhotos objectAtIndex:indexPath.row];
         photoViewController.photoURL = photoClass.photo;
         photoViewController.view.frame = appDelegate.window.frame;
         
@@ -84,7 +119,7 @@
 }
 
 -(void)startRefresh{
-    [self getTimeLineDetails];
+    [self getHashtagDetails];
 }
 
 -(void)removeImage{
@@ -94,19 +129,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
--(void)viewWillAppear:(BOOL)animated{
-    appDelegate.tabbar.tabView.hidden = NO;
-    [super viewWillAppear:YES];
-    
-    if(GetisComment == YES){
-        SetisComment(NO);
-        return;
-    }
-    if(arrTimelinePhotos.count > 0){
-        [self scrollToTop];
-    }
 }
 
 -(void)setComment:(int)selectIndex commentCount:(NSString *)countStr{
@@ -139,12 +161,12 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return [arrTimelinePhotos count];
+    return [arrHashtagPhotos count];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    CollectionViewCellimage *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"timeLineCollView" forIndexPath:indexPath];
-    PhotoClass *photoClass = [arrTimelinePhotos objectAtIndex:indexPath.row];
+    CollectionViewCellimage *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"hashtagCollView" forIndexPath:indexPath];
+    PhotoClass *photoClass = [arrHashtagPhotos objectAtIndex:indexPath.row];
     
     // Change words that start with # to blue
     //    NSString *aString = [NSString stringWithFormat:@"%@", photoClass.description];
@@ -171,13 +193,13 @@
     cell.lblLikeBack.layer.borderColor = [AnimatedMethods colorFromHexString:@"#cacaca"].CGColor;
     cell.lblLikeBack.layer.borderWidth = 1;
     cell.lblLikeBack.layer.cornerRadius = 6;
-    cell.layer.masksToBounds=YES;
+    cell.layer.masksToBounds = YES;
     
     cell.lblComentBack.backgroundColor = [UIColor whiteColor];
     cell.lblComentBack.layer.borderColor = [AnimatedMethods colorFromHexString:@"#cacaca"].CGColor;
     cell.lblComentBack.layer.borderWidth = 1;
     cell.lblComentBack.layer.cornerRadius = 6;
-    cell.layer.masksToBounds=YES;
+    cell.layer.masksToBounds = YES;
     
     cell.imgLike.image = [UIImage imageNamed:@"like_icon"];
     if(photoClass.isLike){
@@ -216,7 +238,7 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    CollectionViewCellimage *currentCell=(CollectionViewCellimage *)[collectionView cellForItemAtIndexPath:indexPath];
+    CollectionViewCellimage *currentCell = (CollectionViewCellimage *)[collectionView cellForItemAtIndexPath:indexPath];
     //CollectionViewCellimage *PreivousCell=(CollectionViewCellimage *)[collectionView cellForItemAtIndexPath:previousIndexPath];
     
     if(currentCell.imgView.image == nil){
@@ -228,9 +250,9 @@
         return;
     }
     
-    tapCellIndex=indexPath.row;
+    tapCellIndex = indexPath.row;
     
-    PhotoClass *photoClass = [arrTimelinePhotos objectAtIndex:indexPath.row];
+    PhotoClass *photoClass = [arrHashtagPhotos objectAtIndex:indexPath.row];
     photoViewController.photoURL = photoClass.photo;
     photoViewController.view.frame = appDelegate.window.frame;
     [appDelegate.window addSubview:photoViewController.view];
@@ -273,16 +295,16 @@
     CollectionViewCellimage *currentCell=(CollectionViewCellimage *)[colltionVw cellForItemAtIndexPath:indexPath];
     
     PhotoClass *photoClass;
-    photoClass = [arrTimelinePhotos objectAtIndex:sender.tag];
+    photoClass = [arrHashtagPhotos objectAtIndex:sender.tag];
     
-    SupportViewController *supportViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"SupportViewController"];
+    SupportViewController *supportViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SupportViewController"];
     
     if([currentCell.lblComments.text isEqualToString:@"0"]){
         return;
     }
     
-    supportViewController.pageTitle=@"Comments";
-    supportViewController.arrDetails=photoClass.comment_set.copy;
+    supportViewController.pageTitle = @"Comments";
+    supportViewController.arrDetails = photoClass.comment_set.copy;
     [self.navigationController pushViewController:supportViewController animated:YES];
 }
 
@@ -291,7 +313,7 @@
     CollectionViewCellimage *currentCell=(CollectionViewCellimage *)[colltionVw cellForItemAtIndexPath:indexPath];
     
     PhotoClass *photoClass;
-    photoClass=[arrTimelinePhotos objectAtIndex:sender.tag];
+    photoClass = [arrHashtagPhotos objectAtIndex:sender.tag];
     
     SupportViewController *supportViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"SupportViewController"];
     
@@ -305,7 +327,7 @@
 }
 
 -(void)showUser:(CustomButton*)sender{
-    PhotoClass *photoClass = [arrTimelinePhotos objectAtIndex:sender.tag];
+    PhotoClass *photoClass = [arrHashtagPhotos objectAtIndex:sender.tag];
     ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
     profileViewController.userURL=photoClass.creator_url;
     [self.navigationController pushViewController:profileViewController animated:YES];
@@ -314,7 +336,7 @@
 -(void)onComment:(CustomButton*)sender{
     SetisComment(YES);
     PhotoClass *photoClass;
-    photoClass = [arrTimelinePhotos objectAtIndex:sender.tag];
+    photoClass = [arrHashtagPhotos objectAtIndex:sender.tag];
     commentViewController.selectRow = (int)sender.tag;
     commentViewController.photoClass = photoClass;
     [self.navigationController pushViewController:commentViewController animated:YES];
@@ -325,7 +347,7 @@
     CollectionViewCellimage *currentCell = (CollectionViewCellimage *)[colltionVw cellForItemAtIndexPath:indexPath];
     
     PhotoClass *photoClass;
-    photoClass = [arrTimelinePhotos objectAtIndex:sender.tag];
+    photoClass = [arrHashtagPhotos objectAtIndex:sender.tag];
     
     checkNetworkReachability();
     
@@ -369,8 +391,6 @@
     currentCell.lblLikes.text = [NSString stringWithFormat:@"%@",photoClass.like_count];
     
     [self doLike:photoClass selectCell:currentCell];
-    
-    //    NSLog(@"Like Click");
 }
 
 -(void)doLike:(PhotoClass *)photoClass selectCell:(CollectionViewCellimage *)selectCell {
@@ -430,12 +450,12 @@
     });
 }
 
--(void)getTimeLineDetails{
+-(void)getHashtagDetails{
     checkNetworkReachability();
     
     [appDelegate showHUDAddedToView:self.view message:@""];
     // [self setBusy:YES];
-    NSString *urlString = [NSString stringWithFormat:@"%@",TIMELINEURL];
+    NSString *urlString = tagURL;
     
     NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                              timeoutInterval:60];
@@ -445,17 +465,11 @@
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
     NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
     [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
-    
-    //[_request setValue:[NSString stringWithFormat:@"Token %@",GetUserToken] forHTTPHeaderField:@"Authorization"];
-    
-    //    NSLog(@"%@",GetUserToken);
-    
     [_request setHTTPMethod:@"GET"];
     
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
      {
          if(error != nil){
-             // [self setBusy:NO];
              [appDelegate hideHUDForView2:self.view];
          }
          if ([data length] > 0 && error == nil){
@@ -463,11 +477,12 @@
              
              if([JSONValue isKindOfClass:[NSArray class]]){
                  
-                 if(arrTimelinePhotos.count > 0){
-                     [arrTimelinePhotos removeAllObjects];
+                 if(arrHashtagPhotos.count > 0){
+                     [arrHashtagPhotos removeAllObjects];
                  }
                  
                  if([JSONValue count] > 0){
+                     NSLog(@"SWAGGGGG");
                      for (int i = 0; i < JSONValue.count; i++) {
                          NSMutableDictionary *dictResult;
                          dictResult = [[NSMutableDictionary alloc]init];
@@ -587,7 +602,7 @@
                          photoClass.photo = [dictResult objectForKey:@"photo"];
                          photoClass.slug = [dictResult objectForKey:@"slug"];
                          
-                         [arrTimelinePhotos addObject:photoClass];
+                         [arrHashtagPhotos addObject:photoClass];
                      }
                      [appDelegate hideHUDForView2:self.view];
                      //[self setBusy:NO];

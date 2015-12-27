@@ -5,7 +5,7 @@
 #import <UIKit/UIKit.h>
 
 
-@protocol  PhotoViewControllerDelegate <NSObject>
+@protocol PhotoViewControllerDelegate <NSObject>
 @required
 -(void)removeImage;
 

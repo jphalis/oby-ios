@@ -20,7 +20,7 @@
 
 #define kOFFSET_FOR_KEYBOARD 0.65
 
-@interface EditProfileViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,CustomeImagePickerDelegate,ChoosePhotoViewControllerDelegate>{
+@interface EditProfileViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,CustomeImagePickerDelegate,ChoosePhotoViewControllerDelegate> {
     
     __weak IBOutlet UITextField *txtWebsite;
     __weak IBOutlet UITextField *txtFullName;
@@ -39,10 +39,13 @@
     
     AppDelegate *appDelegate;
 }
+
 - (IBAction)onBack:(id)sender;
 - (IBAction)onGender:(id)sender;
 - (IBAction)onUpdate:(id)sender;
-@property (nonatomic, strong) NSString * selectedGender;
+
+@property (nonatomic, strong) NSString *selectedGender;
+
 @end
 
 @implementation EditProfileViewController

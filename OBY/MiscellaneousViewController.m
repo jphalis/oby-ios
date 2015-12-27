@@ -34,13 +34,13 @@ enum{
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    appDelegate=[AppDelegate getDelegate];
+    appDelegate = [AppDelegate getDelegate];
     
-    if(self.view.frame.size.height==480 &&self.view.frame.size.width==320){
-        btnCreate.frame=CGRectMake(btnCreate.frame.origin.x+5, btnCreate.frame.origin.y, 63, 63);
-        btnProfile.frame=CGRectMake(btnProfile.frame.origin.x+5, btnProfile.frame.origin.y, 63, 63);
-        btnSearch.frame=CGRectMake(btnSearch.frame.origin.x+5, btnSearch.frame.origin.y, 63, 63);
-        btnSetting.frame=CGRectMake(btnSetting.frame.origin.x+5, btnSetting.frame.origin.y, 63, 63);
+    if(self.view.frame.size.height == 480 && self.view.frame.size.width == 320){
+        btnCreate.frame = CGRectMake(btnCreate.frame.origin.x+5, btnCreate.frame.origin.y, 63, 63);
+        btnProfile.frame = CGRectMake(btnProfile.frame.origin.x+5, btnProfile.frame.origin.y, 63, 63);
+        btnSearch.frame = CGRectMake(btnSearch.frame.origin.x+5, btnSearch.frame.origin.y, 63, 63);
+        btnSetting.frame = CGRectMake(btnSetting.frame.origin.x+5, btnSetting.frame.origin.y, 63, 63);
     }
     // Do any additional setup after loading the view.
 }
@@ -51,7 +51,7 @@ enum{
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    appDelegate.tabbar.tabView.hidden=NO;
+    appDelegate.tabbar.tabView.hidden = NO;
     [super viewWillAppear:YES];
 }
 
@@ -68,36 +68,27 @@ enum{
 - (IBAction)onClick:(id)sender {
     switch ([sender tag]) {
         case BTNCREATE:{
-//            NSLog(@"create");
-            
-            CreateViewController *createViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"CreateViewController"];
+            CreateViewController *createViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CreateViewController"];
             [self.navigationController pushViewController:createViewController animated:YES];
         }
             break;
         case BTNSERACH:{
-            SearchViewController *SearchViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"SearchViewController"];
+            SearchViewController *SearchViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SearchViewController"];
             [self.navigationController pushViewController:SearchViewController animated:YES];
-            
-//            NSLog(@"search");
         }
             break;
         case BTNPROFILE:{
-            
-            ProfileViewController *profileViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
+            ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
            
-            profileViewController.userURL=[NSString stringWithFormat:@"%@%@/",PROFILEURL,GetUserName];
+            profileViewController.userURL = [NSString stringWithFormat:@"%@%@/",PROFILEURL,GetUserName];
             [self.navigationController pushViewController:profileViewController animated:YES];
-//            NSLog(@"Profile");
         }
             break;
         case BTNSETTING:{
-            SettingViewController *settingViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"SettingViewController"];
+            SettingViewController *settingViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingViewController"];
             [self.navigationController pushViewController:settingViewController animated:YES];
-            
-//            NSLog(@"setting");
         }
             break;
-            
         default:
             break;
     }

@@ -167,6 +167,8 @@
 		D040B7961C2F2C01001CD53B /* SCLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D040B78D1C2F2C01001CD53B /* SCLTextView.m */; };
 		D040B7971C2F2C01001CD53B /* SCLTimerDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = D040B78F1C2F2C01001CD53B /* SCLTimerDisplay.m */; };
 		D040B7981C2F2C01001CD53B /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = D040B7911C2F2C01001CD53B /* UIImage+ImageEffects.m */; };
+		D040B79D1C2F59B1001CD53B /* HashtagClass.m in Sources */ = {isa = PBXBuildFile; fileRef = D040B79C1C2F59B1001CD53B /* HashtagClass.m */; };
+		D040B7A01C2F5AE2001CD53B /* HashtagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D040B79F1C2F5AE2001CD53B /* HashtagViewController.m */; };
 		D0461F581C2766440024738F /* SVWebViewController.strings in Resources */ = {isa = PBXBuildFile; fileRef = D0461F391C2766440024738F /* SVWebViewController.strings */; };
 		D0461F591C2766440024738F /* SVModalWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0461F431C2766440024738F /* SVModalWebViewController.m */; };
 		D0461F5A1C2766440024738F /* SVWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D0461F441C2766440024738F /* SVWebViewController.bundle */; };
@@ -472,6 +474,10 @@
 		D040B78F1C2F2C01001CD53B /* SCLTimerDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLTimerDisplay.m; sourceTree = "<group>"; };
 		D040B7901C2F2C01001CD53B /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		D040B7911C2F2C01001CD53B /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		D040B79A1C2F593F001CD53B /* HashtagClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HashtagClass.h; sourceTree = "<group>"; };
+		D040B79C1C2F59B1001CD53B /* HashtagClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HashtagClass.m; sourceTree = "<group>"; };
+		D040B79E1C2F5AB8001CD53B /* HashtagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HashtagViewController.h; sourceTree = "<group>"; };
+		D040B79F1C2F5AE2001CD53B /* HashtagViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HashtagViewController.m; sourceTree = "<group>"; };
 		D0461F3A1C2766440024738F /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
 		D0461F3B1C2766440024738F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
 		D0461F3C1C2766440024738F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
@@ -640,6 +646,8 @@
 				BEB1CFD31BFDE0BE00A2242A /* EditProfileViewController.m */,
 				A5B6C4151BE8ED7A004F295C /* ForgotViewController.h */,
 				A5B6C4161BE8ED7A004F295C /* ForgotViewController.m */,
+				D040B79E1C2F5AB8001CD53B /* HashtagViewController.h */,
+				D040B79F1C2F5AE2001CD53B /* HashtagViewController.m */,
 				BE0BC5F21BEB2FE600C5903E /* HomeViewController.h */,
 				BE0BC5F31BEB2FE600C5903E /* HomeViewController.m */,
 				BE0BC5FB1BEB308000C5903E /* MiscellaneousViewController.h */,
@@ -1038,6 +1046,8 @@
 				BE0909071BEE03FC0077DFE8 /* TimeLineClass.m */,
 				BED84ECA1BECD19200E5C734 /* PhotoClass.h */,
 				BED84ECB1BECD19200E5C734 /* PhotoClass.m */,
+				D040B79A1C2F593F001CD53B /* HashtagClass.h */,
+				D040B79C1C2F59B1001CD53B /* HashtagClass.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1417,6 +1427,7 @@
 				BE2045A51BF5A89600288548 /* SDWebImageDownloader.m in Sources */,
 				BE2045A71BF5A89600288548 /* SDWebImageManager.m in Sources */,
 				BE03006B1BEB84550005183F /* AFXMLRequestOperation.m in Sources */,
+				D040B79D1C2F59B1001CD53B /* HashtagClass.m in Sources */,
 				BE2045AA1BF5A89600288548 /* UIImage+GIF.m in Sources */,
 				BE0BC5FA1BEB304A00C5903E /* NotificationViewController.m in Sources */,
 				BE5C002B1BEA39DF00971567 /* AnimatedMethods.m in Sources */,
@@ -1439,6 +1450,7 @@
 				BE2045A01BF5A89600288548 /* MKAnnotationView+WebCache.m in Sources */,
 				A5B6C4001BE8E9B7004F295C /* SBJson4StreamWriter.m in Sources */,
 				A5B6C4041BE8E9B7004F295C /* SBJson4StreamParserState.m in Sources */,
+				D040B7A01C2F5AE2001CD53B /* HashtagViewController.m in Sources */,
 				BE03006A1BEB84550005183F /* AFURLConnectionOperation.m in Sources */,
 				BE4279E61C02D60000E3F50D /* MMPickerView.m in Sources */,
 				BE0909081BEE03FC0077DFE8 /* TimeLineClass.m in Sources */,

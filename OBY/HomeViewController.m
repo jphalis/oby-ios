@@ -13,6 +13,7 @@
 #import "CustomButton.h"
 #import "defs.h"
 #import "GlobalFunctions.h"
+#import "HashtagViewController.h"
 #import "HomeViewController.h"
 #import "HTHorizontalSelectionList.h"
 #import "PhotoClass.h"
@@ -159,7 +160,7 @@
     
     NSIndexPath *indexPath = [collectionVWHome indexPathForItemAtPoint:p];
     if (indexPath == nil){
-//        NSLog(@"couldn't find index path");
+
     } else {
         PhotoClass *photoClass;
         
@@ -325,19 +326,15 @@
 
     //[_request setValue:[NSString stringWithFormat:@"Token %@",GetUserToken] forHTTPHeaderField:@"Authorization"];
     
-//    NSLog(@"%@",GetUserToken);
-    
     [_request setHTTPMethod:@"GET"];
     
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
          if(error != nil){
-//             NSLog(@"%@",error);
               [appDelegate hideHUDForView2:self.view];
              //[self setBusy:NO];
          }
          if ([data length] > 0 && error == nil){
              NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-            //NSLog(@"%@",JSONValue);
              
              if([JSONValue isKindOfClass:[NSDictionary class]]){
                  if([JSONValue allKeys].count > 4){
@@ -764,7 +761,7 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if(isMenuChoosed){
-        return  [arrCategoryPhotos count];
+        return [arrCategoryPhotos count];
     } else {
         return [appDelegate.arrPhotos count];
     }
@@ -798,9 +795,13 @@
     KILinkTapHandler tapHandler = ^(KILabel *label, NSString *string, NSRange range) {
         [self tappedLink:string cellForRowAtIndexPath:indexPath];
     };
+    KILinkTapHandler tapTagHandler = ^(KILabel *label, NSString *string, NSRange range) {
+        [self tappedHashtag:string cellForRowAtIndexPath:indexPath];
+    };
+    
     gestureLabel.userHandleLinkTapHandler = tapHandler;
 //    gestureLabel.urlLinkTapHandler = tapHandler;
-//    gestureLabel.hashtagLinkTapHandler = tapHandler;
+    gestureLabel.hashtagLinkTapHandler = tapTagHandler;
     
     cell.lblName.text = photoClass.creator;
     cell.lblDescription.text = photoClass.description;
@@ -863,26 +864,24 @@
     return cell;
 }
 
-- (void)tappedLink:(NSString *)link cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tappedLink:(NSString *)link cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *title = [NSString stringWithFormat:@"%@", link];
     NSString *newTitle = [title substringFromIndex:1];
-//    NSString *message = [NSString stringWithFormat:@"You tapped %@ in section %@, row %@.",
-//                         link,
-//                         @(indexPath.section),
-//                         @(indexPath.row)];
-//    
-//    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
-//                                                                   message:message
-//                                                            preferredStyle:UIAlertControllerStyleAlert];
-//    [alert addAction:[UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:nil]];
-//    
-//    [self presentViewController:alert animated:YES completion:nil];
-    
     ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
     NSString *usrURL = [NSString stringWithFormat:@"%@%@/",PROFILEURL,newTitle];
     profileViewController.userURL = usrURL;
     [self.navigationController pushViewController:profileViewController animated:YES];
+}
+
+- (void)tappedHashtag:(NSString *)link cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *title = [NSString stringWithFormat:@"%@", link];
+    NSString *newTitle = [title substringFromIndex:1];
+    newTitle = [newTitle lowercaseString];
+    HashtagViewController *hashtagViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HashtagViewController"];
+    NSString *tagURL = [NSString stringWithFormat:@"%@%@",HASHTAGURL,newTitle];
+    hashtagViewController.tagURL = tagURL;
+    hashtagViewController.titleLabel = [title uppercaseString];
+    [self.navigationController pushViewController:hashtagViewController animated:YES];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{

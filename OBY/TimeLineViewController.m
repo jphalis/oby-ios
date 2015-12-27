@@ -75,7 +75,7 @@
         if(i == 1){
             return;
         }
-        PhotoClass *photoClass=[arrTimelinePhotos objectAtIndex:indexPath.row];
+        PhotoClass *photoClass = [arrTimelinePhotos objectAtIndex:indexPath.row];
         photoViewController.photoURL = photoClass.photo;
         photoViewController.view.frame = appDelegate.window.frame;
 
@@ -112,7 +112,7 @@
 -(void)setComment:(int)selectIndex commentCount:(NSString *)countStr{
     if(selectIndex >= 0){
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:selectIndex inSection:0];
-        CollectionViewCellimage *currentCell=(CollectionViewCellimage *)[colltionVw cellForItemAtIndexPath:indexPath];
+        CollectionViewCellimage *currentCell = (CollectionViewCellimage *)[colltionVw cellForItemAtIndexPath:indexPath];
         currentCell.lblComments.text = countStr;
         
     }
@@ -455,7 +455,6 @@
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
      {
          if(error != nil){
-            // [self setBusy:NO];
              [appDelegate hideHUDForView2:self.view];
          }
          if ([data length] > 0 && error == nil){

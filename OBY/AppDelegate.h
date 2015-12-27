@@ -14,9 +14,8 @@
 +(AppDelegate*) getDelegate;
 +(void)showMessage:(NSString *)message;
 
-// KIIP
-//@property (assign, nonatomic) BOOL testMode;
 @property (strong, nonatomic) NSMutableArray *arrTimeLinePhotos;
+@property (strong, nonatomic) NSMutableArray *arrHashtagPhotos;
 @property (strong, nonatomic) NSMutableArray *arrSupports;
 @property (strong, nonatomic) NSMutableArray *arrPhotos;
 @property (strong, nonatomic) NSMutableDictionary *dicAllKeys;

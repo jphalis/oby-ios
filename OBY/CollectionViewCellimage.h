@@ -7,6 +7,7 @@
 
 
 @interface CollectionViewCellimage : UICollectionViewCell
+
 @property (weak, nonatomic) IBOutlet SDIAsyncImageView *imgView;
 @property (weak, nonatomic) IBOutlet UIView *viewInfo;
 @property (weak, nonatomic) IBOutlet UILabel *lblName;
@@ -21,4 +22,5 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imgLike;
 @property (weak, nonatomic) IBOutlet UIButton *btnLikeList;
 @property (weak, nonatomic) IBOutlet UIButton *btnCommentList;
+
 @end

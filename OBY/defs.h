@@ -53,6 +53,7 @@ extern AppDelegate *appDelegate;
     #define FORGOTPASSURL @"http://127.0.0.1:8000/hide/oby/api/password/reset/"
     #define LOGINURL @"http://127.0.0.1:8000/hide/oby/api/auth/token/"
     #define SIGNUPURL @"http://127.0.0.1:8000/hide/oby/api/accounts/create/"
+    #define HASHTAGURL @"http://127.0.0.1:8000/hide/oby/api/hashtags/?q="
     #define HOMEPAGEURL @"http://127.0.0.1:8000/hide/oby/api/homepage/"
     #define CATEGORYURL @"http://127.0.0.1:8000/hide/oby/api/categories/"
     #define NOTIFICATIONURL @"http://127.0.0.1:8000/hide/oby/api/notifications/"

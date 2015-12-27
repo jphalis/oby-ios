@@ -24,7 +24,7 @@
 #import "UIImageView+WebCache.h"
 
 
-@interface ProfileViewController ()<PhotoViewControllerDelegate,CommentViewControllerDelegate>{
+@interface ProfileViewController ()<PhotoViewControllerDelegate,CommentViewControllerDelegate> {
     NSString *supportUserId;
     
     __weak IBOutlet UIImageView *imgSuportTypes;
@@ -196,7 +196,7 @@
 
 -(void)checkUser{
     if([[userURL lastPathComponent]isEqualToString:GetUserName]){
-        if(self.view.frame.size.height == 480 &&self.view.frame.size.width == 320){
+        if(self.view.frame.size.height == 480 && self.view.frame.size.width == 320){
             
         }
         imgSuportTypes.image = [UIImage imageNamed:@"setting_icon_profile"];
@@ -298,7 +298,7 @@
 - (IBAction)onViewList:(id)sender {
     SupportViewController *supportViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SupportViewController"];
     
-    ProfileClass *profileClass=[dictProfileInformation objectForKey:@"ProfileInfo"];
+    ProfileClass *profileClass = [dictProfileInformation objectForKey:@"ProfileInfo"];
     
     if([sender tag] == 1){
         if([lblSupporters.text isEqualToString:@"0"]){
@@ -319,7 +319,6 @@
 - (IBAction)onURLClick:(id)sender {
     if(![lblWebsite.text isEqualToString:@""]){
         NSString *urlString = lblWebsite.text;
-//        NSURL *webpageUrl;
         NSString *modalWebpageUrl;
         
         // Use with Safari view
@@ -350,7 +349,6 @@
         EditProfileViewController *editProfileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"EditProfileViewController"];
         [self.navigationController pushViewController:editProfileViewController animated:YES];
     } else {
-        //return;
         [self doSupport:(int)[sender tag]];
     }
 }
@@ -377,13 +375,11 @@
     
     //Call the Login Web services
     [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-//         if(error != nil){
-//             NSLog(@"%@",error);
-//         }
+        
          if ([data length] > 0 && error == nil){
              NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
              if(JSONValue != nil){
-                  // NSLog(@"Jsonvalue=%@",JSONValue);
+
                  if([[JSONValue allKeys]count] > 1){
                      NSMutableArray *arrFollower = [JSONValue objectForKey:@"get_followers_info"];
 
@@ -400,10 +396,8 @@
                      
                      for(int j = 0; j < arrFollower.count; j++){
                          
-                         NSMutableDictionary *dictFollowerInfo=[[NSMutableDictionary alloc]init];
-                         NSDictionary *dictUserDetail=[arrFollower objectAtIndex:j];
-                         
-                         // NSLog(@"%@",[dictUserDetail objectForKey:@"user__username"]);
+                         NSMutableDictionary *dictFollowerInfo = [[NSMutableDictionary alloc]init];
+                         NSDictionary *dictUserDetail = [arrFollower objectAtIndex:j];
                          
                          if([dictUserDetail objectForKey:@"user__profile_picture"] == [NSNull null]){
                              [dictFollowerInfo setObject:@"" forKey:@"user__profile_picture"];
@@ -425,8 +419,8 @@
                          }
                          
                          NSString *fullString;
-                         NSString *userName=[dictFollowerInfo objectForKey:@"user__username"];
-                         NSString *fullName=[dictFollowerInfo objectForKey:@"user__full_name"];
+                         NSString *userName = [dictFollowerInfo objectForKey:@"user__username"];
+                         NSString *fullName = [dictFollowerInfo objectForKey:@"user__full_name"];
                          
                          fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
                          
@@ -488,12 +482,10 @@
     
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
          if(error != nil){
-//             NSLog(@"%@",error);
              [self setBusy:NO];
          }
          if ([data length] > 0 && error == nil){
              NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-             //NSLog(@"%@",JSONValue);
             
              if(arrPhotsList.count > 0){
                  [arrPhotsList removeAllObjects];
@@ -532,7 +524,7 @@
                  profileClass.gender = [JSONValue objectForKey:@"gender"];
                  profileClass.arrphoto_set = [[NSMutableArray alloc]init];
                      
-                 NSArray *arrPhotoset=[JSONValue objectForKey:@"photo_set"];
+                 NSArray *arrPhotoset = [JSONValue objectForKey:@"photo_set"];
                  for(int i = 0; i < arrPhotoset.count; i++){
                      NSMutableDictionary *dictResult;
                      dictResult = [[NSMutableDictionary alloc]init];

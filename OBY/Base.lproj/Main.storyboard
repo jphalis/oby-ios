@@ -78,8 +78,16 @@
             <string>Gibson-Regular</string>
             <string>Gibson-Regular</string>
             <string>Gibson-Regular</string>
+            <string>Gibson-Regular</string>
+            <string>Gibson-Regular</string>
+            <string>Gibson-Regular</string>
+            <string>Gibson-Regular</string>
+            <string>Gibson-Regular</string>
+            <string>Gibson-Regular</string>
         </mutableArray>
         <mutableArray key="GIBSON-SEMIBOLD.OTF">
+            <string>Gibson-SemiBold</string>
+            <string>Gibson-SemiBold</string>
             <string>Gibson-SemiBold</string>
             <string>Gibson-SemiBold</string>
             <string>Gibson-SemiBold</string>
@@ -697,7 +705,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rtg-RA-igi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="991" y="-836"/>
+            <point key="canvasLocation" x="1004" y="-837"/>
         </scene>
         <!--Photo View Controller-->
         <scene sceneID="Qsz-yh-Wed">
@@ -1185,7 +1193,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NQQ-S7-13w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1457" y="-837"/>
+            <point key="canvasLocation" x="1458" y="-837"/>
         </scene>
         <!--Edit Profile View Controller-->
         <scene sceneID="a9x-xh-9WE">
@@ -2633,7 +2641,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CHw-5k-yUx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="546" y="-836"/>
+            <point key="canvasLocation" x="552" y="-837"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="hDt-Bp-Kbw">
@@ -2752,6 +2760,183 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ygK-LO-Mmu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="634" y="22"/>
+        </scene>
+        <!--Hashtag View Controller-->
+        <scene sceneID="qgR-QG-l3Y">
+            <objects>
+                <viewController storyboardIdentifier="HashtagViewController" id="bG3-K6-8vs" customClass="HashtagViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YYH-rU-sAU">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="header" id="YOc-al-Koe">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#HASHTAG" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="leH-cg-fCc">
+                                <rect key="frame" x="0.0" y="26" width="414" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Gibson-SemiBold" family="Gibson" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="back_icon" id="1X5-xA-nx7">
+                                <rect key="frame" x="2" y="31" width="30" height="26"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="GcI-Ua-WeZ">
+                                <rect key="frame" x="0.0" y="23" width="62" height="41"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onBack:" destination="bG3-K6-8vs" eventType="touchUpInside" id="Hc7-g6-u9w"/>
+                                </connections>
+                            </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="prototypes" id="iQT-Xm-Rww">
+                                <rect key="frame" x="0.0" y="69" width="414" height="613"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.94117647059999998" green="0.93725490199999995" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="hQq-AZ-6wB">
+                                    <size key="itemSize" width="414" height="248"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="hashtagCollView" id="Hew-TY-tLP" customClass="CollectionViewCellimage">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="248"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="248"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" id="Zl4-qb-FYC">
+                                                    <rect key="frame" x="0.0" y="3" width="414" height="242"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JPHALIS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="cKM-o9-IzO">
+                                                            <rect key="frame" x="55" y="3" width="238" height="25"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" name="Gibson-SemiBold" family="Gibson" pointSize="11"/>
+                                                            <color key="textColor" red="0.094117647060000004" green="0.35686274509999999" blue="0.5450980392" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rxb-pb-KrN">
+                                                            <rect key="frame" x="55" y="2" width="237" height="25"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="18"/>
+                                                            <state key="normal">
+                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </state>
+                                                        </button>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Caa-HJ-vP8">
+                                                            <rect key="frame" x="277" y="208" width="35" height="23"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="12"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="spining.png" id="pez-jg-4A5">
+                                                            <rect key="frame" x="141" y="41" width="133" height="115"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vjH-Wr-ixF">
+                                                            <rect key="frame" x="153" y="208" width="35" height="23"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="12"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="like_icon.png" id="YYE-sS-GcA">
+                                                            <rect key="frame" x="126" y="207" width="24" height="24"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="comment_icon.png" id="8sM-Eu-Rst">
+                                                            <rect key="frame" x="251" y="208" width="26" height="23"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nye-sp-Bbe">
+                                                            <rect key="frame" x="239" y="198" width="42" height="42"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                            <state key="normal">
+                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </state>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mUu-fQ-4rE">
+                                                            <rect key="frame" x="281" y="199" width="42" height="42"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="19"/>
+                                                            <state key="normal">
+                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </state>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Rvx-Dq-NWe">
+                                                            <rect key="frame" x="155" y="198" width="42" height="42"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="19"/>
+                                                            <state key="normal">
+                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </state>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="oMr-ol-UgV">
+                                                            <rect key="frame" x="114" y="198" width="42" height="42"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                            <state key="normal">
+                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </state>
+                                                        </button>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="vTC-2C-5o1" customClass="SDIAsyncImageView">
+                                                            <rect key="frame" x="47" y="31" width="321" height="136"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="pretty" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pPE-vu-T92" customClass="KILabel">
+                                                            <rect key="frame" x="55" y="175" width="303" height="22"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                            <color key="tintColor" red="0.094117647060000004" green="0.35686274509999999" blue="0.5450980392" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="12"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <outlet property="btnComment" destination="nye-sp-Bbe" id="Si5-kE-fHP"/>
+                                            <outlet property="btnCommentList" destination="mUu-fQ-4rE" id="Zor-Q3-PjX"/>
+                                            <outlet property="btnLike" destination="oMr-ol-UgV" id="QjD-da-kQ5"/>
+                                            <outlet property="btnLikeList" destination="Rvx-Dq-NWe" id="2h7-ql-1Gx"/>
+                                            <outlet property="btnUserName" destination="rxb-pb-KrN" id="sis-Ra-Z5i"/>
+                                            <outlet property="imgLike" destination="YYE-sS-GcA" id="sHA-Dm-4V3"/>
+                                            <outlet property="imgView" destination="vTC-2C-5o1" id="SaL-9a-uFi"/>
+                                            <outlet property="lblComments" destination="Caa-HJ-vP8" id="Y8D-9D-la5"/>
+                                            <outlet property="lblDescription" destination="pPE-vu-T92" id="VS7-Z3-4aY"/>
+                                            <outlet property="lblLikes" destination="vjH-Wr-ixF" id="Z38-FA-8vE"/>
+                                            <outlet property="lblName" destination="cKM-o9-IzO" id="VuG-xj-C8s"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="bG3-K6-8vs" id="snL-GZ-PYD"/>
+                                    <outlet property="delegate" destination="bG3-K6-8vs" id="IW8-yX-DAn"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.94117647059999998" green="0.93725490199999995" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <connections>
+                        <outlet property="colltionVw" destination="iQT-Xm-Rww" id="WKg-Ta-yVt"/>
+                        <outlet property="headerLabel" destination="leH-cg-fCc" id="9nD-VH-bAm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jOg-DY-xOu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1910" y="-837"/>
         </scene>
     </scenes>
     <resources>

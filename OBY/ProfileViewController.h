@@ -7,6 +7,6 @@
 
 @interface ProfileViewController : UIViewController
 
-@property (strong,nonatomic)NSString *userURL;
+@property (strong, nonatomic)NSString *userURL;
 
 @end
