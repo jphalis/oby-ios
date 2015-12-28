@@ -220,7 +220,7 @@
 }
 
 -(void)scrollToTop{
-    [UIView animateWithDuration:0.3 animations:^(void){
+    [UIView animateWithDuration:0.2 animations:^(void){
         [collectionVWHome scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
     }];
 }

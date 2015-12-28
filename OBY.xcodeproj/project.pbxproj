@@ -473,7 +473,7 @@
 		D040B7911C2F2C01001CD53B /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		D040B79E1C2F5AB8001CD53B /* HashtagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HashtagViewController.h; sourceTree = "<group>"; };
 		D040B79F1C2F5AE2001CD53B /* HashtagViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HashtagViewController.m; sourceTree = "<group>"; };
-		D040B7A11C30AE92001CD53B /* CategoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryTableViewCell.h; sourceTree = "<group>"; };
+		D040B7A11C30AE92001CD53B /* CategoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CategoryTableViewCell.h; path = "/Users/jphalis/Desktop/oby-ios/OBY/CategoryTableViewCell.h"; sourceTree = "<absolute>"; };
 		D040B7A21C30AECB001CD53B /* CategoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryTableViewCell.m; sourceTree = "<group>"; };
 		D0461F3A1C2766440024738F /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
 		D0461F3B1C2766440024738F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
@@ -583,7 +583,7 @@
 				BE0300B81BEB91530005183F /* SlicedImages */,
 				A5B6C3C31BE8E942004F295C /* Supporting Files */,
 				BE0300811BEB8DEB0005183F /* TestImages */,
-				A5B6C3E91BE8E950004F295C /* ViewController */,
+				A5B6C3E91BE8E950004F295C /* ViewControllers */,
 				A5B6C3C71BE8E942004F295C /* AppDelegate.h */,
 				A5B6C3C81BE8E942004F295C /* AppDelegate.m */,
 				BEB30E301BEC889E002EC0D8 /* Images.xcassets */,
@@ -622,7 +622,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		A5B6C3E91BE8E950004F295C /* ViewController */ = {
+		A5B6C3E91BE8E950004F295C /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				A5B6C3CA1BE8E942004F295C /* AuthViewController.h */,
@@ -664,7 +664,7 @@
 				BE0BC5F51BEB302A00C5903E /* TimeLineViewController.h */,
 				BE0BC5F61BEB302A00C5903E /* TimeLineViewController.m */,
 			);
-			name = ViewController;
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 		A5B6C3EA1BE8E96A004F295C /* External */ = {
