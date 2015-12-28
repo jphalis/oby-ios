@@ -68,6 +68,11 @@ enum{
     appDelegate.arrViewControllers = [[NSMutableArray alloc]init];
     appDelegate.tabbar = self;
     
+    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tabView.frame.size.width, 0.7)];
+    topBorder.backgroundColor = [UIColor colorWithRed:(235/255.0) green:(235/255.0) blue:(235/255.0) alpha:1.0];
+    
+    [tabView addSubview:topBorder];
+    
     UIButton *btn = (UIButton*)[self.view viewWithTag:TABHOME];
     btn.titleLabel.font = fontLight(13);
     btn = (UIButton*)[self.view viewWithTag:TABTIMELINE];

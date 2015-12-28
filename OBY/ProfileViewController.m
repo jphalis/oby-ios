@@ -11,6 +11,8 @@
 #import "defs.h"
 #import "EditProfileViewController.h"
 #import "GlobalFunctions.h"
+#import "HashtagViewController.h"
+#import "KILabel.h"
 #import "PhotoClass.h"
 #import "PhotoViewController.h"
 #import "ProfileClass.h"
@@ -418,19 +420,14 @@
                              [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"user__full_name"] forKey:@"user__full_name"];
                          }
                          
-                         NSString *fullString;
-                         NSString *userName = [dictFollowerInfo objectForKey:@"user__username"];
-                         NSString *fullName = [dictFollowerInfo objectForKey:@"user__full_name"];
-                         
-                         fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
-                         
-                         NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
-                         
-                         NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
-                         
-                         [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
-                         
-                         [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
+//                         NSString *fullString;
+//                         NSString *userName = [dictFollowerInfo objectForKey:@"user__username"];
+//                         NSString *fullName = [dictFollowerInfo objectForKey:@"user__full_name"];
+//                         fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
+//                         NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
+//                         NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
+//                         [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
+//                         [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
                          
                          [profileClass.arrfollowers addObject:dictFollowerInfo];
                      }
@@ -664,19 +661,34 @@
                      NSMutableArray *arrFollowing = [dictFollower objectForKey:@"get_following_info"];
                          
                      // Change this to a Django field that abbreviates extensions
-                     NSInteger followerCount = arrFollower.count;
-                     NSInteger followingCount = arrFollowing.count;
-                         
-                     profileClass.followers_count = [NSString stringWithFormat:@"%ld",(long)followerCount];
-                     profileClass.following_count = [NSString stringWithFormat:@"%ld",(long)followingCount];
+//                     NSInteger followerCount = arrFollower.count;
+//                     NSInteger followingCount = arrFollowing.count;
+                     
+                     NSString *followerCount = [dictFollower objectForKey:@"get_followers_count"];
+                     NSString *followingCount = [dictFollower objectForKey:@"get_following_count"];
+                     
+                     if ([[dictFollower objectForKey:@"get_followers_count"]intValue] > 0) {
+                         profileClass.followers_count = followerCount;
+                     } else {
+                         profileClass.followers_count = @"0";
+                     }
+                     if ([[dictFollower objectForKey:@"get_following_count"]intValue] > 0) {
+                         profileClass.following_count = followingCount;
+                     } else {
+                         profileClass.following_count = @"0";
+                     }
+//                     profileClass.followers_count = [NSString stringWithFormat:@"%d",followerCount];
+//                     profileClass.following_count = [NSString stringWithFormat:@"%d",followingCount];
+                     
+//                     profileClass.followers_count = [NSString stringWithFormat:@"%ld",(long)followerCount];
+//                     profileClass.following_count = [NSString stringWithFormat:@"%ld",(long)followingCount];
+                     
                      profileClass.arrfollowers = [[NSMutableArray alloc]init];
                      profileClass.arrfollowings = [[NSMutableArray alloc]init];
                          
                      for(int j = 0; j < arrFollower.count; j++){
                          NSMutableDictionary *dictFollowerInfo = [[NSMutableDictionary alloc]init];
                          NSDictionary *dictUserDetail = [arrFollower objectAtIndex:j];
-                             
-                     // NSLog(@"%@",[dictUserDetail objectForKey:@"user__username"]);
 
                          if([dictUserDetail objectForKey:@"user__profile_picture"] == [NSNull null]){
                              [dictFollowerInfo setObject:@"" forKey:@"user__profile_picture"];
@@ -697,14 +709,15 @@
                          [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"user__full_name"] forKey:@"user__full_name"];
                          }
                              
-                         NSString *fullString;
-                         NSString *userName = [dictFollowerInfo objectForKey:@"user__username"];
-                         NSString *fullName = [dictFollowerInfo objectForKey:@"user__full_name"];
-                         fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
-                         NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
-                         NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
-                         [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
-                         [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
+//                         NSString *fullString;
+//                         NSString *userName = [dictFollowerInfo objectForKey:@"user__username"];
+//                         NSString *fullName = [dictFollowerInfo objectForKey:@"user__full_name"];
+//                         fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
+//                         NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
+//                         NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
+//                         [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
+//                         [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
+
                          [profileClass.arrfollowers addObject:dictFollowerInfo];
                      }
                      for(int k = 0; k < arrFollowing.count; k++){
@@ -802,6 +815,19 @@
 //    }
 //    cell.lblDescription.attributedText = attribString;
     
+    // Handles gesture taps for mentions, hashtags, and urls
+    KILabel *gestureLabel = (KILabel *)[cell lblDescription];
+    KILinkTapHandler tapHandler = ^(KILabel *label, NSString *string, NSRange range) {
+        [self tappedUser:string cellForRowAtIndexPath:indexPath];
+    };
+    KILinkTapHandler tapTagHandler = ^(KILabel *label, NSString *string, NSRange range) {
+        [self tappedHashtag:string cellForRowAtIndexPath:indexPath];
+    };
+    
+    gestureLabel.userHandleLinkTapHandler = tapHandler;
+    //    gestureLabel.urlLinkTapHandler = tapHandler;
+    gestureLabel.hashtagLinkTapHandler = tapTagHandler;
+    
     cell.lblName.text = photoClass.creator;
     cell.lblDescription.text = photoClass.description;
     cell.lblLikes.text = [NSString stringWithFormat:@"%@",photoClass.like_count];
@@ -809,9 +835,9 @@
     
     [cell.imgView loadImageFromURL:photoClass.photo withTempImage:@""];
 
-    //cell.imgView.shouldShowLoader=YES;
+    //cell.imgView.shouldShowLoader = YES;
     
-      //[cell.imgView sd_setImageWithURL:[NSURL URLWithString:photoClass.photo] placeholderImage:[UIImage imageNamed:@"testLoader.gif"]];
+    //[cell.imgView sd_setImageWithURL:[NSURL URLWithString:photoClass.photo] placeholderImage:[UIImage imageNamed:@"testLoader.gif"]];
     
     cell.lblLikes.textColor = [AnimatedMethods colorFromHexString:@"#cacaca"];
     cell.lblComments.textColor = [AnimatedMethods colorFromHexString:@"#cacaca"];
@@ -858,6 +884,26 @@
     [cell.btnCommentList setTag:indexPath.row];
     [cell.btnCommentList addTarget:self action:@selector(onCommentList:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
+}
+
+- (void)tappedUser:(NSString *)link cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *title = [NSString stringWithFormat:@"%@", link];
+    NSString *newTitle = [title substringFromIndex:1];
+    ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
+    NSString *usrURL = [NSString stringWithFormat:@"%@%@/",PROFILEURL,newTitle];
+    profileViewController.userURL = usrURL;
+    [self.navigationController pushViewController:profileViewController animated:YES];
+}
+
+- (void)tappedHashtag:(NSString *)link cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *title = [NSString stringWithFormat:@"%@", link];
+    NSString *newTitle = [title substringFromIndex:1];
+    newTitle = [newTitle lowercaseString];
+    HashtagViewController *hashtagViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HashtagViewController"];
+    NSString *tagURL = [NSString stringWithFormat:@"%@%@",HASHTAGURL,newTitle];
+    hashtagViewController.tagURL = tagURL;
+    hashtagViewController.titleLabel = [title uppercaseString];
+    [self.navigationController pushViewController:hashtagViewController animated:YES];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{

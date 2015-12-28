@@ -80,8 +80,11 @@
     
     NSMutableDictionary *dictUser = [arrDetails objectAtIndex:indexPath.row];
     
-    cell.txtNotification.attributedText = [dictUser objectForKey:@"usernameText"];
-    cell.txtNotification.editable = NO;
+//    cell.txtNotification.attributedText = [dictUser objectForKey:@"usernameText"];
+//    cell.txtNotification.editable = NO;
+    
+    cell.usrUsername.text = [dictUser objectForKey:@"user__username"];
+    cell.usrFullname.text = [dictUser objectForKey:@"user__full_name"];
     
     if([[dictUser objectForKey:@"user__username"]isEqualToString:GetUserName]){
         [dictUser setObject:GetProifilePic forKey:@"user__profile_picture"];

@@ -155,15 +155,14 @@
                                 [dictSearch setValue:[dictResult objectForKey:@"full_name"] forKey:@"full_name"];
                             }
                             
-                            NSString *fullString;
-                            NSString *userName=[dictResult objectForKey:@"username"];
-                            NSString *fullName=[dictResult objectForKey:@"full_name"];
-                            fullString=[NSString stringWithFormat:@"%@ %@",fullName,userName];
-                            NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
-                            NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
-                            [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
-                            
-                            [dictSearch setValue:hogan forKey:@"usernameText"];
+//                            NSString *fullString;
+//                            NSString *userName = [dictResult objectForKey:@"username"];
+//                            NSString *fullName = [dictResult objectForKey:@"full_name"];
+//                            fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
+//                            NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
+//                            NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
+//                            [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
+//                            [dictSearch setValue:hogan forKey:@"usernameText"];
                             
                             if([dictResult objectForKey:@"profile_picture"] == [NSNull null]){
                                 [dictSearch setValue:@"" forKey:@"profile_picture"];
@@ -210,7 +209,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;    //count of section
+    return 1;   //count of section
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -218,7 +217,7 @@
         return [arrFilterUsers count];
     } else {
     return [arrUsers count];
-    }           //count number of row from counting array hear cataGorry is An Array
+    }           //count number of rows from array
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -237,7 +236,9 @@
         dictUser = [arrUsers objectAtIndex:indexPath.row];
     }
 
-    cell.txtNotification.attributedText = [dictUser objectForKey:@"usernameText"];
+//    cell.txtNotification.attributedText = [dictUser objectForKey:@"usernameText"];
+    cell.usrUsername.text = [dictUser objectForKey:@"username"];
+    cell.usrFullname.text = [dictUser objectForKey:@"full_name"];
     [cell.imgProfile loadImageFromURL:[dictUser objectForKey:@"profile_picture"] withTempImage:@"avatar"];
     cell.imgProfile.layer.cornerRadius = cell.imgProfile.frame.size.width / 2;
     cell.imgProfile.layer.masksToBounds = YES;

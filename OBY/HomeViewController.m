@@ -17,6 +17,7 @@
 #import "HashtagViewController.h"
 #import "HomeViewController.h"
 #import "HTHorizontalSelectionList.h"
+#import "KILabel.h"
 #import "PhotoClass.h"
 #import "PhotoViewController.h"
 #import "ProfileClass.h"
@@ -24,8 +25,6 @@
 #import "SDIAsyncImageView.h"
 #import "SupportViewController.h"
 #import "UIImageView+WebCache.h"
-
-#import "KILabel.h"
 
 
 @interface HomeViewController ()<HTHorizontalSelectionListDataSource,HTHorizontalSelectionListDelegate,PhotoViewControllerDelegate,CommentViewControllerDelegate>{
@@ -212,7 +211,8 @@
         if(arrCategoryPhotos.count > 0){
             [self scrollToTop];
         }
-    } else {
+    }
+    else {
         if(appDelegate.arrPhotos.count > 0){
             [self scrollToTop];
         }
@@ -563,7 +563,6 @@
      }];
 }
 
-// NSURLConnection Delegates
 -(void)getHomePageDetails{
     checkNetworkReachability();
     
@@ -571,23 +570,17 @@
     //[appDelegate hideHUDForView2:self.view];
     
     NSString *urlString = [NSString stringWithFormat:@"%@",HOMEPAGEURL];
-   
     NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                              timeoutInterval:60];
- 
     NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
     NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
     NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
     [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
-    
-    //[_request setValue:[NSString stringWithFormat:@"Token %@",GetUserToken] forHTTPHeaderField:@"Authorization"];
-    
     [_request setHTTPMethod:@"GET"];
     
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
          if(error != nil){
-            // [self setBusy:NO];
              [appDelegate hideHUDForView2:self.view];
          }
          if ([data length] > 0 && error == nil){
@@ -607,7 +600,6 @@
                          PhotoClass *photoClass = [[PhotoClass alloc]init];
                          photoClass.category_url = [dictResult objectForKey:@"category_url"];
                          photoClass.comment_count = [dictResult objectForKey:@"comment_count"];
-                         //photoClass.comment_set = [dictResult objectForKey:@"comment_set"];
                          photoClass.created = [dictResult objectForKey:@"created"];
                          photoClass.creator = [[dictResult objectForKey:@"creator"] uppercaseString];
                          photoClass.creator_url = [dictResult objectForKey:@"creator_url"];
@@ -662,13 +654,9 @@
                              NSString *fullName = [dictFollowerInfo objectForKey:@"full_name"];
                              
                              fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
-                             
                              NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
-
                              NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
-                             
                              [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
-                             
                              [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
                              
                              [photoClass.likers addObject:dictFollowerInfo];
@@ -702,13 +690,9 @@
                              NSString *userName = [dictFollowerInfo objectForKey:@"text"];
                              
                              fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
-                             
                              NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
-                             
                              NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
-                             
                              [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
-                             
                              [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
                              
                              [photoClass.comment_set addObject:dictFollowerInfo];
@@ -795,7 +779,7 @@
     // Handles gesture taps for mentions, hashtags, and urls
     KILabel *gestureLabel = (KILabel *)[cell lblDescription];
     KILinkTapHandler tapHandler = ^(KILabel *label, NSString *string, NSRange range) {
-        [self tappedLink:string cellForRowAtIndexPath:indexPath];
+        [self tappedUser:string cellForRowAtIndexPath:indexPath];
     };
     KILinkTapHandler tapTagHandler = ^(KILabel *label, NSString *string, NSRange range) {
         [self tappedHashtag:string cellForRowAtIndexPath:indexPath];
@@ -866,7 +850,7 @@
     return cell;
 }
 
-- (void)tappedLink:(NSString *)link cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tappedUser:(NSString *)link cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *title = [NSString stringWithFormat:@"%@", link];
     NSString *newTitle = [title substringFromIndex:1];
     ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];

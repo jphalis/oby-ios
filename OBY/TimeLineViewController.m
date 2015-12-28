@@ -9,6 +9,8 @@
 #import "CustomButton.h"
 #import "defs.h"
 #import "GlobalFunctions.h"
+#import "HashtagViewController.h"
+#import "KILabel.h"
 #import "PhotoClass.h"
 #import "PhotoViewController.h"
 #import "ProfileViewController.h"
@@ -158,6 +160,19 @@
 //    }
 //    cell.lblDescription.attributedText = attribString;
     
+    // Handles gesture taps for mentions, hashtags, and urls
+    KILabel *gestureLabel = (KILabel *)[cell lblDescription];
+    KILinkTapHandler tapHandler = ^(KILabel *label, NSString *string, NSRange range) {
+        [self tappedUser:string cellForRowAtIndexPath:indexPath];
+    };
+    KILinkTapHandler tapTagHandler = ^(KILabel *label, NSString *string, NSRange range) {
+        [self tappedHashtag:string cellForRowAtIndexPath:indexPath];
+    };
+    
+    gestureLabel.userHandleLinkTapHandler = tapHandler;
+    //    gestureLabel.urlLinkTapHandler = tapHandler;
+    gestureLabel.hashtagLinkTapHandler = tapTagHandler;
+    
     cell.lblName.text = photoClass.creator;
     cell.lblDescription.text = photoClass.description;
     cell.lblLikes.text = [NSString stringWithFormat:@"%@",photoClass.like_count];
@@ -213,6 +228,26 @@
     [cell.btnCommentList addTarget:self action:@selector(onCommentList:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
+}
+
+- (void)tappedUser:(NSString *)link cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *title = [NSString stringWithFormat:@"%@", link];
+    NSString *newTitle = [title substringFromIndex:1];
+    ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
+    NSString *usrURL = [NSString stringWithFormat:@"%@%@/",PROFILEURL,newTitle];
+    profileViewController.userURL = usrURL;
+    [self.navigationController pushViewController:profileViewController animated:YES];
+}
+
+- (void)tappedHashtag:(NSString *)link cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *title = [NSString stringWithFormat:@"%@", link];
+    NSString *newTitle = [title substringFromIndex:1];
+    newTitle = [newTitle lowercaseString];
+    HashtagViewController *hashtagViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HashtagViewController"];
+    NSString *tagURL = [NSString stringWithFormat:@"%@%@",HASHTAGURL,newTitle];
+    hashtagViewController.tagURL = tagURL;
+    hashtagViewController.titleLabel = [title uppercaseString];
+    [self.navigationController pushViewController:hashtagViewController animated:YES];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
