@@ -39,10 +39,6 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     btnSubmit.layer.cornerRadius = 20;
-    UIColor *color = [UIColor whiteColor];
-    txtOldPass.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Old Password" attributes:@{NSForegroundColorAttributeName: color}];
-    txtNewPass.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"New Password" attributes:@{NSForegroundColorAttributeName: color}];
-    txtNewConfrmPass.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Confirm Password" attributes:@{NSForegroundColorAttributeName: color}];
 }
 
 -(void)swipeRight:(UISwipeGestureRecognizer *)gestureRecognizer{

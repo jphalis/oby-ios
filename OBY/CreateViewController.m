@@ -92,13 +92,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     appDelegate.tabbar.tabView.hidden = YES;
     
-    txtDescription.layer.borderWidth = 0.5;
-    txtDescription.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-    
-    lblCat.layer.borderWidth = 0.5;
-    lblCat.layer.borderColor = [[UIColor lightGrayColor] CGColor];;
-    
-    createBtn.layer.cornerRadius = 6;
+//    createBtn.layer.cornerRadius = 6;
   
     [super viewWillAppear:YES];
 }

@@ -80,8 +80,7 @@
 -(void)getNotificDetails:(NSString *)requestURL{
     checkNetworkReachability();
     
-     [appDelegate showHUDAddedToView:self.view message:@""];
-    //[self setBusy:YES];
+    [appDelegate showHUDAddedToView:self.view message:@""];
     NSString *urlString = [NSString stringWithFormat:@"%@",requestURL];
     
     NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
@@ -96,16 +95,12 @@
     
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
          if(error != nil){
-//             NSLog(@"%@",error);
              [appDelegate hideHUDForView2:self.view];
-             //[self setBusy:NO];
          }
          if([data length] > 0 && error == nil){
                [appDelegate hideHUDForView2:self.view];
-             //[self setBusy:NO];
              
              NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-             //  NSLog(@"%@",JSONValue);
             
              if([JSONValue isKindOfClass:[NSDictionary class]] && [[JSONValue allKeys]count] > 2){
                  notificationCount = [[JSONValue objectForKey:@"count"]integerValue];
@@ -119,60 +114,59 @@
                      lblWaterMark.text = @"";
                  } else {
                      lblWaterMark.hidden = NO;
-                     lblWaterMark.text = @"No notifications";
+                     lblWaterMark.text = @"Notifications will appear here";
                  }
-                     for (int i = 0; i < arrNotifResult.count; i++) {
-                         NotificationClass *notificationClass = [[NotificationClass alloc]init];
-                         int userId = [[[arrNotifResult objectAtIndex:i]valueForKey:@"id"]intValue];
-                         notificationClass.Id = [NSString stringWithFormat:@"%d",userId];
+                 for (int i = 0; i < arrNotifResult.count; i++) {
+                     NotificationClass *notificationClass = [[NotificationClass alloc]init];
+                     int userId = [[[arrNotifResult objectAtIndex:i]valueForKey:@"id"]intValue];
+                     notificationClass.Id = [NSString stringWithFormat:@"%d",userId];
+                     notificationClass.sender = [[arrNotifResult objectAtIndex:i]valueForKey:@"sender"];
+                     notificationClass.sender_url = [[arrNotifResult objectAtIndex:i]valueForKey:@"sender_url"];
                          
-                         notificationClass.sender = [[arrNotifResult objectAtIndex:i]valueForKey:@"sender"];
-                         notificationClass.sender_url = [[arrNotifResult objectAtIndex:i]valueForKey:@"sender_url"];
+                     NSString *str = [[arrNotifResult objectAtIndex:i]valueForKey:@"sender_profile_picture"];
+                     NSString *newStr = [NSString stringWithFormat:@"https:%@",str];
+                     notificationClass.sender_profile_picture = newStr;
                          
-                         NSString *str = [[arrNotifResult objectAtIndex:i]valueForKey:@"sender_profile_picture"];
-                         NSString *newStr = [NSString stringWithFormat:@"https:%@",str];
-                         notificationClass.sender_profile_picture = newStr;
+                     notificationClass.display_thread = [[arrNotifResult objectAtIndex:i]valueForKey:@"display_thread"];
                          
-                         notificationClass.display_thread = [[arrNotifResult objectAtIndex:i]valueForKey:@"display_thread"];
-                         
-                         if([[arrNotifResult objectAtIndex:i]valueForKey:@"read"]){
-                             notificationClass.read = @"Yes";
-                         } else {
-                             notificationClass.read = @"No";
-                         }
-                         notificationClass.recipient = [[arrNotifResult objectAtIndex:i]valueForKey:@"recipient"];
-                         notificationClass.created = [[arrNotifResult objectAtIndex:i]valueForKey:@"created"];
-                         notificationClass.modified = [[arrNotifResult objectAtIndex:i]valueForKey:@"modified"];
-                         
-                         //target_photo
-                         if([[arrNotifResult objectAtIndex:i]valueForKey:@"target_url"] != [NSNull null]){
-                               notificationClass.target_url = [[arrNotifResult objectAtIndex:i]valueForKey:@"target_url"];
-                         } else {
-                             notificationClass.target_url = @"";
-                         }
-                         if([[arrNotifResult objectAtIndex:i]valueForKey:@"target_photo"]){
-                    
-                         }
-                         if([[arrNotifResult objectAtIndex:i]valueForKey:@"target_photo"] != [NSNull null]){
-                             NSString *urlString = [NSString stringWithFormat:@"https:%@",[[arrNotifResult objectAtIndex:i]valueForKey:@"target_photo"]];
-                             
-                             if ([urlString hasPrefix:@"http://"] || [urlString hasPrefix:@"https://"]) {
-                                 notificationClass.target_photo = urlString;
-                             } else {
-                                 notificationClass.target_photo = [NSString stringWithFormat:@"http://%@", urlString];
-                             }
-                         } else {
-                             notificationClass.target_photo = @"";
-                         }
-                         if(![[arrNotifResult objectAtIndex:i]valueForKey:@"target_photo"]){
-                             notificationClass.target_photo = @"";
-                         }
-                         
-                         [arrNotification addObject:notificationClass];
+                     if([[arrNotifResult objectAtIndex:i]valueForKey:@"read"]){
+                         notificationClass.read = @"Yes";
+                     } else {
+                         notificationClass.read = @"No";
                      }
-                     [appDelegate hideHUDForView2:self.view];
+                     notificationClass.recipient = [[arrNotifResult objectAtIndex:i]valueForKey:@"recipient"];
+                     notificationClass.created = [[arrNotifResult objectAtIndex:i]valueForKey:@"created"];
+                     notificationClass.modified = [[arrNotifResult objectAtIndex:i]valueForKey:@"modified"];
+                         
+                     //target_photo
+                     if([[arrNotifResult objectAtIndex:i]valueForKey:@"target_url"] != [NSNull null]){
+                         notificationClass.target_url = [[arrNotifResult objectAtIndex:i]valueForKey:@"target_url"];
+                     } else {
+                         notificationClass.target_url = @"";
+                     }
+                     if([[arrNotifResult objectAtIndex:i]valueForKey:@"target_photo"]){
+                    
+                     }
+                     if([[arrNotifResult objectAtIndex:i]valueForKey:@"target_photo"] != [NSNull null]){
+                         NSString *urlString = [NSString stringWithFormat:@"https:%@",[[arrNotifResult objectAtIndex:i]valueForKey:@"target_photo"]];
+                             
+                         if ([urlString hasPrefix:@"http://"] || [urlString hasPrefix:@"https://"]) {
+                             notificationClass.target_photo = urlString;
+                         } else {
+                             notificationClass.target_photo = [NSString stringWithFormat:@"http://%@", urlString];
+                         }
+                     } else {
+                         notificationClass.target_photo = @"";
+                     }
+                     if(![[arrNotifResult objectAtIndex:i]valueForKey:@"target_photo"]){
+                         notificationClass.target_photo = @"";
+                     }
+                         
+                     [arrNotification addObject:notificationClass];
+                 }
+                 [appDelegate hideHUDForView2:self.view];
                  //[self setBusy:NO];
-                    [self showNotifications];
+                 [self showNotifications];
              } else {
                  [appDelegate hideHUDForView2:self.view];
                  //[self setBusy:NO];

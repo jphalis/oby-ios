@@ -11,6 +11,7 @@
 #import "CollectionViewCellimage.h"
 #import "CommentViewController.h"
 #import "CustomButton.h"
+#import "CutomTabViewController.h"
 #import "defs.h"
 #import "GlobalFunctions.h"
 #import "HashtagViewController.h"
@@ -46,6 +47,7 @@
 
 @property (nonatomic, strong) HTHorizontalSelectionList *selectionList;
 @property (nonatomic, strong) NSArray *categoryList;
+
 @end
 
 @implementation HomeViewController

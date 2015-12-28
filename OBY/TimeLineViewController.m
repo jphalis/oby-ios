@@ -35,7 +35,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    arrTimelinePhotos = [[NSMutableArray alloc]init];
+    arrTimelinePhotos = [[NSMutableArray alloc] init];
     tapCellIndex = -1;
     
     previousIndexPath = nil;
@@ -68,7 +68,7 @@
     
     NSIndexPath *indexPath = [colltionVw indexPathForItemAtPoint:p];
     if (indexPath == nil){
-//        NSLog(@"couldn't find index path");
+
     } else {
         static int i = 0;
         i++;
@@ -216,7 +216,7 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    CollectionViewCellimage *currentCell=(CollectionViewCellimage *)[collectionView cellForItemAtIndexPath:indexPath];
+    CollectionViewCellimage *currentCell = (CollectionViewCellimage *)[collectionView cellForItemAtIndexPath:indexPath];
     //CollectionViewCellimage *PreivousCell=(CollectionViewCellimage *)[collectionView cellForItemAtIndexPath:previousIndexPath];
     
     if(currentCell.imgView.image == nil){
@@ -228,7 +228,7 @@
         return;
     }
     
-    tapCellIndex=indexPath.row;
+    tapCellIndex = indexPath.row;
     
     PhotoClass *photoClass = [arrTimelinePhotos objectAtIndex:indexPath.row];
     photoViewController.photoURL = photoClass.photo;
@@ -291,7 +291,7 @@
     CollectionViewCellimage *currentCell=(CollectionViewCellimage *)[colltionVw cellForItemAtIndexPath:indexPath];
 
     PhotoClass *photoClass;
-    photoClass=[arrTimelinePhotos objectAtIndex:sender.tag];
+    photoClass = [arrTimelinePhotos objectAtIndex:sender.tag];
   
     SupportViewController *supportViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"SupportViewController"];
     
@@ -369,8 +369,6 @@
     currentCell.lblLikes.text = [NSString stringWithFormat:@"%@",photoClass.like_count];
     
     [self doLike:photoClass selectCell:currentCell];
-    
-//    NSLog(@"Like Click");
 }
 
 -(void)doLike:(PhotoClass *)photoClass selectCell:(CollectionViewCellimage *)selectCell {
@@ -434,26 +432,19 @@
     checkNetworkReachability();
     
     [appDelegate showHUDAddedToView:self.view message:@""];
-   // [self setBusy:YES];
+
     NSString *urlString = [NSString stringWithFormat:@"%@",TIMELINEURL];
-    
     NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                              timeoutInterval:60];
-    
     NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
     NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
     NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
     [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
-    
-    //[_request setValue:[NSString stringWithFormat:@"Token %@",GetUserToken] forHTTPHeaderField:@"Authorization"];
-    
-//    NSLog(@"%@",GetUserToken);
-    
     [_request setHTTPMethod:@"GET"];
     
-    [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-     {
+    [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+        
          if(error != nil){
              [appDelegate hideHUDForView2:self.view];
          }
@@ -595,8 +586,7 @@
              }
          } else {
              [refreshControl endRefreshing];
-            [appDelegate hideHUDForView2:self.view];
-             //[self setBusy:NO];
+             [appDelegate hideHUDForView2:self.view];
              showServerError();
          }
      }];

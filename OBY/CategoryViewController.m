@@ -2,6 +2,9 @@
 //  CategoryViewController.m
 //
 
+#import <QuartzCore/QuartzCore.h>
+
+#import "CategoryTableViewCell.h"
 #import "CategoryViewController.h"
 
 
@@ -18,7 +21,7 @@
 
 // Need to fix this to be dynamic based on admin entries
 - (void)viewDidLoad {
-    arrCategory = [[NSMutableArray alloc]initWithObjects:@"Just Because",@"Sports & Fitness",@"Nightlife",@"Style",@"Lol",@"Pay it Forward",@"University",@"Food",@"Fall",@"", nil];
+    arrCategory = [[NSMutableArray alloc]initWithObjects:@"Just Because",@"Sports & Fitness",@"Nightlife",@"Style",@"Lol",@"Pay it Forward",@"University",@"Food",@"Fall", nil];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
@@ -43,21 +46,43 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [arrCategory count];    //count number of row from counting array hear cataGorry is An Array
+    return [arrCategory count];    //count number of rows from counting array
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *MyIdentifier = @"MyIdentifier";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+    CategoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"categoryCell" forIndexPath:indexPath];
+    
+//    static NSString *MyIdentifier = @"MyIdentifier";
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
     
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    if (cell == nil){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                       reuseIdentifier:MyIdentifier];
-    }
-    cell.textLabel.text = [arrCategory objectAtIndex:indexPath.row];
+    
+//    if (cell == nil){
+//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+//                                       reuseIdentifier:MyIdentifier];
+//    }
+    
+    NSArray *colors = @[
+        [UIColor colorWithRed:(83/255.0) green:(117/255.0) blue:(171/255.0) alpha:1.0], // #5375ab
+        [UIColor colorWithRed:(214/255.0) green:(115/255.0) blue:(221/255.0) alpha:1.0], // #D673DD
+        [UIColor colorWithRed:(252/255.0) green:(165/255.0) blue:(101/255.0) alpha:1.0], // #fca565
+        [UIColor colorWithRed:(79/255.0) green:(112/255.0) blue:(166/255.0) alpha:1.0], // #4f70a6
+        [UIColor colorWithRed:(248/255.0) green:(108/255.0) blue:(181/255.0) alpha:1.0], // #f86cb5
+        [UIColor colorWithRed:(185/255.0) green:(243/255.0) blue:(205/255.0) alpha:1.0], // #b9f3cd
+        [UIColor colorWithRed:(239/255.0) green:(248/255.0) blue:(165/255.0) alpha:1.0], // #eff8a5
+        [UIColor colorWithRed:(244/255.0) green:(173/255.0) blue:(249/255.0) alpha:1.0], // #f4adf9
+        [UIColor colorWithRed:(254/255.0) green:(80/255.0) blue:(46/255.0) alpha:1.0], // #fe502e
+        [UIColor colorWithRed:(83/255.0) green:(117/255.0) blue:(171/255.0) alpha:1.0], // #5375ab
+    ];
+    NSInteger colorIndex = indexPath.row % colors.count;
+    
+//    cell.catBackground.backgroundColor = colors[colorIndex];
+    cell.catBackground.layer.borderColor = [colors[colorIndex] CGColor];
+    cell.catBackground.layer.borderWidth = 2.0f;
+    cell.catBackground.layer.cornerRadius = 12;
+    cell.catTitle.text = [arrCategory objectAtIndex:indexPath.row];
 
     return cell;
 }

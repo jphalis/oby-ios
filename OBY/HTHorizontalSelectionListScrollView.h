@@ -5,6 +5,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HTHorizontalSelectionListScrollView : UIScrollView
 
+@interface HTHorizontalSelectionListScrollView : UIScrollView
 @end

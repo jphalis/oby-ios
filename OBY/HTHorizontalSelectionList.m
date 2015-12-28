@@ -176,43 +176,43 @@
         button.layer.cornerRadius = 5.0;
         switch (index) {
             case 0: {
-                button.layer.borderColor =[AnimatedMethods colorFromHexString:@"#5375ab" ].CGColor;
+                button.layer.borderColor = [AnimatedMethods colorFromHexString:@"#5375ab" ].CGColor;
             }
                 break;
             case 1: {
-                button.layer.borderColor =[AnimatedMethods colorFromHexString:@"#D673DD" ].CGColor;
+                button.layer.borderColor = [AnimatedMethods colorFromHexString:@"#D673DD" ].CGColor;
             }
                 break;
             case 2: {
-                button.layer.borderColor =[AnimatedMethods colorFromHexString:@"#fca565" ].CGColor;
+                button.layer.borderColor = [AnimatedMethods colorFromHexString:@"#fca565" ].CGColor;
             }
                 break;
             case 3: {
-               button.layer.borderColor =[AnimatedMethods colorFromHexString:@"#4f70a6" ].CGColor;
+               button.layer.borderColor = [AnimatedMethods colorFromHexString:@"#4f70a6" ].CGColor;
             }
                 break;
             case 4: {
-                button.layer.borderColor =[AnimatedMethods colorFromHexString:@"#f86cb5" ].CGColor;
+                button.layer.borderColor = [AnimatedMethods colorFromHexString:@"#f86cb5" ].CGColor;
             }
                 break;
             case 5: {
-                button.layer.borderColor =[AnimatedMethods colorFromHexString:@"#b9f3cd" ].CGColor;
+                button.layer.borderColor = [AnimatedMethods colorFromHexString:@"#b9f3cd" ].CGColor;
             }
                 break;
             case 6: {
-                button.layer.borderColor =[AnimatedMethods colorFromHexString:@"#eff8a5" ].CGColor;
+                button.layer.borderColor = [AnimatedMethods colorFromHexString:@"#eff8a5" ].CGColor;
             }
                 break;
             case 7: {
-                button.layer.borderColor =[AnimatedMethods colorFromHexString:@"#f4adf9" ].CGColor;
+                button.layer.borderColor = [AnimatedMethods colorFromHexString:@"#f4adf9" ].CGColor;
             }
                 break;
             case 8: {
-                 button.layer.borderColor =[AnimatedMethods colorFromHexString:@"#fe502e" ].CGColor;
+                 button.layer.borderColor = [AnimatedMethods colorFromHexString:@"#fe502e" ].CGColor;
             }
                 break;
             case 9: {
-                button.layer.borderColor =[AnimatedMethods colorFromHexString:@"#5375ab" ].CGColor;
+                button.layer.borderColor = [AnimatedMethods colorFromHexString:@"#5375ab" ].CGColor;
             }
                 break;
             default: {

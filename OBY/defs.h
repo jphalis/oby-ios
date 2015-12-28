@@ -75,6 +75,7 @@ extern AppDelegate *appDelegate;
     #define FORGOTPASSURL @"https://www.obystudio.com/hide/oby/api/password/reset/"
     #define LOGINURL @"https://www.obystudio.com/hide/oby/api/auth/token/"
     #define SIGNUPURL @"https://www.obystudio.com/hide/oby/api/accounts/create/"
+    #define HASHTAGURL @"https://www.obystudio.com/hide/oby/api/hashtags/?q="
     #define HOMEPAGEURL @"https://www.obystudio.com/hide/oby/api/homepage/"
     #define CATEGORYURL @"https://www.obystudio.com/hide/oby/api/categories/"
     #define NOTIFICATIONURL @"https://www.obystudio.com/hide/oby/api/notifications/"

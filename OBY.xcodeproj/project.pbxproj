@@ -104,7 +104,6 @@
 		BEA44D981BF318F50024BF55 /* slider_img1.png in Resources */ = {isa = PBXBuildFile; fileRef = BEA44D971BF318F50024BF55 /* slider_img1.png */; };
 		BEA44D9A1BF319500024BF55 /* avatar_img.png in Resources */ = {isa = PBXBuildFile; fileRef = BEA44D991BF319500024BF55 /* avatar_img.png */; };
 		BEA44D9D1BF35F600024BF55 /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA44D9C1BF35F600024BF55 /* AsyncImageView.m */; };
-		BEA44DA01BF3674B0024BF55 /* TiemLineCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA44D9F1BF3674A0024BF55 /* TiemLineCollectionViewCell.m */; };
 		BEAD57401BF464AE00289E4E /* ProfileClass.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAD573F1BF464AE00289E4E /* ProfileClass.m */; };
 		BEAD57451BF48D3600289E4E /* GIBSON-BOLD.OTF in Resources */ = {isa = PBXBuildFile; fileRef = BEAD57421BF48D3600289E4E /* GIBSON-BOLD.OTF */; };
 		BEAD57461BF48D3600289E4E /* GIBSON-REGULAR.OTF in Resources */ = {isa = PBXBuildFile; fileRef = BEAD57431BF48D3600289E4E /* GIBSON-REGULAR.OTF */; };
@@ -167,8 +166,8 @@
 		D040B7961C2F2C01001CD53B /* SCLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D040B78D1C2F2C01001CD53B /* SCLTextView.m */; };
 		D040B7971C2F2C01001CD53B /* SCLTimerDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = D040B78F1C2F2C01001CD53B /* SCLTimerDisplay.m */; };
 		D040B7981C2F2C01001CD53B /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = D040B7911C2F2C01001CD53B /* UIImage+ImageEffects.m */; };
-		D040B79D1C2F59B1001CD53B /* HashtagClass.m in Sources */ = {isa = PBXBuildFile; fileRef = D040B79C1C2F59B1001CD53B /* HashtagClass.m */; };
 		D040B7A01C2F5AE2001CD53B /* HashtagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D040B79F1C2F5AE2001CD53B /* HashtagViewController.m */; };
+		D040B7A31C30AECB001CD53B /* CategoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D040B7A21C30AECB001CD53B /* CategoryTableViewCell.m */; };
 		D0461F581C2766440024738F /* SVWebViewController.strings in Resources */ = {isa = PBXBuildFile; fileRef = D0461F391C2766440024738F /* SVWebViewController.strings */; };
 		D0461F591C2766440024738F /* SVModalWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0461F431C2766440024738F /* SVModalWebViewController.m */; };
 		D0461F5A1C2766440024738F /* SVWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D0461F441C2766440024738F /* SVWebViewController.bundle */; };
@@ -383,8 +382,6 @@
 		BEA44D991BF319500024BF55 /* avatar_img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar_img.png; sourceTree = "<group>"; };
 		BEA44D9B1BF35F600024BF55 /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
 		BEA44D9C1BF35F600024BF55 /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
-		BEA44D9E1BF3674A0024BF55 /* TiemLineCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TiemLineCollectionViewCell.h; sourceTree = "<group>"; };
-		BEA44D9F1BF3674A0024BF55 /* TiemLineCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TiemLineCollectionViewCell.m; sourceTree = "<group>"; };
 		BEAD573E1BF464AE00289E4E /* ProfileClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileClass.h; sourceTree = "<group>"; };
 		BEAD573F1BF464AE00289E4E /* ProfileClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileClass.m; sourceTree = "<group>"; };
 		BEAD57421BF48D3600289E4E /* GIBSON-BOLD.OTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GIBSON-BOLD.OTF"; sourceTree = "<group>"; };
@@ -474,10 +471,10 @@
 		D040B78F1C2F2C01001CD53B /* SCLTimerDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLTimerDisplay.m; sourceTree = "<group>"; };
 		D040B7901C2F2C01001CD53B /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		D040B7911C2F2C01001CD53B /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
-		D040B79A1C2F593F001CD53B /* HashtagClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HashtagClass.h; sourceTree = "<group>"; };
-		D040B79C1C2F59B1001CD53B /* HashtagClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HashtagClass.m; sourceTree = "<group>"; };
 		D040B79E1C2F5AB8001CD53B /* HashtagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HashtagViewController.h; sourceTree = "<group>"; };
 		D040B79F1C2F5AE2001CD53B /* HashtagViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HashtagViewController.m; sourceTree = "<group>"; };
+		D040B7A11C30AE92001CD53B /* CategoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryTableViewCell.h; sourceTree = "<group>"; };
+		D040B7A21C30AECB001CD53B /* CategoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryTableViewCell.m; sourceTree = "<group>"; };
 		D0461F3A1C2766440024738F /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
 		D0461F3B1C2766440024738F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
 		D0461F3C1C2766440024738F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SVWebViewController.strings; sourceTree = "<group>"; };
@@ -876,12 +873,12 @@
 		BE0909121BEE101B0077DFE8 /* CellViews */ = {
 			isa = PBXGroup;
 			children = (
-				BEA44D9E1BF3674A0024BF55 /* TiemLineCollectionViewCell.h */,
-				BEA44D9F1BF3674A0024BF55 /* TiemLineCollectionViewCell.m */,
-				BE09090F1BEE10140077DFE8 /* TableViewCellNotification.h */,
-				BE0909101BEE10140077DFE8 /* TableViewCellNotification.m */,
+				D040B7A11C30AE92001CD53B /* CategoryTableViewCell.h */,
+				D040B7A21C30AECB001CD53B /* CategoryTableViewCell.m */,
 				BE03004E1BEB7DDD0005183F /* CollectionViewCellimage.h */,
 				BE03004F1BEB7DDD0005183F /* CollectionViewCellimage.m */,
+				BE09090F1BEE10140077DFE8 /* TableViewCellNotification.h */,
+				BE0909101BEE10140077DFE8 /* TableViewCellNotification.m */,
 			);
 			name = CellViews;
 			sourceTree = "<group>";
@@ -1046,8 +1043,6 @@
 				BE0909071BEE03FC0077DFE8 /* TimeLineClass.m */,
 				BED84ECA1BECD19200E5C734 /* PhotoClass.h */,
 				BED84ECB1BECD19200E5C734 /* PhotoClass.m */,
-				D040B79A1C2F593F001CD53B /* HashtagClass.h */,
-				D040B79C1C2F59B1001CD53B /* HashtagClass.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1427,9 +1422,9 @@
 				BE2045A51BF5A89600288548 /* SDWebImageDownloader.m in Sources */,
 				BE2045A71BF5A89600288548 /* SDWebImageManager.m in Sources */,
 				BE03006B1BEB84550005183F /* AFXMLRequestOperation.m in Sources */,
-				D040B79D1C2F59B1001CD53B /* HashtagClass.m in Sources */,
 				BE2045AA1BF5A89600288548 /* UIImage+GIF.m in Sources */,
 				BE0BC5FA1BEB304A00C5903E /* NotificationViewController.m in Sources */,
+				D040B7A31C30AECB001CD53B /* CategoryTableViewCell.m in Sources */,
 				BE5C002B1BEA39DF00971567 /* AnimatedMethods.m in Sources */,
 				D0461F591C2766440024738F /* SVModalWebViewController.m in Sources */,
 				BE2045A91BF5A89600288548 /* UIButton+WebCache.m in Sources */,
@@ -1443,7 +1438,6 @@
 				BE0300671BEB84550005183F /* AFJSONRequestOperation.m in Sources */,
 				BE2045AF1BF5A89600288548 /* UIView+WebCacheOperation.m in Sources */,
 				A5B6C40C1BE8E9D2004F295C /* StringUtil.m in Sources */,
-				BEA44DA01BF3674B0024BF55 /* TiemLineCollectionViewCell.m in Sources */,
 				BECF7AFE1C229ADE008627B9 /* ColorUtil.m in Sources */,
 				BE2045A21BF5A89600288548 /* SDImageCache.m in Sources */,
 				BE6B3A0C1C0DB637002509D3 /* BadgeLabel.m in Sources */,

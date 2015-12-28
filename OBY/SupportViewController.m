@@ -20,7 +20,7 @@
 @end
 
 @implementation SupportViewController
-@synthesize arrDetails,pageTitle;
+@synthesize arrDetails, pageTitle;
 
 - (void)viewDidLoad {
     appDelegate = [AppDelegate getDelegate];
@@ -75,6 +75,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     TableViewCellNotification *cell = [tableView dequeueReusableCellWithIdentifier:@"SupportCell" forIndexPath:indexPath];
     
     NSMutableDictionary *dictUser = [arrDetails objectAtIndex:indexPath.row];

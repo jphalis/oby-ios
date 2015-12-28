@@ -98,8 +98,6 @@ enum{
                                                                  timeoutInterval:60];
     
         NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
-//        NSLog(@"auth string =%@",authStr);
-    
         NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
         NSString *base64String = [plainData base64EncodedStringWithOptions:0];
         NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
@@ -107,9 +105,6 @@ enum{
         [_request setHTTPMethod:@"GET"];
     
         [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-//            if(error != nil){
-//                NSLog(@"%@",error);
-//            }
             if ([data length] > 0 && error == nil){
                 NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
              
@@ -219,6 +214,10 @@ enum{
     
     if (btn.tag == previousIndex){
        // return;
+//        [UIView animateWithDuration:0.3 animations:^(void){
+//            [collectionVWHome scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+//        }];
+//        NSLog(@"Click");
     } else {
         if (previousIndex != 0){
             UIButton *btnpreviousIndex = (UIButton*)[tabView viewWithTag:previousIndex];

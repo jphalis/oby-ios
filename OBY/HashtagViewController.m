@@ -22,6 +22,10 @@
 @interface HashtagViewController ()<PhotoViewControllerDelegate,CommentViewControllerDelegate> {
     AppDelegate *appDelegate;
     
+    NSInteger hashtagCount;
+    NSString *nextURL;
+    NSString *previousURL;
+    
     NSMutableArray *arrHashtagPhotos;
     NSInteger tapCellIndex;
     NSIndexPath *previousIndexPath;
@@ -454,9 +458,8 @@
     checkNetworkReachability();
     
     [appDelegate showHUDAddedToView:self.view message:@""];
-    // [self setBusy:YES];
+
     NSString *urlString = tagURL;
-    
     NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                              timeoutInterval:60];
     
@@ -467,26 +470,26 @@
     [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
     [_request setHTTPMethod:@"GET"];
     
-    [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-     {
+    [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+        
          if(error != nil){
              [appDelegate hideHUDForView2:self.view];
          }
          if ([data length] > 0 && error == nil){
-             NSArray *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+             NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
              
-             if([JSONValue isKindOfClass:[NSArray class]]){
-                 
-                 if(arrHashtagPhotos.count > 0){
-                     [arrHashtagPhotos removeAllObjects];
-                 }
+             if([JSONValue isKindOfClass:[NSDictionary class]] && [[JSONValue allKeys]count] > 2){
+                 hashtagCount = [[JSONValue objectForKey:@"count"]integerValue];
+                 nextURL = [JSONValue objectForKey:@"next"];
+                 previousURL = [JSONValue objectForKey:@"previous"];
+             
+                 NSArray *arrHashtagResult = [JSONValue objectForKey:@"results"];
                  
                  if([JSONValue count] > 0){
-                     NSLog(@"SWAGGGGG");
-                     for (int i = 0; i < JSONValue.count; i++) {
+                     for (int i = 0; i < arrHashtagResult.count; i++) {
                          NSMutableDictionary *dictResult;
                          dictResult = [[NSMutableDictionary alloc]init];
-                         dictResult = [JSONValue objectAtIndex:i];
+                         dictResult = [arrHashtagResult objectAtIndex:i];
                          PhotoClass *photoClass = [[PhotoClass alloc]init];
                          photoClass.category_url = [dictResult objectForKey:@"category_url"];
                          photoClass.comment_count = [dictResult objectForKey:@"comment_count"];
@@ -510,7 +513,7 @@
                          photoClass.isLike = NO;
                          if([[dictResult objectForKey:@"get_likers_info"] count] > 0){
                              for(int l = 0; l < [arrLiker count]; l++){
-                                 NSDictionary *dictUsers= [arrLiker objectAtIndex:l];
+                                 NSDictionary *dictUsers = [arrLiker objectAtIndex:l];
                                  if([[dictUsers objectForKey:@"username"] isEqualToString:GetUserName]){
                                      photoClass.isLike = YES;
                                      break;

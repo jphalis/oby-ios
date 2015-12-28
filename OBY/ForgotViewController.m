@@ -30,11 +30,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    btnSubmit.layer.cornerRadius=20;
-    
-    UIColor *color = [UIColor whiteColor];
-    txtEmail.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Email" attributes:@{NSForegroundColorAttributeName: color}];
-    
+    btnSubmit.layer.cornerRadius = 20;
     [super viewWillAppear:YES];
 }
 

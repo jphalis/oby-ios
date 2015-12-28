@@ -116,7 +116,7 @@ enum{
         }
             break;
         case LOGOUT: {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Are you sure you want to logout?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Are you sure you want to sign out?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
             alert.delegate = self;
             alert.tag = 100;
             [alert show];

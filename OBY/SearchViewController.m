@@ -13,17 +13,18 @@
 
 
 @interface SearchViewController (){
+    AppDelegate *appDelegate;
+    
     int lastCount;
     BOOL isEmpty;
+    BOOL isFilter;
+    
+    NSMutableArray *arrUsers;
+    NSArray *arrFilterUsers;
     
     __weak IBOutlet UITableView *tblVW;
     __weak IBOutlet UISearchBar *txtSearch;
-    AppDelegate *appDelegate;
     __weak IBOutlet UILabel *lblWaterMark;
-    
-    NSMutableArray *arrUsers;
-    NSArray *arrFileterUsers;
-    BOOL isFilter;
 }
 
 - (IBAction)onSearch:(id)sender;
@@ -36,10 +37,11 @@
 - (void)viewDidLoad {
     appDelegate = [AppDelegate getDelegate];
     
-    arrUsers = [[NSMutableArray alloc]init];
-    arrFileterUsers = [[NSArray alloc]init];
+    arrUsers = [[NSMutableArray alloc] init];
+    arrFilterUsers = [[NSArray alloc] init];
     
     [super viewDidLoad];
+    
     UISwipeGestureRecognizer *viewRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
     viewRight.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:viewRight];
@@ -56,7 +58,9 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     appDelegate.tabbar.tabView.hidden = YES;
-    lblWaterMark.text = @"";
+    lblWaterMark.text = @"Search OBY";
+    txtSearch.layer.borderWidth = 1;
+    txtSearch.layer.borderColor = [[UIColor whiteColor] CGColor];
     [super viewWillAppear:YES];
 }
 
@@ -112,11 +116,10 @@
         NSError *error = nil;
         NSData *data = [NSURLConnection sendSynchronousRequest:_request returningResponse:&response error:&error];
         
-        if ( error == nil && [data length] > 0){
+        if (error == nil && [data length] > 0){
             dispatch_sync(dispatch_get_main_queue(), ^{
                 
                 NSArray *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-                //NSString *strResponse = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
                 
                 if([JSONValue isKindOfClass:[NSNull class]]){
                     [self setBusy:NO];
@@ -134,9 +137,7 @@
                             
                             NSMutableDictionary *dictResult;
                             dictResult = [JSONValue objectAtIndex:i];
-                            
                             NSMutableDictionary *dictSearch = [[NSMutableDictionary alloc]init];
-                           // NSLog(@"%@",[dictResult objectForKey:@"account_url"]);
                             
                             if([dictResult objectForKey:@"account_url"] == [NSNull null]){
                                 [dictSearch setValue:@"" forKey:@"account_url"];
@@ -179,7 +180,7 @@
                         [self showUsers];
                     } else {
                         isEmpty = YES;
-                        lblWaterMark.text = @"No results found";
+                        lblWaterMark.text = @"0 results found";
                         [self showUsers];
                         //[tblVW reloadData];
                         [self setBusy:NO];
@@ -214,7 +215,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if(isFilter == YES){
-        return  [arrFileterUsers count];
+        return [arrFilterUsers count];
     } else {
     return [arrUsers count];
     }           //count number of row from counting array hear cataGorry is An Array
@@ -231,7 +232,7 @@
     NSMutableDictionary *dictUser;
     
     if(isFilter == YES){
-        dictUser = [arrFileterUsers objectAtIndex:indexPath.row];
+        dictUser = [arrFilterUsers objectAtIndex:indexPath.row];
     } else {
         dictUser = [arrUsers objectAtIndex:indexPath.row];
     }
@@ -245,30 +246,19 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-//    UITableViewCell *cell = [tblVW cellForRowAtIndexPath:indexPath];
-    
     [self.view endEditing:YES];
     
     ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
-    //account_url
+
     NSMutableDictionary *dictUser;
     
     if(isFilter == YES){
-        dictUser = [arrFileterUsers objectAtIndex:indexPath.row];
+        dictUser = [arrFilterUsers objectAtIndex:indexPath.row];
     } else {
         dictUser = [arrUsers objectAtIndex:indexPath.row];
     }
     profileViewController.userURL = [dictUser objectForKey:@"account_url"];
     [self.navigationController pushViewController:profileViewController animated:YES];
-}
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    [searchBar resignFirstResponder];
-    if([self validateFields]){
-        isEmpty = NO;
-        [self doSearch];
-    }
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
@@ -278,7 +268,7 @@
             [arrUsers removeAllObjects];
         }
         isEmpty = NO;
-        lblWaterMark.text = @"";
+        lblWaterMark.text = @"Search OBY";
         [tblVW reloadData];
     } else {
         if(searchText.length == 1){
@@ -291,7 +281,7 @@
 
 -(void)doFilter{
     isFilter = YES;
-    arrFileterUsers = nil;
+    arrFilterUsers = nil;
     NSString *searchString = txtSearch.text;
     
     if([searchString length] == 0){
@@ -304,12 +294,12 @@
         return;
     }
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"username beginswith[c] %@", searchString];
-    arrFileterUsers = [arrUsers filteredArrayUsingPredicate:predicate];
+    arrFilterUsers = [arrUsers filteredArrayUsingPredicate:predicate];
     
-    if(arrFileterUsers.count > 0){
+    if(arrFilterUsers.count > 0){
         lblWaterMark.text = @"";
     } else {
-        lblWaterMark.text = @"No results found";
+        lblWaterMark.text = @"0 results found";
     }
     [tblVW reloadData];
 }
