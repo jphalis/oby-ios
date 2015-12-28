@@ -2,6 +2,8 @@
 //  NotificationViewController.m
 //
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "AnimatedMethods.h"
 #import "AppDelegate.h"
 #import "CustomButton.h"
@@ -224,6 +226,10 @@
     [cell.btnUsrProfile setTag:indexPath.row];
     [cell.btnUsrProfile addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
     
+    UIView *bottomBorder = [[UIView alloc] initWithFrame:CGRectMake(0, cell.frame.size.height - 1, cell.frame.size.width, 1)];
+    bottomBorder.backgroundColor = [UIColor colorWithRed:(234/255.0) green:(234/255.0) blue:(234/255.0) alpha:1.0];
+    [cell.contentView addSubview:bottomBorder];
+    
     int c = (int)[arrNotification count];
     
     if([nextURL isKindOfClass:[NSString class]] && ![nextURL isEqualToString:@""] && ![nextURL isEqual:NULL] && (c%10 == 0) && (indexPath.row == (c-1))){
@@ -238,7 +244,7 @@
     NSIndexPath *indexPath = [tblVW indexPathForRowAtPoint:p];
     
     if (indexPath == nil){
-//        NSLog(@"couldn't find index path");
+
     } else {
         NotificationClass *notificationClass = [arrNotification objectAtIndex:indexPath.row];
         
