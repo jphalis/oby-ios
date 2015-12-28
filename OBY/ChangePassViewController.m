@@ -14,16 +14,13 @@
 
 
 @interface ChangePassViewController (){
-    
     __weak IBOutlet UITextField *txtNewConfrmPass;
     __weak IBOutlet UITextField *txtNewPass;
     __weak IBOutlet UITextField *txtOldPass;
     __weak IBOutlet UIButton *btnSubmit;
-    
 }
 - (IBAction)onSubmit:(id)sender;
 - (IBAction)onBack:(id)sender;
-
 @end
 
 @implementation ChangePassViewController

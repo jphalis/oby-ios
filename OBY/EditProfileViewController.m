@@ -21,23 +21,22 @@
 #define kOFFSET_FOR_KEYBOARD 0.65
 
 @interface EditProfileViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,CustomeImagePickerDelegate,ChoosePhotoViewControllerDelegate> {
+    AppDelegate *appDelegate;
     
     __weak IBOutlet UITextField *txtWebsite;
     __weak IBOutlet UITextField *txtFullName;
     __weak IBOutlet UITextField *txtEmail;
     __weak IBOutlet UITextField *txtUserName;
-     NSMutableArray *arrGender;
     __weak IBOutlet SDIAsyncImageView *imgProfile;
     __weak IBOutlet UITextView *txtBio;
     __weak IBOutlet UITextField *txtEduEmail;
     __weak IBOutlet UITextField *txtGender;
     __weak IBOutlet UIButton *updateBtn;
-    
-    ChoosePhotoViewController *choosePhotoViewController;
-    
     __weak IBOutlet UIScrollView *scrolVW;
     
-    AppDelegate *appDelegate;
+    NSMutableArray *arrGender;
+    
+    ChoosePhotoViewController *choosePhotoViewController;
 }
 
 - (IBAction)onBack:(id)sender;

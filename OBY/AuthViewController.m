@@ -12,7 +12,6 @@
 #import "SCLAlertView.h"
 #import "StringUtil.h"
 #import "SVModalWebViewController.h"
-//#import "SVWebViewController.h"
 #import "UIViewControllerAdditions.h"
 
 
@@ -20,7 +19,6 @@
 
 
 @interface AuthViewController ()<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>{
-    
     __weak IBOutlet UILabel *pageTitle;
     __weak IBOutlet UIView *viewLogin;
     __weak IBOutlet UIView *viewSignUp;
@@ -39,13 +37,11 @@
     __weak IBOutlet UITextField *txtLoginPass;
     __weak IBOutlet UITextField *txtLoginUsrName;
 }
-
 - (IBAction)onForgot:(id)sender;
 - (IBAction)onTapSign:(id)sender;
 - (IBAction)doSignIn:(id)sender;
 - (IBAction)doSignUp:(id)sender;
 - (IBAction)onTermsClick:(id)sender;
-
 @end
 
 @implementation AuthViewController
@@ -78,7 +74,6 @@
     self.navigationController.navigationBarHidden = YES;
     
   //Custom Placeholder Color
-    
     UIColor *color = [UIColor whiteColor];
     txtLoginUsrName.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Username" attributes:@{NSForegroundColorAttributeName: color}];
     
@@ -187,23 +182,27 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
-    UIToolbar * keyboardToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
-    keyboardToolBar.tag = textField.tag;
+    UIToolbar *keyboardToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
     
-    keyboardToolBar.barStyle = UIBarStyleDefault;
+    keyboardToolBar.tag = textField.tag;
+    keyboardToolBar.barStyle = UIBarStyleBlack;
     
     UIBarButtonItem *bar1 = [[UIBarButtonItem alloc]initWithTitle:@"Previous" style:UIBarButtonItemStyleBordered target:self action:@selector(previousTextField:)];
     bar1.tag = textField.tag;
+    [bar1 setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
     
     UIBarButtonItem *bar2 = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStyleBordered target:self action:@selector(nextTextField:)];
     bar2.tag = textField.tag;
+    [bar2 setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
     
     UIBarButtonItem *bar3 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     bar3.tag = textField.tag;
+    [bar3 setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
     
     UIBarButtonItem *bar4 =
     [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(resignKeyboard)];
     bar4.tag = textField.tag;
+    [bar4 setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
     
     [keyboardToolBar setItems: [NSArray arrayWithObjects:
                                 bar1,bar2,bar3,bar4,

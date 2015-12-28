@@ -5,6 +5,7 @@
 #import "AnimatedMethods.h"
 #import "AppDelegate.h"
 #import "CollectionViewCellimage.h"
+#import "CommentListViewController.h"
 #import "CommentViewController.h"
 #import "CreateViewController.h"
 #import "CustomButton.h"
@@ -22,18 +23,15 @@
 #import "StringUtil.h"
 #import "SupportViewController.h"
 #import "SVModalWebViewController.h"
-//#import "SVWebViewController.h"
 #import "UIImageView+WebCache.h"
 
 
 @interface ProfileViewController ()<PhotoViewControllerDelegate,CommentViewControllerDelegate> {
-    NSString *supportUserId;
+    AppDelegate *appDelegate;
     
     __weak IBOutlet UIImageView *imgSuportTypes;
     __weak IBOutlet UIView *viewSwipeFront;
     __weak IBOutlet UIButton *btnTopBar;
-    CGRect collVwOldFrame;
-    BOOL isViewUp;
     __weak IBOutlet UIView *viewTOP;
     __weak IBOutlet UILabel *lblWebsite;
     __weak IBOutlet UILabel *lblDescription;
@@ -43,24 +41,24 @@
     __weak IBOutlet UIButton *btnSupport;
     __weak IBOutlet SDIAsyncImageView *imgProfileView;
     __weak IBOutlet UIImageView *imgBackView;
-    NSMutableArray *arrPhotsList;
     __weak IBOutlet UILabel *lblProfileName;
-    AppDelegate *appDelegate;
     __weak IBOutlet UILabel *lblSupporting;
     __weak IBOutlet UILabel *lblSupporters;
+    __weak IBOutlet UIPageControl *pgControl;
+    __weak IBOutlet UIButton *btnAdd;
     
+    BOOL isViewUp;
+    NSString *supportUserId;
     NSInteger tapCellIndex;
     NSIndexPath *previousIndexPath;
+    NSMutableArray *arrPhotsList;
     NSMutableArray *arrImages;
-    __weak IBOutlet UIPageControl *pgControl;
-     UIRefreshControl *refreshControl;
-    
     NSMutableDictionary *dictProfileInformation;
-     PhotoViewController *photoViewController;
+    UIRefreshControl *refreshControl;
+    CGRect collVwOldFrame;
     
+    PhotoViewController *photoViewController;
     CommentViewController *commentViewController;
-    
-    __weak IBOutlet UIButton *btnAdd;
 }
 
 - (IBAction)onAddClick:(id)sender;
@@ -149,7 +147,7 @@
     
     NSIndexPath *indexPath = [collectionVW indexPathForItemAtPoint:p];
     if (indexPath == nil){
-//        NSLog(@"couldn't find index path");
+
     } else {
         static int i = 0;
         i++;
@@ -371,11 +369,9 @@
     NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
     NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
-    
     [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
     [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
-    //Call the Login Web services
     [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
         
          if ([data length] > 0 && error == nil){
@@ -472,9 +468,6 @@
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
     NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
     [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
-    
-    //[_request setValue:[NSString stringWithFormat:@"Token %@",GetUserToken] forHTTPHeaderField:@"Authorization"];
-    
     [_request setHTTPMethod:@"GET"];
     
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
@@ -659,11 +652,6 @@
                      NSDictionary *dictFollower = [JSONValue objectForKey:@"follower"];
                      NSMutableArray *arrFollower = [dictFollower objectForKey:@"get_followers_info"];
                      NSMutableArray *arrFollowing = [dictFollower objectForKey:@"get_following_info"];
-                         
-                     // Change this to a Django field that abbreviates extensions
-//                     NSInteger followerCount = arrFollower.count;
-//                     NSInteger followingCount = arrFollowing.count;
-                     
                      NSString *followerCount = [dictFollower objectForKey:@"get_followers_count"];
                      NSString *followingCount = [dictFollower objectForKey:@"get_following_count"];
                      
@@ -677,11 +665,6 @@
                      } else {
                          profileClass.following_count = @"0";
                      }
-//                     profileClass.followers_count = [NSString stringWithFormat:@"%d",followerCount];
-//                     profileClass.following_count = [NSString stringWithFormat:@"%d",followingCount];
-                     
-//                     profileClass.followers_count = [NSString stringWithFormat:@"%ld",(long)followerCount];
-//                     profileClass.following_count = [NSString stringWithFormat:@"%ld",(long)followingCount];
                      
                      profileClass.arrfollowers = [[NSMutableArray alloc]init];
                      profileClass.arrfollowings = [[NSMutableArray alloc]init];
@@ -967,15 +950,13 @@
     PhotoClass *photoClass;
     photoClass = [arrPhotsList objectAtIndex:sender.tag];
     
-    SupportViewController *supportViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SupportViewController"];
+    CommentListViewController *commentListViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CommentListViewController"];
     
     if([currentCell.lblComments.text isEqualToString:@"0"]){
         return;
     }
-    
-    supportViewController.pageTitle = @"Comments";
-    supportViewController.arrDetails = photoClass.comment_set.copy;
-    [self.navigationController pushViewController:supportViewController animated:YES];
+    commentListViewController.arrDetails = photoClass.comment_set.copy;
+    [self.navigationController pushViewController:commentListViewController animated:YES];
 }
 
 -(void)onLikeList:(CustomButton*)sender{

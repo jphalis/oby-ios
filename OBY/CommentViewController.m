@@ -22,7 +22,6 @@
 
 - (IBAction)onSubmit:(id)sender;
 - (IBAction)onBack:(id)sender;
-
 @end
 
 @implementation CommentViewController

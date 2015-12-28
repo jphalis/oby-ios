@@ -9,6 +9,7 @@
 #import "AnimatedMethods.h"
 #import "AppDelegate.h"
 #import "CollectionViewCellimage.h"
+#import "CommentListViewController.h"
 #import "CommentViewController.h"
 #import "CustomButton.h"
 #import "CutomTabViewController.h"
@@ -40,6 +41,7 @@
     NSMutableArray *arrCategoryPhotos;
     UIRefreshControl *refreshControl;
     NSString *CategoryURL;
+    
     PhotoViewController *photoViewController;
     CommentViewController *commentViewController;
 }
@@ -207,6 +209,7 @@
         SetisComment(NO);
         return;
     }
+    
     if(isMenuChoosed){
         if(arrCategoryPhotos.count > 0){
             [self scrollToTop];
@@ -907,14 +910,13 @@
         photoClass = [appDelegate.arrPhotos objectAtIndex:sender.tag];
     }
     
-    SupportViewController *supportViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SupportViewController"];
+    CommentListViewController *commentListViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CommentListViewController"];
     
     if([currentCell.lblComments.text isEqualToString:@"0"]){
         return;
     }
-    supportViewController.pageTitle = @"Comments";
-    supportViewController.arrDetails = photoClass.comment_set.copy;
-    [self.navigationController pushViewController:supportViewController animated:YES];
+    commentListViewController.arrDetails = photoClass.comment_set.copy;
+    [self.navigationController pushViewController:commentListViewController animated:YES];
 }
 
 -(void)onLikeList:(CustomButton*)sender{

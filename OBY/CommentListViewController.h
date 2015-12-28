@@ -6,7 +6,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface SupportViewController : UIViewController
+@interface CommentListViewController : UIViewController
 
 @property (strong, nonatomic)NSMutableArray *arrDetails;
 

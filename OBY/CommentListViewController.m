@@ -6,12 +6,12 @@
 #import "AppDelegate.h"
 #import "defs.h"
 #import "ProfileViewController.h"
-#import "SupportViewController.h"
+#import "CommentListViewController.h"
 #import "TableViewCellNotification.h"
 #import "UIImageView+WebCache.h"
 
 
-@interface SupportViewController (){
+@interface CommentListViewController (){
     AppDelegate *appDelegate;
 }
 
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation SupportViewController
+@implementation CommentListViewController
 @synthesize arrDetails;
 
 - (void)viewDidLoad {

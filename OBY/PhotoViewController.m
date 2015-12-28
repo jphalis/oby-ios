@@ -19,7 +19,6 @@
     __weak IBOutlet UIScrollView *imageScrollView;
     __weak IBOutlet SDIAsyncImageView *imageView;
 }
-
 @end
 
 @implementation PhotoViewController

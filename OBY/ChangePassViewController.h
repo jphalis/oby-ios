@@ -6,5 +6,4 @@
 
 
 @interface ChangePassViewController : UIViewController
-
 @end

@@ -11,10 +11,10 @@
 @interface ChoosePhotoViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,CustomeImagePickerDelegate>{
     
     __weak IBOutlet UITableView *tblVW;
+    
     NSMutableArray *arrOptions;
 }
 - (IBAction)onBack:(id)sender;
-
 @end
 
 @implementation ChoosePhotoViewController

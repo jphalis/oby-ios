@@ -15,16 +15,15 @@
 @interface SearchViewController (){
     AppDelegate *appDelegate;
     
-    int lastCount;
-    BOOL isEmpty;
-    BOOL isFilter;
-    
-    NSMutableArray *arrUsers;
-    NSArray *arrFilterUsers;
-    
     __weak IBOutlet UITableView *tblVW;
     __weak IBOutlet UISearchBar *txtSearch;
     __weak IBOutlet UILabel *lblWaterMark;
+    
+    int lastCount;
+    BOOL isEmpty;
+    BOOL isFilter;
+    NSMutableArray *arrUsers;
+    NSArray *arrFilterUsers;
 }
 
 - (IBAction)onSearch:(id)sender;

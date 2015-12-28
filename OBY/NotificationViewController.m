@@ -19,16 +19,17 @@
 
 @interface NotificationViewController ()<PhotoViewControllerDelegate>{
     AppDelegate *appDelegate;
-    NSInteger notificationCount;
-    NSString *nextURL;
-    NSString *previousURL;
-    NSMutableArray *arrNotification;
     
     __weak IBOutlet UILabel *lblWaterMark;
     __weak IBOutlet UITableView *tblVW;
     
-    PhotoViewController *photoViewController;
+    NSInteger notificationCount;
+    NSString *nextURL;
+    NSString *previousURL;
+    NSMutableArray *arrNotification;
     UIRefreshControl *refreshControl;
+    
+    PhotoViewController *photoViewController;
 }
 @end
 

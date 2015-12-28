@@ -16,7 +16,6 @@
 }
 - (IBAction)onBack:(id)sender;
 - (IBAction)onSubmit:(id)sender;
-
 @end
 
 @implementation ForgotViewController

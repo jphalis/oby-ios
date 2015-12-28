@@ -159,6 +159,7 @@
 		BEE990B71C08534C009F6C97 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEE990B61C08534C009F6C97 /* CommentViewController.m */; };
 		BEF41B651C0D5FE400BF957E /* likeselect.png in Resources */ = {isa = PBXBuildFile; fileRef = BEF41B641C0D5FE400BF957E /* likeselect.png */; };
 		D006BB3A1C2B8885005C7B1E /* ARDESTINE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D006BB391C2B8334005C7B1E /* ARDESTINE.ttf */; };
+		D03BF8E51C31DE19006AA088 /* CommentListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D03BF8E41C31DE19006AA088 /* CommentListViewController.m */; };
 		D040B7921C2F2C01001CD53B /* SCLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = D040B7841C2F2C01001CD53B /* SCLAlertView.m */; };
 		D040B7931C2F2C01001CD53B /* SCLAlertViewResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = D040B7861C2F2C01001CD53B /* SCLAlertViewResponder.m */; };
 		D040B7941C2F2C01001CD53B /* SCLAlertViewStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D040B7881C2F2C01001CD53B /* SCLAlertViewStyleKit.m */; };
@@ -456,6 +457,8 @@
 		BEE990B61C08534C009F6C97 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
 		BEF41B641C0D5FE400BF957E /* likeselect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = likeselect.png; sourceTree = "<group>"; };
 		D006BB391C2B8334005C7B1E /* ARDESTINE.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ARDESTINE.ttf; sourceTree = "<group>"; };
+		D03BF8E31C31DE07006AA088 /* CommentListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentListViewController.h; sourceTree = "<group>"; };
+		D03BF8E41C31DE19006AA088 /* CommentListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentListViewController.m; sourceTree = "<group>"; };
 		D040B7831C2F2C01001CD53B /* SCLAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertView.h; sourceTree = "<group>"; };
 		D040B7841C2F2C01001CD53B /* SCLAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertView.m; sourceTree = "<group>"; };
 		D040B7851C2F2C01001CD53B /* SCLAlertViewResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertViewResponder.h; sourceTree = "<group>"; };
@@ -633,6 +636,8 @@
 				BE4074AC1BFB029A0074C151 /* ChangePassViewController.m */,
 				BE54C1E51BFF2914001380A0 /* ChoosePhotoViewController.h */,
 				BE54C1E61BFF2914001380A0 /* ChoosePhotoViewController.m */,
+				D03BF8E31C31DE07006AA088 /* CommentListViewController.h */,
+				D03BF8E41C31DE19006AA088 /* CommentListViewController.m */,
 				BEE990B51C08534C009F6C97 /* CommentViewController.h */,
 				BEE990B61C08534C009F6C97 /* CommentViewController.m */,
 				BE0300421BEB3E780005183F /* CreateViewController.h */,
@@ -1448,6 +1453,7 @@
 				BE03006A1BEB84550005183F /* AFURLConnectionOperation.m in Sources */,
 				BE4279E61C02D60000E3F50D /* MMPickerView.m in Sources */,
 				BE0909081BEE03FC0077DFE8 /* TimeLineClass.m in Sources */,
+				D03BF8E51C31DE19006AA088 /* CommentListViewController.m in Sources */,
 				BE0AC1B71BEB20A3008866EC /* CutomTabViewController.m in Sources */,
 				D040B7951C2F2C01001CD53B /* SCLButton.m in Sources */,
 				BE4074AD1BFB029A0074C151 /* ChangePassViewController.m in Sources */,

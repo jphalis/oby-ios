@@ -9,5 +9,7 @@
 
 
 @interface CreateViewController : UIViewController <UIActionSheetDelegate, IBActionSheetDelegate>
+
 @property IBActionSheet *standardIBAS, *customIBAS, *funkyIBAS;
+
 @end

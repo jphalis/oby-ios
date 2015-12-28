@@ -5,6 +5,7 @@
 #import "AnimatedMethods.h"
 #import "AppDelegate.h"
 #import "CollectionViewCellimage.h"
+#import "CommentListViewController.h"
 #import "CommentViewController.h"
 #import "CustomButton.h"
 #import "defs.h"
@@ -23,13 +24,16 @@
 
 @interface TimeLineViewController ()<PhotoViewControllerDelegate,CommentViewControllerDelegate>{
     AppDelegate *appDelegate;
+    
+    __weak IBOutlet UICollectionView *colltionVw;
+    
     NSMutableArray *arrTimelinePhotos;
     NSInteger tapCellIndex;
     NSIndexPath *previousIndexPath;
-    __weak IBOutlet UICollectionView *colltionVw;
-    PhotoViewController *photoViewController;
     UIRefreshControl *refreshControl;
+    
     CommentViewController *commentViewController;
+    PhotoViewController *photoViewController;
 }
 @end
 
@@ -310,15 +314,13 @@
     PhotoClass *photoClass;
     photoClass = [arrTimelinePhotos objectAtIndex:sender.tag];
     
-    SupportViewController *supportViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"SupportViewController"];
+    CommentListViewController *commentListViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CommentListViewController"];
     
     if([currentCell.lblComments.text isEqualToString:@"0"]){
         return;
     }
-    
-    supportViewController.pageTitle=@"Comments";
-    supportViewController.arrDetails=photoClass.comment_set.copy;
-    [self.navigationController pushViewController:supportViewController animated:YES];
+    commentListViewController.arrDetails = photoClass.comment_set.copy;
+    [self.navigationController pushViewController:commentListViewController animated:YES];
 }
 
 -(void)onLikeList:(CustomButton*)sender{

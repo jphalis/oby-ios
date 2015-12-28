@@ -9,12 +9,11 @@
 
 
 @interface CategoryViewController ()<UITableViewDataSource,UITableViewDelegate>{
-    NSMutableArray *arrCategory;
     __weak IBOutlet UITableView *tblVw;
+    
+    NSMutableArray *arrCategory;
 }
-
 - (IBAction)onBack:(id)sender;
-
 @end
 
 @implementation CategoryViewController

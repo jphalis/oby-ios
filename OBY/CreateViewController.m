@@ -23,12 +23,14 @@
 
 @interface CreateViewController ()<CategoryViewControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,IBActionSheetDelegate,CustomeImagePickerDelegate,ChoosePhotoViewControllerDelegate>{
     AppDelegate *appDelegate;
+    
     __weak IBOutlet UITextView *txtDescription;
     __weak IBOutlet UITextField *txtCategory;
-    BOOL isImageChoosed;
     __weak IBOutlet UIImageView *imgView;
     __weak IBOutlet UIButton *createBtn;
+    
     int selectedCode;
+    BOOL isImageChoosed;
     
     ChoosePhotoViewController *choosePhotoViewController;
 }

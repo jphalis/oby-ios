@@ -23,22 +23,22 @@
 @interface HashtagViewController ()<PhotoViewControllerDelegate,CommentViewControllerDelegate> {
     AppDelegate *appDelegate;
     
+    __weak IBOutlet UICollectionView *colltionVw;
+    __weak IBOutlet UILabel *headerLabel;
+    
     NSInteger hashtagCount;
     NSString *nextURL;
     NSString *previousURL;
-    
     NSMutableArray *arrHashtagPhotos;
     NSInteger tapCellIndex;
     NSIndexPath *previousIndexPath;
-    __weak IBOutlet UICollectionView *colltionVw;
-    PhotoViewController *photoViewController;
     UIRefreshControl *refreshControl;
+    
     CommentViewController *commentViewController;
-    __weak IBOutlet UILabel *headerLabel;
+    PhotoViewController *photoViewController;
 }
 
 - (IBAction)onBack:(id)sender;
-
 @end
 
 @implementation HashtagViewController

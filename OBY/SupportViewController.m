@@ -12,6 +12,7 @@
 
 @interface SupportViewController (){
     AppDelegate *appDelegate;
+
     __weak IBOutlet UILabel *lblPageTitle;
 }
 
