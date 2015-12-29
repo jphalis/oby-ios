@@ -102,7 +102,6 @@
             <string>Gibson-SemiBold</string>
             <string>Gibson-SemiBold</string>
             <string>Gibson-SemiBold</string>
-            <string>Gibson-SemiBold</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -464,11 +463,11 @@
                                     <button opaque="NO" tag="12" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gAm-Hc-ves">
                                         <rect key="frame" x="160" y="0.0" width="80" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="notification_icon_nor">
+                                        <state key="normal" image="notification_icon_default">
                                             <color key="titleColor" red="0.12156862745098039" green="0.12941176470588237" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="selected" image="notification_icon_sel">
+                                        <state key="selected" image="notification_icon_active">
                                             <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
@@ -478,11 +477,11 @@
                                     <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="WJp-hZ-5ka">
                                         <rect key="frame" x="80" y="0.0" width="80" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="group_icon_nor">
+                                        <state key="normal" image="group_icon_default">
                                             <color key="titleColor" red="0.12156862745098039" green="0.12941176470588237" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="selected" image="group_icon_sel">
+                                        <state key="selected" image="group_icon_active">
                                             <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
@@ -492,11 +491,11 @@
                                     <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BvP-cu-Xnf">
                                         <rect key="frame" x="5" y="0.0" width="75" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="home_icon_nor">
+                                        <state key="normal" image="home_icon_default">
                                             <color key="titleColor" red="0.12156862745098039" green="0.12941176470588237" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="selected" image="home_icon_sel">
+                                        <state key="selected" image="home_icon_active">
                                             <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
@@ -506,11 +505,11 @@
                                     <button opaque="NO" tag="13" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fe7-Yu-kbq">
                                         <rect key="frame" x="240" y="0.0" width="75" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="menu_icon_nor">
+                                        <state key="normal" image="menu_icon_default">
                                             <color key="titleColor" red="0.12156862745098039" green="0.12941176470588237" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="selected" image="menu_icon_sel">
+                                        <state key="selected" image="menu_icon_active">
                                             <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
@@ -561,7 +560,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="prototypes" id="VSi-Wm-doW">
-                                <rect key="frame" x="0.0" y="69" width="414" height="667"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="contentInset" minX="0.0" minY="0.0" maxX="0.0" maxY="50"/>
@@ -580,18 +579,18 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" id="MpI-Y1-OLm">
-                                                    <rect key="frame" x="0.0" y="3" width="414" height="248"/>
+                                                    <rect key="frame" x="0.0" y="3" width="414" height="227.5"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JPHALIS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="FG1-3g-9Dc">
-                                                            <rect key="frame" x="55" y="3" width="238" height="26.5"/>
+                                                            <rect key="frame" x="55" y="3" width="238" height="24"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-SemiBold" family="Gibson" pointSize="11"/>
                                                             <color key="textColor" red="0.094117647060000004" green="0.35686274509999999" blue="0.5450980392" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="RJW-oE-8Fc">
-                                                            <rect key="frame" x="55" y="2" width="237" height="26"/>
+                                                            <rect key="frame" x="55" y="2" width="237" height="23.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="18"/>
                                                             <state key="normal">
@@ -599,7 +598,7 @@
                                                             </state>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LV0-ZJ-F2W">
-                                                            <rect key="frame" x="277" y="213" width="35" height="24"/>
+                                                            <rect key="frame" x="277" y="195.5" width="35" height="22"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="12"/>
                                                             <nil key="highlightedColor"/>
@@ -609,28 +608,28 @@
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6Lf-ep-vgX">
-                                                            <rect key="frame" x="153" y="213" width="35" height="24"/>
+                                                            <rect key="frame" x="153" y="195.5" width="35" height="22"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="12"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="like_icon.png" id="g6x-Qg-yx1">
-                                                            <rect key="frame" x="126" y="212.5" width="24" height="24.5"/>
+                                                            <rect key="frame" x="126" y="195" width="24" height="22.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="comment_icon.png" id="pb3-ir-t1S">
-                                                            <rect key="frame" x="251" y="213" width="26" height="24"/>
+                                                            <rect key="frame" x="251" y="195.5" width="26" height="22"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kXd-v2-tqW">
-                                                            <rect key="frame" x="239" y="203" width="42" height="43"/>
+                                                            <rect key="frame" x="239" y="186.5" width="42" height="39.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <state key="normal">
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="054-Om-t7y">
-                                                            <rect key="frame" x="281" y="203.5" width="42" height="43.5"/>
+                                                            <rect key="frame" x="281" y="187" width="42" height="40"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="19"/>
                                                             <state key="normal">
@@ -638,7 +637,7 @@
                                                             </state>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="zoL-zN-mJp">
-                                                            <rect key="frame" x="155" y="203" width="42" height="43"/>
+                                                            <rect key="frame" x="155" y="186.5" width="42" height="39.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="19"/>
                                                             <state key="normal">
@@ -646,18 +645,18 @@
                                                             </state>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="umA-ZZ-Nbp">
-                                                            <rect key="frame" x="114" y="203" width="42" height="43"/>
+                                                            <rect key="frame" x="114" y="186.5" width="42" height="39.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <state key="normal">
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
                                                         </button>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="El9-wa-MU9" customClass="SDIAsyncImageView">
-                                                            <rect key="frame" x="47" y="31.5" width="321" height="139.5"/>
+                                                            <rect key="frame" x="47" y="29" width="321" height="128"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="pretty" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="B8l-zr-yg8" customClass="KILabel">
-                                                            <rect key="frame" x="55" y="179" width="303" height="23"/>
+                                                            <rect key="frame" x="55" y="164.5" width="303" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <color key="tintColor" red="0.094117647060000004" green="0.35686274509999999" blue="0.5450980392" alpha="1" colorSpace="calibratedRGB"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="12"/>
@@ -1398,11 +1397,12 @@
                                         </connections>
                                     </textView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1VI-ya-cXR">
-                                        <rect key="frame" x="106" y="483" width="163" height="36"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.0" green="0.91345593629999999" blue="0.32572298640000003" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" name="Gibson-SemiBold" family="Gibson" pointSize="18"/>
-                                        <state key="normal" title="Update">
+                                        <rect key="frame" x="0.0" y="483" width="375" height="120"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <state key="normal" title="update">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -3032,17 +3032,17 @@
         <image name="comment_icon.png" width="55" height="55"/>
         <image name="editsquare.png" width="72" height="72"/>
         <image name="gallery_icon" width="288" height="288"/>
-        <image name="group_icon_nor" width="38" height="21"/>
-        <image name="group_icon_sel" width="38" height="21"/>
+        <image name="group_icon_active" width="37" height="21"/>
+        <image name="group_icon_default" width="38" height="22"/>
         <image name="header" width="640" height="128"/>
-        <image name="home_icon_nor" width="21" height="21"/>
-        <image name="home_icon_sel" width="21" height="21"/>
+        <image name="home_icon_active" width="21" height="21"/>
+        <image name="home_icon_default" width="21" height="21"/>
         <image name="like_icon.png" width="62" height="62"/>
-        <image name="menu_icon_nor" width="21" height="21"/>
-        <image name="menu_icon_sel" width="21" height="21"/>
+        <image name="menu_icon_active" width="21" height="21"/>
+        <image name="menu_icon_default" width="21" height="21"/>
         <image name="nextarrow" width="50" height="50"/>
-        <image name="notification_icon_nor" width="21" height="21"/>
-        <image name="notification_icon_sel" width="21" height="21"/>
+        <image name="notification_icon_active" width="21" height="21"/>
+        <image name="notification_icon_default" width="21" height="21"/>
         <image name="profile_icon" width="170" height="170"/>
         <image name="search_icon" width="170" height="170"/>
         <image name="setting_icon" width="170" height="170"/>

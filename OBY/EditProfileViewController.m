@@ -58,7 +58,9 @@
     imgProfile.layer.cornerRadius = imgProfile.frame.size.width / 2;
     imgProfile.layer.masksToBounds = YES;
     
-    updateBtn.layer.cornerRadius = 12;
+    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 0, updateBtn.frame.size.width, 1.0)];
+    topBorder.backgroundColor = [UIColor colorWithRed:(235/255.0) green:(235/255.0) blue:(235/255.0) alpha:1.0];
+    [updateBtn addSubview:topBorder];
 
     [self getProfileInfo];
     
