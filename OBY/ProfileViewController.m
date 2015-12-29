@@ -360,7 +360,6 @@
     [self setBusy:YES];
     ProfileClass *profileClass = [dictProfileInformation objectForKey:@"ProfileInfo"];
     NSString *strURL = [NSString stringWithFormat:@"%@%@/",SUPPORTURL,profileClass.Id];
-    
     NSURL *url = [NSURL URLWithString:strURL];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setTimeoutInterval:60];
@@ -462,7 +461,6 @@
     NSString *urlString = [NSString stringWithFormat:@"%@",userURL];
     NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                              timeoutInterval:60];
-    
     NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
     NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
@@ -524,18 +522,15 @@
                      phClas.category_url = [dictResult objectForKey:@"category_url"];
                      phClas.photo = [dictResult objectForKey:@"photo"];
                      phClas.comment_count = [dictResult objectForKey:@"comment_count"];
-                  // phClas.comment_set = [dictResult objectForKey:@"comment_set"];
                      phClas.created = [dictResult objectForKey:@"created"];
                      phClas.creator = [[dictResult objectForKey:@"creator"] uppercaseString];
                      phClas.creator_url = [dictResult objectForKey:@"creator_url"];
                      phClas.description = [dictResult objectForKey:@"description"];
                          
                      int userId = [[dictResult objectForKey:@"id"]intValue];
-                     int linke_Count = [[dictResult objectForKey:@"like_count"]intValue];
                          
                      phClas.PhotoId = [NSString stringWithFormat:@"%d",userId];
-                     phClas.like_count = [NSString stringWithFormat:@"%d",linke_Count];
-                 //  phClas.likers = [dictResult objectForKey:@"likers"];
+                     phClas.like_count = [dictResult objectForKey:@"like_count"];
                      phClas.likers = [[NSMutableArray alloc]init];
                      phClas.comment_set = [[NSMutableArray alloc]init];
                          
@@ -616,17 +611,12 @@
                          }
                              
                          NSString *fullString;
-                         NSString *fullName = [[dictFollowerInfo objectForKey:@"user__username"]lastPathComponent];
-                         NSString *userName = [dictFollowerInfo objectForKey:@"text"];
-                             
-                         fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
-                             
+                         NSString *userName = [[dictFollowerInfo objectForKey:@"user__username"]lastPathComponent];
+                         NSString *fullName = [dictFollowerInfo objectForKey:@"text"];
+                         fullString = [NSString stringWithFormat:@"%@ %@",userName,fullName];
                          NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
-                             
                          NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
-                             
                          [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
-                             
                          [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
                              
                          [phClas.comment_set addObject:dictFollowerInfo];
@@ -990,7 +980,6 @@
 }
 
 -(void)onComment:(CustomButton*)sender{
-    //SetisComment(YES);
     PhotoClass *photoClass;
     photoClass = [arrPhotsList objectAtIndex:sender.tag];
     commentViewController.selectRow = (int)sender.tag;
@@ -1035,13 +1024,9 @@
         NSString *fullString;
         NSString *userName = [dictUser objectForKey:@"user__username"];
         NSString *fullName = [dictUser objectForKey:@"user__full_name"];
-        
         fullString = [NSString stringWithFormat:@"%@ %@",userName,fullName];
-        
         NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
-        
         NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
-        
         [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
         [dictUser setValue:hogan forKey:@"usernameText"];
         
@@ -1061,7 +1046,6 @@
     currentCell.lblLikes.text = [NSString stringWithFormat:@"%@",photoClass.like_count];
     
     [self doLike:photoClass selectCell:currentCell];
-//    NSLog(@"Like Click");
 }
 
 -(void)doLike:(PhotoClass *)photoClass selectCell:(CollectionViewCellimage *)selectCell {
@@ -1069,8 +1053,7 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         // [self setBusy:YES];
-        NSString *strURL=[NSString stringWithFormat:@"%@%@/",LIKEURL,photoClass.PhotoId];
-        
+        NSString *strURL = [NSString stringWithFormat:@"%@%@/",LIKEURL,photoClass.PhotoId];
         NSURL *url = [NSURL URLWithString:strURL];
         NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
         [urlRequest setTimeoutInterval:60];
@@ -1079,15 +1062,10 @@
         NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
         NSString *base64String = [plainData base64EncodedStringWithOptions:0];
         NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
-        
         [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
         [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         
-        //Call the Login Web services
         [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-//             if(error != nil){
-//                 NSLog(@"%@",error);
-//             }
             
              if ([data length] > 0 && error == nil){
                  NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];

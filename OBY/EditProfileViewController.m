@@ -79,8 +79,6 @@
     arrGender = [NSMutableArray arrayWithObjects:@"---",@"Dude",@"Betty",nil];
     _selectedGender = [arrGender objectAtIndex:0];
     
-    // Do any additional setup after loading the view.
-    
     choosePhotoViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ChoosePhotoViewController"];
     
     choosePhotoViewController.delegate = self;
@@ -124,10 +122,10 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{ // 1
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.view showActivityView];
-        }); // Main Queue to Display the Activity View
+        });
         int count = 0;
         for(NSString *imageURLString in arrayOfImages){
-            // Asset URLs
+
             ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
             [assetsLibrary assetForURL:[NSURL URLWithString:imageURLString] resultBlock:^(ALAsset *asset) {
                 ALAssetRepresentation *representation = [asset defaultRepresentation];
@@ -150,7 +148,7 @@
             } failureBlock:^(NSError *error) {
             }];
             count++;
-        } // All Images I got
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.view hideActivityView];
         });
@@ -158,7 +156,6 @@
 }
 
 -(void)tapScroll:(UITapGestureRecognizer *)gestureRecognizer{
-    // CGPoint p = [gestureRecognizer locationInView:imgProfile];
     [self.view endEditing:YES];
 }
 
@@ -169,28 +166,24 @@
 -(void)getProfileInfo{
     [self setBusy:YES];
     
-    NSString *urlString=[NSString stringWithFormat:@"%@%@/",PROFILEURL,GetUserName];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@/",PROFILEURL,GetUserName];
     NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                              timeoutInterval:60];
-    
     NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
     NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
     NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
     [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
-    
-    //[_request setValue:[NSString stringWithFormat:@"Token %@",GetUserToken] forHTTPHeaderField:@"Authorization"];
-    
     [_request setHTTPMethod:@"GET"];
     
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
          if(error != nil){
-//             NSLog(@"%@",error);
+
              [self setBusy:NO];
          }
          if ([data length] > 0 && error == nil){
              NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-             //NSLog(@"%@",JSONValue);
+
              if([JSONValue isKindOfClass:[NSDictionary class]]){
                  if([JSONValue allKeys].count == 1 && [JSONValue objectForKey:@"detail"]){
                      [self setBusy:NO];
@@ -266,7 +259,6 @@
 -(void)showGender{
     NSArray *arr = [arrGender copy];
     [self resignKeyboard];
-  //  [self animateTextField: txtGender up: YES];
   
     [MMPickerView showPickerViewInView:appDelegate.window
                            withStrings:arr
@@ -279,7 +271,6 @@
                                          MMselectedObject:_selectedGender,
                                          MMtextAlignment:@1}
                             completion:^(NSString *selectedString) {
-                              
                                 txtGender.text = selectedString;
                                 _selectedGender = selectedString;
                             }];
@@ -292,58 +283,18 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
     NSUInteger length = [textField.text length] + [string length] - range.length;
-    if(textField == txtUserName)
-    {
+    if(textField == txtUserName){
         BOOL isValidChar = [AppDelegate isValidCharacter:string filterCharSet:USERNAME];
         return isValidChar && length < 16 ;
     }
     return YES;
 }
 
-//TextFiled Delegate Methods
-
 -(BOOL) textFieldShouldBeginEditing:(UITextField*)textField {
     return YES;
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-        if (textField.tag == 1){
-            [txtEmail becomeFirstResponder];
-        } else if(textField.tag == 2){
-            [txtFullName becomeFirstResponder];
-        } else if(textField.tag == 3){
-            [txtBio becomeFirstResponder];
-        } else if(textField.tag == 4){
-            [txtEduEmail becomeFirstResponder];
-        } else if(textField.tag == 5){
-             [txtEduEmail resignFirstResponder];
-            [self showGender];
-        }
-    return YES;
-}
-
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
-    UIToolbar * keyboardToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
-    keyboardToolBar.tag = textField.tag;
-    
-    keyboardToolBar.barStyle = UIBarStyleBlack;
-    
-    UIBarButtonItem *bar1 = [[UIBarButtonItem alloc]initWithTitle:@"Previous" style:UIBarButtonItemStyleBordered target:self action:@selector(previousTextField:)];
-    bar1.tag = textField.tag;
-    
-    UIBarButtonItem *bar2 = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStyleBordered target:self action:@selector(nextTextField:)];
-    bar2.tag = textField.tag;
-    
-    UIBarButtonItem *bar3 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    bar3.tag = textField.tag;
-    
-    UIBarButtonItem *bar4 =
-    [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(resignKeyboard)];
-    bar4.tag = textField.tag;
-    [keyboardToolBar setItems: [NSArray arrayWithObjects:
-                                bar1,bar2,bar3,bar4,
-                                nil]];
-    textField.inputAccessoryView = keyboardToolBar;
     [self animateTextField: textField up: YES];
 }
 
@@ -352,32 +303,6 @@
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView{
-    UIToolbar * keyboardToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
-    keyboardToolBar.tag = textView.tag;
-    
-//    int tag = textView.tag;
-    
-    keyboardToolBar.barStyle = UIBarStyleDefault;
-    
-    UIBarButtonItem *bar1 = [[UIBarButtonItem alloc]initWithTitle:@"Previous" style:UIBarButtonItemStyleBordered target:self action:@selector(previousTextField:)];
-    bar1.tag = textView.tag;
-    
-    UIBarButtonItem *bar2 = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStyleBordered target:self action:@selector(nextTextField:)];
-    bar2.tag = textView.tag;
-    
-    UIBarButtonItem *bar3 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    bar3.tag = textView.tag;
-
-    UIBarButtonItem *bar4 =
-    [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(resignKeyboard)];
-    bar4.tag = textView.tag;
-    
-    [keyboardToolBar setItems: [NSArray arrayWithObjects:
-                                bar1,bar2,bar3,bar4,
-                                nil]];
-    
-    textView.inputAccessoryView = keyboardToolBar;
-    
     [self animateTextView:textView up: YES];
     return YES;
 }
@@ -390,7 +315,7 @@
      [self animateTextView:textView up: NO];
 }
 
-- (void) animateTextField: (UITextField*) textField up: (BOOL) up{
+- (void)animateTextField:(UITextField*)textField up: (BOOL) up{
     float val;
     
     if(self.view.frame.size.height == 480){
@@ -400,8 +325,6 @@
     }
     
     const int movementDistance = val * textField.frame.origin.y;
-    
-    // tweak as needed
     const float movementDuration = 0.3f;
     
     int movement = (up ? -movementDistance : movementDistance);
@@ -414,7 +337,7 @@
     [UIView commitAnimations];
 }
 
-- (void) animateTextView: (UITextView*) textView up: (BOOL) up{
+- (void)animateTextView:(UITextView*)textView up: (BOOL) up{
     float val;
     
     if(self.view.frame.size.height == 480){
@@ -438,58 +361,24 @@
     [UIView commitAnimations];
 }
 
-- (void)nextTextField:(UIBarButtonItem *)sender {
-        if(sender.tag == 1){
-            [txtUserName resignFirstResponder];
-            [txtEmail becomeFirstResponder];
-        } else if(sender.tag == 2){
-            [txtEmail resignFirstResponder];
-            [txtFullName becomeFirstResponder];
-        } else if(sender.tag == 3){
-            [txtFullName resignFirstResponder];
-            [txtBio becomeFirstResponder];
-        } else if(sender.tag == 4){
-            [txtWebsite resignFirstResponder];
-            [txtEduEmail becomeFirstResponder];
-        } else if(sender.tag == 7){
-            [txtBio resignFirstResponder];
-            [txtWebsite becomeFirstResponder];
-        } else if(sender.tag == 5){
-            [txtEduEmail resignFirstResponder];
-            [self showGender];
-        }
-}
-
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     if([text isEqualToString:@"\n"]){
         [textView resignFirstResponder];
-        [txtWebsite becomeFirstResponder];
         return NO;
     }
     return YES;
 }
 
--(void)previousTextField:(UIBarButtonItem *)sender{
-        if(sender.tag == 5){
-            [txtEduEmail resignFirstResponder];
-            [txtWebsite becomeFirstResponder];
-        } else if(sender.tag == 4){
-            [txtWebsite resignFirstResponder];
-            [txtBio becomeFirstResponder];
-        } else if(sender.tag == 3){
-            [txtFullName resignFirstResponder];
-            [txtEmail becomeFirstResponder];
-        } else if(sender.tag == 2){
-            [txtEmail resignFirstResponder];
-            [txtUserName becomeFirstResponder];
-        } else if(sender.tag == 7){
-            [txtBio resignFirstResponder];
-            [txtFullName becomeFirstResponder];
-        }
-}
-
 -(void)resignKeyboard{
     [self.view endEditing:YES];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [txtEmail resignFirstResponder];
+    [txtEduEmail resignFirstResponder];
+    [txtWebsite resignFirstResponder];
+    [txtFullName resignFirstResponder];
+    return YES;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -778,7 +667,7 @@
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-//    NSLog(@"info=%@",info);
+
     UIImage *originalImage, *editedImage, *imageToSave;
     editedImage = (UIImage *) [info objectForKey:UIImagePickerControllerEditedImage];
     originalImage = (UIImage *) [info objectForKey:

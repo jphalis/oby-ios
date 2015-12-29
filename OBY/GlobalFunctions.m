@@ -49,13 +49,13 @@ void doRewardCheck() {
                 NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
                 NSString *rewardResult = [JSONValue objectForKey:@"deserves_reward"];
                 if([rewardResult boolValue] == YES){
-                    [[Kiip sharedInstance] saveMoment:@"putting others before yourself!" withCompletionHandler:^(KPPoptart *poptart, NSError *error){
+                    [[Kiip sharedInstance] saveMoment:@"being awesome!" withCompletionHandler:^(KPPoptart *poptart, NSError *error){
                         if (error){
-                            //                            NSLog(@"Something's wrong");
+                            // NSLog(@"Something's wrong");
                             // handle with an Alert dialog.
                         }
                         if (poptart){
-                            //                            NSLog(@"Successful moment save. Showing reward.");
+                            // NSLog(@"Successful moment save. Showing reward.");
                             [poptart show];
                             
                             NSString *urlString = [NSString stringWithFormat:@"%@",REWARDREDEEMEDURL];
@@ -72,7 +72,7 @@ void doRewardCheck() {
                             }];
                         }
                         if (!poptart){
-                            //                            NSLog(@"Successful moment save, but no reward available.");
+                            // NSLog(@"Successful moment save, but no reward available.");
                         }
                     }];
                 }

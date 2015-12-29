@@ -174,18 +174,22 @@
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView{
     UIToolbar * keyboardToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+    
     keyboardToolBar.tag = textView.tag;
     keyboardToolBar.barStyle = UIBarStyleBlack;
     
     UIBarButtonItem *bar2 = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStyleBordered target:self action:@selector(nextTextField:)];
     bar2.tag = textView.tag;
+    [bar2 setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
     
     UIBarButtonItem *bar3 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     bar3.tag = textView.tag;
+    [bar3 setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
     
     UIBarButtonItem *bar4 =
     [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(resignKeyboard)];
     bar4.tag = textView.tag;
+    [bar4 setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
     
     [keyboardToolBar setItems: [NSArray arrayWithObjects:
                                 bar2,bar3,bar4,

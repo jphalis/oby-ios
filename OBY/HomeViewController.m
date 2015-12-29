@@ -358,17 +358,15 @@
                          PhotoClass *photoClass = [[PhotoClass alloc]init];
                          photoClass.category_url = [dictResult objectForKey:@"category_url"];
                          photoClass.comment_count = [dictResult objectForKey:@"comment_count"];
-                        // photoClass.comment_set = [dictResult objectForKey:@"comment_set"];
                          photoClass.created = [dictResult objectForKey:@"created"];
                          photoClass.creator = [[dictResult objectForKey:@"creator"] uppercaseString];
                          photoClass.creator_url = [dictResult objectForKey:@"creator_url"];
                          photoClass.description = [dictResult objectForKey:@"description"];
                          
                          int photoID = [[dictResult objectForKey:@"id"]intValue];
-                         int like_Count = [[dictResult objectForKey:@"like_count"]intValue];
                          
                          photoClass.PhotoId = [NSString stringWithFormat:@"%d",photoID];
-                         photoClass.like_count = [NSString stringWithFormat:@"%d",like_Count];
+                         photoClass.like_count = [dictResult objectForKey:@"like_count"];
                          photoClass.likers = [[NSMutableArray alloc]init];
                          photoClass.comment_set = [[NSMutableArray alloc]init];
                          
@@ -609,10 +607,9 @@
                          photoClass.description = [dictResult objectForKey:@"description"];
                          
                          int photoID = [[dictResult objectForKey:@"id"]intValue];
-                         int like_Count = [[dictResult objectForKey:@"like_count"]intValue];
                          
                          photoClass.PhotoId = [NSString stringWithFormat:@"%d",photoID];
-                         photoClass.like_count = [NSString stringWithFormat:@"%d",like_Count];
+                         photoClass.like_count = [dictResult objectForKey:@"like_count"];
                          
                          photoClass.likers = [[NSMutableArray alloc]init];
                          photoClass.comment_set = [[NSMutableArray alloc]init];

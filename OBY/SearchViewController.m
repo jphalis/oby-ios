@@ -80,6 +80,10 @@
     }
 }
 
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    [searchBar resignFirstResponder];
+}
+
 -(BOOL)validateFields{
     SCLAlertView *alert = [[SCLAlertView alloc] init];
     

@@ -45,11 +45,23 @@
    
     [txtComment becomeFirstResponder];
     
-    btnSubmit.layer.cornerRadius = 20;
-    
     UIColor *color = [UIColor whiteColor];
     txtComment.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"add a comment..." attributes:@{NSForegroundColorAttributeName: color}];
     appDelegate.tabbar.tabView.hidden = YES;
+    
+    btnSubmit.layer.borderWidth = 2;
+    btnSubmit.layer.borderColor = [[UIColor whiteColor] CGColor];
+    btnSubmit.layer.cornerRadius = 7;
+    
+    // Gradient
+    UIColor *topColor = [UIColor colorWithRed:(44/255.0) green:(25/255.0) blue:(54/255.0) alpha:1.0];
+    UIColor *bottomColor = [UIColor colorWithRed:(28/255.0) green:(28/255.0) blue:(54/255.0) alpha:1.0];
+    CAGradientLayer *theViewGradient = [CAGradientLayer layer];
+    theViewGradient.colors = [NSArray arrayWithObjects:(id)topColor.CGColor, (id)bottomColor.CGColor, nil];
+    theViewGradient.frame = self.view.bounds;
+    //    theViewGradient.startPoint = CGPointMake(0.0, 0.5);
+    //    theViewGradient.endPoint = CGPointMake(1.0, 0.5);
+    [self.view.layer insertSublayer:theViewGradient atIndex:0];
 }
 
 -(void)resetFields{
@@ -111,10 +123,7 @@
     NSString *photo = photoClass.PhotoId;
     NSString *text = txtComment.text;
     NSString *parent = @"";
-    
     NSString *params = [NSString stringWithFormat:@"{\"user\":\"%@\",\"parent\":\"%@\",\"photo\":\"%@\",\"text\":\"%@\"}",user,parent,photo,text];
-    
-//    NSLog(@"%@",params);
     NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[params length]];
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",COMMENTURL]];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
@@ -122,19 +131,15 @@
     [urlRequest setHTTPMethod:@"POST"];
     
     NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
-    // NSData *authData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
-    //NSString *authValue = [NSString stringWithFormat:@"Basic %@", [authData base64Encoding]];
     NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
     NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
-    
     [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
     [urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     // [urlRequest setValue:@"multipart/form-data" forHTTPHeaderField:@"enctype"];
     [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
     
-    //Call the Login Web services
     [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
 
          if ([data length] > 0 && error == nil){

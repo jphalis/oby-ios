@@ -220,7 +220,7 @@ enum{
     if (btn.tag == previousIndex){
        // return;
 //        [UIView animateWithDuration:0.3 animations:^(void){
-//            [collectionVWHome scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+//            [prevController.view scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
 //        }];
 //        NSLog(@"Click");
     } else {

@@ -38,6 +38,8 @@ MBProgressHUD *hud;
     Kiip *kiip = [[Kiip alloc] initWithAppKey:@"300fc8335c0e0080476bb09b9866d185" andSecret:@"a5a34e72cc8efc14a93a6b276cd968d1"];
     kiip.delegate = self;
     [Kiip setSharedInstance:kiip];
+    
+    [[UITextField appearance] setKeyboardAppearance:UIKeyboardAppearanceDark];
 
     return YES;
 }

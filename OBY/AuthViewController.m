@@ -32,16 +32,23 @@
     __weak IBOutlet UITextField *txtSignupPass;
     __weak IBOutlet UITextField *txtSignupUsrName;
     __weak IBOutlet UITextField *txtSignupEmail;
+    __weak IBOutlet UIButton *showSignupPass;
+    __weak IBOutlet UIButton *showVerifyPass;
     
-    //Login TxtFields
+    //Signin TxtFields
     __weak IBOutlet UITextField *txtLoginPass;
     __weak IBOutlet UITextField *txtLoginUsrName;
+    __weak IBOutlet UIButton *showSigninPass;
 }
 - (IBAction)onForgot:(id)sender;
 - (IBAction)onTapSign:(id)sender;
 - (IBAction)doSignIn:(id)sender;
 - (IBAction)doSignUp:(id)sender;
 - (IBAction)onTermsClick:(id)sender;
+- (IBAction)doShowSigninPass:(id)sender;
+- (IBAction)doShowSignupPass:(id)sender;
+- (IBAction)doShowVerifyPass:(id)sender;
+
 @end
 
 @implementation AuthViewController
@@ -52,7 +59,7 @@
     }
     
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.edgesForExtendedLayout = UIRectEdgeNone;
+//    self.edgesForExtendedLayout = UIRectEdgeNone;
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
 }
@@ -66,26 +73,42 @@
     [btnSel setSelected:YES];
     [btnUel setSelected:NO];
     
-    btnSignInner.layer.cornerRadius = 20;
-    btnSignupInner.layer.cornerRadius = 20;
+    btnSignInner.layer.borderWidth = 2;
+    btnSignInner.layer.borderColor = [[UIColor whiteColor] CGColor];
+    btnSignInner.layer.cornerRadius = 7;
+    
+    btnSignupInner.layer.borderWidth = 2;
+    btnSignupInner.layer.borderColor = [[UIColor whiteColor] CGColor];
+    btnSignupInner.layer.cornerRadius = 7;
+    
+//    btnSignInner.layer.cornerRadius = 20;
+//    btnSignupInner.layer.cornerRadius = 20;
     
     viewLogin.hidden = NO;
     viewSignUp.hidden = YES;
     self.navigationController.navigationBarHidden = YES;
     
-  //Custom Placeholder Color
+    //Custom Placeholder Color
     UIColor *color = [UIColor whiteColor];
-    txtLoginUsrName.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Username" attributes:@{NSForegroundColorAttributeName: color}];
+    txtLoginUsrName.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"username" attributes:@{NSForegroundColorAttributeName: color}];
     
-    txtLoginPass.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName: color}];
+    txtLoginPass.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"password" attributes:@{NSForegroundColorAttributeName: color}];
     
-    txtSignupUsrName.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Username" attributes:@{NSForegroundColorAttributeName: color}];
+    txtSignupUsrName.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"username" attributes:@{NSForegroundColorAttributeName: color}];
     
-    txtSignupEmail.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Email" attributes:@{NSForegroundColorAttributeName: color}];
+    txtSignupEmail.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"email" attributes:@{NSForegroundColorAttributeName: color}];
     
-    txtSignupPass.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Create Password" attributes:@{NSForegroundColorAttributeName: color}];
+    txtSignupPass.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"create password" attributes:@{NSForegroundColorAttributeName: color}];
     
-    txtSignupVerifyPass.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Verify Password" attributes:@{NSForegroundColorAttributeName: color}];
+    txtSignupVerifyPass.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"verify password" attributes:@{NSForegroundColorAttributeName: color}];
+    
+    // Gradient
+    UIColor *topColor = [UIColor colorWithRed:(135/255.0) green:(8/255.0) blue:(12/255.0) alpha:1.0];
+    UIColor *bottomColor = [UIColor colorWithRed:(180/255.0) green:(77/255.0) blue:(62/255.0) alpha:1.0];
+    CAGradientLayer *theViewGradient = [CAGradientLayer layer];
+    theViewGradient.colors = [NSArray arrayWithObjects:(id)topColor.CGColor, (id)bottomColor.CGColor, nil];
+    theViewGradient.frame = self.view.frame;
+    [self.view.layer insertSublayer:theViewGradient atIndex:0];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -95,9 +118,7 @@
 
 - (IBAction)onForgot:(id)sender {
     [self.view endEditing:YES];
-    
     ForgotViewController *forgotViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ForgotViewController"];
-    
     [self.navigationController pushViewController:forgotViewController animated:YES];
 }
 
@@ -110,7 +131,7 @@
        
         viewLogin.hidden = NO;
         viewSignUp.hidden = YES;
-        pageTitle.text = @"Sign in";
+//        pageTitle.text = @"Sign in";
         [self clearFields];
     } else {
         //[self swipeAnimation];
@@ -123,7 +144,7 @@
         
         viewLogin.hidden = YES;
         viewSignUp.hidden = NO;
-        pageTitle.text = @"Sign up";
+//        pageTitle.text = @"Sign up";
     }
 }
 
@@ -143,7 +164,6 @@
 
 -(void)swipeAnimation{
     consSignupX.constant = self.view.frame.size.width;
-    
     [UIView animateWithDuration:1.0
                           delay:0.0
                         options:UIViewAnimationOptionTransitionFlipFromTop
@@ -156,7 +176,7 @@
 
 //TextField Delegate Methods
 
--(BOOL) textFieldShouldBeginEditing:(UITextField*)textField {
+-(BOOL)textFieldShouldBeginEditing:(UITextField*)textField {
     return YES;
 }
 
@@ -168,7 +188,7 @@
             [txtSignupPass becomeFirstResponder];
         } else if(textField.tag == 3) {
             [txtSignupVerifyPass becomeFirstResponder];
-        } else if(textField.tag ==4 ) {
+        } else if(textField.tag == 4 ) {
             [txtSignupVerifyPass resignFirstResponder];
         }
     } else {
@@ -210,6 +230,22 @@
     
     textField.inputAccessoryView = keyboardToolBar;
     
+    if(textField == txtLoginPass){
+        showSigninPass.hidden = NO;
+    } else {
+        showSigninPass.hidden = YES;
+    }
+    if(textField == txtSignupPass){
+        showSignupPass.hidden = NO;
+    } else {
+        showSignupPass.hidden = YES;
+    }
+    if(textField == txtSignupVerifyPass){
+        showVerifyPass.hidden = NO;
+    } else {
+        showVerifyPass.hidden = YES;
+    }
+    
     [self animateTextField: textField up: YES];
 }
 
@@ -217,8 +253,9 @@
     [self animateTextField: textField up: NO];
 }
 
-- (void) animateTextField: (UITextField*) textField up: (BOOL) up{
+- (void)animateTextField:(UITextField*)textField up: (BOOL) up{
     float val;
+
     if(self.view.frame.size.height == 480){
         val = 0.75;
     } else {
@@ -227,7 +264,6 @@
     
     const int movementDistance = val * textField.frame.origin.y;
     const float movementDuration = 0.3f;
-    
     int movement = (up ? -movementDistance : movementDistance);
     
     [UIView beginAnimations: @"anim" context: nil];
@@ -269,10 +305,10 @@
         if(sender.tag == 4){
             [txtSignupVerifyPass resignFirstResponder];
             [txtSignupPass becomeFirstResponder];
-        } else if(sender.tag == 3) {
+        } else if(sender.tag == 3){
             [txtSignupPass resignFirstResponder];
             [txtSignupEmail becomeFirstResponder];
-        } else if(sender.tag == 2) {
+        } else if(sender.tag == 2){
             [txtSignupEmail resignFirstResponder];
             [txtSignupUsrName becomeFirstResponder];
         }
@@ -294,7 +330,6 @@
 
 - (IBAction)doSignIn:(id)sender{
     checkNetworkReachability();
-    
     if ([self validateFields] == YES){
         [self doLogin];
     }
@@ -315,7 +350,6 @@
         NSMutableData *bodyData = [[NSMutableData alloc] initWithData:[params dataUsingEncoding:NSUTF8StringEncoding]];
         NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[bodyData length]];
         
-        // Server Header Information
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",LOGINURL]];
         NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
         [urlRequest setTimeoutInterval:60];
@@ -325,7 +359,6 @@
         [urlRequest setValue:@"multipart/form-data" forHTTPHeaderField:@"enctype"];
         [urlRequest setHTTPBody:bodyData];
         
-        //Call the Login Web services
         [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
             
              dispatch_async(dispatch_get_main_queue(), ^{
@@ -379,7 +412,6 @@
                  
                  if([JSONValue allKeys].count == 1 && [JSONValue objectForKey:@"detail"]){
                      [self setBusy:NO];
-                     //[self showMessage:SERVER_ERROR];
                      return;
                  }
                  
@@ -406,7 +438,7 @@
      }];
 }
 
--(void)pushingView :(BOOL)animation{
+-(void)pushingView:(BOOL)animation{
     CutomTabViewController *cutomTabViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CutomTabViewController"];
     [self.navigationController pushViewController:cutomTabViewController animated:animation];
 }
@@ -439,6 +471,37 @@
     }
 }
 
+- (IBAction)doShowSigninPass:(id)sender {
+    if(viewLogin.hidden == NO){
+        if (txtLoginPass){
+            txtLoginPass.secureTextEntry = NO;
+        }
+    } else {
+        return;
+    }
+}
+
+- (IBAction)doShowSignupPass:(id)sender {
+    if(viewLogin.hidden == YES){
+        if (txtSignupPass){
+            txtSignupPass.secureTextEntry = NO;
+        }
+    } else {
+        return;
+    }
+}
+
+- (IBAction)doShowVerifyPass:(id)sender {
+    if(viewLogin.hidden == YES){
+        if (txtSignupVerifyPass){
+            txtSignupVerifyPass.secureTextEntry = NO;
+        }
+    } else {
+        return;
+    }
+}
+
+
 -(void)doRegister{
     checkNetworkReachability();
     [self.view endEditing:YES];
@@ -459,7 +522,6 @@
     // [urlRequest setValue:@"multipart/form-data" forHTTPHeaderField:@"enctype"];
     [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
     
-    //Call the Login Web services
     [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
         
          if ([data length] > 0 && error == nil){

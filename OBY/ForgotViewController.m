@@ -29,8 +29,23 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    btnSubmit.layer.cornerRadius = 20;
     [super viewWillAppear:YES];
+    
+    txtEmail.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"email" attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    
+    btnSubmit.layer.borderWidth = 2;
+    btnSubmit.layer.borderColor = [[UIColor whiteColor] CGColor];
+    btnSubmit.layer.cornerRadius = 7;
+    
+    // Gradient
+    UIColor *topColor = [UIColor colorWithRed:(59/255.0) green:(200/255.0) blue:(129/255.0) alpha:1.0];
+    UIColor *bottomColor = [UIColor colorWithRed:(74/255.0) green:(155/255.0) blue:(230/255.0) alpha:1.0];
+    CAGradientLayer *theViewGradient = [CAGradientLayer layer];
+    theViewGradient.colors = [NSArray arrayWithObjects:(id)topColor.CGColor, (id)bottomColor.CGColor, nil];
+    theViewGradient.frame = self.view.bounds;
+//    theViewGradient.startPoint = CGPointMake(0.0, 0.5);
+//    theViewGradient.endPoint = CGPointMake(1.0, 0.5);
+    [self.view.layer insertSublayer:theViewGradient atIndex:0];
 }
 
 -(void)swipeRight:(UISwipeGestureRecognizer *)gestureRecognizer{
@@ -103,8 +118,6 @@
         NSString *params = [NSString stringWithFormat:@"email=%@",[txtEmail.text Trim]];
         NSMutableData *bodyData = [[NSMutableData alloc] initWithData:[params dataUsingEncoding:NSUTF8StringEncoding]];
         NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[bodyData length]];
-        
-        // Server Header Information
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",FORGOTPASSURL]];
         NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
         [urlRequest setTimeoutInterval:60];
@@ -113,9 +126,7 @@
         [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
         [urlRequest setValue:@"multipart/form-data" forHTTPHeaderField:@"enctype"];
         [urlRequest setHTTPBody:bodyData];
-        //NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-        
-        //Call the Login Web services
+
         [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
              dispatch_async(dispatch_get_main_queue(), ^{
                  [self setBusy:NO];

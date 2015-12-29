@@ -509,10 +509,9 @@
                          photoClass.description = [dictResult objectForKey:@"description"];
                          
                          int userId = [[dictResult objectForKey:@"id"]intValue];
-                         int like_Count = [[dictResult objectForKey:@"like_count"]intValue];
                          
                          photoClass.PhotoId = [NSString stringWithFormat:@"%d",userId];
-                         photoClass.like_count = [NSString stringWithFormat:@"%d",like_Count];
+                         photoClass.like_count = [dictResult objectForKey:@"like_count"];
                          
                          photoClass.likers = [[NSMutableArray alloc]init];
                          photoClass.comment_set = [[NSMutableArray alloc]init];
