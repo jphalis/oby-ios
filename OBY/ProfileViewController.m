@@ -264,7 +264,7 @@
                                  viewTwo.frame = CGRectMake(+self.view.frame.size.width, viewTwo.frame.origin.y, self.view.frame.size.width, viewTwo.frame.size.height);
                                  
                              }
-                             completion:^(BOOL finished) {
+                             completion:^(BOOL finished){
                                  
                              }
              ];
@@ -570,14 +570,14 @@
                          }
                              
                          if([dictUserDetail objectForKey:@"full_name"] == [NSNull null]){
-                             [dictFollowerInfo setObject:@"" forKey:@"full_name"];
+                             [dictFollowerInfo setObject:@"" forKey:@"user__full_name"];
                          } else {
-                             [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"full_name"] forKey:@"full_name"];
+                             [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"full_name"] forKey:@"user__full_name"];
                          }
                              
                          NSString *fullString;
                          NSString *userName = [dictFollowerInfo objectForKey:@"user__username"];
-                         NSString *fullName = [dictFollowerInfo objectForKey:@"full_name"];
+                         NSString *fullName = [dictFollowerInfo objectForKey:@"user__full_name"];
                              
                          fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
                              
@@ -595,8 +595,8 @@
                      NSArray *arrCommentSet=[dictResult objectForKey:@"comment_set"];
                          
                      for(int k = 0; k < arrCommentSet.count; k++){
-                         NSMutableDictionary *dictFollowerInfo=[[NSMutableDictionary alloc]init];
-                         NSDictionary *dictUserDetail=[arrCommentSet objectAtIndex:k];
+                         NSMutableDictionary *dictFollowerInfo = [[NSMutableDictionary alloc]init];
+                         NSDictionary *dictUserDetail = [arrCommentSet objectAtIndex:k];
                              
                          if([dictUserDetail objectForKey:@"profile_picture"] == [NSNull null]){
                              [dictFollowerInfo setObject:@"" forKey:@"user__profile_picture"];
@@ -616,8 +616,8 @@
                          }
                              
                          NSString *fullString;
-                         NSString *fullName=[[dictFollowerInfo objectForKey:@"user__username"]lastPathComponent];
-                         NSString *userName=[dictFollowerInfo objectForKey:@"text"];
+                         NSString *fullName = [[dictFollowerInfo objectForKey:@"user__username"]lastPathComponent];
+                         NSString *userName = [dictFollowerInfo objectForKey:@"text"];
                              
                          fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
                              
@@ -1030,13 +1030,13 @@
         NSMutableDictionary *dictUser = [[NSMutableDictionary alloc]init];
         [dictUser setValue:GetProifilePic forKey:@"user__profile_picture"];
         [dictUser setValue:GetUserName forKey:@"user__username"];
-        [dictUser setValue:GetUserFullName forKey:@"full_name"];
+        [dictUser setValue:GetUserFullName forKey:@"user__full_name"];
         
         NSString *fullString;
-        NSString *fullName = [dictUser objectForKey:@"user__username"];
-        NSString *userName = [dictUser objectForKey:@"full_name"];
+        NSString *userName = [dictUser objectForKey:@"user__username"];
+        NSString *fullName = [dictUser objectForKey:@"user__full_name"];
         
-        fullString=[NSString stringWithFormat:@"%@ %@",fullName,userName];
+        fullString = [NSString stringWithFormat:@"%@ %@",userName,fullName];
         
         NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
         
@@ -1064,7 +1064,7 @@
 //    NSLog(@"Like Click");
 }
 
--(void)doLike : (PhotoClass *)photoClass selectCell:(CollectionViewCellimage *)selectCell {
+-(void)doLike:(PhotoClass *)photoClass selectCell:(CollectionViewCellimage *)selectCell {
     [self.view endEditing:YES];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -1181,7 +1181,6 @@
                      completion:^(BOOL finished){
                          viewSwipeFront.hidden = YES;
                          btnTopBar.hidden = NO;
-//                         NSLog(@"completion block");
                      }
      ];
 }
@@ -1196,7 +1195,6 @@
                      }
                      completion:^(BOOL finished){
                          viewSwipeFront.hidden = NO;
-//                         NSLog(@"completion block");
                      }
      ];
 }
@@ -1214,8 +1212,6 @@
     
     [self moveingView:viewTOP fromFrame:viewTOP.frame toFrame:newFrame];
     [AnimatedMethods animatedMovingView:collectionVW fromFrame:collFrame toFrame:collVwOldFrame];
-    
-   // btnTopBar.hidden=YES;
 }
 
 @end

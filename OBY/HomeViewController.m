@@ -379,7 +379,7 @@
                              for(int l = 0; l < [arrLiker count]; l++){
                                  NSDictionary *dictUsers = [arrLiker objectAtIndex:l];
                                  if([[dictUsers objectForKey:@"username"] isEqualToString:GetUserName]){
-                                     photoClass.isLike=YES;
+                                     photoClass.isLike = YES;
                                      break;
                                  }
                              }
@@ -402,14 +402,14 @@
                                  [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"username"] forKey:@"user__username"];
                              }
                              if([dictUserDetail objectForKey:@"full_name"] == [NSNull null]){
-                                 [dictFollowerInfo setObject:@"" forKey:@"full_name"];
+                                 [dictFollowerInfo setObject:@"" forKey:@"user__full_name"];
                              } else {
-                                 [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"full_name"] forKey:@"full_name"];
+                                 [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"full_name"] forKey:@"user__full_name"];
                              }
                              
                              NSString *fullString;
                              NSString *userName = [dictFollowerInfo objectForKey:@"user__username"];
-                             NSString *fullName = [dictFollowerInfo objectForKey:@"full_name"];
+                             NSString *fullName = [dictFollowerInfo objectForKey:@"user__full_name"];
                              
                              fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
                              
@@ -647,14 +647,14 @@
                                  [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"username"] forKey:@"user__username"];
                              }
                              if([dictUserDetail objectForKey:@"full_name"] == [NSNull null]){
-                                 [dictFollowerInfo setObject:@"" forKey:@"full_name"];
+                                 [dictFollowerInfo setObject:@"" forKey:@"user__full_name"];
                              } else {
-                                 [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"full_name"] forKey:@"full_name"];
+                                 [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"full_name"] forKey:@"user__full_name"];
                              }
                              
                              NSString *fullString;
                              NSString *userName = [dictFollowerInfo objectForKey:@"user__username"];
-                             NSString *fullName = [dictFollowerInfo objectForKey:@"full_name"];
+                             NSString *fullName = [dictFollowerInfo objectForKey:@"user__full_name"];
                              
                              fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
                              NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
@@ -989,13 +989,13 @@
         NSMutableDictionary *dictUser = [[NSMutableDictionary alloc]init];
         [dictUser setValue:GetProifilePic forKey:@"user__profile_picture"];
         [dictUser setValue:GetUserName forKey:@"user__username"];
-        [dictUser setValue:GetUserFullName forKey:@"full_name"];
+        [dictUser setValue:GetUserFullName forKey:@"user__full_name"];
         
         NSString *fullString;
-        NSString *fullName = [dictUser objectForKey:@"user__username"];
-        NSString *userName = [dictUser objectForKey:@"full_name"];
+        NSString *userName = [dictUser objectForKey:@"user__username"];
+        NSString *fullName = [dictUser objectForKey:@"user__full_name"];
         
-        fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
+        fullString = [NSString stringWithFormat:@"%@ %@",userName,fullName];
         
         NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
         NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];

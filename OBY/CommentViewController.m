@@ -48,7 +48,7 @@
     btnSubmit.layer.cornerRadius = 20;
     
     UIColor *color = [UIColor whiteColor];
-    txtComment.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Add a comment" attributes:@{NSForegroundColorAttributeName: color}];
+    txtComment.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"add a comment..." attributes:@{NSForegroundColorAttributeName: color}];
     appDelegate.tabbar.tabView.hidden = YES;
 }
 

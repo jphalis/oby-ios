@@ -173,9 +173,9 @@
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView{
-    UIToolbar * keyboardToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+    UIToolbar * keyboardToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
     keyboardToolBar.tag = textView.tag;
-    keyboardToolBar.barStyle = UIBarStyleDefault;
+    keyboardToolBar.barStyle = UIBarStyleBlack;
     
     UIBarButtonItem *bar2 = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStyleBordered target:self action:@selector(nextTextField:)];
     bar2.tag = textView.tag;

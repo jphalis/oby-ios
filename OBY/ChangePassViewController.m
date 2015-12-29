@@ -125,12 +125,12 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
-    UIToolbar * keyboardToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+    UIToolbar *keyboardToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
     keyboardToolBar.tag = textField.tag;
     
 //    int tag = textField.tag;
     
-    keyboardToolBar.barStyle = UIBarStyleDefault;
+    keyboardToolBar.barStyle = UIBarStyleBlack;
     
     UIBarButtonItem *bar1 = [[UIBarButtonItem alloc]initWithTitle:@"Previous" style:UIBarButtonItemStyleBordered target:self action:@selector(previousTextField:)];
     bar1.tag = textField.tag;

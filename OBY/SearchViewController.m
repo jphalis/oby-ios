@@ -226,7 +226,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     TableViewCellNotification *cell=[tableView dequeueReusableCellWithIdentifier:@"SearchCell" forIndexPath:indexPath];
-    //SupportCell
+
     NSMutableDictionary *dictUser;
     
     if(isFilter == YES){
