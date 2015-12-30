@@ -171,9 +171,9 @@
                             CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:loc.latitude longitude:loc.longitude];
 
                             CLLocationDistance distance = [locFromPhoto distanceFromLocation:userLocation];
-                            NSLog(@"%f",distance);
+//                            NSLog(@"%f",distance);
                             if(distance < 1000){
-                                NSLog(@"Nearby");
+//                                NSLog(@"Nearby");
                             }
                         }
                     }

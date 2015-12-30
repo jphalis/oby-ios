@@ -119,7 +119,7 @@
                                                 [self outputAccelertionData:accelerometerData.acceleration];
                                             }
                                             else{
-                                                NSLog(@"%@", error);
+//                                                NSLog(@"%@", error);
                                             }
                                         }];
 }

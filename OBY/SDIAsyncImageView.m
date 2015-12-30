@@ -109,22 +109,20 @@
 - (void)connectionDidFinishLoading:(NSURLConnection*)theConnection {
 	//so self data now has the complete image
 	
-    if(data!=nil && data.length>1260)
-    {
-        UIImage *mg=[UIImage imageWithData:data];
-        if(mg==nil)
-        {
+    if(data != nil && data.length>1260){
+        UIImage *mg = [UIImage imageWithData:data];
+        if(mg == nil){
             [delegate asyncconnection:connection didFailWithError:nil];
-        }
-        else
-        {
-            if(mg.size.width >300 || mg.size.height>300)
+        } else {
+            if(mg.size.width >300 || mg.size.height>300){
                 mg=[mg ScaleImageToRect:mg displaySize:CGSizeMake(800, 600)];
+            }
             NSData *newData=UIImagePNGRepresentation(mg);
-            if(newData!=nil)
+            if(newData != nil){
                 [newData writeToFile:strLocalFilePath atomically:YES];
-            else
+            } else {
                 [data writeToFile:strLocalFilePath atomically:YES];
+            }
             
             [delegate asyncImageDownloader:self didcompletedWithLocalURL:strLocalFilePath];
         }
@@ -137,27 +135,20 @@
 	//NSLog(@"end");
 	
 }
--(void)CancelDownload
-{
-    if(connection)
-    {
-        NSLog(@"Cancelled");
+-(void)CancelDownload{
+    if(connection){
+//        NSLog(@"Cancelled");
         [connection cancel]; //in case the URL is still downloading
-        
         Destroy(connection)
-
+    } else {
+//        NSLog(@"Not Cancelled");
     }
-    else
-        NSLog(@"Not Cancelled");
 }
 
 - (void)dealloc {
-    if(connection)
-    {
+    if(connection){
         [connection cancel]; //in case the URL is still downloading
-        
         Destroy(connection)
-        
     }
     Destroy(data);
     Destroy(strLocalFilePath)
@@ -268,7 +259,7 @@ static NSString *strCachePath = nil;
 
 -(UIImage*)GetImageFromStroage:(NSString *)strID{
     NSString *file = [NSString stringWithFormat:@"%@/%@",strCachePath,strID];
-    NSLog(@"FILE: %@",file);
+//    NSLog(@"FILE: %@",file);
     NSFileManager *fmg = [NSFileManager defaultManager];
     if([fmg fileExistsAtPath:file]){
         UIImage*img = [UIImage imageWithContentsOfFile:file];
@@ -464,7 +455,7 @@ static NSString *strCachePath = nil;
                             self.image = mg;
                             [self setNeedsDisplay];
                         } else {
-                            NSLog(@"Img is nil");
+//                            NSLog(@"Img is nil");
                         }
                     });
                     
@@ -587,12 +578,12 @@ static NSString *strCachePath = nil;
         if(delegate && [delegate respondsToSelector:@selector(asynchImageView:didCachedImage:)]){
             [delegate asynchImageView:self didCachedImage:strURL];
         }
-        NSLog(@"Download URL:%@",strURL);
+//        NSLog(@"Download URL:%@",strURL);
         self.autoresizingMask = ( UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight );
-        if(isRemoved == YES){NSLog(@"PREVENTING CRASH"); return;}
+        if(isRemoved == YES)//{NSLog(@"PREVENTING CRASH"); return;}
         [self UpdateImage:strURL];
     } else {
-         NSLog(@"Not found");
+//         NSLog(@"Not found");
     }
 }
 
@@ -613,7 +604,7 @@ static NSString *strCachePath = nil;
 -(void)RemoveHud{
     if(shouldShowLoader == YES){
         shouldShowLoader = NO;
-        NSLog(@"Hud removed");
+//        NSLog(@"Hud removed");
         [MBProgressHUD hideHUDForView:self animated:YES];
         HUD = nil;
     }
@@ -621,7 +612,7 @@ static NSString *strCachePath = nil;
 
 -(void)HidProgressBar{
     if(shouldShowLoader == YES){
-        NSLog(@"Hud removed");
+//        NSLog(@"Hud removed");
         [MBProgressHUD hideHUDForView:self animated:YES];
         HUD = nil;
     }
@@ -633,7 +624,7 @@ static NSString *strCachePath = nil;
 
 -(void)UpdateImage:(NSString*)filename{
    //self.contentMode=UIViewContentModeScaleToFill;
-    if(isRemoved == YES){NSLog(@"PREVENTING CRASH"); return;}
+    if(isRemoved == YES)//{NSLog(@"PREVENTING CRASH"); return;}
     
     self.backgroundColor = [UIColor clearColor];
     if(shouldMask){

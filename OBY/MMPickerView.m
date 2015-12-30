@@ -5,6 +5,8 @@
 
 #import "MMPickerView.h"
 #import "EditProfileViewController.h"
+
+
 NSString * const MMbackgroundColor = @"backgroundColor";
 NSString * const MMtextColor = @"textColor";
 NSString * const MMtoolbarColor = @"toolbarColor";
@@ -65,7 +67,6 @@ NSString * const MMshowsSelectionIndicator = @"showsSelectionIndicator";
   [[self sharedView] setPickerHidden:NO callBack:nil];
   [self sharedView].onDismissCompletion = completion;
   [view addSubview:[self sharedView]];
-  
 }
 
 +(void)showPickerViewInView:(UIView *)view
@@ -81,7 +82,6 @@ NSString * const MMshowsSelectionIndicator = @"showsSelectionIndicator";
                                     withOptions:options];
   [[self sharedView] setPickerHidden:NO callBack:nil];
   [view addSubview:[self sharedView]];
-  
 }
 
 #pragma mark - Dismiss Methods
@@ -91,14 +91,13 @@ NSString * const MMshowsSelectionIndicator = @"showsSelectionIndicator";
 }
 
 -(void)dismiss{
-   
  [MMPickerView dismissWithCompletion:self.onDismissCompletion];
 }
 
 +(void)Method:(EditProfileViewController*)obj{
     [obj callMethod];
-    
 }
+
 +(void)removePickerView{
   [[self sharedView] removeFromSuperview];
 }
@@ -173,7 +172,7 @@ NSString * const MMshowsSelectionIndicator = @"showsSelectionIndicator";
   [self setFrame: view.bounds];
   [self setBackgroundColor:[UIColor clearColor]];
   
-  UIImage * toolbarImage = options[MMtoolbarBackgroundImage];
+  UIImage *toolbarImage = options[MMtoolbarBackgroundImage];
   
   //Whole screen with PickerView and a dimmed background
   _pickerViewContainerView = [[UIView alloc] initWithFrame:view.bounds];
@@ -182,10 +181,6 @@ NSString * const MMshowsSelectionIndicator = @"showsSelectionIndicator";
   
   //PickerView Container with top bar
   _pickerContainerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, _pickerViewContainerView.bounds.size.height - 200.0, view.frame.size.width, 260.0)];
-    
-    
-    //320.0,  260.0
-    
     
   //Default Color Values (if colors == nil)
   
@@ -234,7 +229,7 @@ NSString * const MMshowsSelectionIndicator = @"showsSelectionIndicator";
   //Content of pickerContainerView
   
   //Top bar view
-  _pickerTopBarView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, _pickerContainerView.frame.size.width, 44.0)];
+  _pickerTopBarView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, _pickerContainerView.frame.size.width, 40.0)];
   [_pickerContainerView addSubview:_pickerTopBarView];
   [_pickerTopBarView setBackgroundColor:[UIColor whiteColor]];
   
@@ -248,7 +243,7 @@ NSString * const MMshowsSelectionIndicator = @"showsSelectionIndicator";
   if (iOSVersion < 7.0) {
     _pickerViewToolBar.tintColor = toolbarBackgroundColor;
     //[_pickerViewToolBar setBackgroundColor:toolbarBackgroundColor];
-  }else{
+  } else {
      [_pickerViewToolBar setBackgroundColor:toolbarBackgroundColor];
 
      //_pickerViewToolBar.tintColor = toolbarBackgroundColor;
@@ -306,7 +301,7 @@ NSString * const MMshowsSelectionIndicator = @"showsSelectionIndicator";
             forComponent: (NSInteger)component {
   if (self.objectToStringConverter == nil){
     return [_pickerViewArray objectAtIndex:row];
-  } else{
+  } else {
     return (self.objectToStringConverter ([_pickerViewArray objectAtIndex:row]));
   }
 }
@@ -316,7 +311,7 @@ NSString * const MMshowsSelectionIndicator = @"showsSelectionIndicator";
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
   if (self.objectToStringConverter == nil) {
     self.onDismissCompletion ([_pickerViewArray objectAtIndex:row]);
-  } else{
+  } else {
     self.onDismissCompletion (self.objectToStringConverter ([self selectedObject]));
   }
 }
@@ -331,12 +326,11 @@ NSString * const MMshowsSelectionIndicator = @"showsSelectionIndicator";
            reusingView:(UIView *)view {
   
   UIView *customPickerView = view;
-  
   UILabel *pickerViewLabel;
   
-  if (customPickerView==nil) {
+  if (customPickerView == nil) {
     
-    CGRect frame = CGRectMake(0.0, 0.0, 292.0, 44.0);
+    CGRect frame = CGRectMake(0.0, 0.0, 292.0, 40.0);
     customPickerView = [[UIView alloc] initWithFrame: frame];
     
 //   UIImageView *patternImageView = [[UIImageView alloc] initWithFrame:frame];
@@ -355,7 +349,7 @@ NSString * const MMshowsSelectionIndicator = @"showsSelectionIndicator";
     [pickerViewLabel setTextColor:_pickerViewTextColor];
     [pickerViewLabel setFont:_pickerViewFont];
     [customPickerView addSubview:pickerViewLabel];
-  } else{
+  } else {
     
     for (UIView *view in customPickerView.subviews) {
       if (view.tag == 1) {

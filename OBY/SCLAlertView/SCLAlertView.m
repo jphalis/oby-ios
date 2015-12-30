@@ -676,7 +676,7 @@ SCLTimerDisplay *buttonTimer;
     }
     else
     {
-        NSLog(@"Unknown action type for button");
+//        NSLog(@"Unknown action type for button");
     }
 }
 
@@ -865,7 +865,7 @@ SCLTimerDisplay *buttonTimer;
     {
         if (_audioPlayer == nil)
         {
-            NSLog(@"You need to set your sound file first");
+//            NSLog(@"You need to set your sound file first");
         }
         else
         {

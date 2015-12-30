@@ -56,7 +56,7 @@
 }
 
 +(void)example{
-    NSLog(@"example success");
+//    NSLog(@"example success");
 }
 
 +(void)animatedFade:(UIView *)fromView{

@@ -328,7 +328,7 @@ static inline CGSize swapWidthAndHeight(CGSize size)
     
     newImage = UIGraphicsGetImageFromCurrentImageContext();
     if(newImage == nil) 
-        NSLog(@"could not scale image");
+//        NSLog(@"could not scale image");
     
     //pop the context to get back to the default
     UIGraphicsEndImageContext();

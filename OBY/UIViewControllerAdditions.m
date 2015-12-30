@@ -21,7 +21,7 @@
 	//[alert release];
 }
 
--(void) showMessage:(NSString *)text withTag:(int)tag withTarget:(id)target {
+-(void)showMessage:(NSString *)text withTag:(int)tag withTarget:(id)target {
     UIAlertView * alert =[[UIAlertView alloc] initWithTitle:@"" 	
 													message:text 
 												   delegate:nil 
@@ -33,7 +33,7 @@
 	//[alert release];
 }
 
-- (void)showMessage:(NSString *)text  {
+- (void)showMessage:(NSString *)text {
 	UIAlertView * alert =[[UIAlertView alloc] initWithTitle:@"Alert"
 													message:text
 												   delegate:nil
@@ -45,30 +45,31 @@
 
 #pragma mark ProgressView methods
 
--(void) setBusy:(BOOL)busy {
+-(void)setBusy:(BOOL)busy {
     AppDelegate *appDelegate =[AppDelegate getDelegate];
-    if(!busy)
-        
+    if(!busy){
         [appDelegate hideHUDForView:self.view];
-    else
+    } else {
         [appDelegate showHUDAddedTo:self.view];
+    }
 }
 
--(void) setBusyFront:(BOOL)busy {
+-(void)setBusyFront:(BOOL)busy {
     AppDelegate *appDelegate =[AppDelegate getDelegate];
-    if(!busy)
-        
+    if(!busy){
         [appDelegate hideHUDForView:appDelegate.window];
-    else
+    } else {
         [appDelegate showHUDAddedTo:appDelegate.window];
+    }
 }
 
--(void) setBusy:(BOOL)busy forMessage:(NSString*)message {
+-(void)setBusy:(BOOL)busy forMessage:(NSString*)message {
     AppDelegate *appDelegate =[AppDelegate getDelegate];
-    if(!busy)
+    if(!busy){
         [appDelegate hideHUDForView:self.view];
-    else
+    } else {
         [appDelegate showHUDAddedTo:self.view message:message];
+    }
 }
 
 -(void) updateProgressMessage:(NSString*)message {
@@ -78,7 +79,7 @@
 
 #pragma mark - Utilities methods 
  
--(void) MemoryReport {
+-(void)MemoryReport {
     struct task_basic_info info;
     mach_msg_type_number_t size = sizeof(info);
     kern_return_t kerr = task_info(mach_task_self(),
@@ -86,11 +87,9 @@
                                    (task_info_t)&info,
                                    &size);
     if( kerr == KERN_SUCCESS ) {
-        
         //ALog(@"%@: Memory in use %d mb",NSStringFromClass([self class]),info.resident_size/(1024*1024));
         
-    }  else {
-        
+    } else {
         //ALog(@"Error with task_info(): %s", mach_error_string(kerr));
     }
 }

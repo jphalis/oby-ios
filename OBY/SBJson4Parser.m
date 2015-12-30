@@ -119,7 +119,7 @@ typedef enum {
         if (initialProcessBlock)
             path = [[NSMutableArray alloc] initWithCapacity:32];
         processBlock = initialProcessBlock;
-        errorHandler = eh ? eh : ^(NSError*err) { NSLog(@"%@", err); };
+        errorHandler = eh ? eh : ^(NSError*err) {  };
 		currentType = SBJson4ChunkNone;
         _maxDepth = maxDepth;
 	}

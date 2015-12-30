@@ -128,7 +128,7 @@
 
 - (void)show{
     if (!self.title && !self.message)
-        NSLog(@"OLGhostAlertView: Your alert doesn't have any content.");
+//        NSLog(@"OLGhostAlertView: Your alert doesn't have any content.");
     
     if (self.isVisible) return;
     

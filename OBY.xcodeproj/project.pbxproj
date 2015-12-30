@@ -675,20 +675,20 @@
 			isa = PBXGroup;
 			children = (
 				A5B6C3F01BE8E9B7004F295C /* SBJson4.h */,
-				A5B6C3F11BE8E9B7004F295C /* SBJson4StreamWriterState.m */,
 				A5B6C3F21BE8E9B7004F295C /* SBJson4StreamWriterState.h */,
+				A5B6C3F11BE8E9B7004F295C /* SBJson4StreamWriterState.m */,
 				A5B6C3F31BE8E9B7004F295C /* SBJson4StreamParserState.h */,
+				A5B6C3FC1BE8E9B7004F295C /* SBJson4StreamParserState.m */,
 				A5B6C3F41BE8E9B7004F295C /* SBJson4StreamWriter.h */,
 				A5B6C3F51BE8E9B7004F295C /* SBJson4StreamWriter.m */,
 				A5B6C3F61BE8E9B7004F295C /* SBJson4StreamParser.h */,
-				A5B6C3F71BE8E9B7004F295C /* SBJson4Parser.h */,
 				A5B6C3F81BE8E9B7004F295C /* SBJson4StreamParser.m */,
+				A5B6C3F71BE8E9B7004F295C /* SBJson4Parser.h */,
 				A5B6C3F91BE8E9B7004F295C /* SBJson4Parser.m */,
-				A5B6C3FA1BE8E9B7004F295C /* SBJson4Writer.m */,
 				A5B6C3FB1BE8E9B7004F295C /* SBJson4Writer.h */,
-				A5B6C3FC1BE8E9B7004F295C /* SBJson4StreamParserState.m */,
-				A5B6C3FD1BE8E9B7004F295C /* SBJson4StreamTokeniser.m */,
+				A5B6C3FA1BE8E9B7004F295C /* SBJson4Writer.m */,
 				A5B6C3FE1BE8E9B7004F295C /* SBJson4StreamTokeniser.h */,
+				A5B6C3FD1BE8E9B7004F295C /* SBJson4StreamTokeniser.m */,
 			);
 			name = Json;
 			sourceTree = "<group>";
@@ -697,9 +697,9 @@
 			isa = PBXGroup;
 			children = (
 				A5B6C4071BE8E9D2004F295C /* StringUtil.h */,
+				A5B6C40A1BE8E9D2004F295C /* StringUtil.m */,
 				A5B6C4081BE8E9D2004F295C /* NSString+Additions.h */,
 				A5B6C4091BE8E9D2004F295C /* NSString+Additions.m */,
-				A5B6C40A1BE8E9D2004F295C /* StringUtil.m */,
 			);
 			name = StringUitlity;
 			sourceTree = "<group>";
@@ -1576,6 +1576,7 @@
 				INFOPLIST_FILE = OBY/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.obystudio.oby;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1588,7 +1589,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1598,6 +1599,7 @@
 				INFOPLIST_FILE = OBY/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.obystudio.oby;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
