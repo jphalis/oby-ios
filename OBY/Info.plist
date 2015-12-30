@@ -17,7 +17,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>2.9</string>
+	<string>3.01</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -25,8 +25,6 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>NSHumanReadableCopyright</key>
-	<string>2016 OBY</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>ARDESTINE.ttf</string>

@@ -35,7 +35,20 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
-    btnSubmit.layer.cornerRadius = 20;
+    
+    btnSubmit.layer.borderWidth = 2;
+    btnSubmit.layer.borderColor = [[UIColor whiteColor] CGColor];
+    btnSubmit.layer.cornerRadius = 7;
+    
+    // Gradient
+    UIColor *topColor = [UIColor colorWithRed:(45/255.0) green:(221/255.0) blue:(186/255.0) alpha:1.0];
+    UIColor *bottomColor = [UIColor colorWithRed:(242/255.0) green:(233/255.0) blue:(102/255.0) alpha:1.0];
+    CAGradientLayer *theViewGradient = [CAGradientLayer layer];
+    theViewGradient.colors = [NSArray arrayWithObjects:(id)topColor.CGColor, (id)bottomColor.CGColor, nil];
+    theViewGradient.frame = self.view.bounds;
+    //    theViewGradient.startPoint = CGPointMake(0.0, 0.5);
+    //    theViewGradient.endPoint = CGPointMake(1.0, 0.5);
+    [self.view.layer insertSublayer:theViewGradient atIndex:0];
 }
 
 -(void)swipeRight:(UISwipeGestureRecognizer *)gestureRecognizer{
