@@ -1094,13 +1094,9 @@
     checkNetworkReachability();
     [self setBusy:YES];
     
-    //    NSString *deviceType = [NSString stringWithFormat:@"%@ %@", [[UIDevice currentDevice] systemName], [[UIDevice currentDevice] systemVersion]];
-    //    NSString *deviceUDID = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceUDID"];
-    //    NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"];
-    
-    NSString *deviceType = @"iPhone OS 9.2";
-    NSString *deviceUDID = @"DB80B802-66E3-455D-82B9-A970F14BC008";
-    NSString *deviceToken = @"cb35acf1e5c36c5ea2e9403c457033748d3dd5557d37de299e611fbf7338c31e";
+    NSString *deviceType = [NSString stringWithFormat:@"%@ %@", [[UIDevice currentDevice] systemName], [[UIDevice currentDevice] systemVersion]];
+    NSString *deviceUDID = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceUDID"];
+    NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"];
     
     NSString *params = [NSString stringWithFormat:@"{\"device_type\":\"%@\",\"registration_id\":\"%@\",\"device_id\":\"%@\"}",deviceType,deviceToken,deviceUDID];
     NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[params length]];
@@ -1122,12 +1118,11 @@
         if ([data length] > 0 && error == nil){
             NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             if(JSONValue != nil){
-                NSLog(@"JSON: %@", JSONValue);
                 
                 if([[JSONValue allKeys]count] > 1){
-                    NSLog(@"it worked");
+                    //NSLog(@"it worked");
                 } else {
-                    NSLog(@"did not work");
+                    //NSLog(@"did not work");
                 }
             } else {
                 showServerError();

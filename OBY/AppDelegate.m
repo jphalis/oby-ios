@@ -80,7 +80,7 @@ MBProgressHUD *hud;
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
-//     NSLog(@"Error: %@", error);
+    // NSLog(@"Error: %@", error);
 }
 
 #pragma mark - Static Methods
