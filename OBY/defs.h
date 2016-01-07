@@ -88,6 +88,7 @@ extern AppDelegate *appDelegate;
     #define PROFILEURL @"https://www.obystudio.com/hide/oby/api/accounts/"
     #define TERMSURL @"https://www.obystudio.com/terms/"
     #define PRIVACYURL @"https://www.obystudio.com/privacy/"
+    #define APNSTOKENGENERATOR @"https://www.obystudio.com/hide/oby/api/device/apns/"
 #endif
 
 #define    SetisComment(x)        [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"isComment"]
