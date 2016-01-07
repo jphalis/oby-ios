@@ -374,7 +374,6 @@
                          SetUserActive([[JSONValue objectForKey:@"userid"]integerValue]);
                          SetUserPassword([txtLoginPass.text Trim]);
                          [self performSelectorInBackground:@selector(getProfileDetails) withObject:nil];
-
                          [self pushingView:YES];
                      } else {
                          alert.showAnimationType = SlideInFromLeft;
@@ -535,7 +534,6 @@
                          SetUserMail([JSONValue objectForKey:@"email"]);
                          SetUserID([[JSONValue objectForKey:@"id"]integerValue]);
                          SetUserPassword([txtSignupPass.text Trim]);
-                         
                          [self getUserId];
                          [self performSelectorInBackground:@selector(getProfileDetails) withObject:nil];
                          [self pushingView:YES];

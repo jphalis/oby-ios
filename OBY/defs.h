@@ -65,6 +65,7 @@ extern AppDelegate *appDelegate;
     #define PROFILEURL @"http://127.0.0.1:8000/hide/oby/api/accounts/"
     #define TERMSURL @"http://127.0.0.1:8000/terms/"
     #define PRIVACYURL @"http://127.0.0.1:8000/privacy/"
+    #define APNSTOKENGENERATOR @"http://127.0.0.1:8000/hide/oby/api/device/apns/"
 #else
     // PROD URLS
     #define LIKEURL @"https://www.obystudio.com/hide/oby/api/like/"

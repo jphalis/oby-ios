@@ -24,8 +24,11 @@ MBProgressHUD *hud;
     // Hide status bar on splash page
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
     
-    // Display white status bar on screen
+    // Display white status bar
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+    // Dark keyboard
+    [[UITextField appearance] setKeyboardAppearance:UIKeyboardAppearanceDark];
     
     [NSThread sleepForTimeInterval:1];
     
@@ -39,9 +42,45 @@ MBProgressHUD *hud;
     kiip.delegate = self;
     [Kiip setSharedInstance:kiip];
     
-    [[UITextField appearance] setKeyboardAppearance:UIKeyboardAppearanceDark];
+    // Push notification settings
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    } else {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeNewsstandContentAvailability| UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    }
+    
+    // Which types of noticiations are enabled by the user
+    // UIRemoteNotificationType enabledTypes = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
 
     return YES;
+}
+
+// Available in iOS8
+-(void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings{
+    
+    [application registerForRemoteNotifications];
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+    
+    NSString *uniqueIdentifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    NSString *tokenAsString = [[[deviceToken description]
+                                 stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]]
+                                stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    [[NSUserDefaults standardUserDefaults] setObject: uniqueIdentifier forKey:@"deviceUDID"];
+    [[NSUserDefaults standardUserDefaults] setObject: tokenAsString forKey:@"deviceToken"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    // Handle your remote RemoteNotification
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+//     NSLog(@"Error: %@", error);
 }
 
 #pragma mark - Static Methods
@@ -173,7 +212,6 @@ MBProgressHUD *hud;
     if(arrSupports.count > 0){
         [arrSupports removeAllObjects];
     }
-    
     if(arrPhotos.count > 0){
         [arrPhotos removeAllObjects];
     }
@@ -190,6 +228,13 @@ MBProgressHUD *hud;
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
 
+- (void)applicationDidBecomeActive:(UIApplication *)application{
+    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+}
+
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
@@ -197,10 +242,6 @@ MBProgressHUD *hud;
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

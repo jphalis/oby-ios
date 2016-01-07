@@ -109,6 +109,7 @@
     
     [self performSelectorInBackground:@selector(getSupportList) withObject:nil];
     [self getHomePageDetails];
+    [self addDeviceToken];
 }
 
 -(void)setComment:(int)selectIndex commentCount:(NSString *)countStr{
@@ -1087,6 +1088,57 @@
     profileViewController.userURL = photoClass.creator_url;
     
     [self.navigationController pushViewController:profileViewController animated:YES];
+}
+
+-(void)addDeviceToken{
+    checkNetworkReachability();
+    [self setBusy:YES];
+    
+    //    NSString *deviceType = [NSString stringWithFormat:@"%@ %@", [[UIDevice currentDevice] systemName], [[UIDevice currentDevice] systemVersion]];
+    //    NSString *deviceUDID = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceUDID"];
+    //    NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"];
+    
+    NSString *deviceType = @"iPhone OS 9.2";
+    NSString *deviceUDID = @"DB80B802-66E3-455D-82B9-A970F14BC008";
+    NSString *deviceToken = @"cb35acf1e5c36c5ea2e9403c457033748d3dd5557d37de299e611fbf7338c31e";
+    
+    NSString *params = [NSString stringWithFormat:@"{\"device_type\":\"%@\",\"registration_id\":\"%@\",\"device_id\":\"%@\"}",deviceType,deviceToken,deviceUDID];
+    NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[params length]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",APNSTOKENGENERATOR]];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setTimeoutInterval:60];
+    [urlRequest setHTTPMethod:@"POST"];
+    NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
+    NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *base64String = [plainData base64EncodedStringWithOptions:0];
+    NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
+    [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
+    [urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+        
+        if ([data length] > 0 && error == nil){
+            NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            if(JSONValue != nil){
+                NSLog(@"JSON: %@", JSONValue);
+                
+                if([[JSONValue allKeys]count] > 1){
+                    NSLog(@"it worked");
+                } else {
+                    NSLog(@"did not work");
+                }
+            } else {
+                showServerError();
+            }
+            [self setBusy:NO];
+        } else {
+            [self setBusy:NO];
+            showServerError();
+        }
+        [self setBusy:NO];
+    }];
 }
 
 @end

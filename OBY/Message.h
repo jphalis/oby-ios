@@ -28,7 +28,7 @@
 #define EMPTY_CATEGORY @"Please choose a category for your picture."
 #define EMPTY_PHOTO @"Please choose a photo from your library, or take your own."
 #define EMPTY_EMAIL @"Please enter your email in the designated field."
-#define EMPTY_PASSWORD @"Please enter your password in the designate field."
+#define EMPTY_PASSWORD @"Please enter your password in the designated field."
 #define EMPTY_CNF_PASSWORD @"Please verify your password."
 #define EMAIL_EXISTS @"This email is already associated with an account."
 #define SIGNUP_SUCCESS @"Thank you for signing up on OBY!"

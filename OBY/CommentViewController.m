@@ -161,15 +161,10 @@
                  NSString *fullString;
                  NSString *fullName = [JSONValue objectForKey:@"username"];
                  NSString *userName = [JSONValue objectForKey:@"text"];
-                 
                  fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
-                 
                  NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
-                 
                  NSRange range = [fullString rangeOfString:userName options:NSBackwardsSearch];
-                 
                  [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
-                 
                  [dictUserInfo setValue:hogan forKey:@"usernameText"];
                  
                  [photoClass.comment_set addObject:dictUserInfo];

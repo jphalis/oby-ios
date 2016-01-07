@@ -225,7 +225,7 @@
     [self.navigationController pushViewController:choosePhotoViewController animated:NO];
 }
 
--(void) imageSelected:(NSArray *)arrayOfImages{
+-(void)imageSelected:(NSArray *)arrayOfImages{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{ // 1
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.view showActivityView];
@@ -288,7 +288,8 @@
                                                     cancelButtonTitle: @"Cancel"
                                                destructiveButtonTitle: nil
                                                     otherButtonTitles: @"Take Photo",
-                                  @"Choose from library", nil];
+                                                                       @"Choose from library",
+                                                                       nil];
     
     [[UIButton appearanceWhenContainedIn:[UIActionSheet class], nil] setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     
@@ -332,7 +333,7 @@
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-//    NSLog(@"info=%@",info);
+
     UIImage *originalImage, *editedImage, *imageToSave;
     editedImage = (UIImage *) [info objectForKey:UIImagePickerControllerEditedImage];
     originalImage = (UIImage *) [info objectForKey:
@@ -403,7 +404,6 @@
     [self setBusy:YES];
     
     NSString *myUniqueName = [NSString stringWithFormat:@"%@-%lu", @"img", (unsigned long)([[NSDate date] timeIntervalSince1970]*10.0)];
-    
     NSString *description;
     
     if([txtDescription.text isEqualToString:@"Description"]){
@@ -420,11 +420,11 @@
     // the boundary string : a random string, that will not repeat in post data, to separate post data fields.
     NSString *BoundaryConstant = @"----------V2ymHFg03ehbqgZCaKO6jy";
     
-    // string constant for the post parameter 'file'. My server uses this name: `file`. Your's may differ
-    NSString* FileParamConstant = @"photo";
+    // string constant for the post parameter 'file'. My server uses this name: `file`
+    NSString *FileParamConstant = @"photo";
     
-    // the server url to which the image (or the media) is uploaded. Use your server url here
-    NSURL* requestURL = [NSURL URLWithString:CREATEURL];
+    // the server url to which the image (or the media) is uploaded
+    NSURL *requestURL = [NSURL URLWithString:CREATEURL];
     
     // create request
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -458,7 +458,7 @@
     }
     [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", BoundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
     
-    // setting the body of the post to the reqeust
+    // setting the body of the post to the request
     [request setHTTPBody:body];
     
     NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
@@ -479,7 +479,6 @@
               [self setBusy:NO];
              
              NSDictionary * JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-//             NSString *strResponse = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
              
              if([JSONValue isKindOfClass:[NSDictionary class]]){
                  if([JSONValue allKeys].count == 3 && [JSONValue objectForKey:@"photo"]){
