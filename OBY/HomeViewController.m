@@ -82,7 +82,7 @@
     self.selectionList.dataSource = self;
     self.selectionList.backgroundColor = [AnimatedMethods colorFromHexString:@"#353535"];
     
-    //[UIColor colorWithPatternImage:[UIImage imageNamed:@"buttons_bg.png"]];
+//    [UIColor colorWithPatternImage:[UIImage imageNamed:@"buttons_bg"]];
     
     self.categoryList = @[@"Popular",
                           @"Just Because",
@@ -815,13 +815,12 @@
         cell.imgLike.image = [UIImage imageNamed:@"likeselect"];
     }
     
-    //[cell.imgView sd_setImageWithURL:[NSURL URLWithString:photoClass.photo]];
-    
-   //[cell.imgView sd_setImageWithURL:[NSURL URLWithString:photoClass.photo] placeholderImage:[UIImage imageNamed:@"testLoader.gif"]];
+//   [cell.imgView sd_setImageWithURL:[NSURL URLWithString:photoClass.photo]
+//                   placeholderImage:[UIImage imageNamed:@""]];
     
     //spining
     
-      [cell.imgView loadImageFromURL:photoClass.photo withTempImage:@""];
+      [cell.imgView loadImageFromURL:photoClass.photo withTempImage:nil];
     
    // cell.imgView.shouldShowLoader=YES;
     

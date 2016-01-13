@@ -31,25 +31,22 @@
     }
     return self;
 }
--(void)DownloadImageForURL:(NSString *)imageURL
-{
-   // NSLog(@"URL:%@",imageURL);
+-(void)DownloadImageForURL:(NSString *)imageURL {
     
-    NSString *lpath =[imageURL lastPathComponent];
-    strLocalFilePath =[[NSString alloc] initWithFormat:@"%@/%@",[SDIAsyncImageView GetCatchPath],lpath];
+    NSString *lpath = [imageURL lastPathComponent];
+    strLocalFilePath = [[NSString alloc] initWithFormat:@"%@/%@",[SDIAsyncImageView GetCatchPath],lpath];
 #ifdef WITHOUT_ARC
     if (connection!=nil && [connection respondsToSelector:@selector(retainCount)])
 #else
-        if (connection!=nil)
+    if (connection!=nil)
 #endif
-        {
-            
-            [connection cancel];
-            //[connection release];
-        }
-    //in case we are downloading a 2nd image
-    if (data!=nil)
     {
+            
+        [connection cancel];
+        //[connection release];
+    }
+    //in case we are downloading a 2nd image
+    if (data!=nil) {
 #ifdef WITHOUT_ARC
         [data release];
 #else
@@ -61,8 +58,7 @@
     NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageURL] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     connection = [[NSURLConnection alloc] initWithRequest:request delegate:self]; //notice how delegate set to self object
     
-    if(connection!=nil)
-    {
+    if(connection!=nil) {
         /*
         if(shouldShowLoader==YES)
         {
@@ -76,22 +72,18 @@
     }
     _MQ
 }
--(void)connection:(NSURLConnection *)Mconnection didFailWithError:(NSError *)error
-{
-    if(delegate && [delegate respondsToSelector:@selector(asyncconnection:didFailWithError:)])
-    {
+-(void)connection:(NSURLConnection *)Mconnection didFailWithError:(NSError *)error {
+    if(delegate && [delegate respondsToSelector:@selector(asyncconnection:didFailWithError:)]) {
         [delegate asyncconnection:Mconnection didFailWithError:error];
     }
      connection=nil;
 }
+
 -(void) connection :(NSURLConnection *) Mconnection
- didReceiveResponse:(NSURLResponse *) response
-{
-    if(delegate && [delegate respondsToSelector:@selector(asyncConnection:didReceiveResponse:)])
-    {
+ didReceiveResponse:(NSURLResponse *) response {
+    if(delegate && [delegate respondsToSelector:@selector(asyncConnection:didReceiveResponse:)]) {
         [delegate asyncConnection:Mconnection didReceiveResponse:response];
     }
-   // NSLog(@"download response");
 }
 //the URL connection calls this repeatedly as data arrives
 - (void)connection:(NSURLConnection *)theConnection didReceiveData:(NSData *)incrementalData {
@@ -132,16 +124,14 @@
         data=nil;
     }
     connection=nil;
-	//NSLog(@"end");
 	
 }
 -(void)CancelDownload{
     if(connection){
-//        NSLog(@"Cancelled");
         [connection cancel]; //in case the URL is still downloading
         Destroy(connection)
     } else {
-//        NSLog(@"Not Cancelled");
+
     }
 }
 
@@ -163,10 +153,8 @@ static SDIAsyncImageDownloadManager *_defaultManger=nil;
 
 @implementation SDIAsyncImageDownloadManager
 
-+(id)defaultManager
-{
-    if(_defaultManger==nil)
-    {
++(id)defaultManager {
+    if(_defaultManger==nil) {
         _defaultManger=[[SDIAsyncImageDownloadManager alloc]init];
     }
     return _defaultManger;
@@ -548,7 +536,7 @@ static NSString *strCachePath = nil;
     
 }
 
--(void) asyncConnection :(NSURLConnection *) connection
+-(void)asyncConnection: (NSURLConnection *) connection
  didReceiveResponse:(NSURLResponse *) response{
 
     if(shouldShowLoader == YES){
@@ -580,7 +568,7 @@ static NSString *strCachePath = nil;
         }
 //        NSLog(@"Download URL:%@",strURL);
         self.autoresizingMask = ( UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight );
-        if(isRemoved == YES)//{NSLog(@"PREVENTING CRASH"); return;}
+        if(isRemoved == YES){return;}
         [self UpdateImage:strURL];
     } else {
 //         NSLog(@"Not found");
@@ -624,7 +612,7 @@ static NSString *strCachePath = nil;
 
 -(void)UpdateImage:(NSString*)filename{
    //self.contentMode=UIViewContentModeScaleToFill;
-    if(isRemoved == YES)//{NSLog(@"PREVENTING CRASH"); return;}
+    if(isRemoved == YES){return;}
     
     self.backgroundColor = [UIColor clearColor];
     if(shouldMask){

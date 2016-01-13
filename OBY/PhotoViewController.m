@@ -29,7 +29,6 @@
     
     self.view.backgroundColor = [UIColor colorWithHue:1 saturation:1 brightness:0 alpha:0.95];
     [super viewDidLoad];
-//    NSLog(@"%@",photoURL);
     
    // UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(ClickImage:)];
    //[imageView addGestureRecognizer:tapGesture];
