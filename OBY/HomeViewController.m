@@ -12,7 +12,6 @@
 #import "CommentListViewController.h"
 #import "CommentViewController.h"
 #import "CustomButton.h"
-#import "CutomTabViewController.h"
 #import "defs.h"
 #import "GlobalFunctions.h"
 #import "HashtagViewController.h"

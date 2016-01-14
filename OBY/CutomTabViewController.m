@@ -34,10 +34,11 @@ enum{
 
 @property (weak, nonatomic) IBOutlet BadgeLabel *badgeLabel;
 @property(nonatomic) BOOL scrollsToTop;
+
 @end
 
 @implementation CutomTabViewController
-@synthesize tabView;
+@synthesize tabView, currentView;
 
 - (void)viewDidLoad {
     appDelegate = (AppDelegate *)[AppDelegate getDelegate];
@@ -219,9 +220,10 @@ enum{
     
     if (btn.tag == previousIndex){
        // return;
-//        [UIView animateWithDuration:0.3 animations:^(void){
-//            [prevController.view scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
-//        }];
+        [UIView animateWithDuration:0.3 animations:^(void){
+//            [currentView setContentOffset:CGPointMake(0.0f,0.0f)];
+//            [currentView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+        }];
 //        NSLog(@"Click");
     } else {
         if (previousIndex != 0){
