@@ -5,7 +5,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface ProfileViewController : UIViewController
+@interface ProfileViewController : UIViewController <UIActionSheetDelegate>
 
 @property (strong, nonatomic)NSString *userURL;
 

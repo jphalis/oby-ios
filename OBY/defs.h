@@ -46,6 +46,8 @@ extern AppDelegate *appDelegate;
 #ifdef DEBUG
     // DEV URLS
     #define LIKEURL @"http://127.0.0.1:8000/hide/oby/api/like/"
+    #define FLAGURL @"http://127.0.0.1:8000/hide/oby/api/flag/create/"
+    #define BLOCKURL @"http://127.0.0.1:8000/hide/oby/api/block/"
     #define COMMENTURL @"http://127.0.0.1:8000/hide/oby/api/comments/create/"
     #define SUPPORTURL @"http://127.0.0.1:8000/hide/oby/api/support/"
     #define SEARCH_URL @"http://127.0.0.1:8000/hide/oby/api/search/?q="
@@ -69,6 +71,8 @@ extern AppDelegate *appDelegate;
 #else
     // PROD URLS
     #define LIKEURL @"https://www.obystudio.com/hide/oby/api/like/"
+    #define FLAGURL @"https://www.obystudio.com/hide/oby/api/flag/create/"
+    #define BLOCKURL @"https://www.obystudio.com/hide/oby/api/block/"
     #define COMMENTURL @"https://www.obystudio.com/hide/oby/api/comments/create/"
     #define SUPPORTURL @"https://www.obystudio.com/hide/oby/api/support/"
     #define SEARCH_URL @"https://www.obystudio.com/hide/oby/api/search/?q="

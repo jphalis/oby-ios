@@ -23,6 +23,7 @@
 #import "StringUtil.h"
 #import "SupportViewController.h"
 #import "SVModalWebViewController.h"
+#import "TWMessageBarManager.h"
 #import "UIImageView+WebCache.h"
 
 
@@ -157,6 +158,8 @@
 
         PhotoClass *photoClass = [arrPhotsList objectAtIndex:indexPath.row];
         photoViewController.photoURL = photoClass.photo;
+        photoViewController.photoDeleteURL = photoClass.photo_url;
+        photoViewController.photoCreator = photoClass.creator;
         photoViewController.view.frame = appDelegate.window.frame;
         
         [self.view addSubview:photoViewController.view];
@@ -181,9 +184,13 @@
     appDelegate.tabbar.tabView.hidden = YES;
     
     if([[userURL lastPathComponent]isEqualToString:GetUserName]){
-        btnAdd.hidden = NO;
+        [btnAdd setImage:[UIImage imageNamed:@"add_icon_profile"] forState:UIControlStateNormal];
+        btnAdd.tag = 1;
+//        btnAdd.hidden = NO;
     } else {
-        btnAdd.hidden = YES;
+        [btnAdd setImage:[UIImage imageNamed:@"dot-more"] forState:UIControlStateNormal];
+        btnAdd.tag = 2;
+//        btnAdd.hidden = YES;
     }
 
     [self checkUser];
@@ -282,8 +289,58 @@
 */
 
 - (IBAction)onAddClick:(id)sender {
-    CreateViewController *createViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CreateViewController"];
-    [self.navigationController pushViewController:createViewController animated:YES];
+    if([sender tag] == 1){
+        CreateViewController *createViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CreateViewController"];
+        [self.navigationController pushViewController:createViewController animated:YES];
+    } else {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                 delegate:self
+                                                        cancelButtonTitle:@"Cancel"
+                                                   destructiveButtonTitle:@"Block"
+                                                        otherButtonTitles:nil];
+        [actionSheet showInView:self.view];
+    }
+}
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0){
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Are you sure you want to block this user?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+        alert.delegate = self;
+        alert.tag = 100;
+        [alert show];
+    } else if(buttonIndex == 1){
+        NSLog(@"Cancel button clicked");
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 100 && buttonIndex == 1 ) {
+        checkNetworkReachability();
+        ProfileClass *profileClass = [dictProfileInformation objectForKey:@"ProfileInfo"];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSString *strURL = [NSString stringWithFormat:@"%@%@/",BLOCKURL,profileClass.Id];
+            NSURL *url = [NSURL URLWithString:strURL];
+            NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+            [urlRequest setTimeoutInterval:60];
+            [urlRequest setHTTPMethod:@"POST"];
+            NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
+            NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
+            NSString *base64String = [plainData base64EncodedStringWithOptions:0];
+            NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
+            [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
+            [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+
+            [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+                [self setBusy:NO];
+                [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Success"
+                                                               description:BLOCK_USER
+                                                                      type:TWMessageBarMessageTypeSuccess
+                                                                  duration:3.0];
+                [self.navigationController popViewControllerAnimated:YES];
+            }];
+        });
+    }
 }
 
 - (IBAction)onSettingClick:(id)sender {
@@ -472,6 +529,7 @@
          if(error != nil){
              [self setBusy:NO];
          }
+        
          if ([data length] > 0 && error == nil){
              NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             
@@ -495,7 +553,13 @@
                  
                  if([JSONValue allKeys].count == 1 && [JSONValue objectForKey:@"detail"]){
                      [self setBusy:NO];
-                     showServerError();
+                     //             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
+                     //             NSLog(@"response status code: %ld", (long)[httpResponse statusCode]);
+                     [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Forbidden Error"
+                                                                    description:[JSONValue objectForKey:@"detail"]
+                                                                           type:TWMessageBarMessageTypeError
+                                                                       duration:4.0];
+                     [self.navigationController popViewControllerAnimated:YES];
                      return;
                  }
                  ProfileClass *profileClass = [[ProfileClass alloc]init];
@@ -520,6 +584,7 @@
                        
                      PhotoClass *phClas = [[PhotoClass alloc]init];
                      phClas.category_url = [dictResult objectForKey:@"category_url"];
+                     phClas.photo_url = [dictResult objectForKey:@"photo_url"];
                      phClas.photo = [dictResult objectForKey:@"photo"];
                      phClas.comment_count = [dictResult objectForKey:@"comment_count"];
                      phClas.created = [dictResult objectForKey:@"created"];
@@ -896,6 +961,8 @@
     tapCellIndex = indexPath.row;
     PhotoClass *photoClass = [arrPhotsList objectAtIndex:indexPath.row];
     photoViewController.photoURL = photoClass.photo;
+    photoViewController.photoDeleteURL = photoClass.photo_url;
+    photoViewController.photoCreator = photoClass.creator;
     photoViewController.view.frame = appDelegate.window.frame;
     
     [appDelegate.window addSubview:photoViewController.view];

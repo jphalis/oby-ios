@@ -153,6 +153,8 @@
         }
         
         photoViewController.photoURL = photoClass.photo;
+        photoViewController.photoDeleteURL = photoClass.photo_url;
+        photoViewController.photoCreator = photoClass.creator;
         photoViewController.view.frame = appDelegate.window.frame;
         
         [appDelegate.window addSubview:photoViewController.view];
@@ -174,6 +176,8 @@
             photoClass = [appDelegate.arrPhotos objectAtIndex:indexPath.row];
         }
         photoViewController.photoURL = photoClass.photo;
+        photoViewController.photoDeleteURL = photoClass.photo_url;
+        photoViewController.photoCreator = photoClass.creator;
         photoViewController.view.frame = appDelegate.window.frame;
         [self.view addSubview:photoViewController.view];
     }
@@ -358,6 +362,7 @@
                          
                          PhotoClass *photoClass = [[PhotoClass alloc]init];
                          photoClass.category_url = [dictResult objectForKey:@"category_url"];
+                         photoClass.photo_url = [dictResult objectForKey:@"photo_url"];
                          photoClass.comment_count = [dictResult objectForKey:@"comment_count"];
                          photoClass.created = [dictResult objectForKey:@"created"];
                          photoClass.creator = [[dictResult objectForKey:@"creator"] uppercaseString];
@@ -601,6 +606,7 @@
                          dictResult = [JSONValue objectAtIndex:i];
                          PhotoClass *photoClass = [[PhotoClass alloc]init];
                          photoClass.category_url = [dictResult objectForKey:@"category_url"];
+                         photoClass.photo_url = [dictResult objectForKey:@"photo_url"];
                          photoClass.comment_count = [dictResult objectForKey:@"comment_count"];
                          photoClass.created = [dictResult objectForKey:@"created"];
                          photoClass.creator = [[dictResult objectForKey:@"creator"] uppercaseString];
@@ -889,7 +895,10 @@
         photoClass = [appDelegate.arrPhotos objectAtIndex:indexPath.row];
     }
     
+    photoViewController.PhotoId = photoClass.PhotoId;
     photoViewController.photoURL = photoClass.photo;
+    photoViewController.photoDeleteURL = photoClass.photo_url;
+    photoViewController.photoCreator = photoClass.creator;
     photoViewController.view.frame = appDelegate.window.frame;
 
     [appDelegate.window addSubview:photoViewController.view];

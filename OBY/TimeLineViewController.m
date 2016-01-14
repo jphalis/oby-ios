@@ -83,6 +83,8 @@
         }
         PhotoClass *photoClass = [arrTimelinePhotos objectAtIndex:indexPath.row];
         photoViewController.photoURL = photoClass.photo;
+        photoViewController.photoDeleteURL = photoClass.photo_url;
+        photoViewController.photoCreator = photoClass.creator;
         photoViewController.view.frame = appDelegate.window.frame;
 
         [self.view addSubview:photoViewController.view];
@@ -271,6 +273,8 @@
     
     PhotoClass *photoClass = [arrTimelinePhotos objectAtIndex:indexPath.row];
     photoViewController.photoURL = photoClass.photo;
+    photoViewController.photoDeleteURL = photoClass.photo_url;
+    photoViewController.photoCreator = photoClass.creator;
     photoViewController.view.frame = appDelegate.window.frame;
     [appDelegate.window addSubview:photoViewController.view];
     
@@ -501,6 +505,7 @@
                          dictResult = [JSONValue objectAtIndex:i];
                          PhotoClass *photoClass = [[PhotoClass alloc]init];
                          photoClass.category_url = [dictResult objectForKey:@"category_url"];
+                         photoClass.photo_url = [dictResult objectForKey:@"photo_url"];
                          photoClass.comment_count = [dictResult objectForKey:@"comment_count"];
                          //photoClass.comment_set = [dictResult objectForKey:@"comment_set"];
                          photoClass.created = [dictResult objectForKey:@"created"];

@@ -133,7 +133,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void) animateTextView: (UITextView*) textView up: (BOOL) up{
+- (void)animateTextView:(UITextView*) textView up:(BOOL) up{
     float val;
     if(self.view.frame.size.height == 480){
         val = 0.75;

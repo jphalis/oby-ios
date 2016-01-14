@@ -7,6 +7,10 @@
 
 // General
 #define UPLOAD_PHOTO @"Your photo has been uploaded successfully."
+#define SAVE_PHOTO @"The photo has been saved to your camera roll."
+#define REPORT_PHOTO @"Thank you. The photo has been reported."
+#define BLOCK_USER @"You have blocked that user."
+#define DELETE_PHOTO @"Your photo has been deleted."
 #define INCORRECTOLDPASS @"Incorrect old password."
 #define SERVER_ERROR @"That's our bad. Please try again later."
 #define LOGIN_ERROR  @"Unable to login with provided credentials."

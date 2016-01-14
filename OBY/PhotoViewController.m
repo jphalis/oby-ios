@@ -6,8 +6,10 @@
 #import "AppDelegate.h"
 #import "AsyncImageView.h"
 #import "defs.h"
+#import "GlobalFunctions.h"
 #import "PhotoViewController.h"
 #import "SDIAsyncImageView.h"
+#import "TWMessageBarManager.h"
 
 
 #define ZOOM_STEP 2.0
@@ -19,10 +21,12 @@
     __weak IBOutlet UIScrollView *imageScrollView;
     __weak IBOutlet SDIAsyncImageView *imageView;
 }
+
+- (IBAction)actionSheetButtonPressed:(id)sender;
 @end
 
 @implementation PhotoViewController
-@synthesize photoURL;
+@synthesize PhotoId, photoURL, photoDeleteURL, photoCreator;
 
 - (void)viewDidLoad {
     appDelegate = [AppDelegate getDelegate];
@@ -198,6 +202,94 @@
 
 - (IBAction)onCancelClick:(id)sender {
     [self.delegate removeImage];
+}
+
+- (IBAction)actionSheetButtonPressed:(id)sender {
+    NSString *button1 = @"";
+    if ([photoCreator lowercaseString] == GetUserName) {
+         button1 = @"Delete";
+    } else {
+        button1 = @"Report";
+    }
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:button1
+                                                    otherButtonTitles:@"Save image", nil];
+    [actionSheet showInView:self.view];
+}
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0){
+        if ([photoCreator lowercaseString] == GetUserName) {
+            checkNetworkReachability();
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                NSString *strURL = [NSString stringWithFormat:@"%@",photoDeleteURL];
+                NSURL *url = [NSURL URLWithString:strURL];
+                NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+                [urlRequest setTimeoutInterval:60];
+                [urlRequest setHTTPMethod:@"DELETE"];
+                NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
+                NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
+                NSString *base64String = [plainData base64EncodedStringWithOptions:0];
+                NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
+                [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
+                [urlRequest setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
+                
+                [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+                    [self setBusy:NO];
+                    [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Success"
+                                                                   description:DELETE_PHOTO
+                                                                          type:TWMessageBarMessageTypeSuccess
+                                                                      duration:3.0];
+                    [self.delegate removeImage];
+                }];
+            });
+            
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Are you sure you want to report this image as inappropriate?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+            alert.delegate = self;
+            alert.tag = 100;
+            [alert show];
+        }
+    } else if(buttonIndex == 1){
+        UIImageWriteToSavedPhotosAlbum(imageView.image, nil, nil, nil);
+        [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Success"
+                                                       description:SAVE_PHOTO
+                                                              type:TWMessageBarMessageTypeSuccess
+                                                          duration:3.0];
+    } else if(buttonIndex == 2){
+        // NSLog(@"Cancel button clicked");
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 100 && buttonIndex == 1 ) {
+        checkNetworkReachability();
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSString *strURL = [NSString stringWithFormat:@"%@%@/",FLAGURL,PhotoId];
+            NSURL *url = [NSURL URLWithString:strURL];
+            NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+            [urlRequest setTimeoutInterval:60];
+            [urlRequest setHTTPMethod:@"POST"];
+            NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
+            NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
+            NSString *base64String = [plainData base64EncodedStringWithOptions:0];
+            NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
+            [urlRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
+            [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+            
+            [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+                [self setBusy:NO];
+                [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Success"
+                                                               description:REPORT_PHOTO
+                                                                      type:TWMessageBarMessageTypeSuccess
+                                                                  duration:3.0];
+                [self.delegate removeImage];
+            }];
+        });
+    }
 }
 
 @end
