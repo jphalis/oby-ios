@@ -276,7 +276,8 @@
         [tblVW reloadData];
     } else {
         if(searchText.length == 1){
-            [self doSearch];
+            [self performSelector:@selector(doSearch) withObject:searchText afterDelay:0.3f];
+            // [self doSearch];
         } else {
             [self doFilter];
         }

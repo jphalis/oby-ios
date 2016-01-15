@@ -21,5 +21,6 @@
 @property (nonatomic, retain) NSString *profile_picture;
 @property (nonatomic, retain) NSString *followers_count;
 @property (nonatomic, retain) NSString *following_count;
+@property (nonatomic, assign) BOOL is_verified;
 
 @end

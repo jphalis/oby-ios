@@ -21,6 +21,10 @@
 #import "TWMessageBarManager.h"
 #import "UIImageView+WebCache.h"
 
+//if (suggested) {
+//    [colltionVw setFrame:CGRectMake(colltionVw.frame.origin.x, colltionVw.frame.origin.y + 18, colltionVw.bounds.size.width, colltionVw.bounds.size.height)];
+//}
+
 
 @interface TimeLineViewController ()<PhotoViewControllerDelegate,CommentViewControllerDelegate>{
     AppDelegate *appDelegate;
@@ -507,7 +511,6 @@
                          photoClass.category_url = [dictResult objectForKey:@"category_url"];
                          photoClass.photo_url = [dictResult objectForKey:@"photo_url"];
                          photoClass.comment_count = [dictResult objectForKey:@"comment_count"];
-                         //photoClass.comment_set = [dictResult objectForKey:@"comment_set"];
                          photoClass.created = [dictResult objectForKey:@"created"];
                          photoClass.creator = [[dictResult objectForKey:@"creator"] uppercaseString];
                          photoClass.creator_url = [dictResult objectForKey:@"creator_url"];
@@ -559,17 +562,11 @@
                              NSString *fullString;
                              NSString *userName = [dictFollowerInfo objectForKey:@"user__username"];
                              NSString *fullName = [dictFollowerInfo objectForKey:@"user__full_name"];
-                             
                              fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
-                             
                              NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
-                             
                              NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
-                             
                              [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
-                             
                              [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
-                             
                              [photoClass.likers addObject:dictFollowerInfo];
                          }
 

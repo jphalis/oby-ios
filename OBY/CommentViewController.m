@@ -114,6 +114,15 @@
     return YES;
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    NSUInteger length = [textField.text length] - range.length + [string length];
+    if(textField == txtComment){
+        return length <= 240 ;
+    }
+    return YES;
+}
+
 -(void)doSubmit{
     checkNetworkReachability();
     [self.view endEditing:YES];

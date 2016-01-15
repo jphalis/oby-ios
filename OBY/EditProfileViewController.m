@@ -282,10 +282,34 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
-    NSUInteger length = [textField.text length] + [string length] - range.length;
+    NSUInteger length = [textField.text length] - range.length + [string length];
     if(textField == txtUserName){
         BOOL isValidChar = [AppDelegate isValidCharacter:string filterCharSet:USERNAME];
-        return isValidChar && length < 16 ;
+        return isValidChar && length <= 30 ;
+    }
+    if(textField == txtFullName){
+        return length <= 50 ;
+    }
+    if(textField == txtEmail || txtEduEmail){
+        BOOL isValidChar = [AppDelegate isValidCharacter:string filterCharSet:EMAIL];
+        return isValidChar && length <= 80 ;
+    }
+    if(textField == txtWebsite){
+        // Add regex for urls
+        return length <= 90 ;
+    }
+    return YES;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    
+    if([text isEqualToString:@"\n"]){
+        [textView resignFirstResponder];
+        return NO;
+    }
+    NSUInteger length = [textView.text length] - range.length + [text length];
+    if(textView == txtBio){
+        return length <= 200 ;
     }
     return YES;
 }
@@ -359,14 +383,6 @@
     self.view.frame = CGRectOffset(self.view.frame, 0, movement);
     
     [UIView commitAnimations];
-}
-
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-    if([text isEqualToString:@"\n"]){
-        [textView resignFirstResponder];
-        return NO;
-    }
-    return YES;
 }
 
 -(void)resignKeyboard{

@@ -150,14 +150,18 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
-    NSUInteger length = [textField.text length] + [string length] - range.length;
+    NSUInteger length = [textField.text length] - range.length + [string length];
    
     if(textField == txtLoginUsrName || textField == txtSignupUsrName){
         if(textField == txtSignupUsrName){
             txtSignupUsrName.text = txtSignupUsrName.text.lowercaseString;
         }
         BOOL isValidChar = [AppDelegate isValidCharacter:string filterCharSet:USERNAME];
-        return isValidChar && length < 16;
+        return isValidChar && length <= 30;
+    }
+    if(textField == txtSignupEmail){
+        BOOL isValidChar = [AppDelegate isValidCharacter:string filterCharSet:EMAIL];
+        return isValidChar && length <= 80;
     }
     return YES;
 }

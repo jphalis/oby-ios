@@ -87,7 +87,7 @@
     pgControl.numberOfPages = 2;
     pgControl.currentPage = 1;
     
-    pgControl.pageIndicatorTintColor = [UIColor redColor];
+    pgControl.pageIndicatorTintColor = [UIColor colorWithRed:(230/255.0) green:(33/255.0) blue:(23/255.0) alpha:1.0];
     
     appDelegate = [AppDelegate getDelegate];
     
@@ -228,17 +228,15 @@
 
 -(void)swipeViewOne:(UISwipeGestureRecognizer *)gestureRecognizer{
     if(viewOne.frame.origin.x == 0.0){
-        if(gestureRecognizer.direction==UISwipeGestureRecognizerDirectionLeft){
+        if(gestureRecognizer.direction == UISwipeGestureRecognizerDirectionLeft){
             
             [UIView animateWithDuration:0.5
                                   delay:0.0
                                 options:UIViewAnimationOptionTransitionFlipFromTop
                              animations:^{
-                                  pgControl.currentPage = 0;
+                                 pgControl.currentPage = 0;
                                  viewOne.frame = CGRectMake(-self.view.frame.size.width, viewOne.frame.origin.y, self.view.frame.size.width, viewOne.frame.size.height);
-                                 
                                  viewTwo.frame = CGRectMake(0, viewTwo.frame.origin.y, self.view.frame.size.width, viewTwo.frame.size.height);
-                                 
                              }
                              completion:^(BOOL finished) {
                                  
@@ -259,23 +257,19 @@
 
 -(void)swipeViewTwo:(UISwipeGestureRecognizer *)gestureRecognizer{
     if(viewTwo.frame.origin.x == 0.0){
-            [UIView animateWithDuration:0.5
-                                  delay:0.0
-                                options:UIViewAnimationOptionTransitionFlipFromTop
-                             animations:^{
-                                
-                                 pgControl.currentPage = 1;
+        [UIView animateWithDuration:0.5
+                              delay:0.0
+                            options:UIViewAnimationOptionTransitionFlipFromTop
+                         animations:^{
+                             pgControl.currentPage = 1;
+                             viewOne.frame = CGRectMake(0, viewOne.frame.origin.y, self.view.frame.size.width, viewOne.frame.size.height);
+                             viewTwo.frame = CGRectMake(+self.view.frame.size.width, viewTwo.frame.origin.y, self.view.frame.size.width, viewTwo.frame.size.height);
+                         }
+                         completion:^(BOOL finished){
                                  
-                                 viewOne.frame = CGRectMake(0, viewOne.frame.origin.y, self.view.frame.size.width, viewOne.frame.size.height);
-                                 
-                                 viewTwo.frame = CGRectMake(+self.view.frame.size.width, viewTwo.frame.origin.y, self.view.frame.size.width, viewTwo.frame.size.height);
-                                 
-                             }
-                             completion:^(BOOL finished){
-                                 
-                             }
-             ];
-        }
+                         }
+         ];
+    }
 }
 
 /*
@@ -354,7 +348,6 @@
 
 - (IBAction)onViewList:(id)sender {
     SupportViewController *supportViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SupportViewController"];
-    
     ProfileClass *profileClass = [dictProfileInformation objectForKey:@"ProfileInfo"];
     
     if([sender tag] == 1){
@@ -539,18 +532,6 @@
              
              if([JSONValue isKindOfClass:[NSDictionary class]]){
                  
-                 /*
-                 SetUserName([JSONValue objectForKey:@"username"]);
-                 SetUserFullName([JSONValue objectForKey:@"full_name"]);
-                 NSString *profilePic;
-                 if([JSONValue objectForKey:@"profile_picture"]==[NSNull null]){
-                     profilePic=@"";
-                 }else{
-                     profilePic=[JSONValue objectForKey:@"profile_picture"];
-                 }
-                 SetProifilePic(profilePic);
-                  */
-                 
                  if([JSONValue allKeys].count == 1 && [JSONValue objectForKey:@"detail"]){
                      [self setBusy:NO];
                      //             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
@@ -565,7 +546,6 @@
                  ProfileClass *profileClass = [[ProfileClass alloc]init];
                  
                  int profileId = [[JSONValue objectForKey:@"id"]intValue];
-                 
                  profileClass.Id = [NSString stringWithFormat:@"%d",profileId];
                  profileClass.username = [JSONValue objectForKey:@"username"];
                  profileClass.account_url = [JSONValue objectForKey:@"account_url"];
@@ -574,6 +554,8 @@
                  profileClass.bio = [JSONValue objectForKey:@"bio"];
                  profileClass.website = [JSONValue objectForKey:@"website"];
                  profileClass.gender = [JSONValue objectForKey:@"gender"];
+                 BOOL isVerified = [[JSONValue objectForKey:@"is_verified"]boolValue];
+                 profileClass.is_verified = isVerified;
                  profileClass.arrphoto_set = [[NSMutableArray alloc]init];
                      
                  NSArray *arrPhotoset = [JSONValue objectForKey:@"photo_set"];
@@ -582,39 +564,38 @@
                      dictResult = [[NSMutableDictionary alloc]init];
                      dictResult = [arrPhotoset objectAtIndex:i];
                        
-                     PhotoClass *phClas = [[PhotoClass alloc]init];
-                     phClas.category_url = [dictResult objectForKey:@"category_url"];
-                     phClas.photo_url = [dictResult objectForKey:@"photo_url"];
-                     phClas.photo = [dictResult objectForKey:@"photo"];
-                     phClas.comment_count = [dictResult objectForKey:@"comment_count"];
-                     phClas.created = [dictResult objectForKey:@"created"];
-                     phClas.creator = [[dictResult objectForKey:@"creator"] uppercaseString];
-                     phClas.creator_url = [dictResult objectForKey:@"creator_url"];
-                     phClas.description = [dictResult objectForKey:@"description"];
+                     PhotoClass *photoClass = [[PhotoClass alloc]init];
+                     photoClass.category_url = [dictResult objectForKey:@"category_url"];
+                     photoClass.photo_url = [dictResult objectForKey:@"photo_url"];
+                     photoClass.photo = [dictResult objectForKey:@"photo"];
+                     photoClass.comment_count = [dictResult objectForKey:@"comment_count"];
+                     photoClass.created = [dictResult objectForKey:@"created"];
+                     photoClass.creator = [[dictResult objectForKey:@"creator"] uppercaseString];
+                     photoClass.creator_url = [dictResult objectForKey:@"creator_url"];
+                     photoClass.description = [dictResult objectForKey:@"description"];
                          
                      int userId = [[dictResult objectForKey:@"id"]intValue];
-                         
-                     phClas.PhotoId = [NSString stringWithFormat:@"%d",userId];
-                     phClas.like_count = [dictResult objectForKey:@"like_count"];
-                     phClas.likers = [[NSMutableArray alloc]init];
-                     phClas.comment_set = [[NSMutableArray alloc]init];
+                     photoClass.PhotoId = [NSString stringWithFormat:@"%d",userId];
+                     photoClass.like_count = [dictResult objectForKey:@"like_count"];
+                     photoClass.likers = [[NSMutableArray alloc]init];
+                     photoClass.comment_set = [[NSMutableArray alloc]init];
                          
                      NSArray *arrLiker = [dictResult objectForKey:@"get_likers_info"];
                          
-                     phClas.isLike = NO;
+                     photoClass.isLike = NO;
                      if([[dictResult objectForKey:@"get_likers_info"] count] > 0){
                          for(int l = 0; l < [arrLiker count]; l++){
                              NSDictionary *dictUsers = [arrLiker objectAtIndex:l];
                              if([[dictUsers objectForKey:@"username"] isEqualToString:GetUserName]){
-                                 phClas.isLike = YES;
+                                 photoClass.isLike = YES;
                                  break;
                              }
                          }
                      }
 
                      for(int j = 0; j < arrLiker.count; j++){
-                         NSMutableDictionary *dictFollowerInfo=[[NSMutableDictionary alloc]init];
-                         NSDictionary *dictUserDetail=[arrLiker objectAtIndex:j];
+                         NSMutableDictionary *dictFollowerInfo = [[NSMutableDictionary alloc]init];
+                         NSDictionary *dictUserDetail = [arrLiker objectAtIndex:j];
                              
                          if([dictUserDetail objectForKey:@"profile_picture"] == [NSNull null]){
                              [dictFollowerInfo setObject:@"" forKey:@"user__profile_picture"];
@@ -649,7 +630,7 @@
                              
                          [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
                              
-                         [phClas.likers addObject:dictFollowerInfo];
+                         [photoClass.likers addObject:dictFollowerInfo];
                      }
                          
                      NSArray *arrCommentSet=[dictResult objectForKey:@"comment_set"];
@@ -684,18 +665,18 @@
                          [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
                          [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
                              
-                         [phClas.comment_set addObject:dictFollowerInfo];
+                         [photoClass.comment_set addObject:dictFollowerInfo];
                      }
 
-                     phClas.modified = [dictResult objectForKey:@"modified"];
-                     phClas.photo = [dictResult objectForKey:@"photo"];
-                     phClas.slug = [dictResult objectForKey:@"slug"];
+                     photoClass.modified = [dictResult objectForKey:@"modified"];
+                     photoClass.photo = [dictResult objectForKey:@"photo"];
+                     photoClass.slug = [dictResult objectForKey:@"slug"];
 
-                     [arrPhotsList addObject:phClas];
+                     [arrPhotsList addObject:photoClass];
                  }
                      
-                 if([JSONValue objectForKey:@"profile_picture"]==[NSNull null]){
-                     profileClass.profile_picture=@"";
+                 if([JSONValue objectForKey:@"profile_picture"] == [NSNull null]){
+                     profileClass.profile_picture = @"";
                  } else {
                      profileClass.profile_picture = [JSONValue objectForKey:@"profile_picture"];
                  }
@@ -746,15 +727,6 @@
                          } else {
                          [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"user__full_name"] forKey:@"user__full_name"];
                          }
-                             
-//                         NSString *fullString;
-//                         NSString *userName = [dictFollowerInfo objectForKey:@"user__username"];
-//                         NSString *fullName = [dictFollowerInfo objectForKey:@"user__full_name"];
-//                         fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
-//                         NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
-//                         NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
-//                         [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
-//                         [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
 
                          [profileClass.arrfollowers addObject:dictFollowerInfo];
                      }
@@ -815,7 +787,18 @@
 
 -(void)showProfileInfo{
     ProfileClass *profileClass = [dictProfileInformation objectForKey:@"ProfileInfo"];
-    lblProfileName.text = profileClass.username;
+    
+    if (profileClass.is_verified){
+        NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+        attachment.image = [UIImage imageNamed:@"verify"];
+        NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
+        NSMutableAttributedString *myString= [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", profileClass.username]];
+        [myString appendAttributedString:attachmentString];
+        lblProfileName.attributedText = myString;
+    } else {
+        lblProfileName.text = profileClass.username;
+    }
+    
     lblSupporters.text = profileClass.followers_count;
     lblSupporting.text = profileClass.following_count;
     [imgProfileView loadImageFromURL:profileClass.profile_picture withTempImage:@"avatar"];
@@ -871,7 +854,7 @@
     cell.lblLikes.text = [NSString stringWithFormat:@"%@",photoClass.like_count];
     cell.lblComments.text = [NSString stringWithFormat:@"%@",photoClass.comment_count];
     
-    [cell.imgView loadImageFromURL:photoClass.photo withTempImage:@""];
+    [cell.imgView loadImageFromURL:photoClass.photo withTempImage:nil];
 
     //cell.imgView.shouldShowLoader = YES;
     
@@ -896,16 +879,6 @@
     if(photoClass.isLike){
         cell.imgLike.image = [UIImage imageNamed:@"likeselect"];
     }
-    
-    /*
-    if(tapCellIndex==indexPath.row){
-        cell.imgView.hidden=YES;
-        cell.viewInfo.hidden=NO;
-    }else{
-        cell.imgView.hidden=NO;
-        cell.viewInfo.hidden=YES;
-    }
-    */
     
     [cell.btnUserName setTag:indexPath.row];
     [cell.btnUserName addTarget:self action:@selector(showUser:) forControlEvents:UIControlEventTouchUpInside];
@@ -966,38 +939,6 @@
     photoViewController.view.frame = appDelegate.window.frame;
     
     [appDelegate.window addSubview:photoViewController.view];
-
-    /*
-    if(previousIndexPath==nil){
-        currentCell.imgView.hidden=YES;
-        currentCell.viewInfo.hidden=NO;
-        
-        [AnimatedMethods animatedFlipFromRight:currentCell.imgView secondView:currentCell.viewInfo];
-        
-        previousIndexPath=indexPath;
-        return;
-    }
-    
-    if (previousIndexPath.row!=indexPath.row) {
-        currentCell.imgView.hidden=YES;
-        currentCell.viewInfo.hidden=NO;
-        
-        [AnimatedMethods animatedFlipFromRight:currentCell.imgView secondView:currentCell.viewInfo];
-        
-        if(previousIndexPath!=nil){
-            PreivousCell.imgView.hidden=NO;
-            PreivousCell.viewInfo.hidden=YES;
-            // [AnimatedMethods animatedFlipFrombottom:PreivousCell.imgView secondView:PreivousCell.viewInfo];
-        }
-        previousIndexPath=indexPath;
-    }else{
-        currentCell.imgView.hidden=NO;
-        currentCell.viewInfo.hidden=YES;
-        [AnimatedMethods animatedFlipFromLeft:currentCell.imgView secondView:currentCell.viewInfo];
-        
-        previousIndexPath=nil;
-    }
-    */
 }
 
 -(void)onCommentList:(CustomButton*)sender{
@@ -1137,26 +1078,9 @@
              if ([data length] > 0 && error == nil){
                  NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
                  if(JSONValue != nil){
-                     //  NSLog(@"Jsonvalue=%@",JSONValue);
+
                      if([[JSONValue allKeys]count] > 5){
-                         /*
-                          int likecount=(int)[photoClass.like_count integerValue];
-                          if(photoClass.isLike){
-                          likecount--;
-                          }else{
-                          likecount++;
-                          }
-                          
-                          photoClass.like_count=[NSString stringWithFormat:@"%d",likecount];
-                          photoClass.isLike=!photoClass.isLike;
-                          
-                          selectCell.imgLike.image=[UIImage imageNamed:@"like_icon"];
-                          if(photoClass.isLike){
-                          selectCell.imgLike.image=[UIImage imageNamed:@"likeselect"];
-                          }
-                          selectCell.lblLikes.text=[NSString stringWithFormat:@"%@",photoClass.like_count];
-                          */
-                         // [collectionVWHome reloadData];
+
                      } else {
                          //[self showMessage:SERVER_ERROR];
                      }
@@ -1217,7 +1141,7 @@
 
 -(void)moveView:(UIView *)fromView fromFrame:(CGRect) fromFrame toFrame:(CGRect) toFrame{
     fromView.frame = fromFrame;
-    [UIView animateWithDuration:0.5
+    [UIView animateWithDuration:0.1
                           delay:0.0
                         options:UIViewAnimationOptionTransitionFlipFromTop
                      animations:^{
@@ -1226,6 +1150,7 @@
                      completion:^(BOOL finished){
                          viewSwipeFront.hidden = YES;
                          btnTopBar.hidden = NO;
+                         pgControl.hidden = YES;
                      }
      ];
 }
@@ -1251,6 +1176,7 @@
 - (IBAction)onTopBarClick:(id)sender {
     isViewUp = NO;
     btnTopBar.hidden = YES;
+    pgControl.hidden = NO;
     CGFloat viewTopHeight = viewTOP.frame.size.height;
     CGRect newFrame = CGRectMake(0, 0, self.view.frame.size.width, viewTopHeight);
     CGRect collFrame = CGRectMake(0, 40+btnTopBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height-20-btnTopBar.frame.size.height);
