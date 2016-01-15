@@ -201,6 +201,15 @@
     return YES;
 }
 
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    
+    NSUInteger length = [textView.text length] - range.length + [text length];
+    if(textView == txtDescription){
+        return length <= 250;
+    }
+    return YES;
+}
+
 - (IBAction)onChooseImage:(id)sender {
     [self.view endEditing:YES];
   //[self.navigationController pushViewController:choosePhotoViewController animated:NO];
