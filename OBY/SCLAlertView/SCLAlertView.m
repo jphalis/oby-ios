@@ -230,6 +230,7 @@ SCLTimerDisplay *buttonTimer;
     {
         _viewText.textContainerInset = UIEdgeInsetsZero;
         _viewText.textContainer.lineFragmentPadding = 0;
+        self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
     // Colors
@@ -676,7 +677,7 @@ SCLTimerDisplay *buttonTimer;
     }
     else
     {
-//        NSLog(@"Unknown action type for button");
+        NSLog(@"Unknown action type for button");
     }
 }
 
@@ -763,6 +764,11 @@ SCLTimerDisplay *buttonTimer;
             viewColor = UIColorFromHEX(0x6c125d);
             break;
             
+        case Question:
+            viewColor = UIColorFromHEX(0x727375);
+            iconImage = SCLAlertViewStyleKit.imageOfQuestion;
+            break;
+            
         case Custom:
             viewColor = color;
             iconImage = image;
@@ -806,46 +812,19 @@ SCLTimerDisplay *buttonTimer;
         
         // Adjust text view size, if necessary
         CGSize sz = CGSizeMake(_windowWidth - 24.0f, CGFLOAT_MAX);
-        NSDictionary *attr = @{NSFontAttributeName:self.viewText.font};
-        NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading | NSStringDrawingUsesDeviceMetrics;
         
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0"))
+        CGSize size = [_viewText sizeThatFits:sz];
+        
+        CGFloat ht = ceilf(size.height);
+        if (ht < _subTitleHeight)
         {
-            CGRect r = CGRectNull;
-            if(_attributedFormatBlock == nil) {
-                NSString *str = subTitle;
-                r = [str boundingRectWithSize:sz options:options attributes:attr context:nil];
-            } else {
-                r = [_viewText.attributedText boundingRectWithSize:sz options:options context:nil];
-            }
-            
-            CGFloat ht = ceilf(r.size.height);
-            if (ht < _subTitleHeight)
-            {
-                self.windowHeight -= (_subTitleHeight - ht);
-                self.subTitleHeight = ht;
-            }
-            else
-            {
-                self.windowHeight += (ht - _subTitleHeight);
-                self.subTitleHeight = ht;
-            }
+            self.windowHeight -= (_subTitleHeight - ht);
+            self.subTitleHeight = ht;
         }
         else
         {
-            NSAttributedString *str =[[NSAttributedString alloc] initWithString:subTitle attributes:attr];
-            CGRect r = [str boundingRectWithSize:sz options:options context:nil];
-            CGFloat ht = ceilf(r.size.height) + 10.0f;
-            if (ht < _subTitleHeight)
-            {
-                self.windowHeight -= (_subTitleHeight - ht);
-                self.subTitleHeight = ht;
-            }
-            else
-            {
-                self.windowHeight += (ht - _subTitleHeight);
-                self.subTitleHeight = ht;
-            }
+            self.windowHeight += (ht - _subTitleHeight);
+            self.subTitleHeight = ht;
         }
         _viewText.frame = CGRectMake(12.0f, _subTitleY, _windowWidth - 24.0f, _subTitleHeight);
     }
@@ -865,7 +844,7 @@ SCLTimerDisplay *buttonTimer;
     {
         if (_audioPlayer == nil)
         {
-//            NSLog(@"You need to set your sound file first");
+            NSLog(@"You need to set your sound file first");
         }
         else
         {
@@ -1004,6 +983,12 @@ SCLTimerDisplay *buttonTimer;
     [self showTitle:vc image:nil color:nil title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Waiting];
 }
 
+- (void)showQuestion:(UIViewController *)vc title:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
+{
+    [self showTitle:vc image:nil color:nil title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Question];
+}
+
+
 #pragma mark - Show using new window
 
 - (void)showSuccess:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
@@ -1050,6 +1035,11 @@ SCLTimerDisplay *buttonTimer;
 {
     [self addActivityIndicatorView];
     [self showTitle:nil image:nil color:nil title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Waiting];
+}
+
+- (void)showQuestion:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
+{
+    [self showTitle:nil image:nil color:nil title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Question];
 }
 
 #pragma mark - Visibility
