@@ -369,7 +369,7 @@
                  [self setBusy:NO];
 
                  if ([data length] > 0 && error == nil){
-                     NSDictionary * JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+                     NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
                      
                      if([[JSONValue objectForKey:@"userid"]integerValue]>0){
                          SetUserName([JSONValue objectForKey:@"user"]);
@@ -380,9 +380,10 @@
                          [self performSelectorInBackground:@selector(getProfileDetails) withObject:nil];
                          [self pushingView:YES];
                      } else {
+                         NSArray *arr = [JSONValue objectForKey:@"non_field_errors"];
                          alert.showAnimationType = SlideInFromLeft;
                          alert.hideAnimationType = SlideOutToBottom;
-                         [alert showNotice:self title:@"Notice" subTitle:LOGIN_ERROR closeButtonTitle:@"OK" duration:0.0f];
+                         [alert showNotice:self title:@"Notice" subTitle:[arr firstObject] closeButtonTitle:@"OK" duration:0.0f];
                      }
                  } else {
                      showServerError();
