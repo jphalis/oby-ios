@@ -220,10 +220,10 @@ enum{
     
     if (btn.tag == previousIndex){
        // return;
-        [UIView animateWithDuration:0.3 animations:^(void){
+//        [UIView animateWithDuration:0.3 animations:^(void){
 //            [currentView setContentOffset:CGPointMake(0.0f,0.0f)];
 //            [currentView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
-        }];
+//        }];
 //        NSLog(@"Click");
     } else {
         if (previousIndex != 0){

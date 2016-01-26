@@ -27,6 +27,14 @@ MBProgressHUD *hud;
     // Display white status bar
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
+    if(GetUserName == nil){
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+        UINavigationController *navController = [storyboard instantiateViewControllerWithIdentifier:@"NavigationControllerOBY"];
+        AuthViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"AuthViewController"];
+        navController.viewControllers = @[vc];
+        [self.window setRootViewController:navController];
+    }
+    
     // Dark keyboard
     [[UITextField appearance] setKeyboardAppearance:UIKeyboardAppearanceDark];
     
@@ -169,7 +177,7 @@ MBProgressHUD *hud;
     return myStringMatchesRegEx;
 }
 
-+(BOOL) isValidCharacter:(NSString*)string filterCharSet:(NSString*)set {
++(BOOL)isValidCharacter:(NSString*)string filterCharSet:(NSString*)set {
     NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:set] invertedSet];
     NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
     

@@ -1203,6 +1203,11 @@
 					A5B6C3BF1BE8E942004F295C = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = Y64H65SHZL;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					A5B6C3D81BE8E942004F295C = {
 						CreatedOnToolsVersion = 6.4;

@@ -54,9 +54,9 @@
 @implementation AuthViewController
 
 - (void)viewDidLoad {
-    if(GetUserName != nil){
-        [self pushingView:NO];
-    }
+//    if(GetUserName != nil){
+//        [self pushingView:NO];
+//    }
     
     self.automaticallyAdjustsScrollViewInsets = NO;
 //    self.edgesForExtendedLayout = UIRectEdgeNone;
