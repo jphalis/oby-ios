@@ -616,7 +616,7 @@
             alert.hideAnimationType = SlideOutToBottom;
             [alert showNotice:self title:@"Notice" subTitle:EMPTY_USERNAME closeButtonTitle:@"OK" duration:0.0f];
             return NO;
-        } else if ([[txtSignupUsrName.text Trim] length] < 3){
+        } else if ([[txtSignupUsrName.text Trim] length] <= 3){
             alert.showAnimationType = SlideInFromLeft;
             alert.hideAnimationType = SlideOutToBottom;
             [alert showNotice:self title:@"Notice" subTitle:USERNAME_MIN_LEGTH closeButtonTitle:@"OK" duration:0.0f];
