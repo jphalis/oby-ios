@@ -204,7 +204,7 @@
     cell.lblDescription.text = photoClass.description;
     cell.lblLikes.text = [NSString stringWithFormat:@"%@",photoClass.like_count];
     cell.lblComments.text = [NSString stringWithFormat:@"%@",photoClass.comment_count];
-    [cell.imgView loadImageFromURL:photoClass.photo withTempImage:@""];
+    [cell.imgView loadImageFromURL:photoClass.photo withTempImage:@"blankImage"];
     
     cell.lblLikes.textColor = [AnimatedMethods colorFromHexString:@"#cacaca"];
     cell.lblComments.textColor = [AnimatedMethods colorFromHexString:@"#cacaca"];
@@ -285,7 +285,7 @@
         return;
     }
     
-    UIImage *img = [UIImage imageNamed:@"spining"];
+    UIImage *img = [UIImage imageNamed:@"blankImage"];
     if([AnimatedMethods firstimage:img isEqualTo:currentCell.imgView.image]){
         return;
     }

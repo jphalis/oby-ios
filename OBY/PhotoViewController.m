@@ -168,7 +168,7 @@
     [AnimatedMethods zoomIn:self.view];
     
     SetIsImageView(YES);
-    [imageView loadImageFromURL:photoURL withTempImage:@""];
+    [imageView loadImageFromURL:photoURL withTempImage:@"blankImage"];
     imageView.shouldShowLoader = YES;
     
     [super viewWillAppear:YES];

@@ -854,7 +854,7 @@
     cell.lblLikes.text = [NSString stringWithFormat:@"%@",photoClass.like_count];
     cell.lblComments.text = [NSString stringWithFormat:@"%@",photoClass.comment_count];
     
-    [cell.imgView loadImageFromURL:photoClass.photo withTempImage:nil];
+    [cell.imgView loadImageFromURL:photoClass.photo withTempImage:@"blankImage"];
 
     //cell.imgView.shouldShowLoader = YES;
     
@@ -927,7 +927,7 @@
         return;
     }
     
-    UIImage *img = [UIImage imageNamed:@"spining"];
+    UIImage *img = [UIImage imageNamed:@"blankImage"];
     if([AnimatedMethods firstimage:img isEqualTo:currentCell.imgView.image]){
         return;
     }

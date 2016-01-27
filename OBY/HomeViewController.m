@@ -825,7 +825,7 @@
     
     //spining
     
-      [cell.imgView loadImageFromURL:photoClass.photo withTempImage:nil];
+      [cell.imgView loadImageFromURL:photoClass.photo withTempImage:@"blankImage"];
     
    // cell.imgView.shouldShowLoader=YES;
     
@@ -881,7 +881,7 @@
         return;
     }
 
-    UIImage *img = [UIImage imageNamed:@"spining"];
+    UIImage *img = [UIImage imageNamed:@"blankImage"];
     if([self firstimage:img isEqualTo:currentCell.imgView.image]){
         return;
     }
