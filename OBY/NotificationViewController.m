@@ -15,6 +15,7 @@
 #import "ProfileViewController.h"
 #import "SDIAsyncImageView.h"
 #import "TableViewCellNotification.h"
+#import "SinglePhotoViewController.h"
 
 
 @interface NotificationViewController ()<PhotoViewControllerDelegate>{
@@ -142,6 +143,11 @@
                      notificationClass.modified = [[arrNotifResult objectAtIndex:i]valueForKey:@"modified"];
                          
                      //target_photo
+                     if([[arrNotifResult objectAtIndex:i]valueForKey:@"view_target_photo_url"] != [NSNull null]){
+                         notificationClass.view_target_photo_url = [[arrNotifResult objectAtIndex:i]valueForKey:@"view_target_photo_url"];
+                     } else {
+                         notificationClass.view_target_photo_url = @"";
+                     }
                      if([[arrNotifResult objectAtIndex:i]valueForKey:@"target_url"] != [NSNull null]){
                          notificationClass.target_url = [[arrNotifResult objectAtIndex:i]valueForKey:@"target_url"];
                      } else {
@@ -254,9 +260,12 @@
         if([notificationClass.target_photo isEqualToString:@""]){
             return;
         } else {
-            photoViewController.photoURL = notificationClass.target_photo;
-            photoViewController.view.frame = appDelegate.window.frame;
-            [self.view addSubview:photoViewController.view];
+            SinglePhotoViewController *singlePhotoViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SinglePhotoViewController"];
+            singlePhotoViewController.singlePhotoURL = notificationClass.view_target_photo_url;
+            [self.navigationController pushViewController:singlePhotoViewController animated:YES];
+//            photoViewController.photoURL = notificationClass.target_photo;
+//            photoViewController.view.frame = appDelegate.window.frame;
+//            [self.view addSubview:photoViewController.view];
         }
     }
 }
@@ -269,9 +278,12 @@
     if([notificationClass.target_photo isEqualToString:@""]){
         return;
     } else {
-        photoViewController.photoURL = notificationClass.target_photo;
-        photoViewController.view.frame = appDelegate.window.frame;
-        [self.view addSubview:photoViewController.view];
+        SinglePhotoViewController *singlePhotoViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SinglePhotoViewController"];
+        singlePhotoViewController.singlePhotoURL = notificationClass.view_target_photo_url;
+        [self.navigationController pushViewController:singlePhotoViewController animated:YES];
+//        photoViewController.photoURL = notificationClass.target_photo;
+//        photoViewController.view.frame = appDelegate.window.frame;
+//        [self.view addSubview:photoViewController.view];
     }
 }
 

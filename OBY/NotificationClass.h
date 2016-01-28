@@ -22,6 +22,7 @@
 @property (nonatomic, retain) NSString *recipient;
 @property (nonatomic, retain) NSString *created;
 @property (nonatomic, retain) NSString *modified;
+@property (nonatomic, retain) NSString *view_target_photo_url;
 @property (nonatomic, retain) NSString *target_url;
 @property (nonatomic, retain) NSString *target_photo;
 

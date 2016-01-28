@@ -825,7 +825,7 @@
     
     //spining
     
-      [cell.imgView loadImageFromURL:photoClass.photo withTempImage:@"blankImage"];
+      [cell.imgView loadImageFromURL:photoClass.photo withTempImage:@""];
     
    // cell.imgView.shouldShowLoader=YES;
     

@@ -164,6 +164,7 @@
 		D0461F641C2766440024738F /* SVWebViewControllerActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = D0461F551C2766440024738F /* SVWebViewControllerActivity.m */; };
 		D0461F661C2882420024738F /* KiipSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0461F651C2882420024738F /* KiipSDK.framework */; };
 		D0461F681C28838B0024738F /* KiipSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D0461F671C28838B0024738F /* KiipSDKResources.bundle */; };
+		D06158F01C598E4C0017079D /* SinglePhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D06158EF1C598E4C0017079D /* SinglePhotoViewController.m */; };
 		D0AC4C771C2C506A00A110AE /* icon-error.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AC4C6E1C2C506A00A110AE /* icon-error.png */; };
 		D0AC4C781C2C506A00A110AE /* icon-error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AC4C6F1C2C506A00A110AE /* icon-error@2x.png */; };
 		D0AC4C791C2C506A00A110AE /* icon-info.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AC4C701C2C506A00A110AE /* icon-info.png */; };
@@ -467,6 +468,8 @@
 		D0461F571C2766440024738F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/SVWebViewController.strings"; sourceTree = "<group>"; };
 		D0461F651C2882420024738F /* KiipSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KiipSDK.framework; sourceTree = "<group>"; };
 		D0461F671C28838B0024738F /* KiipSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = KiipSDKResources.bundle; sourceTree = "<group>"; };
+		D06158EE1C598E4C0017079D /* SinglePhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglePhotoViewController.h; sourceTree = "<group>"; };
+		D06158EF1C598E4C0017079D /* SinglePhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinglePhotoViewController.m; sourceTree = "<group>"; };
 		D0AC4C6E1C2C506A00A110AE /* icon-error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-error.png"; sourceTree = "<group>"; };
 		D0AC4C6F1C2C506A00A110AE /* icon-error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-error@2x.png"; sourceTree = "<group>"; };
 		D0AC4C701C2C506A00A110AE /* icon-info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-info.png"; sourceTree = "<group>"; };
@@ -624,6 +627,8 @@
 				BE4074AF1BFB291F0074C151 /* SearchViewController.m */,
 				BE03003C1BEB3E420005183F /* SettingViewController.h */,
 				BE03003D1BEB3E420005183F /* SettingViewController.m */,
+				D06158EE1C598E4C0017079D /* SinglePhotoViewController.h */,
+				D06158EF1C598E4C0017079D /* SinglePhotoViewController.m */,
 				BE2E37591BF9CB4C001C6120 /* SupportViewController.h */,
 				BE2E375A1BF9CB4C001C6120 /* SupportViewController.m */,
 				BE0BC5F51BEB302A00C5903E /* TimeLineViewController.h */,
@@ -1335,6 +1340,7 @@
 				BE2045A81BF5A89600288548 /* SDWebImagePrefetcher.m in Sources */,
 				BEAD57401BF464AE00289E4E /* ProfileClass.m in Sources */,
 				BE0300441BEB3E780005183F /* CreateViewController.m in Sources */,
+				D06158F01C598E4C0017079D /* SinglePhotoViewController.m in Sources */,
 				BE0300661BEB84550005183F /* AFImageRequestOperation.m in Sources */,
 				A5B6C4171BE8ED7A004F295C /* ForgotViewController.m in Sources */,
 				BEBD0E2A1BEDC24600A62198 /* HTHorizontalSelectionList.m in Sources */,

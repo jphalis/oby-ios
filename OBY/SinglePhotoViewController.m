@@ -1,5 +1,5 @@
 //
-//  HashtagViewController.m
+//  SinglePhotoViewController.m
 //
 
 #import "AnimatedMethods.h"
@@ -15,21 +15,21 @@
 #import "PhotoViewController.h"
 #import "ProfileViewController.h"
 #import "Reachability.h"
+#import "SinglePhotoViewController.h"
 #import "SupportViewController.h"
 #import "TWMessageBarManager.h"
 #import "UIImageView+WebCache.h"
 
 
-@interface HashtagViewController ()<PhotoViewControllerDelegate,CommentViewControllerDelegate> {
+@interface SinglePhotoViewController ()<PhotoViewControllerDelegate,CommentViewControllerDelegate> {
     AppDelegate *appDelegate;
     
     __weak IBOutlet UICollectionView *colltionVw;
     __weak IBOutlet UILabel *headerLabel;
     
-    NSInteger hashtagCount;
     NSString *nextURL;
     NSString *previousURL;
-    NSMutableArray *arrHashtagPhotos;
+    NSMutableArray *arrSinglePhoto;
     NSInteger tapCellIndex;
     NSIndexPath *previousIndexPath;
     UIRefreshControl *refreshControl;
@@ -41,13 +41,12 @@
 - (IBAction)onBack:(id)sender;
 @end
 
-@implementation HashtagViewController
-@synthesize titleLabel;
-@synthesize tagURL;
+@implementation SinglePhotoViewController
+@synthesize singlePhotoURL;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    arrHashtagPhotos = [[NSMutableArray alloc]init];
+    arrSinglePhoto = [[NSMutableArray alloc]init];
     tapCellIndex = -1;
     
     previousIndexPath = nil;
@@ -75,7 +74,7 @@
     
     [self.view addGestureRecognizer:viewRight];
     
-    [self getHashtagDetails];
+    [self getPhotoDetails];
     
     // Do any additional setup after loading the view.
 }
@@ -84,13 +83,13 @@
     appDelegate.tabbar.tabView.hidden = NO;
     [super viewWillAppear:YES];
     
-    headerLabel.text = titleLabel;
+//    headerLabel.text = @"Photo";
     
     if(GetisComment == YES){
         SetisComment(NO);
         return;
     }
-    if(arrHashtagPhotos.count > 0){
+    if(arrSinglePhoto.count > 0){
         [self scrollToTop];
     }
 }
@@ -115,7 +114,7 @@
         if(i == 1){
             return;
         }
-        PhotoClass *photoClass = [arrHashtagPhotos objectAtIndex:indexPath.row];
+        PhotoClass *photoClass = [arrSinglePhoto objectAtIndex:indexPath.row];
         photoViewController.photoURL = photoClass.photo;
         photoViewController.photoDeleteURL = photoClass.photo_url;
         photoViewController.photoCreator = photoClass.creator;
@@ -126,7 +125,7 @@
 }
 
 -(void)startRefresh{
-    [self getHashtagDetails];
+    [self getPhotoDetails];
 }
 
 -(void)removeImage{
@@ -168,12 +167,12 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return [arrHashtagPhotos count];
+    return [arrSinglePhoto count];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     CollectionViewCellimage *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"hashtagCollView" forIndexPath:indexPath];
-    PhotoClass *photoClass = [arrHashtagPhotos objectAtIndex:indexPath.row];
+    PhotoClass *photoClass = [arrSinglePhoto objectAtIndex:indexPath.row];
     
     // Change words that start with # to blue
     //    NSString *aString = [NSString stringWithFormat:@"%@", photoClass.description];
@@ -271,7 +270,7 @@
     NSString *newTitle = [title substringFromIndex:1];
     newTitle = [newTitle lowercaseString];
     HashtagViewController *hashtagViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HashtagViewController"];
-    tagURL = [NSString stringWithFormat:@"%@%@",HASHTAGURL,newTitle];
+    NSString *tagURL = [NSString stringWithFormat:@"%@%@",HASHTAGURL,newTitle];
     hashtagViewController.tagURL = tagURL;
     hashtagViewController.titleLabel = [title uppercaseString];
     [self.navigationController pushViewController:hashtagViewController animated:YES];
@@ -292,7 +291,7 @@
     
     tapCellIndex = indexPath.row;
     
-    PhotoClass *photoClass = [arrHashtagPhotos objectAtIndex:indexPath.row];
+    PhotoClass *photoClass = [arrSinglePhoto objectAtIndex:indexPath.row];
     photoViewController.photoURL = photoClass.photo;
     photoViewController.photoDeleteURL = photoClass.photo_url;
     photoViewController.photoCreator = photoClass.creator;
@@ -337,7 +336,7 @@
     CollectionViewCellimage *currentCell=(CollectionViewCellimage *)[colltionVw cellForItemAtIndexPath:indexPath];
     
     PhotoClass *photoClass;
-    photoClass = [arrHashtagPhotos objectAtIndex:sender.tag];
+    photoClass = [arrSinglePhoto objectAtIndex:sender.tag];
     
     SupportViewController *supportViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SupportViewController"];
     
@@ -355,7 +354,7 @@
     CollectionViewCellimage *currentCell=(CollectionViewCellimage *)[colltionVw cellForItemAtIndexPath:indexPath];
     
     PhotoClass *photoClass;
-    photoClass = [arrHashtagPhotos objectAtIndex:sender.tag];
+    photoClass = [arrSinglePhoto objectAtIndex:sender.tag];
     
     SupportViewController *supportViewController=[self.storyboard instantiateViewControllerWithIdentifier:@"SupportViewController"];
     
@@ -369,7 +368,7 @@
 }
 
 -(void)showUser:(CustomButton*)sender{
-    PhotoClass *photoClass = [arrHashtagPhotos objectAtIndex:sender.tag];
+    PhotoClass *photoClass = [arrSinglePhoto objectAtIndex:sender.tag];
     ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
     profileViewController.userURL=photoClass.creator_url;
     [self.navigationController pushViewController:profileViewController animated:YES];
@@ -378,7 +377,7 @@
 -(void)onComment:(CustomButton*)sender{
     SetisComment(YES);
     PhotoClass *photoClass;
-    photoClass = [arrHashtagPhotos objectAtIndex:sender.tag];
+    photoClass = [arrSinglePhoto objectAtIndex:sender.tag];
     commentViewController.selectRow = (int)sender.tag;
     commentViewController.photoClass = photoClass;
     [self.navigationController pushViewController:commentViewController animated:YES];
@@ -389,7 +388,7 @@
     CollectionViewCellimage *currentCell = (CollectionViewCellimage *)[colltionVw cellForItemAtIndexPath:indexPath];
     
     PhotoClass *photoClass;
-    photoClass = [arrHashtagPhotos objectAtIndex:sender.tag];
+    photoClass = [arrSinglePhoto objectAtIndex:sender.tag];
     
     checkNetworkReachability();
     
@@ -492,15 +491,15 @@
     });
 }
 
--(void)getHashtagDetails{
+-(void)getPhotoDetails{
     checkNetworkReachability();
     
     [appDelegate showHUDAddedToView:self.view message:@""];
 
-    NSString *urlString = tagURL;
+    NSString *urlString = singlePhotoURL;
+    NSLog(@"%@", singlePhotoURL);
     NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                              timeoutInterval:60];
-    
     NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
     NSData *plainData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
@@ -510,153 +509,131 @@
     
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
         
-         if(error != nil){
-             [appDelegate hideHUDForView2:self.view];
-         }
-         if ([data length] > 0 && error == nil){
-             NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-             
-             if([JSONValue isKindOfClass:[NSDictionary class]] && [[JSONValue allKeys]count] > 2){
-                 hashtagCount = [[JSONValue objectForKey:@"count"]integerValue];
-                 nextURL = [JSONValue objectForKey:@"next"];
-                 previousURL = [JSONValue objectForKey:@"previous"];
-             
-                 NSArray *arrHashtagResult = [JSONValue objectForKey:@"results"];
-                 
-                 if([JSONValue count] > 0){
-                     for (int i = 0; i < arrHashtagResult.count; i++) {
-                         NSMutableDictionary *dictResult;
-                         dictResult = [[NSMutableDictionary alloc]init];
-                         dictResult = [arrHashtagResult objectAtIndex:i];
-                         PhotoClass *photoClass = [[PhotoClass alloc]init];
-                         photoClass.category_url = [dictResult objectForKey:@"category_url"];
-                         photoClass.photo_url = [dictResult objectForKey:@"photo_url"];
-                         photoClass.comment_count = [dictResult objectForKey:@"comment_count"];
-                         //photoClass.comment_set = [dictResult objectForKey:@"comment_set"];
-                         photoClass.created = [dictResult objectForKey:@"created"];
-                         photoClass.creator = [[dictResult objectForKey:@"creator"] uppercaseString];
-                         photoClass.creator_url = [dictResult objectForKey:@"creator_url"];
-                         photoClass.description = [dictResult objectForKey:@"description"];
+            if(error != nil){
+                [appDelegate hideHUDForView2:self.view];
+            }
+            if ([data length] > 0 && error == nil){
+                NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+
+                if([JSONValue isKindOfClass:[NSDictionary class]]){
+                    PhotoClass *photoClass = [[PhotoClass alloc]init];
+                    photoClass.category_url = [JSONValue objectForKey:@"category_url"];
+                    photoClass.photo_url = [JSONValue objectForKey:@"photo_url"];
+                    photoClass.comment_count = [JSONValue objectForKey:@"comment_count"];
+                    photoClass.created = [JSONValue objectForKey:@"created"];
+                    photoClass.creator = [JSONValue objectForKey:@"creator"];
+                    photoClass.creator_url = [JSONValue objectForKey:@"creator_url"];
+                    photoClass.description = [JSONValue objectForKey:@"description"];
                          
-                         int userId = [[dictResult objectForKey:@"id"]intValue];
-                         int like_Count = [[dictResult objectForKey:@"like_count"]intValue];
+                    int userId = [[JSONValue objectForKey:@"id"]intValue];
+                    int like_Count = [[JSONValue objectForKey:@"like_count"]intValue];
                          
-                         photoClass.PhotoId = [NSString stringWithFormat:@"%d",userId];
-                         photoClass.like_count = [NSString stringWithFormat:@"%d",like_Count];
+                    photoClass.PhotoId = [NSString stringWithFormat:@"%d",userId];
+                    photoClass.like_count = [NSString stringWithFormat:@"%d",like_Count];
                          
-                         photoClass.likers = [[NSMutableArray alloc]init];
-                         photoClass.comment_set = [[NSMutableArray alloc]init];
+                    photoClass.likers = [[NSMutableArray alloc]init];
+                    photoClass.comment_set = [[NSMutableArray alloc]init];
                          
-                         NSArray *arrLiker = [dictResult objectForKey:@"get_likers_info"];
+                    NSArray *arrLiker = [JSONValue objectForKey:@"get_likers_info"];
+                    photoClass.isLike = NO;
+                    if([JSONValue objectForKey:@"get_likers_info"] > 0){
+                        for(int l = 0; l < [arrLiker count]; l++){
+                            NSDictionary *dictUsers = [arrLiker objectAtIndex:l];
+                            if([[dictUsers objectForKey:@"username"] isEqualToString:GetUserName]){
+                                photoClass.isLike = YES;
+                                break;
+                            }
+                        }
+                    }
                          
-                         photoClass.isLike = NO;
-                         if([[dictResult objectForKey:@"get_likers_info"] count] > 0){
-                             for(int l = 0; l < [arrLiker count]; l++){
-                                 NSDictionary *dictUsers = [arrLiker objectAtIndex:l];
-                                 if([[dictUsers objectForKey:@"username"] isEqualToString:GetUserName]){
-                                     photoClass.isLike = YES;
-                                     break;
-                                 }
-                             }
-                         }
-                         
-                         for(int j = 0; j < arrLiker.count; j++){
-                             NSMutableDictionary *dictFollowerInfo = [[NSMutableDictionary alloc]init];
-                             NSDictionary *dictUserDetail = [arrLiker objectAtIndex:j];
+                    for(int j = 0; j < arrLiker.count; j++){
+                        NSMutableDictionary *dictFollowerInfo = [[NSMutableDictionary alloc]init];
+                        NSDictionary *dictUserDetail = [arrLiker objectAtIndex:j];
                              
-                             if([dictUserDetail objectForKey:@"profile_picture"] == [NSNull null]){
-                                 [dictFollowerInfo setObject:@"" forKey:@"user__profile_picture"];
-                             } else {
-                                 NSString *proflURL = [NSString stringWithFormat:@"%@%@",@"https://oby.s3.amazonaws.com/media/",[dictUserDetail objectForKey:@"profile_picture"]];
+                        if([dictUserDetail objectForKey:@"profile_picture"] == [NSNull null]){
+                            [dictFollowerInfo setObject:@"" forKey:@"user__profile_picture"];
+                        } else {
+                            NSString *proflURL = [NSString stringWithFormat:@"%@%@",@"https://oby.s3.amazonaws.com/media/",[dictUserDetail objectForKey:@"profile_picture"]];
                                  
-                                 [dictFollowerInfo setValue:proflURL forKey:@"user__profile_picture"];
-                             }
-                             if([dictUserDetail objectForKey:@"username"] == [NSNull null]){
-                                 [dictFollowerInfo setObject:@"" forKey:@"user__username"];
-                             } else {
-                                 [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"username"] forKey:@"user__username"];
-                             }
-                             if([dictUserDetail objectForKey:@"full_name"] == [NSNull null]){
-                                 [dictFollowerInfo setObject:@"" forKey:@"full_name"];
-                             } else {
-                                 [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"full_name"] forKey:@"full_name"];
-                             }
+                            [dictFollowerInfo setValue:proflURL forKey:@"user__profile_picture"];
+                        }
+                        if([dictUserDetail objectForKey:@"username"] == [NSNull null]){
+                            [dictFollowerInfo setObject:@"" forKey:@"user__username"];
+                        } else {
+                            [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"username"] forKey:@"user__username"];
+                        }
+                        if([dictUserDetail objectForKey:@"full_name"] == [NSNull null]){
+                            [dictFollowerInfo setObject:@"" forKey:@"full_name"];
+                        } else {
+                            [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"full_name"] forKey:@"full_name"];
+                        }
                              
-                             NSString *fullString;
-                             NSString *userName = [dictFollowerInfo objectForKey:@"user__username"];
-                             NSString *fullName = [dictFollowerInfo objectForKey:@"full_name"];
+                        NSString *fullString;
+                        NSString *userName = [dictFollowerInfo objectForKey:@"user__username"];
+                        NSString *fullName = [dictFollowerInfo objectForKey:@"full_name"];
                              
-                             fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
+                        fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
+                        NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
+                        NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
+                        [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
+                        [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
                              
-                             NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
-                             
-                             NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
-                             
-                             [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
-                             
-                             [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
-                             
-                             [photoClass.likers addObject:dictFollowerInfo];
-                         }
+                        [photoClass.likers addObject:dictFollowerInfo];
+                    }
                          
-                         NSArray *arrCommentSet = [dictResult objectForKey:@"comment_set"];
+                    NSArray *arrCommentSet = [JSONValue objectForKey:@"comment_set"];;
                          
-                         for(int k = 0; k < arrCommentSet.count; k++){
-                             NSMutableDictionary *dictFollowerInfo = [[NSMutableDictionary alloc]init];
-                             NSDictionary *dictUserDetail = [arrCommentSet objectAtIndex:k];
+                    for(int k = 0; k < arrCommentSet.count; k++){
+                        NSMutableDictionary *dictFollowerInfo = [[NSMutableDictionary alloc]init];
+                        NSDictionary *dictUserDetail = [arrCommentSet objectAtIndex:k];
                              
-                             if([dictUserDetail objectForKey:@"profile_picture"] == [NSNull null]){
-                                 [dictFollowerInfo setObject:@"" forKey:@"user__profile_picture"];
-                             } else {
-                                 NSString *proflURL = [NSString stringWithFormat:@"%@%@",@"https://oby.s3.amazonaws.com/media/",[dictUserDetail objectForKey:@"profile_picture"]];
+                        if([dictUserDetail objectForKey:@"profile_picture"] == [NSNull null]){
+                            [dictFollowerInfo setObject:@"" forKey:@"user__profile_picture"];
+                        } else {
+                            NSString *proflURL = [NSString stringWithFormat:@"%@%@",@"https://oby.s3.amazonaws.com/media/",[dictUserDetail objectForKey:@"profile_picture"]];
                                  
-                                 [dictFollowerInfo setValue:proflURL forKey:@"user__profile_picture"];
-                             }
-                             if([dictUserDetail objectForKey:@"user"] == [NSNull null]){
-                                 [dictFollowerInfo setObject:@"" forKey:@"user__username"];
+                            [dictFollowerInfo setValue:proflURL forKey:@"user__profile_picture"];
+                        }
+                        if([dictUserDetail objectForKey:@"user"] == [NSNull null]){
+                            [dictFollowerInfo setObject:@"" forKey:@"user__username"];
                                  
-                             } else {
-                                 [dictFollowerInfo setObject:[[dictUserDetail objectForKey:@"user"]lastPathComponent] forKey:@"user__username"];
-                             }
-                             if([dictUserDetail objectForKey:@"text"] == [NSNull null]){
-                                 [dictFollowerInfo setObject:@"" forKey:@"text"];
-                             } else {
-                                 [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"text"] forKey:@"text"];
-                             }
+                        } else {
+                            [dictFollowerInfo setObject:[[dictUserDetail objectForKey:@"user"]lastPathComponent] forKey:@"user__username"];
+                        }
+                        if([dictUserDetail objectForKey:@"text"] == [NSNull null]){
+                            [dictFollowerInfo setObject:@"" forKey:@"text"];
+                        } else {
+                            [dictFollowerInfo setObject:[dictUserDetail objectForKey:@"text"] forKey:@"text"];
+                        }
                              
-                             NSString *fullString;
-                             NSString *fullName = [[dictFollowerInfo objectForKey:@"user__username"]lastPathComponent];
-                             NSString *userName = [dictFollowerInfo objectForKey:@"text"];
+                        NSString *fullString;
+                        NSString *fullName = [[dictFollowerInfo objectForKey:@"user__username"]lastPathComponent];
+                        NSString *userName = [dictFollowerInfo objectForKey:@"text"];
                              
-                             fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
+                        fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
+                        NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
+                        NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
+                        [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
+                        [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
                              
-                             NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
-                             
-                             NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
-                             
-                             [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
-                             
-                             [dictFollowerInfo setValue:hogan forKey:@"usernameText"];
-                             
-                             [photoClass.comment_set addObject:dictFollowerInfo];
-                         }
-                         photoClass.modified = [dictResult objectForKey:@"modified"];
-                         photoClass.photo = [dictResult objectForKey:@"photo"];
-                         photoClass.slug = [dictResult objectForKey:@"slug"];
+                        [photoClass.comment_set addObject:dictFollowerInfo];
+                    }
+                    photoClass.modified = [JSONValue objectForKey:@"modified"];
+                    photoClass.photo = [JSONValue objectForKey:@"photo"];
+                    photoClass.slug = [JSONValue objectForKey:@"slug"];
                          
-                         [arrHashtagPhotos addObject:photoClass];
-                     }
-                     [appDelegate hideHUDForView2:self.view];
+                    [arrSinglePhoto addObject:photoClass];
+                     
+                    [appDelegate hideHUDForView2:self.view];
                      //[self setBusy:NO];
-                     [self showImages];
-                 }
-             }
-         } else {
-             [refreshControl endRefreshing];
-             [appDelegate hideHUDForView2:self.view];
-             //[self setBusy:NO];
-             showServerError();
-         }
+                    [self showImages];
+                }
+            } else {
+                [refreshControl endRefreshing];
+                [appDelegate hideHUDForView2:self.view];
+                //[self setBusy:NO];
+                showServerError();
+            }
      }];
 }
 

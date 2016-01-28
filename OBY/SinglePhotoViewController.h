@@ -1,14 +1,13 @@
 //
-//  HashtagViewController.h
+//  SinglePhotoViewController.h
 //  OBY
 //
 
 #import <UIKit/UIKit.h>
 
 
-@interface HashtagViewController : UIViewController
+@interface SinglePhotoViewController : UIViewController
 
-@property (strong, nonatomic)NSString *titleLabel;
-@property (strong, nonatomic)NSString *tagURL;
+@property (strong, nonatomic)NSString *singlePhotoURL;
 
 @end
