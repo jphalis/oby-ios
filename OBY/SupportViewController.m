@@ -4,6 +4,8 @@
 
 #import "AppDelegate.h"
 #import "defs.h"
+#import "GlobalFunctions.h"
+#import "ProfileClass.h"
 #import "ProfileViewController.h"
 #import "SupportViewController.h"
 #import "TableViewCellNotification.h"

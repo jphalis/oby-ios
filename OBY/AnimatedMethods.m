@@ -168,7 +168,7 @@
     [UIView animateWithDuration:0 animations:^{
         fromView.transform = CGAffineTransformMakeScale(1.0, 1.0);
     }completion:^(BOOL finished){
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:0.4 animations:^{
             fromView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.001, 0.001);
             
         }completion:^(BOOL finished){
@@ -180,7 +180,7 @@
 
 +(void)animatedMovingView:(UIView *)fromView fromFrame:(CGRect) fromFrame toFrame:(CGRect) toFrame{
     fromView.frame = fromFrame;
-    [UIView animateWithDuration:0.5
+    [UIView animateWithDuration:0.2
                           delay:0.0
                         options:UIViewAnimationOptionTransitionFlipFromTop
                      animations:^{

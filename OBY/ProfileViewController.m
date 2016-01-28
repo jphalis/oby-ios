@@ -179,7 +179,7 @@
     
     [viewSwipeFront bringSubviewToFront:collectionVW];
     
-    [btnTopBar setTitle:[userURL lastPathComponent] forState:UIControlStateNormal];
+    [btnTopBar setTitle:[NSString stringWithFormat:@"Scroll to top  ( %@ )", [userURL lastPathComponent]] forState:UIControlStateNormal];
     
     appDelegate.tabbar.tabView.hidden = YES;
     
@@ -230,7 +230,7 @@
     if(viewOne.frame.origin.x == 0.0){
         if(gestureRecognizer.direction == UISwipeGestureRecognizerDirectionLeft){
             
-            [UIView animateWithDuration:0.5
+            [UIView animateWithDuration:0.4
                                   delay:0.0
                                 options:UIViewAnimationOptionTransitionFlipFromTop
                              animations:^{
@@ -257,7 +257,7 @@
 
 -(void)swipeViewTwo:(UISwipeGestureRecognizer *)gestureRecognizer{
     if(viewTwo.frame.origin.x == 0.0){
-        [UIView animateWithDuration:0.5
+        [UIView animateWithDuration:0.4
                               delay:0.0
                             options:UIViewAnimationOptionTransitionFlipFromTop
                          animations:^{
@@ -1128,13 +1128,13 @@
         isViewUp = YES;
         
         CGFloat viewTopHeight = viewTOP.frame.size.height;
-        CGRect newFrame = CGRectMake(0, -viewTopHeight+20, self.view.frame.size.width, viewTopHeight);
+        CGRect newFrame = CGRectMake(0, -viewTopHeight+30, self.view.frame.size.width, viewTopHeight);
         
         collVwOldFrame = collectionVW.frame;
         
         [self moveView:viewTOP fromFrame:viewTOP.frame toFrame:newFrame];
         
-        CGRect collFrame = CGRectMake(0, 40, self.view.frame.size.width, self.view.frame.size.height-40);
+        CGRect collFrame = CGRectMake(0, 50, self.view.frame.size.width, self.view.frame.size.height-50);
         [AnimatedMethods animatedMovingView:collectionVW fromFrame:collVwOldFrame toFrame:collFrame];
     }
 }
@@ -1179,10 +1179,19 @@
     pgControl.hidden = NO;
     CGFloat viewTopHeight = viewTOP.frame.size.height;
     CGRect newFrame = CGRectMake(0, 0, self.view.frame.size.width, viewTopHeight);
-    CGRect collFrame = CGRectMake(0, 40+btnTopBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height-20-btnTopBar.frame.size.height);
+    CGRect collFrame = CGRectMake(0, 50+btnTopBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height-30-btnTopBar.frame.size.height);
     
+    if(arrPhotsList.count > 0){
+        [self scrollToTop];
+    }
     [self moveingView:viewTOP fromFrame:viewTOP.frame toFrame:newFrame];
     [AnimatedMethods animatedMovingView:collectionVW fromFrame:collFrame toFrame:collVwOldFrame];
+}
+
+-(void)scrollToTop{
+    [UIView animateWithDuration:0.5 animations:^(void){
+        [collectionVW scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+    }];
 }
 
 @end
