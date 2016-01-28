@@ -148,10 +148,10 @@
         UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
 
         [scaledImages addObject:newImage];
-        
+
         UIGraphicsEndImageContext();
     }
-
+ 
     return [UIImage animatedImageWithImages:scaledImages duration:self.duration];
 }
 
