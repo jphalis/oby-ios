@@ -105,7 +105,6 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
 
-//    NSLog(@"info=%@",info);
     UIImage *originalImage, *editedImage, *imageToSave;
     editedImage = (UIImage *) [info objectForKey:UIImagePickerControllerEditedImage];
     originalImage = (UIImage *) [info objectForKey:
@@ -150,7 +149,7 @@
     //[self.navigationController popViewControllerAnimated:NO];
 }
 
--(void) imageSelected:(NSArray *)arrayOfImages{
+-(void)imageSelected:(NSArray *)arrayOfImages{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{ // 1
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.view showActivityView];
@@ -183,7 +182,7 @@
                 
             }];
             count++;
-        } // All Images I got
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.view hideActivityView];
         });

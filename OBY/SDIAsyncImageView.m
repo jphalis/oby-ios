@@ -188,39 +188,7 @@ static SDIAsyncImageDownloadManager *_defaultManger=nil;
 -(void)RemoveDelegate:(id<SDIAsyncImageDownloaderDelegate>)delegate{
     
 }
-/*
--(void)asyncImageDownloader:(AsyncImageDownloader *)asimage didcompletedWithLocalURL:(NSString *)strURL
-{
- 
-    NSString *cpath =[strURL lastPathComponent];
-    
-    NSString *stUDID =[dicCatacheUDID objectForKey:cpath];
-    BOOL isValidUpdate=NO;
-    if(stUDID!=nil && [stUDID isKindOfClass:[NSString class]])
-    {
-        NSString *strOldPath =[dicCatache objectForKey:stUDID];
-        
-        if(strOldPath!=nil && [strOldPath isEqualToString:cpath])
-        {
-            [dicCatache removeObjectForKey:stUDID];
-            [dicCatacheUDID removeObjectForKey:cpath];
-            [dicCatacheDelegate removeObjectForKey:stUDID];
-            
-            
-            isValidUpdate=YES;
-            id<AsyncImageDownloaderDelegate> mdelegate =[dicCatacheDelegate objectForKey:stUDID];
-            if(mdelegate && [mdelegate respondsToSelector:@selector(asynchImageView:didCachedImage:)])
-            {
-                
-                [mdelegate asynchImageView:self didCachedImage:strURL];
-            }
-        }
-    }
-    
-    if(isValidUpdate==NO)
-        NSLog(@"Older download");
-}
- */
+
 @end
 
 @implementation SDIAsyncImageView (cache)
@@ -422,7 +390,6 @@ static NSString *strCachePath = nil;
                        // NSString *strpathing=@"/Users/sdi/Library/Developer/CoreSimulator/Devices/D53ECC1D-D72A-47A5-A32C-88D940CA2FAF/data/Containers/Data/Application/3E98DE99-4724-4E61-8E3C-E9F7890D95F2/Library/Caches/BridgeImages/1.png";/Volumes/DATA/Saravanan/Project/Casting/source/jul 1/Casting july 7.zip
                         UIImage *mg = [self GetImageFromStroageForURL:strLocalFilePath];//strLocalFilePath
                         if(mg != nil){
-                           //saravanan
                            //  self.contentMode=UIViewContentModeCenter;
                            // if(GetIsIpad==YES){
                                    // mg =[mg cropCenterAndScaleImageToSize:self.frame.size];
@@ -453,7 +420,6 @@ static NSString *strCachePath = nil;
         }
     } else {
         if(tempImage != nil){
-            // NSLog(@"Temp image loaded");
             //self.contentMode = UIViewContentModeCenter;
                 self.contentMode = UIViewContentModeScaleToFill;
             //self.contentMode = UIViewContentModeScaleAspectFit;

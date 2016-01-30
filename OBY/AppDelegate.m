@@ -4,10 +4,11 @@
 //
 
 #import "AppDelegate.h"
-#import "UIViewControllerAdditions.h"
+#import "AuthViewController.h"
 #import "defs.h"
 #import "MBProgressHUD.h"
-#import "AuthViewController.h"
+#import "NotificationViewController.h"
+#import "UIViewControllerAdditions.h"
 
 
 MBProgressHUD *hud;
@@ -68,7 +69,7 @@ MBProgressHUD *hud;
 // Available in iOS8
 -(void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings{
     
-    [application registerForRemoteNotifications];
+        [application registerForRemoteNotifications];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
@@ -83,8 +84,8 @@ MBProgressHUD *hud;
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
--(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-    // Handle your remote RemoteNotification
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    // Handle your RemoteNotification
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
@@ -214,6 +215,9 @@ MBProgressHUD *hud;
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"UserActive"];
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"UserPassword"];
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"UserMail"];
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"UserEduMail"];
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"UserWebsite"];
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"UserBio"];
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"UserFullName"];
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"ProifilePic"];
 

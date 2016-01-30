@@ -95,109 +95,120 @@ extern AppDelegate *appDelegate;
     #define APNSTOKENGENERATOR @"https://www.obystudio.com/hide/oby/api/device/apns/"
 #endif
 
-#define    SetisComment(x)        [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"isComment"]
-#define    GetisComment            [[NSUserDefaults standardUserDefaults] boolForKey:@"isComment"]
+//#define    SetHomePhotos(x)       [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"HomePhotos"]
+//#define    GetHomePhotos          [[NSUserDefaults standardUserDefaults] objectForKey:@"HomePhotos"]
+
+#define    SetisComment(x)       [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"isComment"]
+#define    GetisComment          [[NSUserDefaults standardUserDefaults] boolForKey:@"isComment"]
 
 #define    SetisUpdate(x)        [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"isUpdate"]
-#define    GetisUpdate            [[NSUserDefaults standardUserDefaults] boolForKey:@"isUpdate"]
+#define    GetisUpdate           [[NSUserDefaults standardUserDefaults] boolForKey:@"isUpdate"]
 
-#define    SetAppKill(x)          [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"AppKill"]
-#define    GetAppKill              [[NSUserDefaults standardUserDefaults] objectForKey:@"AppKill"]
+#define    SetAppKill(x)         [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"AppKill"]
+#define    GetAppKill            [[NSUserDefaults standardUserDefaults] objectForKey:@"AppKill"]
 
-#define    SetUserToken(x)          [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"UserToken"]
-#define    GetUserToken              [[NSUserDefaults standardUserDefaults] objectForKey:@"UserToken"]
+#define    SetUserToken(x)       [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"UserToken"]
+#define    GetUserToken          [[NSUserDefaults standardUserDefaults] objectForKey:@"UserToken"]
 
-#define    SetUserID(x)           [[NSUserDefaults standardUserDefaults] setInteger:(x) forKey:@"UserID"]
-#define    GetUserID               [[NSUserDefaults standardUserDefaults] integerForKey:@"UserID"]
+#define    SetUserID(x)          [[NSUserDefaults standardUserDefaults] setInteger:(x) forKey:@"UserID"]
+#define    GetUserID             [[NSUserDefaults standardUserDefaults] integerForKey:@"UserID"]
 
-#define    SetUserActive(x)           [[NSUserDefaults standardUserDefaults] setInteger:(x) forKey:@"UserActive"]
-#define    GetUserActive               [[NSUserDefaults standardUserDefaults] integerForKey:@"UserActive"]
+#define    SetUserActive(x)      [[NSUserDefaults standardUserDefaults] setInteger:(x) forKey:@"UserActive"]
+#define    GetUserActive         [[NSUserDefaults standardUserDefaults] integerForKey:@"UserActive"]
 
-#define    SetEmailID(x)          [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"EmailID"]
-#define    GetEmailID              [[NSUserDefaults standardUserDefaults] objectForKey:@"EmailID"]
+#define    SetEmailID(x)         [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"EmailID"]
+#define    GetEmailID            [NSUserDefaults standardUserDefaults] objectForKey:@"EmailID"]
 
-#define    SetUserPassword(x)          [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"UserPassword"]
-#define    GetUserPassword              [[NSUserDefaults standardUserDefaults] objectForKey:@"UserPassword"]
+#define    SetUserPassword(x)    [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"UserPassword"]
+#define    GetUserPassword       [[NSUserDefaults standardUserDefaults] objectForKey:@"UserPassword"]
 
-#define    SetisMobile_Registered(x)        [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"isMobileRegistered"]
-#define    GetisMobile_Registered            [[NSUserDefaults standardUserDefaults] boolForKey:@"isMobileRegistered"]
+#define    SetisMobile_Registered(x)      [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"isMobileRegistered"]
+#define    GetisMobile_Registered         [[NSUserDefaults standardUserDefaults] boolForKey:@"isMobileRegistered"]
 
-#define    SetUserName(x)           [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"UserName"]
-#define    GetUserName              [[NSUserDefaults standardUserDefaults] objectForKey:@"UserName"]
+#define    SetUserName(x)         [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"UserName"]
+#define    GetUserName            [[NSUserDefaults standardUserDefaults] objectForKey:@"UserName"]
 
-#define    SetUserFullName(x)           [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"UserFullName"]
-#define    GetUserFullName             [[NSUserDefaults standardUserDefaults] objectForKey:@"UserFullName"]
+#define    SetUserFullName(x)     [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"UserFullName"]
+#define    GetUserFullName        [[NSUserDefaults standardUserDefaults] objectForKey:@"UserFullName"]
 
-#define    SetProifilePic(x)           [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"ProifilePic"]
-#define    GetProifilePic              [[NSUserDefaults standardUserDefaults] objectForKey:@"ProifilePic"]
+#define    SetProifilePic(x)      [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"ProifilePic"]
+#define    GetProifilePic         [[NSUserDefaults standardUserDefaults] objectForKey:@"ProifilePic"]
 
-#define    SetUserMail(x)           [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"UserMail"]
-#define    GetUserMail              [[NSUserDefaults standardUserDefaults] objectForKey:@"UserMail"]
+#define    SetUserMail(x)         [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"UserMail"]
+#define    GetUserMail            [[NSUserDefaults standardUserDefaults] objectForKey:@"UserMail"]
 
-#define    SetFBID(x)           [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"FBID"]
-#define    GetFBID              [[NSUserDefaults standardUserDefaults] objectForKey:@"FBID"]
+#define    SetUserEduMail(x)      [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"UserEduMail"]
+#define    GetUserEduMail         [[NSUserDefaults standardUserDefaults] objectForKey:@"UserEduMail"]
 
-#define    SetMobileNum(x)           [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"MobileNum"]
-#define    GetMobileNum              [[NSUserDefaults standardUserDefaults] objectForKey:@"MobileNum"]
+#define    SetUserWebsite(x)      [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"UserWebsite"]
+#define    GetUserWebsite         [[NSUserDefaults standardUserDefaults] objectForKey:@"UserWebsite"]
 
-#define    SetIsVersion1(x)        [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"Version1"]
-#define    GetsVersion1            [[NSUserDefaults standardUserDefaults] boolForKey:@"Version1"]
+#define    SetUserBio(x)          [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"UserBio"]
+#define    GetUserBio             [[NSUserDefaults standardUserDefaults] objectForKey:@"UserBio"]
 
-#define    SetTutorialOFF(x)        [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"TutorialOFF"]
-#define    GetTutorialOFF            [[NSUserDefaults standardUserDefaults] boolForKey:@"TutorialOFF"]
+#define    SetFBID(x)             [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"FBID"]
+#define    GetFBID                [[NSUserDefaults standardUserDefaults] objectForKey:@"FBID"]
 
-#define    SetisFullView(x)        [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"FullView"]
-#define    GetsFullView            [[NSUserDefaults standardUserDefaults] boolForKey:@"FullView"]
+#define    SetMobileNum(x)        [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"MobileNum"]
+#define    GetMobileNum           [[NSUserDefaults standardUserDefaults] objectForKey:@"MobileNum"]
 
-#define UserDefaults            [NSUserDefaults standardUserDefaults]
+#define    SetIsVersion1(x)       [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"Version1"]
+#define    GetsVersion1           [[NSUserDefaults standardUserDefaults] boolForKey:@"Version1"]
 
-#define SetLat(x)  [UserDefaults setObject:x forKey:@"C_Lat"]
+#define    SetTutorialOFF(x)      [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"TutorialOFF"]
+#define    GetTutorialOFF         [[NSUserDefaults standardUserDefaults] boolForKey:@"TutorialOFF"]
 
-#define GetLat()     [UserDefaults objectForKey:@"C_Lat"]
+#define    SetisFullView(x)       [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"FullView"]
+#define    GetsFullView           [[NSUserDefaults standardUserDefaults] boolForKey:@"FullView"]
 
-#define SetLong(x)  [UserDefaults setObject:x forKey:@"C_Long"]
-#define GetLong()     [UserDefaults objectForKey:@"C_Long"]
+#define    UserDefaults           [NSUserDefaults standardUserDefaults]
 
-#define SetFirst(x)  [UserDefaults setObject:x forKey:@"First"]
-#define GetFirst     [UserDefaults objectForKey:@"First"]
+#define    SetLat(x)              [UserDefaults setObject:x forKey:@"C_Lat"]
+#define    GetLat()               [UserDefaults objectForKey:@"C_Lat"]
 
-#define    SetGender(x)        [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"Gender"]
+#define    SetLong(x)             [UserDefaults setObject:x forKey:@"C_Long"]
+#define    GetLong()              [UserDefaults objectForKey:@"C_Long"]
 
-#define    GetGender            [[NSUserDefaults standardUserDefaults] objectForKey:@"Gender"]
+#define    SetFirst(x)            [UserDefaults setObject:x forKey:@"First"]
+#define    GetFirst               [UserDefaults objectForKey:@"First"]
+
+#define    SetGender(x)           [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"Gender"]
+
+#define    GetGender              [[NSUserDefaults standardUserDefaults] objectForKey:@"Gender"]
 
 #define    SetUnionType(x)        [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"UnionType"]
 
-#define    GetUnionType            [[NSUserDefaults standardUserDefaults] objectForKey:@"UnionType"]
+#define    GetUnionType           [[NSUserDefaults standardUserDefaults] objectForKey:@"UnionType"]
 
-#define    SetPerfomance(x)        [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"Performance"]
+#define    SetPerfomance(x)       [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"Performance"]
 
-#define    GetPerformance            [[NSUserDefaults standardUserDefaults] objectForKey:@"Performance"]
+#define    GetPerformance         [[NSUserDefaults standardUserDefaults] objectForKey:@"Performance"]
 
 #define    SetBirthYear(x)        [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"BirthYear"]
 
-#define    GetBirthYear            [[NSUserDefaults standardUserDefaults] objectForKey:@"BirthYear"]
+#define    GetBirthYear           [[NSUserDefaults standardUserDefaults] objectForKey:@"BirthYear"]
 
 #define    SetCurrentLoaction(x)        [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"CurrentLoaction"]
 
-#define    GetCurrentLoaction            [[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentLoaction"]
+#define    GetCurrentLoaction           [[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentLoaction"]
 
-#define    SetIsFilter(x)        [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"Filter"]
+#define    SetIsFilter(x)         [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"Filter"]
 
 #define    GetIsFilter            [[NSUserDefaults standardUserDefaults] boolForKey:@"Filter"]
 
-#define    SetHelpOverlay(x)        [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"HelpOverlay"]
+#define    SetHelpOverlay(x)      [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"HelpOverlay"]
 
-#define    GetHelpOverlay            [[NSUserDefaults standardUserDefaults] objectForKey:@"HelpOverlay"]
+#define    GetHelpOverlay         [[NSUserDefaults standardUserDefaults] objectForKey:@"HelpOverlay"]
 
 #define    SetInitialScreen(x)        [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"InitialScreen"]
 
-#define    GetInitialScreen            [[NSUserDefaults standardUserDefaults] objectForKey:@"InitialScreen"]
+#define    GetInitialScreen           [[NSUserDefaults standardUserDefaults] objectForKey:@"InitialScreen"]
 
 #define    SetEthnicity(x)        [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"Ethnicity"]
 
-#define    GetEthnicity            [[NSUserDefaults standardUserDefaults] objectForKey:@"Ethnicity"]
+#define    GetEthnicity           [[NSUserDefaults standardUserDefaults] objectForKey:@"Ethnicity"]
 
-#define    SetIsImageView(x)        [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"ImageView"]
-#define    GetsImageView            [[NSUserDefaults standardUserDefaults] boolForKey:@"ImageView"]
+#define    SetIsImageView(x)      [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"ImageView"]
+#define    GetsImageView          [[NSUserDefaults standardUserDefaults] boolForKey:@"ImageView"]
 
 #endif

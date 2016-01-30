@@ -108,7 +108,35 @@
     
     [self performSelectorInBackground:@selector(getSupportList) withObject:nil];
     [self getHomePageDetails];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    appDelegate.tabbar.tabView.hidden = NO;
+    [super viewWillAppear:YES];
+    
     [self addDeviceToken];
+    
+    if(GetisComment == YES){
+        SetisComment(NO);
+        return;
+    }
+    
+    if(isMenuChoosed){
+        if(arrCategoryPhotos.count > 0){
+            [self scrollToTop];
+        }
+    }
+    else {
+        if(appDelegate.arrPhotos.count > 0){
+            [self scrollToTop];
+        }
+    }
+}
+
+-(void)scrollToTop{
+    [UIView animateWithDuration:0.2 animations:^(void){
+        [collectionVWHome scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+    }];
 }
 
 -(void)setComment:(int)selectIndex commentCount:(NSString *)countStr{
@@ -203,33 +231,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
--(void)viewWillAppear:(BOOL)animated{
-    appDelegate.tabbar.tabView.hidden = NO;
-    [super viewWillAppear:YES];
-
-    if(GetisComment == YES){
-        SetisComment(NO);
-        return;
-    }
-    
-    if(isMenuChoosed){
-        if(arrCategoryPhotos.count > 0){
-            [self scrollToTop];
-        }
-    }
-    else {
-        if(appDelegate.arrPhotos.count > 0){
-            [self scrollToTop];
-        }
-    }
-}
-
--(void)scrollToTop{
-    [UIView animateWithDuration:0.2 animations:^(void){
-        [collectionVWHome scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
-    }];
 }
 
 /*
@@ -519,9 +520,6 @@
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
     NSString *authValue = [NSString stringWithFormat:@"Basic %@", base64String];
     [_request setValue:authValue forHTTPHeaderField:@"Authorization"];
-    
-    //[_request setValue:[NSString stringWithFormat:@"Token %@",GetUserToken] forHTTPHeaderField:@"Authorization"];
-
     [_request setHTTPMethod:@"GET"];
     
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
@@ -709,7 +707,9 @@
                          
                          [appDelegate.arrPhotos addObject:photoClass];
                      }
-                     //[self setBusy:NO];
+//                     NSArray *tempHomeArray = [appDelegate.arrPhotos subarrayWithRange:NSMakeRange(0, 3)];
+//                     SetHomePhotos(tempHomeArray);
+                     [self setBusy:NO];
                      [appDelegate hideHUDForView2:self.view];
                      [self showImages];
                  }
@@ -819,13 +819,11 @@
     if(photoClass.isLike){
         cell.imgLike.image = [UIImage imageNamed:@"likeselect"];
     }
-    
+
 //   [cell.imgView sd_setImageWithURL:[NSURL URLWithString:photoClass.photo]
-//                   placeholderImage:[UIImage imageNamed:@""]];
+//                   placeholderImage:[UIImage imageNamed:@"blankImage"]];
     
-    //spining
-    
-      [cell.imgView loadImageFromURL:photoClass.photo withTempImage:@""];
+      [cell.imgView loadImageFromURL:photoClass.photo withTempImage:@"blankImage"];
     
    // cell.imgView.shouldShowLoader=YES;
     

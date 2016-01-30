@@ -52,17 +52,15 @@
 - (void)viewDidLoad {
     appDelegate = [AppDelegate getDelegate];
     
-    if(self.view.frame.size.height == 480 && self.view.frame.size.width == 320){
-        imgProfile.frame = CGRectMake(imgProfile.frame.origin.x+8, imgProfile.frame.origin.y, 60, 60);
-    }
-    imgProfile.layer.cornerRadius = imgProfile.frame.size.width / 2;
-    imgProfile.layer.masksToBounds = YES;
-    
-    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 0, updateBtn.frame.size.width, 1.0)];
-    topBorder.backgroundColor = [UIColor colorWithRed:(235/255.0) green:(235/255.0) blue:(235/255.0) alpha:1.0];
-    [updateBtn addSubview:topBorder];
+    [imgProfile loadImageFromURL:GetProifilePic withTempImage:@"avatar"];
+    txtUserName.text = GetUserName;
+    txtFullName.text = GetUserFullName;
+    txtEmail.text = GetUserMail;
+    txtEduEmail.text = GetUserEduMail;
+    txtWebsite.text = GetUserWebsite;
+    txtBio.text = GetUserBio;
 
-    [self getProfileInfo];
+//    [self getProfileInfo];
     
     [super viewDidLoad];
     
@@ -86,6 +84,22 @@
     UISwipeGestureRecognizer *viewRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
     viewRight.direction = UISwipeGestureRecognizerDirectionRight;
     [scrolVW addGestureRecognizer:viewRight];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    if(self.view.frame.size.height == 480 && self.view.frame.size.width == 320){
+        imgProfile.frame = CGRectMake(imgProfile.frame.origin.x+8, imgProfile.frame.origin.y, 60, 60);
+    }
+    imgProfile.layer.cornerRadius = imgProfile.frame.size.width / 2;
+    imgProfile.layer.masksToBounds = YES;
+    
+    [self getProfileInfo];
+    
+    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 0, updateBtn.frame.size.width, 1.0)];
+    topBorder.backgroundColor = [UIColor colorWithRed:(235/255.0) green:(235/255.0) blue:(235/255.0) alpha:1.0];
+    [updateBtn addSubview:topBorder];
+    
+    [super viewWillAppear:YES];
 }
 
 -(void)swipeRight:(UISwipeGestureRecognizer *)gestureRecognizer{
@@ -118,7 +132,7 @@
     [self.navigationController pushViewController:choosePhotoViewController animated:NO];
 }
 
--(void) imageSelected:(NSArray *)arrayOfImages{
+-(void)imageSelected:(NSArray *)arrayOfImages{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{ // 1
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.view showActivityView];
@@ -164,7 +178,7 @@
 }
 
 -(void)getProfileInfo{
-    [self setBusy:YES];
+//    [self setBusy:YES];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@/",PROFILEURL,GetUserName];
     NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
@@ -178,7 +192,6 @@
     
     [NSURLConnection sendAsynchronousRequest:_request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
          if(error != nil){
-
              [self setBusy:NO];
          }
          if ([data length] > 0 && error == nil){
@@ -301,17 +314,17 @@
     return YES;
 }
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     
-    if([text isEqualToString:@"\n"]){
-        [textView resignFirstResponder];
+        if([text isEqualToString:@"\n"]){
+            [textView resignFirstResponder];
         return NO;
-    }
-    NSUInteger length = [textView.text length] - range.length + [text length];
-    if(textView == txtBio){
-        return length <= 200 ;
-    }
-    return YES;
+        }
+        NSUInteger length = [textView.text length] - range.length + [text length];
+        if(textView == txtBio){
+            return length <= 200 ;
+        }
+        return YES;
 }
 
 -(BOOL) textFieldShouldBeginEditing:(UITextField*)textField {
@@ -480,7 +493,6 @@
     
     NSString *myUniqueName = [NSString stringWithFormat:@"%@-%lu", @"image", (unsigned long)([[NSDate date] timeIntervalSince1970]*10.0)];
 
-    // Dictionary that holds post parameters. You can set your post parameters that your server accepts or programmed to accept.
     NSMutableDictionary* _params = [[NSMutableDictionary alloc] init];
     [_params setObject:[txtUserName.text Trim] forKey:@"username"];
     [_params setObject:[txtEmail.text Trim] forKey:@"email"];
@@ -495,8 +507,6 @@
     }
     [_params setObject:@"true" forKey:@"is_active"];
     [_params setObject:@"true" forKey:@"is_verified"];
-    
-    // [_params setObject:@"" forKey:@"is_admin"];
     
     // the boundary string : a random string, that will not repeat in post data, to separate post data fields.
     NSString *BoundaryConstant = @"----------V2ymHFg03ehbqgZCaKO6jy";
@@ -569,26 +579,31 @@
              [self setBusy:NO];
              
              NSDictionary * JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-//             NSString *strResponse = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
 
              if([JSONValue isKindOfClass:[NSDictionary class]]){
                  if([JSONValue allKeys].count > 5){
-                    // SetUserName(txtUserName.text);
                      SetisUpdate(YES);
-                     
+
                      SetUserName([JSONValue objectForKey:@"username"]);
                      SetUserFullName([JSONValue objectForKey:@"full_name"]);
                      NSString *profilePic;
                      if([JSONValue objectForKey:@"profile_picture"] == [NSNull null]){
                          profilePic = @"";
                      } else {
-                         profilePic = [JSONValue objectForKey:@"profile_picture"];
+                         profilePic=[JSONValue objectForKey:@"profile_picture"];
                      }
                      SetProifilePic(profilePic);
+                     SetUserMail([JSONValue objectForKey:@"email"]);
+                     SetUserEduMail([JSONValue objectForKey:@"edu_email"]);
+                     SetUserWebsite([JSONValue objectForKey:@"website"]);
+                     SetUserBio([JSONValue objectForKey:@"bio"]);
                      
                      alert.showAnimationType = SlideInFromLeft;
                      alert.hideAnimationType = SlideOutToBottom;
                      [alert showSuccess:self title:@"Success" subTitle:UPDATEPROFILE_SUCCESS closeButtonTitle:@"Done" duration:0.0f];
+                     [alert alertIsDismissed:^{
+                         [self.navigationController popViewControllerAnimated:YES];
+                     }];
                  } else if ([JSONValue objectForKey:@"username"]){
                      alert.showAnimationType = SlideInFromLeft;
                      alert.hideAnimationType = SlideOutToBottom;
@@ -696,20 +711,7 @@
     }
 
     imgProfile.image = imageToSave;
-    
-    /*
-     NSData *strProfile;
-     NSString *str=@"";
-     strProfile=UIImageJPEGRepresentation(imageToSave, 1.0);
-     //strProfile = UIImagePNGRepresentation(imageToSave);
-     str = [strProfile base64EncodedStringWithOptions:0];
-     if(isLibrary==YES){
-     [self callingMethod:picker];
-     }else{
-     [self doUploadImage:str];
-     
-     }
-     */
+
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

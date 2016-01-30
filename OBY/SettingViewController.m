@@ -48,15 +48,6 @@ enum{
 - (void)viewDidLoad {
     appDelegate = [AppDelegate getDelegate];
     
-    if(self.view.frame.size.height == 480 && self.view.frame.size.width == 320){
-        imgEdit.frame = CGRectMake(imgEdit.frame.origin.x+2, imgEdit.frame.origin.y, 30, 30);
-        imgHelp.frame = CGRectMake(imgHelp.frame.origin.x+2, imgHelp.frame.origin.y, 30, 30);
-        imgTerms.frame = CGRectMake(imgTerms.frame.origin.x+2, imgTerms.frame.origin.y, 30, 30);
-        imgLogout.frame = CGRectMake(imgLogout.frame.origin.x+2, imgLogout.frame.origin.y, 30, 30);
-        imgPrivacy.frame = CGRectMake(imgPrivacy.frame.origin.x+2, imgPrivacy.frame.origin.y, 30, 30);
-        imgchangePass.frame = CGRectMake(imgchangePass.frame.origin.x+2, imgchangePass.frame.origin.y, 30, 30);
-    }
-    
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
@@ -122,7 +113,7 @@ enum{
         }
             break;
         case PRIVACY: {
-                checkNetworkReachability();
+            checkNetworkReachability();
             
             // Opens PRIVACYURL in a modal view
             SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithAddress:[NSString stringWithFormat:@"%@",PRIVACYURL]];

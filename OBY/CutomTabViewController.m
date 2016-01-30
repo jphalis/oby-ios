@@ -220,9 +220,8 @@ enum{
     
     if (btn.tag == previousIndex){
        // return;
-//        [UIView animateWithDuration:0.3 animations:^(void){
-//            [currentView setContentOffset:CGPointMake(0.0f,0.0f)];
-//            [currentView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+//        [UIView animateWithDuration:0.5 animations:^(void){
+//            [collectionVW scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
 //        }];
 //        NSLog(@"Click");
     } else {
@@ -253,19 +252,17 @@ enum{
         }
             break;
         case TABTIMELINE: {
-            //self.badge.hidden = YES;
             UINavigationController *navController = [appDelegate.arrViewControllers objectAtIndex:1];
             [self presentThisView: navController];
         }
             break;
         case TABNOTIFICATION: {
-            //self.badge.hidden = YES;
+            self.badgeLabel.hidden = YES;
             UINavigationController *navController = [appDelegate.arrViewControllers objectAtIndex:2];
             [self presentThisView: navController];
             break;
         }
         case TABMISCELLANEOUS: {
-            //self.badge.hidden = YES;
             UINavigationController *navController = [appDelegate.arrViewControllers objectAtIndex:3];
             [self presentThisView: navController];
             break;

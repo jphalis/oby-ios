@@ -403,7 +403,7 @@
     }
 }
 
--(void)doSupport :(int) option{
+-(void)doSupport:(int)option{
     checkNetworkReachability();
     
     [self.view endEditing:YES];

@@ -394,7 +394,7 @@
 }
 
 -(void)getProfileDetails{
-    NSString *urlString = [NSString stringWithFormat:@"%@%@/",PROFILEURL,GetUserName];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@/", PROFILEURL, GetUserName];
     NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                              timeoutInterval:60];
     NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
@@ -427,6 +427,11 @@
                      profilePic=[JSONValue objectForKey:@"profile_picture"];
                  }
                  SetProifilePic(profilePic);
+                 SetUserMail([JSONValue objectForKey:@"email"]);
+                 NSLog(@"Email: %@", [JSONValue objectForKey:@"email"]);
+                 SetUserEduMail([JSONValue objectForKey:@"edu_email"]);
+                 SetUserWebsite([JSONValue objectForKey:@"website"]);
+                 SetUserBio([JSONValue objectForKey:@"bio"]);
 
                  [self setBusy:NO];
              } else {
@@ -513,7 +518,8 @@
     SCLAlertView *alert = [[SCLAlertView alloc] init];
     
     NSString *usname = [[txtSignupUsrName.text Trim] lowercaseString];
-    NSString *params = [NSString stringWithFormat:@"{\"username\":\"%@\",\"email\":\"%@\",\"password\":\"%@\"}",usname,[txtSignupEmail.text Trim],[txtSignupPass.text Trim]];
+    NSString *email = [[txtSignupEmail.text Trim] lowercaseString];
+    NSString *params = [NSString stringWithFormat:@"{\"username\":\"%@\",\"email\":\"%@\",\"password\":\"%@\"}",usname,email,[txtSignupPass.text Trim]];
     NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[params length]];
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",SIGNUPURL]];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
