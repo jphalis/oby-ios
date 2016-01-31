@@ -10,6 +10,7 @@
 #import "ProfileViewController.h"
 #import "SettingViewController.h"
 #import "SVModalWebViewController.h"
+#import "TableViewCellSettings.h"
 #import "TWMessageBarManager.h"
 
 
@@ -22,24 +23,9 @@
 
 @interface SettingViewController (){
     AppDelegate *appDelegate;
-    
-    __weak IBOutlet UIImageView *imgLogout;
-    __weak IBOutlet UIImageView *imgPrivacy;
-    __weak IBOutlet UIImageView *imgTerms;
-    __weak IBOutlet UIImageView *imgHelp;
-    __weak IBOutlet UIImageView *imgEdit;
-    __weak IBOutlet UIImageView *imgchangePass;
 }
-enum{
-    EDITPROFILE = 1,
-    HELPCENTER,
-    TERMS,
-    LOGOUT,
-    PRIVACY,
-    CHANGEPASS
-};
+
 - (IBAction)onBack:(id)sender;
-- (IBAction)onClick:(id)sender;
 
 @end
 
@@ -85,17 +71,67 @@ enum{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (IBAction)onClick:(id)sender {
-    switch ([sender tag]) {
-        case EDITPROFILE:{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;    //count of sections
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 5;    //count of rows
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    tableView.tableFooterView = [[UIView alloc] init];
+    
+    TableViewCellSettings *cell = [tableView dequeueReusableCellWithIdentifier:@"SettingsCell" forIndexPath:indexPath];
+    
+    switch (indexPath.row) {
+        case 0: {
+            cell.category.text = @"account";
+            cell.fields.text = @"email, name, bio, website, gender";
+            break;
+        }
+        case 1: {
+            cell.category.text = @"password";
+            cell.fields.text = @"change password";
+            break;
+        }
+        case 2: {
+            cell.category.text = @"terms of service";
+            cell.fields.text = @"";
+            break;
+        }
+        case 3: {
+            cell.category.text = @"privacy policy";
+            cell.fields.text = @"";
+            break;
+        }
+        case 4: {
+            cell.category.text = @"sign out";
+            cell.fields.text = @"";
+            break;
+        }
+        default: {
+            break;
+        }
+    }
+    
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.row) {
+        case 0:{
             EditProfileViewController *editProfileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"EditProfileViewController"];
             [self.navigationController pushViewController:editProfileViewController animated:YES];
-        }
             break;
-        case HELPCENTER:{
         }
+        case 1:{
+            ChangePassViewController *changePassViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ChangePassViewController"];
+            [self.navigationController pushViewController:changePassViewController animated:YES];
             break;
-        case TERMS:{
+        }
+        case 2:{
             checkNetworkReachability();
             // Opens TERMSURL in a modal view
             SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithAddress:[NSString stringWithFormat:@"%@",TERMSURL]];
@@ -103,16 +139,9 @@ enum{
             
             // Opens TERMSURL in Safari
             // [[UIApplication sharedApplication]openURL:[NSURL URLWithString:TERMSURL]];
-        }
             break;
-        case LOGOUT: {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Are you sure you want to sign out?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
-            alert.delegate = self;
-            alert.tag = 100;
-            [alert show];
         }
-            break;
-        case PRIVACY: {
+        case 3: {
             checkNetworkReachability();
             
             // Opens PRIVACYURL in a modal view
@@ -121,15 +150,18 @@ enum{
             
             // Opens PRIVACYURL in Safari
             // [[UIApplication sharedApplication]openURL:[NSURL URLWithString:PRIVACYURL]];
+            break;
         }
+        case 4: {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Are you sure you want to sign out?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+            alert.delegate = self;
+            alert.tag = 100;
+            [alert show];
             break;
-        case CHANGEPASS: {
-            ChangePassViewController *changePassViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ChangePassViewController"];
-            [self.navigationController pushViewController:changePassViewController animated:YES];
         }
+        default: {
             break;
-        default:
-            break;
+        }
     }
 }
 
@@ -140,3 +172,4 @@ enum{
 }
 
 @end
+

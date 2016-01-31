@@ -496,6 +496,7 @@
                                                                            type:TWMessageBarMessageTypeSuccess
                                                                        duration:3.0];
                      [self.navigationController popViewControllerAnimated:YES];
+                     doRewardCheck();
                  } else {
                      showServerError();
                  }

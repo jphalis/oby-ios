@@ -14,5 +14,6 @@
 
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+#import <CoreData/CoreData.h>
 
 #endif /* OBY_Prefix_pch */

@@ -123,6 +123,8 @@
 		BEE990B71C08534C009F6C97 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEE990B61C08534C009F6C97 /* CommentViewController.m */; };
 		BEF41B651C0D5FE400BF957E /* likeselect.png in Resources */ = {isa = PBXBuildFile; fileRef = BEF41B641C0D5FE400BF957E /* likeselect.png */; };
 		D006BB3A1C2B8885005C7B1E /* ARDESTINE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D006BB391C2B8334005C7B1E /* ARDESTINE.ttf */; };
+		D01A339E1C5D301100CC6201 /* AnonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D01A339D1C5D301100CC6201 /* AnonViewController.m */; };
+		D01A33A01C5D33CF00CC6201 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D01A339F1C5D33CF00CC6201 /* CoreData.framework */; };
 		D03867BC1C4A08CC00C64FAD /* SCLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = D03867AE1C4A08CC00C64FAD /* SCLAlertView.m */; };
 		D03867BD1C4A08CC00C64FAD /* SCLAlertViewResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = D03867B01C4A08CC00C64FAD /* SCLAlertViewResponder.m */; };
 		D03867BE1C4A08CC00C64FAD /* SCLAlertViewStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D03867B21C4A08CC00C64FAD /* SCLAlertViewStyleKit.m */; };
@@ -149,6 +151,10 @@
 		D0461F661C2882420024738F /* KiipSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0461F651C2882420024738F /* KiipSDK.framework */; };
 		D0461F681C28838B0024738F /* KiipSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D0461F671C28838B0024738F /* KiipSDKResources.bundle */; };
 		D06158F01C598E4C0017079D /* SinglePhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D06158EF1C598E4C0017079D /* SinglePhotoViewController.m */; };
+		D072C4E51C5DA519004F4AF3 /* OBY.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D072C4E31C5DA519004F4AF3 /* OBY.xcdatamodeld */; };
+		D072C5061C5DB6BD004F4AF3 /* Photo+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = D072C5031C5DB6BD004F4AF3 /* Photo+CoreDataProperties.m */; };
+		D072C5071C5DB6BD004F4AF3 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = D072C5051C5DB6BD004F4AF3 /* Photo.m */; };
+		D072C50D1C5DC92A004F4AF3 /* TableViewCellSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = D072C50C1C5DC92A004F4AF3 /* TableViewCellSettings.m */; };
 		D0AC4C771C2C506A00A110AE /* icon-error.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AC4C6E1C2C506A00A110AE /* icon-error.png */; };
 		D0AC4C781C2C506A00A110AE /* icon-error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AC4C6F1C2C506A00A110AE /* icon-error@2x.png */; };
 		D0AC4C791C2C506A00A110AE /* icon-info.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AC4C701C2C506A00A110AE /* icon-info.png */; };
@@ -385,6 +391,9 @@
 		BEE990B61C08534C009F6C97 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
 		BEF41B641C0D5FE400BF957E /* likeselect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = likeselect.png; sourceTree = "<group>"; };
 		D006BB391C2B8334005C7B1E /* ARDESTINE.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ARDESTINE.ttf; sourceTree = "<group>"; };
+		D01A339C1C5D301100CC6201 /* AnonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnonViewController.h; sourceTree = "<group>"; };
+		D01A339D1C5D301100CC6201 /* AnonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnonViewController.m; sourceTree = "<group>"; };
+		D01A339F1C5D33CF00CC6201 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		D03867AD1C4A08CC00C64FAD /* SCLAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertView.h; sourceTree = "<group>"; };
 		D03867AE1C4A08CC00C64FAD /* SCLAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLAlertView.m; sourceTree = "<group>"; };
 		D03867AF1C4A08CC00C64FAD /* SCLAlertViewResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLAlertViewResponder.h; sourceTree = "<group>"; };
@@ -437,6 +446,13 @@
 		D0461F671C28838B0024738F /* KiipSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = KiipSDKResources.bundle; sourceTree = "<group>"; };
 		D06158EE1C598E4C0017079D /* SinglePhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglePhotoViewController.h; sourceTree = "<group>"; };
 		D06158EF1C598E4C0017079D /* SinglePhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinglePhotoViewController.m; sourceTree = "<group>"; };
+		D072C4E41C5DA519004F4AF3 /* OBY.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OBY.xcdatamodel; sourceTree = "<group>"; };
+		D072C5021C5DB6BD004F4AF3 /* Photo+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Photo+CoreDataProperties.h"; path = "Core Data/Photo+CoreDataProperties.h"; sourceTree = "<group>"; };
+		D072C5031C5DB6BD004F4AF3 /* Photo+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Photo+CoreDataProperties.m"; path = "Core Data/Photo+CoreDataProperties.m"; sourceTree = "<group>"; };
+		D072C5041C5DB6BD004F4AF3 /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Photo.h; path = "Core Data/Photo.h"; sourceTree = "<group>"; };
+		D072C5051C5DB6BD004F4AF3 /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Photo.m; path = "Core Data/Photo.m"; sourceTree = "<group>"; };
+		D072C50B1C5DC92A004F4AF3 /* TableViewCellSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCellSettings.h; sourceTree = "<group>"; };
+		D072C50C1C5DC92A004F4AF3 /* TableViewCellSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCellSettings.m; sourceTree = "<group>"; };
 		D0AC4C6E1C2C506A00A110AE /* icon-error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-error.png"; sourceTree = "<group>"; };
 		D0AC4C6F1C2C506A00A110AE /* icon-error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-error@2x.png"; sourceTree = "<group>"; };
 		D0AC4C701C2C506A00A110AE /* icon-info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-info.png"; sourceTree = "<group>"; };
@@ -496,6 +512,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D01A33A01C5D33CF00CC6201 /* CoreData.framework in Frameworks */,
 				D0C6C5101C288739002E5B5F /* MediaPlayer.framework in Frameworks */,
 				D0C6C50E1C28872E002E5B5F /* PassKit.framework in Frameworks */,
 				D0C6C50C1C288729002E5B5F /* AdSupport.framework in Frameworks */,
@@ -539,6 +556,7 @@
 		A5B6C3C21BE8E942004F295C /* OBY */ = {
 			isa = PBXGroup;
 			children = (
+				D072C4E61C5DA545004F4AF3 /* Core Data */,
 				BE0909121BEE101B0077DFE8 /* CellViews */,
 				A5B6C40D1BE8E9EE004F295C /* Common */,
 				A5B6C3EA1BE8E96A004F295C /* External */,
@@ -591,6 +609,8 @@
 		A5B6C3E91BE8E950004F295C /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				D01A339C1C5D301100CC6201 /* AnonViewController.h */,
+				D01A339D1C5D301100CC6201 /* AnonViewController.m */,
 				A5B6C3CA1BE8E942004F295C /* AuthViewController.h */,
 				A5B6C3CB1BE8E942004F295C /* AuthViewController.m */,
 				BE0300471BEB50940005183F /* CategoryViewController.h */,
@@ -765,6 +785,7 @@
 		BE03007E1BEB89570005183F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D01A339F1C5D33CF00CC6201 /* CoreData.framework */,
 				D0C6C50F1C288739002E5B5F /* MediaPlayer.framework */,
 				D0C6C50D1C28872E002E5B5F /* PassKit.framework */,
 				D0C6C50B1C288729002E5B5F /* AdSupport.framework */,
@@ -829,6 +850,8 @@
 				BE03004F1BEB7DDD0005183F /* CollectionViewCellimage.m */,
 				BE09090F1BEE10140077DFE8 /* TableViewCellNotification.h */,
 				BE0909101BEE10140077DFE8 /* TableViewCellNotification.m */,
+				D072C50B1C5DC92A004F4AF3 /* TableViewCellSettings.h */,
+				D072C50C1C5DC92A004F4AF3 /* TableViewCellSettings.m */,
 			);
 			name = CellViews;
 			sourceTree = "<group>";
@@ -1083,6 +1106,18 @@
 				D0461F531C2766440024738F /* SVWebViewControllerActivitySafari@2x.png */,
 			);
 			path = Safari;
+			sourceTree = "<group>";
+		};
+		D072C4E61C5DA545004F4AF3 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				D072C4E31C5DA519004F4AF3 /* OBY.xcdatamodeld */,
+				D072C5021C5DB6BD004F4AF3 /* Photo+CoreDataProperties.h */,
+				D072C5031C5DB6BD004F4AF3 /* Photo+CoreDataProperties.m */,
+				D072C5041C5DB6BD004F4AF3 /* Photo.h */,
+				D072C5051C5DB6BD004F4AF3 /* Photo.m */,
+			);
+			name = "Core Data";
 			sourceTree = "<group>";
 		};
 		D0AC4C6C1C2C506A00A110AE /* StatusBarNotifications */ = {
@@ -1385,9 +1420,11 @@
 				D03867C21C4A08CC00C64FAD /* UIImage+ImageEffects.m in Sources */,
 				A5B6C4041BE8E9B7004F295C /* SBJson4StreamParserState.m in Sources */,
 				D0D4789A1C59C46900251A68 /* SDWebImageCompat.m in Sources */,
+				D072C5061C5DB6BD004F4AF3 /* Photo+CoreDataProperties.m in Sources */,
 				D040B7A01C2F5AE2001CD53B /* HashtagViewController.m in Sources */,
 				BE03006A1BEB84550005183F /* AFURLConnectionOperation.m in Sources */,
 				D0D478A31C59C46900251A68 /* UIImage+WebP.m in Sources */,
+				D072C50D1C5DC92A004F4AF3 /* TableViewCellSettings.m in Sources */,
 				BE4279E61C02D60000E3F50D /* MMPickerView.m in Sources */,
 				BE0909081BEE03FC0077DFE8 /* TimeLineClass.m in Sources */,
 				D03BF8E51C31DE19006AA088 /* CommentListViewController.m in Sources */,
@@ -1404,7 +1441,10 @@
 				BED84ECC1BECD19200E5C734 /* PhotoClass.m in Sources */,
 				D03867BC1C4A08CC00C64FAD /* SCLAlertView.m in Sources */,
 				BEA44D941BF307260024BF55 /* ProfileViewController.m in Sources */,
+				D072C4E51C5DA519004F4AF3 /* OBY.xcdatamodeld in Sources */,
 				A5B6C4031BE8E9B7004F295C /* SBJson4Writer.m in Sources */,
+				D01A339E1C5D301100CC6201 /* AnonViewController.m in Sources */,
+				D072C5071C5DB6BD004F4AF3 /* Photo.m in Sources */,
 				D0D478A21C59C46900251A68 /* UIImage+MultiFormat.m in Sources */,
 				BE0300651BEB84550005183F /* AFHTTPRequestOperation.m in Sources */,
 				D0461F5E1C2766440024738F /* SVWebViewControllerActivityChrome.m in Sources */,
@@ -1682,6 +1722,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		D072C4E31C5DA519004F4AF3 /* OBY.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D072C4E41C5DA519004F4AF3 /* OBY.xcdatamodel */,
+			);
+			currentVersion = D072C4E41C5DA519004F4AF3 /* OBY.xcdatamodel */;
+			path = OBY.xcdatamodeld;
+			sourceTree = SOURCE_ROOT;
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A5B6C3B81BE8E942004F295C /* Project object */;
 }

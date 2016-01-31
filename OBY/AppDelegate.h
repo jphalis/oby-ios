@@ -10,10 +10,17 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, KiipDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
+@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
+@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
+- (void)saveContext;
+- (NSURL *)applicationDocumentsDirectory;
+
 +(AppDelegate*) getDelegate;
 +(void)showMessage:(NSString *)message;
 
+@property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) NSMutableArray *arrTimeLinePhotos;
 @property (strong, nonatomic) NSMutableArray *arrHashtagPhotos;
 @property (strong, nonatomic) NSMutableArray *arrSupports;

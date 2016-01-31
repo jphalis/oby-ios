@@ -72,31 +72,48 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [arrDetails count];    //count number of row from counting array hear catagory is An Array
+    return 3;    //count number of row from counting array hear catagory is An Array
 }
 
 
-- (UITableViewCell *)tableView:(UITableView *)tableView
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     TableViewCellNotification *cell = [tableView dequeueReusableCellWithIdentifier:@"SupportCell" forIndexPath:indexPath];
     
-    NSMutableDictionary *dictUser = [arrDetails objectAtIndex:indexPath.row];
+//    NSMutableDictionary *dictUser = [arrDetails objectAtIndex:indexPath.row];
+//    
+////    cell.txtNotification.attributedText = [dictUser objectForKey:@"usernameText"];
+////    cell.txtNotification.editable = NO;
+//    
+//    cell.usrUsername.text = [dictUser objectForKey:@"user__username"];
+//    cell.usrFullname.text = [dictUser objectForKey:@"user__full_name"];
+//    
+//    if([[dictUser objectForKey:@"user__username"]isEqualToString:GetUserName]){
+//        [dictUser setObject:GetProifilePic forKey:@"user__profile_picture"];
+//        [cell.imgProfile loadImageFromURL:GetProifilePic withTempImage:@"avatar"];
+//    } else {
+//        [cell.imgProfile loadImageFromURL:[dictUser objectForKey:@"user__profile_picture"] withTempImage:@"avatar"];
+//    }
+//    cell.imgProfile.layer.cornerRadius = cell.imgProfile.frame.size.width / 2;
+//    cell.imgProfile.layer.masksToBounds = YES;
     
-//    cell.txtNotification.attributedText = [dictUser objectForKey:@"usernameText"];
-//    cell.txtNotification.editable = NO;
-    
-    cell.usrUsername.text = [dictUser objectForKey:@"user__username"];
-    cell.usrFullname.text = [dictUser objectForKey:@"user__full_name"];
-    
-    if([[dictUser objectForKey:@"user__username"]isEqualToString:GetUserName]){
-        [dictUser setObject:GetProifilePic forKey:@"user__profile_picture"];
-        [cell.imgProfile loadImageFromURL:GetProifilePic withTempImage:@"avatar"];
-    } else {
-        [cell.imgProfile loadImageFromURL:[dictUser objectForKey:@"user__profile_picture"] withTempImage:@"avatar"];
+    switch (indexPath.row) {
+        case 0:
+            cell.usrUsername.text = @"Hey girl";
+            cell.usrFullname.text = @"What's shakin";
+            break;
+        case 1: {
+            cell.usrUsername.text = @"Hey girlafasdfasdf";
+            cell.usrFullname.text = @"What's shakinasdfsdf";
+            break;
+        }
+        case 2:
+            cell.usrUsername.text = @"Heyyyyyy";
+            cell.usrFullname.text = @"What's cracka lackin?";
+            break;
+        default:
+            break;
     }
-    cell.imgProfile.layer.cornerRadius = cell.imgProfile.frame.size.width / 2;
-    cell.imgProfile.layer.masksToBounds = YES;
     
     return cell;
 }

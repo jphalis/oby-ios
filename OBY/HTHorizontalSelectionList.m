@@ -166,11 +166,6 @@
 
         UIButton *button = [self selectionListButtonWithTitle:buttonTitle];
         
-        //UIColor *clr=[UIColor colorWithPatternImage:[UIImage imageNamed:[NSString stringWithFormat:@"%d.png",index]]];
-        
-        //[button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%d.png",index]] forState:UIControlStateNormal];
-        
-        //[button setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"%d.png",index]] forState:UIControlStateNormal];
         button.backgroundColor = [UIColor clearColor];
         button.layer.borderWidth = 2;
         button.layer.cornerRadius = 5.0;
@@ -342,8 +337,6 @@
             selectedButton.layer.borderColor = self.selectionIndicatorColor.CGColor;
             
             NSInteger oldIndex = [self.buttons indexOfObject:oldSelectedButton];
-            
-           // NSLog(@"%d",oldIndex);
            
             switch (oldIndex) {
                 case 0: {
@@ -389,7 +382,7 @@
                 default: {
                     oldSelectedButton.layer.borderColor = [UIColor blueColor].CGColor;
                 }
-                    break;
+                break;
             }
 
             //oldSelectedButton.layer.borderColor = [UIColor clearColor].CGColor;

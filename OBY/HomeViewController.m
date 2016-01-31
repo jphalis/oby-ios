@@ -28,6 +28,7 @@
 
 
 @interface HomeViewController ()<HTHorizontalSelectionListDataSource,HTHorizontalSelectionListDelegate,PhotoViewControllerDelegate,CommentViewControllerDelegate>{
+    
     AppDelegate *appDelegate;
     
     __weak IBOutlet UILabel *lblTitle;
@@ -108,6 +109,23 @@
     
     [self performSelectorInBackground:@selector(getSupportList) withObject:nil];
     [self getHomePageDetails];
+    
+    
+    NSManagedObjectContext *moc = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Photo" inManagedObjectContext:moc];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entity];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"creator" ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    [request setSortDescriptors:sortDescriptors];
+    // Fetch the records and handle an error
+    NSError *error;
+    appDelegate.arrPhotos = [[moc executeFetchRequest:request error:&error] mutableCopy];
+    if (!appDelegate.arrPhotos) {
+        // This is a serious error
+        // Handle accordingly
+        NSLog(@"Failed to load colors from disk");
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -707,8 +725,9 @@
                          
                          [appDelegate.arrPhotos addObject:photoClass];
                      }
+                     
 //                     NSArray *tempHomeArray = [appDelegate.arrPhotos subarrayWithRange:NSMakeRange(0, 3)];
-//                     SetHomePhotos(tempHomeArray);
+
                      [self setBusy:NO];
                      [appDelegate hideHUDForView2:self.view];
                      [self showImages];
