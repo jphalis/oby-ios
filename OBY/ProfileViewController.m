@@ -3,6 +3,7 @@
 //
 
 #import "AnimatedMethods.h"
+#import "AnonViewController.h"
 #import "AppDelegate.h"
 #import "CollectionViewCellimage.h"
 #import "CommentListViewController.h"

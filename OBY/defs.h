@@ -107,6 +107,9 @@ extern AppDelegate *appDelegate;
 #define    SetAppKill(x)         [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"AppKill"]
 #define    GetAppKill            [[NSUserDefaults standardUserDefaults] objectForKey:@"AppKill"]
 
+#define    SetCategories(x)         [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"Categories"]
+#define    GetCategories            [[NSUserDefaults standardUserDefaults] objectForKey:@"Categories"]
+
 #define    SetUserToken(x)       [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"UserToken"]
 #define    GetUserToken          [[NSUserDefaults standardUserDefaults] objectForKey:@"UserToken"]
 

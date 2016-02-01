@@ -109,6 +109,7 @@
             <string>Gibson-SemiBold</string>
             <string>Gibson-SemiBold</string>
             <string>Gibson-SemiBold</string>
+            <string>Gibson-SemiBold</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -630,32 +631,32 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="contentInset" minX="0.0" minY="0.0" maxX="0.0" maxY="50"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Oe3-eW-FYx">
-                                    <size key="itemSize" width="414" height="280"/>
+                                    <size key="itemSize" width="414" height="290"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="timeLineCollView" id="cjC-ST-NF5" customClass="CollectionViewCellimage">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="280"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="290"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="280"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="290"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" id="MpI-Y1-OLm">
-                                                    <rect key="frame" x="0.0" y="3" width="414" height="227.5"/>
+                                                    <rect key="frame" x="0.0" y="3" width="414" height="266.5"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JPHALIS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="FG1-3g-9Dc">
-                                                            <rect key="frame" x="55" y="3" width="238" height="24"/>
+                                                            <rect key="frame" x="55" y="3" width="238" height="28.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-SemiBold" family="Gibson" pointSize="11"/>
                                                             <color key="textColor" red="0.094117647060000004" green="0.35686274509999999" blue="0.5450980392" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="RJW-oE-8Fc">
-                                                            <rect key="frame" x="55" y="2" width="237" height="23.5"/>
+                                                            <rect key="frame" x="55" y="2" width="237" height="27.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="18"/>
                                                             <state key="normal">
@@ -667,11 +668,11 @@
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="El9-wa-MU9" customClass="SDIAsyncImageView">
-                                                            <rect key="frame" x="47" y="29" width="321" height="128"/>
+                                                            <rect key="frame" x="47" y="33.5" width="321" height="160"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="pretty" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="B8l-zr-yg8" customClass="KILabel">
-                                                            <rect key="frame" x="55" y="165" width="303" height="21"/>
+                                                            <rect key="frame" x="55" y="203.5" width="303" height="24"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <color key="tintColor" red="0.094117647060000004" green="0.35686274509999999" blue="0.5450980392" alpha="1" colorSpace="calibratedRGB"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="12"/>
@@ -679,24 +680,24 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="like_icon.png" id="g6x-Qg-yx1">
-                                                            <rect key="frame" x="119" y="195" width="24" height="22.5"/>
+                                                            <rect key="frame" x="119" y="238.5" width="24" height="26.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="umA-ZZ-Nbp">
-                                                            <rect key="frame" x="107" y="186.5" width="42" height="39.5"/>
+                                                            <rect key="frame" x="107" y="228" width="42" height="46.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <state key="normal">
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6Lf-ep-vgX">
-                                                            <rect key="frame" x="146" y="196" width="50" height="22"/>
+                                                            <rect key="frame" x="146" y="239.5" width="50" height="26"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="12"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="zoL-zN-mJp">
-                                                            <rect key="frame" x="148" y="186.5" width="55" height="39.5"/>
+                                                            <rect key="frame" x="148" y="228" width="55" height="46.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="19"/>
                                                             <state key="normal">
@@ -704,24 +705,24 @@
                                                             </state>
                                                         </button>
                                                         <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="comment_icon.png" id="pb3-ir-t1S">
-                                                            <rect key="frame" x="248" y="195.5" width="26" height="22"/>
+                                                            <rect key="frame" x="248" y="239" width="26" height="26"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kXd-v2-tqW">
-                                                            <rect key="frame" x="236" y="186.5" width="42" height="39.5"/>
+                                                            <rect key="frame" x="236" y="228" width="42" height="46.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <state key="normal">
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LV0-ZJ-F2W">
-                                                            <rect key="frame" x="274" y="196" width="50" height="22"/>
+                                                            <rect key="frame" x="274" y="239.5" width="50" height="26"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="12"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="054-Om-t7y">
-                                                            <rect key="frame" x="278" y="187" width="55" height="40"/>
+                                                            <rect key="frame" x="278" y="228.5" width="55" height="47"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="19"/>
                                                             <state key="normal">
@@ -1286,10 +1287,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="header" id="vOt-e3-Qoq">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="back_icon" id="HDi-Iq-tyS">
                                 <rect key="frame" x="3" y="33" width="27" height="24"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1511,6 +1508,10 @@
                                     </label>
                                 </subviews>
                             </scrollView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="header" id="vOt-e3-Qoq">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1532,13 +1533,55 @@
             </objects>
             <point key="canvasLocation" x="1499.5" y="-137.5"/>
         </scene>
-        <!--View Controller-->
+        <!--Anon View Controller-->
         <scene sceneID="NS5-xS-6cn">
             <objects>
-                <viewController id="qna-KZ-7ve" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AnonViewController" id="qna-KZ-7ve" customClass="AnonViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0bL-a1-yag">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="header" id="M2u-bX-7Eq">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Anonymous" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wTQ-mn-ICx">
+                                <rect key="frame" x="0.0" y="26" width="320" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Gibson-SemiBold" family="Gibson" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="back_icon" id="hf2-MA-cS6">
+                                <rect key="frame" x="0.0" y="32" width="27" height="24"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="EM4-9w-Ob5">
+                                <rect key="frame" x="0.0" y="20" width="71" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onBack:" destination="qna-KZ-7ve" eventType="touchUpInside" id="6yM-th-wJA"/>
+                                    <action selector="onBack:" destination="lua-T3-DDw" eventType="touchUpInside" id="oUd-Y3-54B"/>
+                                </connections>
+                            </button>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="eIQ-6m-InV">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GO HOME, YOU'RE DRUNK" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NG6-00-HO2">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="0.59607843140000005" green="0.48627450979999998" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="GillSans-SemiBold" family="Gill Sans" pointSize="40"/>
+                                <color key="textColor" red="0.0" green="0.91372549020000005" blue="0.32549019610000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
@@ -2103,6 +2146,10 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="support" id="WlN-yw-0Zc">
+                                                    <rect key="frame" x="361" y="15" width="45" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
@@ -2373,31 +2420,31 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="contentInset" minX="0.0" minY="0.0" maxX="0.0" maxY="50"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="ysv-Au-hRu">
-                                    <size key="itemSize" width="414" height="280"/>
+                                    <size key="itemSize" width="414" height="289"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" reuseIdentifier="CollectionViewCellimage" id="Opj-TQ-3qm" customClass="CollectionViewCellimage">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="280"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="289"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="280"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="289"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" id="DkL-q6-T6z">
-                                                    <rect key="frame" x="0.0" y="3" width="414" height="248"/>
+                                                    <rect key="frame" x="0.0" y="2.5" width="414" height="264.5"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JPHALIS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="wXa-Du-4yU">
-                                                            <rect key="frame" x="54.5" y="9" width="238.5" height="22"/>
+                                                            <rect key="frame" x="54.5" y="9.5" width="238.5" height="25"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-SemiBold" family="Gibson" pointSize="11"/>
                                                             <color key="textColor" red="0.094117647058823528" green="0.35686274509803922" blue="0.54509803921568623" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Eun-Ng-xcg">
-                                                            <rect key="frame" x="47" y="4" width="320" height="33"/>
+                                                            <rect key="frame" x="47" y="4" width="320" height="37.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="9"/>
                                                             <state key="normal">
@@ -2409,11 +2456,11 @@
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="odF-Et-AD9" customClass="SDIAsyncImageView">
-                                                            <rect key="frame" x="47" y="34" width="320" height="136"/>
+                                                            <rect key="frame" x="47" y="36.5" width="320" height="155"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="pretty" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yCD-ZS-YVI" customClass="KILabel">
-                                                            <rect key="frame" x="54.5" y="175" width="304" height="30"/>
+                                                            <rect key="frame" x="54.5" y="196.5" width="304" height="31.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <color key="tintColor" red="0.094117647060000004" green="0.35686274509999999" blue="0.5450980392" alpha="1" colorSpace="calibratedRGB"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="12"/>
@@ -2421,24 +2468,24 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="like_icon.png" id="6Qu-51-QB5">
-                                                            <rect key="frame" x="119" y="210" width="24.5" height="24"/>
+                                                            <rect key="frame" x="119" y="234" width="24.5" height="25.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kbK-3i-ehw">
-                                                            <rect key="frame" x="107" y="200" width="42.5" height="42"/>
+                                                            <rect key="frame" x="107" y="223" width="42.5" height="45.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <state key="normal">
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HQ3-cA-vMV">
-                                                            <rect key="frame" x="146" y="210" width="50" height="23"/>
+                                                            <rect key="frame" x="146" y="234" width="50" height="24.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="12"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="MiA-2x-igL">
-                                                            <rect key="frame" x="148" y="200" width="55" height="42"/>
+                                                            <rect key="frame" x="148" y="223" width="55" height="45.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="19"/>
                                                             <state key="normal">
@@ -2446,24 +2493,24 @@
                                                             </state>
                                                         </button>
                                                         <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="comment_icon.png" id="rZX-fU-t60">
-                                                            <rect key="frame" x="247" y="210" width="26.5" height="23"/>
+                                                            <rect key="frame" x="247" y="234" width="26.5" height="24.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BLz-6w-3IS">
-                                                            <rect key="frame" x="235" y="200" width="42" height="42"/>
+                                                            <rect key="frame" x="235" y="223" width="42" height="45.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <state key="normal">
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zh5-Dc-fwQ">
-                                                            <rect key="frame" x="274" y="210" width="50" height="23"/>
+                                                            <rect key="frame" x="274" y="234" width="50" height="24.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="12"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="eLH-GG-7iC">
-                                                            <rect key="frame" x="278" y="200" width="55" height="42"/>
+                                                            <rect key="frame" x="278" y="223" width="55" height="45.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="19"/>
                                                             <state key="normal">
@@ -2676,73 +2723,77 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="prototypes" id="iQT-Xm-Rww">
                                 <rect key="frame" x="0.0" y="69" width="414" height="613"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.94117647059999998" green="0.93725490199999995" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="hQq-AZ-6wB">
-                                    <size key="itemSize" width="414" height="248"/>
+                                    <size key="itemSize" width="414" height="290"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="hashtagCollView" id="Hew-TY-tLP" customClass="CollectionViewCellimage">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="248"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="290"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="248"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="290"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" id="Zl4-qb-FYC">
-                                                    <rect key="frame" x="0.0" y="3" width="414" height="242"/>
+                                                    <rect key="frame" x="0.0" y="3" width="414" height="266.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="USERNAME" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="cKM-o9-IzO">
-                                                            <rect key="frame" x="55" y="3" width="238" height="25"/>
+                                                            <rect key="frame" x="55" y="3" width="238" height="27.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-SemiBold" family="Gibson" pointSize="11"/>
                                                             <color key="textColor" red="0.094117647060000004" green="0.35686274509999999" blue="0.5450980392" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rxb-pb-KrN">
-                                                            <rect key="frame" x="55" y="2" width="237" height="25"/>
+                                                            <rect key="frame" x="55" y="2" width="237" height="27.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="18"/>
                                                             <state key="normal">
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
                                                         </button>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="vTC-2C-5o1" customClass="SDIAsyncImageView">
+                                                            <rect key="frame" x="47" y="34" width="321" height="160"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="spining.png" id="pez-jg-4A5">
+                                                            <rect key="frame" x="141" y="57" width="133" height="115"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Caa-HJ-vP8">
-                                                            <rect key="frame" x="277" y="208" width="35" height="23"/>
+                                                            <rect key="frame" x="277" y="238.5" width="35" height="25.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="12"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="spining.png" id="pez-jg-4A5">
-                                                            <rect key="frame" x="141" y="41" width="133" height="115"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vjH-Wr-ixF">
-                                                            <rect key="frame" x="153" y="208" width="35" height="23"/>
+                                                            <rect key="frame" x="153" y="238.5" width="35" height="25.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="12"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="like_icon.png" id="YYE-sS-GcA">
-                                                            <rect key="frame" x="126" y="207" width="24" height="24"/>
+                                                            <rect key="frame" x="126" y="237.5" width="24" height="26.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="comment_icon.png" id="8sM-Eu-Rst">
-                                                            <rect key="frame" x="251" y="208" width="26" height="23"/>
+                                                            <rect key="frame" x="251" y="238.5" width="26" height="25.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nye-sp-Bbe">
-                                                            <rect key="frame" x="239" y="198" width="42" height="42"/>
+                                                            <rect key="frame" x="239" y="228" width="42" height="46"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <state key="normal">
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mUu-fQ-4rE">
-                                                            <rect key="frame" x="281" y="199" width="42" height="42"/>
+                                                            <rect key="frame" x="281" y="228.5" width="42" height="47"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="19"/>
                                                             <state key="normal">
@@ -2750,7 +2801,7 @@
                                                             </state>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Rvx-Dq-NWe">
-                                                            <rect key="frame" x="155" y="198" width="42" height="42"/>
+                                                            <rect key="frame" x="155" y="228" width="42" height="46"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="19"/>
                                                             <state key="normal">
@@ -2758,18 +2809,14 @@
                                                             </state>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="oMr-ol-UgV">
-                                                            <rect key="frame" x="114" y="198" width="42" height="42"/>
+                                                            <rect key="frame" x="114" y="228" width="42" height="46"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <state key="normal">
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
                                                         </button>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="vTC-2C-5o1" customClass="SDIAsyncImageView">
-                                                            <rect key="frame" x="47" y="31" width="321" height="136"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                                        </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="pretty" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pPE-vu-T92" customClass="KILabel">
-                                                            <rect key="frame" x="55" y="175" width="303" height="22"/>
+                                                            <rect key="frame" x="55" y="202.5" width="303" height="24.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <color key="tintColor" red="0.094117647060000004" green="0.35686274509999999" blue="0.5450980392" alpha="1" colorSpace="calibratedRGB"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="12"/>
@@ -2803,7 +2850,7 @@
                                 </connections>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" red="0.94117647059999998" green="0.93725490199999995" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
@@ -2905,13 +2952,6 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="plO-RP-NFK">
-                                <rect key="frame" x="0.0" y="26" width="414" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Gibson-SemiBold" family="Gibson" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="back_icon" id="Wc9-ET-GCT">
                                 <rect key="frame" x="2" y="31" width="30" height="26"/>
                                 <autoresizingMask key="autoresizingMask"/>
@@ -2928,76 +2968,87 @@
                                     <action selector="onBack:" destination="ijf-Yl-hr6" eventType="touchUpInside" id="FVb-s4-QNh"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="plO-RP-NFK">
+                                <rect key="frame" x="0.0" y="26" width="414" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Gibson-SemiBold" family="Gibson" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="prototypes" id="Hqk-Tk-hBD">
-                                <rect key="frame" x="0.0" y="69" width="414" height="613"/>
+                                <rect key="frame" x="0.0" y="70" width="414" height="613"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.94117647059999998" green="0.93725490199999995" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="85j-fn-S5s">
-                                    <size key="itemSize" width="414" height="248"/>
+                                    <size key="itemSize" width="414" height="290"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="hashtagCollView" id="L22-Gj-te1" customClass="CollectionViewCellimage">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="248"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="290"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="248"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="290"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" id="Omq-eh-3cv">
-                                                    <rect key="frame" x="0.0" y="3" width="414" height="242"/>
+                                                    <rect key="frame" x="0.0" y="3" width="414" height="266.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="USERNAME" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="q5Q-IJ-Xqk">
-                                                            <rect key="frame" x="55" y="3" width="238" height="25"/>
+                                                            <rect key="frame" x="55" y="3.5" width="238" height="27"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-SemiBold" family="Gibson" pointSize="11"/>
                                                             <color key="textColor" red="0.094117647060000004" green="0.35686274509999999" blue="0.5450980392" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Y6B-QD-lEd">
-                                                            <rect key="frame" x="55" y="2" width="237" height="25"/>
+                                                            <rect key="frame" x="55" y="2" width="237" height="28"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="18"/>
                                                             <state key="normal">
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
                                                         </button>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="5A7-Lu-2Bp" customClass="SDIAsyncImageView">
+                                                            <rect key="frame" x="47" y="35" width="321" height="160"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="spining.png" id="hDD-ei-5rj">
+                                                            <rect key="frame" x="141" y="57" width="133" height="115"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8cg-yp-h3o">
-                                                            <rect key="frame" x="277" y="208" width="35" height="23"/>
+                                                            <rect key="frame" x="277" y="239" width="35" height="25.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="12"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="spining.png" id="hDD-ei-5rj">
-                                                            <rect key="frame" x="141" y="41" width="133" height="115"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PJL-Vg-a6M">
-                                                            <rect key="frame" x="153" y="208" width="35" height="23"/>
+                                                            <rect key="frame" x="153" y="239" width="35" height="25.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="12"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="like_icon.png" id="ZaZ-lX-AmA">
-                                                            <rect key="frame" x="126" y="207" width="24" height="24"/>
+                                                            <rect key="frame" x="126" y="238" width="24" height="26.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="comment_icon.png" id="rVB-tA-Kw5">
-                                                            <rect key="frame" x="251" y="208" width="26" height="23"/>
+                                                            <rect key="frame" x="251" y="239" width="26" height="25.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="SdT-VG-jIN">
-                                                            <rect key="frame" x="239" y="198" width="42" height="42"/>
+                                                            <rect key="frame" x="239" y="228.5" width="42" height="45.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <state key="normal">
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="TX5-Qg-6yv">
-                                                            <rect key="frame" x="281" y="199" width="42" height="42"/>
+                                                            <rect key="frame" x="281" y="228.5" width="42" height="47"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="19"/>
                                                             <state key="normal">
@@ -3005,7 +3056,7 @@
                                                             </state>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="EgQ-cB-zXP">
-                                                            <rect key="frame" x="155" y="198" width="42" height="42"/>
+                                                            <rect key="frame" x="155" y="228.5" width="42" height="45.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="19"/>
                                                             <state key="normal">
@@ -3013,18 +3064,14 @@
                                                             </state>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="5rq-sL-hlg">
-                                                            <rect key="frame" x="114" y="198" width="42" height="42"/>
+                                                            <rect key="frame" x="114" y="228.5" width="42" height="45.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <state key="normal">
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
                                                         </button>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="5A7-Lu-2Bp" customClass="SDIAsyncImageView">
-                                                            <rect key="frame" x="47" y="31" width="321" height="136"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                                        </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="pretty" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="uZO-ls-IL0" customClass="KILabel">
-                                                            <rect key="frame" x="55" y="175" width="303" height="22"/>
+                                                            <rect key="frame" x="55" y="202.5" width="303" height="24.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                             <color key="tintColor" red="0.094117647060000004" green="0.35686274509999999" blue="0.5450980392" alpha="1" colorSpace="calibratedRGB"/>
                                                             <fontDescription key="fontDescription" name="Gibson-Regular" family="Gibson" pointSize="12"/>
@@ -3058,7 +3105,7 @@
                                 </connections>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" red="0.94117647059999998" green="0.93725490199999995" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>

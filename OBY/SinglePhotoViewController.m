@@ -3,6 +3,7 @@
 //
 
 #import "AnimatedMethods.h"
+#import "AnonViewController.h"
 #import "AppDelegate.h"
 #import "CollectionViewCellimage.h"
 #import "CommentViewController.h"
@@ -259,10 +260,15 @@
 - (void)tappedUser:(NSString *)link cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *title = [NSString stringWithFormat:@"%@", link];
     NSString *newTitle = [title substringFromIndex:1];
-    ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
-    NSString *usrURL = [NSString stringWithFormat:@"%@%@/",PROFILEURL,newTitle];
-    profileViewController.userURL = usrURL;
-    [self.navigationController pushViewController:profileViewController animated:YES];
+    NSString *userURL = [NSString stringWithFormat:@"%@%@/",PROFILEURL,newTitle];
+    if([[newTitle lastPathComponent]isEqualToString:@"anonymous"]){
+        AnonViewController *anonViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AnonViewController"];
+        [self.navigationController pushViewController:anonViewController animated:YES];
+    } else {
+        ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
+        profileViewController.userURL = userURL;
+        [self.navigationController pushViewController:profileViewController animated:YES];
+    }
 }
 
 - (void)tappedHashtag:(NSString *)link cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -369,9 +375,14 @@
 
 -(void)showUser:(CustomButton*)sender{
     PhotoClass *photoClass = [arrSinglePhoto objectAtIndex:sender.tag];
-    ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
-    profileViewController.userURL=photoClass.creator_url;
-    [self.navigationController pushViewController:profileViewController animated:YES];
+    if([photoClass.creator isEqualToString:@"anonymous"]){
+        AnonViewController *anonViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AnonViewController"];
+        [self.navigationController pushViewController:anonViewController animated:YES];
+    } else {
+        ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
+        profileViewController.userURL = photoClass.creator_url;
+        [self.navigationController pushViewController:profileViewController animated:YES];
+    }
 }
 
 -(void)onComment:(CustomButton*)sender{

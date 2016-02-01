@@ -3,6 +3,7 @@
 //  OBY
 //
 
+#import "AnonViewController.h"
 #import "AppDelegate.h"
 #import "defs.h"
 #import "ProfileViewController.h"
@@ -78,8 +79,8 @@
     
     NSMutableDictionary *dictUser = [arrDetails objectAtIndex:indexPath.row];
     
-        cell.txtNotification.attributedText = [dictUser objectForKey:@"usernameText"];
-        cell.txtNotification.editable = NO;
+    cell.txtNotification.attributedText = [dictUser objectForKey:@"usernameText"];
+    cell.txtNotification.editable = NO;
     
     if([[dictUser objectForKey:@"user__username"]isEqualToString:GetUserName]){
         [dictUser setObject:GetProifilePic forKey:@"user__profile_picture"];
@@ -94,14 +95,16 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
     NSDictionary *dictUserDeatil = [arrDetails objectAtIndex:indexPath.row];
-    
-    NSString *usrURL = [NSString stringWithFormat:@"%@%@/",PROFILEURL,[dictUserDeatil objectForKey:@"user__username"]];
-    
-    profileViewController.userURL = usrURL;
-    
-    [self.navigationController pushViewController:profileViewController animated:YES];
+    if([[dictUserDeatil objectForKey:@"user__username"] isEqualToString:@"anonymous"]){
+        AnonViewController *anonViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AnonViewController"];
+        [self.navigationController pushViewController:anonViewController animated:YES];
+    } else {
+        ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
+        NSString *userURL = [NSString stringWithFormat:@"%@%@/",PROFILEURL,[dictUserDeatil objectForKey:@"user__username"]];
+        profileViewController.userURL = userURL;
+        [self.navigationController pushViewController:profileViewController animated:YES];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{

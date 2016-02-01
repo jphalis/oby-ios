@@ -2,6 +2,7 @@
 //  SearchViewController.m
 //
 
+#import "AnonViewController.h"
 #import "AppDelegate.h"
 #import "defs.h"
 #import "GlobalFunctions.h"
@@ -251,8 +252,6 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self.view endEditing:YES];
-    
-    ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
 
     NSMutableDictionary *dictUser;
     
@@ -261,8 +260,15 @@
     } else {
         dictUser = [arrUsers objectAtIndex:indexPath.row];
     }
-    profileViewController.userURL = [dictUser objectForKey:@"account_url"];
-    [self.navigationController pushViewController:profileViewController animated:YES];
+    
+    if([[dictUser objectForKey:@"username"] isEqualToString:@"anonymous"]){
+        AnonViewController *anonViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AnonViewController"];
+        [self.navigationController pushViewController:anonViewController animated:YES];
+    } else {
+        ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
+        profileViewController.userURL = [dictUser objectForKey:@"account_url"];
+        [self.navigationController pushViewController:profileViewController animated:YES];
+    }
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {

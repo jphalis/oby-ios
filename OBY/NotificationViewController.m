@@ -5,6 +5,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "AnimatedMethods.h"
+#import "AnonViewController.h"
 #import "AppDelegate.h"
 #import "CustomButton.h"
 #import "defs.h"
@@ -288,10 +289,16 @@
 }
 
 -(void)showUser:(CustomButton*)sender{
-   NotificationClass *notificationClass = [arrNotification objectAtIndex:sender.tag];
-    ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
-    profileViewController.userURL = notificationClass.sender_url;
-    [self.navigationController pushViewController:profileViewController animated:YES];
+    NotificationClass *notificationClass = [arrNotification objectAtIndex:sender.tag];
+    
+    if([notificationClass.sender isEqualToString:@"anonymous"]){
+        AnonViewController *anonViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AnonViewController"];
+        [self.navigationController pushViewController:anonViewController animated:YES];
+    } else {
+        ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
+        profileViewController.userURL = notificationClass.sender_url;
+        [self.navigationController pushViewController:profileViewController animated:YES];
+    }
 }
 
 -(void)removeImage{

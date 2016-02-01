@@ -6,12 +6,12 @@
 
 #import "CategoryTableViewCell.h"
 #import "CategoryViewController.h"
+#import "defs.h"
+#import "SCLAlertView.h"
 
 
 @interface CategoryViewController ()<UITableViewDataSource,UITableViewDelegate>{
     __weak IBOutlet UITableView *tblVw;
-    
-    NSMutableArray *arrCategory;
 }
 - (IBAction)onBack:(id)sender;
 @end
@@ -20,7 +20,6 @@
 
 // Need to fix this to be dynamic based on admin entries
 - (void)viewDidLoad {
-    arrCategory = [[NSMutableArray alloc]initWithObjects:@"Just Because",@"Sports & Fitness",@"Nightlife",@"Style",@"Lol",@"Pay it Forward",@"University",@"Food",@"Fall", nil];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
@@ -45,23 +44,14 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [arrCategory count];    //count number of rows from counting array
+    return [GetCategories count];    //count number of rows from counting array
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     CategoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"categoryCell" forIndexPath:indexPath];
     
-//    static NSString *MyIdentifier = @"MyIdentifier";
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
-    
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    
-//    if (cell == nil){
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-//                                       reuseIdentifier:MyIdentifier];
-//    }
     
     NSArray *colors = @[
         [UIColor colorWithRed:(83/255.0) green:(117/255.0) blue:(171/255.0) alpha:1.0], // #5375ab
@@ -77,11 +67,10 @@
     ];
     NSInteger colorIndex = indexPath.row % colors.count;
     
-//    cell.catBackground.backgroundColor = colors[colorIndex];
     cell.catBackground.layer.borderColor = [colors[colorIndex] CGColor];
     cell.catBackground.layer.borderWidth = 2.0f;
     cell.catBackground.layer.cornerRadius = 12;
-    cell.catTitle.text = [arrCategory objectAtIndex:indexPath.row];
+    cell.catTitle.text = [GetCategories objectAtIndex:indexPath.row];
 
     return cell;
 }
@@ -89,12 +78,16 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tblVw cellForRowAtIndexPath:indexPath];
     
-    if(indexPath.row == 9){
+    if([[GetCategories objectAtIndex:indexPath.row] isEqual: @"Popular"]){
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        SCLAlertView *alert = [[SCLAlertView alloc] init];
+        alert.showAnimationType = SlideInFromLeft;
+        alert.hideAnimationType = SlideOutToBottom;
+        [alert showNotice:self title:@"Notice" subTitle:@"Sorry, but you cannot post in the Popular category." closeButtonTitle:@"OK" duration:0.0f];
         return;
     }
     [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
-    [self.delegate chooseCategory:[arrCategory objectAtIndex:indexPath.row]selectedIndex:indexPath.row];
+    [self.delegate chooseCategory:[GetCategories objectAtIndex:indexPath.row]selectedIndex:indexPath.row];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{

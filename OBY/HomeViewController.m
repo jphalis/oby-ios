@@ -7,6 +7,7 @@
 
 #import "AFHTTPClient.h"
 #import "AnimatedMethods.h"
+#import "AnonViewController.h"
 #import "AppDelegate.h"
 #import "CollectionViewCellimage.h"
 #import "CommentListViewController.h"
@@ -39,6 +40,7 @@
     NSInteger tapCellIndex;
     NSIndexPath *previousIndexPath;
     NSMutableArray *arrCategoryPhotos;
+    NSMutableArray *arrHomePhotos;
     UIRefreshControl *refreshControl;
     NSString *CategoryURL;
     
@@ -72,6 +74,7 @@
     commentViewController.delegate = self;
     
     arrCategoryPhotos = [[NSMutableArray alloc]init];
+    arrHomePhotos = [[NSMutableArray alloc]init];
     
     self.selectionList = [[HTHorizontalSelectionList alloc] initWithFrame:CGRectMake(0, scrolVw.frame.origin.y, self.view.frame.size.width, scrolVw.frame.size.height)];
     self.selectionList.backgroundColor = [UIColor clearColor];
@@ -84,16 +87,20 @@
     
 //    [UIColor colorWithPatternImage:[UIImage imageNamed:@"buttons_bg"]];
     
-    self.categoryList = @[@"Popular",
-                          @"Just Because",
-                          @"Sports & Fitness",
-                          @"Nightlife",
-                          @"Style",
-                          @"Lol",
-                          @"Pay it Forward",
-                          @"University",
-                          @"Food",
-                          @"Fall"];
+//    self.categoryList = @[@"Popular",
+//                          @"Just Because",
+//                          @"Sports & Fitness",
+//                          @"Nightlife",
+//                          @"Style",
+//                          @"Lol",
+//                          @"Pay it Forward",
+//                          @"University",
+//                          @"Food",
+//                          @"Fall"];
+    
+    if (GetCategories != nil) {
+        self.categoryList = GetCategories;
+    }
     
     [self.view addSubview:self.selectionList];
 
@@ -111,21 +118,21 @@
     [self getHomePageDetails];
     
     
-    NSManagedObjectContext *moc = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Photo" inManagedObjectContext:moc];
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setEntity:entity];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"creator" ascending:YES];
-    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-    [request setSortDescriptors:sortDescriptors];
-    // Fetch the records and handle an error
-    NSError *error;
-    appDelegate.arrPhotos = [[moc executeFetchRequest:request error:&error] mutableCopy];
-    if (!appDelegate.arrPhotos) {
-        // This is a serious error
-        // Handle accordingly
-        NSLog(@"Failed to load colors from disk");
-    }
+//    NSManagedObjectContext *moc = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+//    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Photo" inManagedObjectContext:moc];
+//    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+//    [request setEntity:entity];
+//    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"creator" ascending:YES];
+//    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+//    [request setSortDescriptors:sortDescriptors];
+//    // Fetch the records and handle an error
+//    NSError *error;
+//    arrHomePhotos = [[moc executeFetchRequest:request error:&error] mutableCopy];
+//    if (!appDelegate.arrPhotos) {
+//        // This is a serious error
+//        // Handle accordingly
+//        NSLog(@"Failed to load colors from disk");
+//    }
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -145,7 +152,7 @@
         }
     }
     else {
-        if(appDelegate.arrPhotos.count > 0){
+        if(arrHomePhotos.count > 0){
             [self scrollToTop];
         }
     }
@@ -194,7 +201,7 @@
         if(isMenuChoosed){
             photoClass = [arrCategoryPhotos objectAtIndex:indexPath.row];
         } else {
-            photoClass = [appDelegate.arrPhotos objectAtIndex:indexPath.row];
+            photoClass = [arrHomePhotos objectAtIndex:indexPath.row];
         }
         
         photoViewController.photoURL = photoClass.photo;
@@ -218,7 +225,7 @@
         if(isMenuChoosed){
             photoClass = [arrCategoryPhotos objectAtIndex:indexPath.row];
         } else {
-            photoClass = [appDelegate.arrPhotos objectAtIndex:indexPath.row];
+            photoClass = [arrHomePhotos objectAtIndex:indexPath.row];
         }
         photoViewController.photoURL = photoClass.photo;
         photoViewController.photoDeleteURL = photoClass.photo_url;
@@ -274,63 +281,38 @@
 #pragma mark - HTHorizontalSelectionListDelegate Protocol Methods
 
 - (void)selectionList:(HTHorizontalSelectionList *)selectionList didSelectButtonWithIndex:(NSInteger)index{
-    // update the view for the corresponding index
-    
     NSString *subCategoryURL = @"";
-    tapCellIndex = -1;
     
     if(arrCategoryPhotos.count > 0){
         [arrCategoryPhotos removeAllObjects];
     }
     
-    switch (index) {
-        case 1: {
-            subCategoryURL = [NSString stringWithFormat:@"%@%@/",CATEGORYURL,@"just-because"];
+    NSMutableArray *catSlugs = [[NSMutableArray alloc]init];
+    
+    if(![GetCategories[index] isEqualToString:@"Popular"]){
+        for (id element in GetCategories){
+            NSCharacterSet *doNotWant = [NSCharacterSet characterSetWithCharactersInString:@" &"];
+            NSString *string = [[[element lowercaseString]
+                                 componentsSeparatedByCharactersInSet: doNotWant]
+                                 componentsJoinedByString: @" "];
+            NSError *error = nil;
+            NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"  +" options:NSRegularExpressionCaseInsensitive error:&error];
+            NSString *trimmedString = [regex stringByReplacingMatchesInString:string options:0 range:NSMakeRange(0, [string length]) withTemplate:@" "];
+            
+            NSCharacterSet *noSpaces = [NSCharacterSet characterSetWithCharactersInString:@" "];
+            NSString *finalString = [[[trimmedString lowercaseString]
+                                 componentsSeparatedByCharactersInSet: noSpaces]
+                                componentsJoinedByString: @"-"];
+            
+            [catSlugs addObject:finalString];
         }
-            break;
-        case 2: {
-            subCategoryURL = [NSString stringWithFormat:@"%@%@/",CATEGORYURL,@"sports-fitness"];
-        }
-            break;
-        case 3: {
-            subCategoryURL = [NSString stringWithFormat:@"%@%@/",CATEGORYURL,@"nightlife"];
-        }
-            break;
-        case 4: {
-            subCategoryURL = [NSString stringWithFormat:@"%@%@/",CATEGORYURL,@"style"];
-        }
-            break;
-        case 5: {
-            subCategoryURL = [NSString stringWithFormat:@"%@%@/",CATEGORYURL,@"lol"];
-        }
-            break;
-        case 6: {
-            subCategoryURL = [NSString stringWithFormat:@"%@%@/",CATEGORYURL,@"pay-it-forward"];
-        }
-            break;
-        case 7: {
-            subCategoryURL = [NSString stringWithFormat:@"%@%@/",CATEGORYURL,@"university"];
-        }
-            break;
-        case 8: {
-            subCategoryURL = [NSString stringWithFormat:@"%@%@/",CATEGORYURL,@"food"];
-        }
-            break;
-        case 9: {
-            subCategoryURL = [NSString stringWithFormat:@"%@%@/",CATEGORYURL,@"fall"];
-        }
-            break;
-        case 0: {
-            isMenuChoosed = NO;
-            [self getHomePageDetails];
-            return;
-        }
-            break;
-        default: {
-            subCategoryURL = [NSString stringWithFormat:@"%@%@/",CATEGORYURL,@"just-because"];
-        }
-            break;
+        subCategoryURL = [NSString stringWithFormat:@"%@%@/",CATEGORYURL,catSlugs[index]];
+    } else {
+        isMenuChoosed = NO;
+        [self getHomePageDetails];
+        return;
     }
+    
     CategoryURL = subCategoryURL;
     [self getCategoryDeatils:subCategoryURL];
 }
@@ -606,19 +588,26 @@
              [appDelegate hideHUDForView2:self.view];
          }
          if ([data length] > 0 && error == nil){
-             NSArray *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+             NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
              
-             if([JSONValue isKindOfClass:[NSArray class]]){
+             if([JSONValue isKindOfClass:[NSDictionary class]] && [JSONValue allKeys].count > 1){
+                 NSArray *arrPhotoSet = [JSONValue objectForKey:@"photos"];
                  
-                 if( appDelegate.arrPhotos.count > 0){
-                     [appDelegate.arrPhotos removeAllObjects];
+                 if (GetCategories != nil) {
+                    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"Categories"];
+                 }
+                 SetCategories([JSONValue objectForKey:@"gms"]);
+                 
+                 if(arrHomePhotos.count > 0){
+                     [arrHomePhotos removeAllObjects];
                  }
                  
                  if([JSONValue count] > 0 ){
-                     for (int i = 0; i < JSONValue.count; i++) {
+                     for (int i = 0; i < arrPhotoSet.count; i++) {
                          NSMutableDictionary *dictResult;
                          dictResult = [[NSMutableDictionary alloc]init];
-                         dictResult = [JSONValue objectAtIndex:i];
+                         dictResult = [arrPhotoSet objectAtIndex:i];
+                         
                          PhotoClass *photoClass = [[PhotoClass alloc]init];
                          photoClass.category_url = [dictResult objectForKey:@"category_url"];
                          photoClass.photo_url = [dictResult objectForKey:@"photo_url"];
@@ -723,7 +712,7 @@
                          photoClass.photo = [dictResult objectForKey:@"photo"];
                          photoClass.slug = [dictResult objectForKey:@"slug"];
                          
-                         [appDelegate.arrPhotos addObject:photoClass];
+                         [arrHomePhotos addObject:photoClass];
                      }
                      
 //                     NSArray *tempHomeArray = [appDelegate.arrPhotos subarrayWithRange:NSMakeRange(0, 3)];
@@ -756,7 +745,7 @@
             [self scrollToTop];
         }
     } else {
-        if(appDelegate.arrPhotos.count > 0){
+        if(arrHomePhotos.count > 0){
             [self scrollToTop];
             [lblTitle setFont:[UIFont fontWithName:@"ARDESTINE" size:30]];
             lblTitle.text = @"OBY";
@@ -774,7 +763,7 @@
     if(isMenuChoosed){
         return [arrCategoryPhotos count];
     } else {
-        return [appDelegate.arrPhotos count];
+        return [arrHomePhotos count];
     }
 }
 
@@ -786,7 +775,7 @@
     if(isMenuChoosed){
         photoClass = [arrCategoryPhotos objectAtIndex:indexPath.row];
     } else {
-        photoClass = [appDelegate.arrPhotos objectAtIndex:indexPath.row];
+        photoClass = [arrHomePhotos objectAtIndex:indexPath.row];
     }
 
     // Change words that start with # to blue
@@ -875,10 +864,15 @@
 - (void)tappedUser:(NSString *)link cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *title = [NSString stringWithFormat:@"%@", link];
     NSString *newTitle = [title substringFromIndex:1];
-    ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
-    NSString *usrURL = [NSString stringWithFormat:@"%@%@/",PROFILEURL,newTitle];
-    profileViewController.userURL = usrURL;
-    [self.navigationController pushViewController:profileViewController animated:YES];
+    NSString *userURL = [NSString stringWithFormat:@"%@%@/",PROFILEURL,newTitle];
+    if([[newTitle lastPathComponent]isEqualToString:@"anonymous"]){
+        AnonViewController *anonViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AnonViewController"];
+        [self.navigationController pushViewController:anonViewController animated:YES];
+    } else {
+        ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
+        profileViewController.userURL = userURL;
+        [self.navigationController pushViewController:profileViewController animated:YES];
+    }
 }
 
 - (void)tappedHashtag:(NSString *)link cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -908,7 +902,7 @@
     if(isMenuChoosed){
         photoClass = [arrCategoryPhotos objectAtIndex:indexPath.row];
     } else {
-        photoClass = [appDelegate.arrPhotos objectAtIndex:indexPath.row];
+        photoClass = [arrHomePhotos objectAtIndex:indexPath.row];
     }
     
     photoViewController.PhotoId = photoClass.PhotoId;
@@ -929,7 +923,7 @@
     if(isMenuChoosed){
         photoClass = [arrCategoryPhotos objectAtIndex:sender.tag];
     } else {
-        photoClass = [appDelegate.arrPhotos objectAtIndex:sender.tag];
+        photoClass = [arrHomePhotos objectAtIndex:sender.tag];
     }
     
     CommentListViewController *commentListViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CommentListViewController"];
@@ -950,7 +944,7 @@
     if(isMenuChoosed){
         photoClass = [arrCategoryPhotos objectAtIndex:sender.tag];
     } else {
-        photoClass = [appDelegate.arrPhotos objectAtIndex:sender.tag];
+        photoClass = [arrHomePhotos objectAtIndex:sender.tag];
     }
     
     SupportViewController *supportViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SupportViewController"];
@@ -976,7 +970,7 @@
     if(isMenuChoosed){
         photoClass = [arrCategoryPhotos objectAtIndex:sender.tag];
     } else {
-        photoClass = [appDelegate.arrPhotos objectAtIndex:sender.tag];
+        photoClass = [arrHomePhotos objectAtIndex:sender.tag];
     }
     commentViewController.selectRow = (int)sender.tag;
     commentViewController.photoClass = photoClass;
@@ -992,7 +986,7 @@
     if(isMenuChoosed){
         photoClass = [arrCategoryPhotos objectAtIndex:sender.tag];
     } else {
-        photoClass = [appDelegate.arrPhotos objectAtIndex:sender.tag];
+        photoClass = [arrHomePhotos objectAtIndex:sender.tag];
     }
     
     checkNetworkReachability();
@@ -1106,12 +1100,17 @@
     if(isMenuChoosed){
         photoClass = [arrCategoryPhotos objectAtIndex:sender.tag];
     } else {
-        photoClass = [appDelegate.arrPhotos objectAtIndex:sender.tag];
+        photoClass = [arrHomePhotos objectAtIndex:sender.tag];
     }
-    ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
-    profileViewController.userURL = photoClass.creator_url;
     
-    [self.navigationController pushViewController:profileViewController animated:YES];
+    if([[photoClass.creator lowercaseString] isEqualToString:@"anonymous"]){
+        AnonViewController *anonViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AnonViewController"];
+        [self.navigationController pushViewController:anonViewController animated:YES];
+    } else {
+        ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
+        profileViewController.userURL = photoClass.creator_url;
+        [self.navigationController pushViewController:profileViewController animated:YES];
+    }
 }
 
 -(void)addDeviceToken{

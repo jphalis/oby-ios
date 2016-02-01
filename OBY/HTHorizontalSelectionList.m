@@ -254,9 +254,8 @@
     if (totalButtons > 0) {
         self.selectedButtonIndex=0;
     
-       UIButton *selectedButton = self.buttons[self.selectedButtonIndex];
-        //saravanan
-      selectedButton.selected = NO;
+        UIButton *selectedButton = self.buttons[self.selectedButtonIndex];
+        selectedButton.selected = NO;
 
         switch (self.selectionIndicatorStyle) {
             case HTHorizontalSelectionIndicatorStyleBottomBar: {
