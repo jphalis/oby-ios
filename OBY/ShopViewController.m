@@ -3,14 +3,17 @@
 //  OBY
 //
 
+#import "AppDelegate.h"
 #import "ProductCreateViewController.h"
 #import "ShopViewController.h"
+#import "AllProductsViewController.h"
 
-#import "CreateViewController.h"
 #import "SettingViewController.h"
 
 
-@interface ShopViewController ()
+@interface ShopViewController (){
+    AppDelegate *appDelegate;
+}
 
 @property (nonatomic) CAPSPageMenu *pageMenu;
 
@@ -21,9 +24,10 @@
 @implementation ShopViewController
 
 - (void)viewDidLoad {
+    appDelegate = [AppDelegate getDelegate];
     [super viewDidLoad];
     
-    CreateViewController *controller1 = [self.storyboard instantiateViewControllerWithIdentifier:@"CreateViewController"];
+    AllProductsViewController *controller1 = [self.storyboard instantiateViewControllerWithIdentifier:@"AllProductsViewController"];
     controller1.title = @"Available";
     SettingViewController *controller2 = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingViewController"];
     controller2.title = @"Redeemed";
@@ -44,9 +48,13 @@
     [self.view addSubview:_pageMenu.view];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    appDelegate.tabbar.tabView.hidden = NO;
+    [super viewWillAppear:YES];
+}
+
 - (IBAction)onAddNew:(id)sender {
     ProductCreateViewController *productCreateViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProductCreateViewController"];
     [self.navigationController pushViewController:productCreateViewController animated:YES];
-    
 }
 @end

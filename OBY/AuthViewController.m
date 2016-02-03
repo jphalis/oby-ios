@@ -428,7 +428,6 @@
                  }
                  SetProifilePic(profilePic);
                  SetUserMail([JSONValue objectForKey:@"email"]);
-                 NSLog(@"Email: %@", [JSONValue objectForKey:@"email"]);
                  SetUserEduMail([JSONValue objectForKey:@"edu_email"]);
                  SetUserWebsite([JSONValue objectForKey:@"website"]);
                  SetUserBio([JSONValue objectForKey:@"bio"]);

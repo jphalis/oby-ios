@@ -508,7 +508,6 @@
     [appDelegate showHUDAddedToView:self.view message:@""];
 
     NSString *urlString = singlePhotoURL;
-    NSLog(@"%@", singlePhotoURL);
     NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                              timeoutInterval:60];
     NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];

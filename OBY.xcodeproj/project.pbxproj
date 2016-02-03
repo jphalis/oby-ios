@@ -165,6 +165,8 @@
 		D0AC4C7C1C2C506A00A110AE /* icon-success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AC4C731C2C506A00A110AE /* icon-success@2x.png */; };
 		D0AC4C7D1C2C506A00A110AE /* TWMessageBarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AC4C751C2C506A00A110AE /* TWMessageBarManager.m */; };
 		D0B03B591C5EFA3100712C44 /* ProductCreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B03B581C5EFA3100712C44 /* ProductCreateViewController.m */; };
+		D0B7AC9A1C627D6E0043034C /* AllProductsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B7AC991C627D6E0043034C /* AllProductsViewController.m */; };
+		D0B7AC9D1C6280100043034C /* TableViewCellProducts.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B7AC9C1C6280100043034C /* TableViewCellProducts.m */; };
 		D0C6C5081C288716002E5B5F /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C6C5021C2886DA002E5B5F /* CoreTelephony.framework */; };
 		D0C6C5091C28871C002E5B5F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C6C5041C2886E4002E5B5F /* QuartzCore.framework */; };
 		D0C6C50A1C288723002E5B5F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C6C5061C2886EF002E5B5F /* SystemConfiguration.framework */; };
@@ -470,6 +472,10 @@
 		D0AC4C751C2C506A00A110AE /* TWMessageBarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWMessageBarManager.m; sourceTree = "<group>"; };
 		D0B03B571C5EFA1C00712C44 /* ProductCreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductCreateViewController.h; sourceTree = "<group>"; };
 		D0B03B581C5EFA3100712C44 /* ProductCreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductCreateViewController.m; sourceTree = "<group>"; };
+		D0B7AC981C627D6E0043034C /* AllProductsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllProductsViewController.h; sourceTree = "<group>"; };
+		D0B7AC991C627D6E0043034C /* AllProductsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllProductsViewController.m; sourceTree = "<group>"; };
+		D0B7AC9B1C6280100043034C /* TableViewCellProducts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCellProducts.h; sourceTree = "<group>"; };
+		D0B7AC9C1C6280100043034C /* TableViewCellProducts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCellProducts.m; sourceTree = "<group>"; };
 		D0C6C5021C2886DA002E5B5F /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		D0C6C5041C2886E4002E5B5F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D0C6C5061C2886EF002E5B5F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -828,6 +834,8 @@
 				BE0909101BEE10140077DFE8 /* TableViewCellNotification.m */,
 				D072C50B1C5DC92A004F4AF3 /* TableViewCellSettings.h */,
 				D072C50C1C5DC92A004F4AF3 /* TableViewCellSettings.m */,
+				D0B7AC9B1C6280100043034C /* TableViewCellProducts.h */,
+				D0B7AC9C1C6280100043034C /* TableViewCellProducts.m */,
 			);
 			name = CellViews;
 			sourceTree = "<group>";
@@ -1177,6 +1185,8 @@
 				D08D04DF1C6100D500491D20 /* CAPSPageMenu.m */,
 				D02586D71C610887000AED9D /* ShopViewController.h */,
 				D02586D81C610887000AED9D /* ShopViewController.m */,
+				D0B7AC981C627D6E0043034C /* AllProductsViewController.h */,
+				D0B7AC991C627D6E0043034C /* AllProductsViewController.m */,
 				D0B03B571C5EFA1C00712C44 /* ProductCreateViewController.h */,
 				D0B03B581C5EFA3100712C44 /* ProductCreateViewController.m */,
 			);
@@ -1407,6 +1417,7 @@
 			files = (
 				BE5C00391BEA3CD800971567 /* DejalActivityView.m in Sources */,
 				D0D4789F1C59C46900251A68 /* SDWebImagePrefetcher.m in Sources */,
+				D0B7AC9A1C627D6E0043034C /* AllProductsViewController.m in Sources */,
 				BE54C1E71BFF2914001380A0 /* ChoosePhotoViewController.m in Sources */,
 				BEB1CFD41BFDE0BE00A2242A /* EditProfileViewController.m in Sources */,
 				A5B6C3CC1BE8E942004F295C /* AuthViewController.m in Sources */,
@@ -1459,6 +1470,7 @@
 				BE6B3A0C1C0DB637002509D3 /* BadgeLabel.m in Sources */,
 				D0D478A11C59C46900251A68 /* UIImage+GIF.m in Sources */,
 				D0D478971C59C46900251A68 /* MKAnnotationView+WebCache.m in Sources */,
+				D0B7AC9D1C6280100043034C /* TableViewCellProducts.m in Sources */,
 				A5B6C4001BE8E9B7004F295C /* SBJson4StreamWriter.m in Sources */,
 				D03867C21C4A08CC00C64FAD /* UIImage+ImageEffects.m in Sources */,
 				A5B6C4041BE8E9B7004F295C /* SBJson4StreamParserState.m in Sources */,

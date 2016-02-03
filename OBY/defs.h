@@ -48,6 +48,8 @@ extern AppDelegate *appDelegate;
     #define LIKEURL @"http://127.0.0.1:8000/hide/oby/api/like/"
     #define FLAGURL @"http://127.0.0.1:8000/hide/oby/api/flag/create/"
     #define BLOCKURL @"http://127.0.0.1:8000/hide/oby/api/block/"
+    #define AVAILABLESHOPURL @"http://127.0.0.1:8000/hide/oby/api/shop/"
+    #define REDEEMEDSHOPURL @"http://127.0.0.1:8000/hide/oby/api/shop/redeemed/"
     #define COMMENTURL @"http://127.0.0.1:8000/hide/oby/api/comments/create/"
     #define SUPPORTURL @"http://127.0.0.1:8000/hide/oby/api/support/"
     #define SEARCH_URL @"http://127.0.0.1:8000/hide/oby/api/search/?q="

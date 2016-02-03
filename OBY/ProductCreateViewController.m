@@ -10,13 +10,29 @@
 @interface ProductCreateViewController (){
     AppDelegate *appDelegate;
 }
+
+- (IBAction)onBack:(id)sender;
+
 @end
 
 @implementation ProductCreateViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
     appDelegate = [AppDelegate getDelegate];
+    
+    [super viewDidLoad];
+    
+    UISwipeGestureRecognizer *viewRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
+    viewRight.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.view addGestureRecognizer:viewRight];
+}
+
+-(void)swipeRight:(UISwipeGestureRecognizer *)gestureRecognizer{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)onBack:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
