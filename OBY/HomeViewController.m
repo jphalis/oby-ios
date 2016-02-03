@@ -85,19 +85,6 @@
     self.selectionList.dataSource = self;
     self.selectionList.backgroundColor = [AnimatedMethods colorFromHexString:@"#353535"];
     
-//    [UIColor colorWithPatternImage:[UIImage imageNamed:@"buttons_bg"]];
-    
-//    self.categoryList = @[@"Popular",
-//                          @"Just Because",
-//                          @"Sports & Fitness",
-//                          @"Nightlife",
-//                          @"Style",
-//                          @"Lol",
-//                          @"Pay it Forward",
-//                          @"University",
-//                          @"Food",
-//                          @"Fall"];
-    
     if (GetCategories != nil) {
         self.categoryList = GetCategories;
     }
@@ -146,16 +133,15 @@
         return;
     }
     
-    if(isMenuChoosed){
-        if(arrCategoryPhotos.count > 0){
-            [self scrollToTop];
-        }
-    }
-    else {
-        if(arrHomePhotos.count > 0){
-            [self scrollToTop];
-        }
-    }
+//    if(isMenuChoosed){
+//        if(arrCategoryPhotos.count > 0){
+//            [self scrollToTop];
+//        }
+//    } else {
+//        if(arrHomePhotos.count > 0){
+//            [self scrollToTop];
+//        }
+//    }
 }
 
 -(void)scrollToTop{
@@ -714,8 +700,6 @@
                          
                          [arrHomePhotos addObject:photoClass];
                      }
-                     
-//                     NSArray *tempHomeArray = [appDelegate.arrPhotos subarrayWithRange:NSMakeRange(0, 3)];
 
                      [self setBusy:NO];
                      [appDelegate hideHUDForView2:self.view];

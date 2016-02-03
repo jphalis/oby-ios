@@ -95,9 +95,6 @@ extern AppDelegate *appDelegate;
     #define APNSTOKENGENERATOR @"https://www.obystudio.com/hide/oby/api/device/apns/"
 #endif
 
-//#define    SetHomePhotos(x)       [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"HomePhotos"]
-//#define    GetHomePhotos          [[NSUserDefaults standardUserDefaults] objectForKey:@"HomePhotos"]
-
 #define    SetisComment(x)       [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"isComment"]
 #define    GetisComment          [[NSUserDefaults standardUserDefaults] boolForKey:@"isComment"]
 
@@ -149,14 +146,8 @@ extern AppDelegate *appDelegate;
 #define    SetUserBio(x)          [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"UserBio"]
 #define    GetUserBio             [[NSUserDefaults standardUserDefaults] objectForKey:@"UserBio"]
 
-#define    SetFBID(x)             [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"FBID"]
-#define    GetFBID                [[NSUserDefaults standardUserDefaults] objectForKey:@"FBID"]
-
 #define    SetMobileNum(x)        [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"MobileNum"]
 #define    GetMobileNum           [[NSUserDefaults standardUserDefaults] objectForKey:@"MobileNum"]
-
-#define    SetIsVersion1(x)       [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"Version1"]
-#define    GetsVersion1           [[NSUserDefaults standardUserDefaults] boolForKey:@"Version1"]
 
 #define    SetTutorialOFF(x)      [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"TutorialOFF"]
 #define    GetTutorialOFF         [[NSUserDefaults standardUserDefaults] boolForKey:@"TutorialOFF"]
@@ -165,12 +156,6 @@ extern AppDelegate *appDelegate;
 #define    GetsFullView           [[NSUserDefaults standardUserDefaults] boolForKey:@"FullView"]
 
 #define    UserDefaults           [NSUserDefaults standardUserDefaults]
-
-#define    SetLat(x)              [UserDefaults setObject:x forKey:@"C_Lat"]
-#define    GetLat()               [UserDefaults objectForKey:@"C_Lat"]
-
-#define    SetLong(x)             [UserDefaults setObject:x forKey:@"C_Long"]
-#define    GetLong()              [UserDefaults objectForKey:@"C_Long"]
 
 #define    SetFirst(x)            [UserDefaults setObject:x forKey:@"First"]
 #define    GetFirst               [UserDefaults objectForKey:@"First"]
@@ -187,14 +172,6 @@ extern AppDelegate *appDelegate;
 
 #define    GetPerformance         [[NSUserDefaults standardUserDefaults] objectForKey:@"Performance"]
 
-#define    SetBirthYear(x)        [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"BirthYear"]
-
-#define    GetBirthYear           [[NSUserDefaults standardUserDefaults] objectForKey:@"BirthYear"]
-
-#define    SetCurrentLoaction(x)        [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"CurrentLoaction"]
-
-#define    GetCurrentLoaction           [[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentLoaction"]
-
 #define    SetIsFilter(x)         [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"Filter"]
 
 #define    GetIsFilter            [[NSUserDefaults standardUserDefaults] boolForKey:@"Filter"]
@@ -206,10 +183,6 @@ extern AppDelegate *appDelegate;
 #define    SetInitialScreen(x)        [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"InitialScreen"]
 
 #define    GetInitialScreen           [[NSUserDefaults standardUserDefaults] objectForKey:@"InitialScreen"]
-
-#define    SetEthnicity(x)        [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"Ethnicity"]
-
-#define    GetEthnicity           [[NSUserDefaults standardUserDefaults] objectForKey:@"Ethnicity"]
 
 #define    SetIsImageView(x)      [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"ImageView"]
 #define    GetsImageView          [[NSUserDefaults standardUserDefaults] boolForKey:@"ImageView"]

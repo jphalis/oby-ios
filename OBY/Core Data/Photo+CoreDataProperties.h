@@ -2,7 +2,7 @@
 //  Photo+CoreDataProperties.h
 //  OBY
 //
-//  Created by JP Halis on 1/30/16.
+//  Created by JP Halis on 1/31/16.
 //
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -15,11 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Photo (CoreDataProperties)
 
+@property (nullable, nonatomic, retain) NSString *comment_count;
 @property (nullable, nonatomic, retain) NSString *creator;
-@property (nullable, nonatomic, retain) NSString *photo;
 @property (nullable, nonatomic, retain) NSString *descrip;
 @property (nullable, nonatomic, retain) NSString *like_count;
-@property (nullable, nonatomic, retain) NSString *comment_count;
+@property (nullable, nonatomic, retain) NSString *photo;
 
 @end
 

@@ -2,7 +2,7 @@
 //  Photo+CoreDataProperties.m
 //  OBY
 //
-//  Created by JP Halis on 1/30/16.
+//  Created by JP Halis on 1/31/16.
 //
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -13,10 +13,10 @@
 
 @implementation Photo (CoreDataProperties)
 
+@dynamic comment_count;
 @dynamic creator;
-@dynamic photo;
 @dynamic descrip;
 @dynamic like_count;
-@dynamic comment_count;
+@dynamic photo;
 
 @end

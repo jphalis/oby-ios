@@ -9,6 +9,7 @@
 #import "ProfileViewController.h"
 #import "SearchViewController.h"
 #import "SettingViewController.h"
+#import "ShopViewController.h"
 
 
 @interface MiscellaneousViewController (){
@@ -23,7 +24,7 @@
 
 - (IBAction)onClick:(id)sender;
 enum{
-    BTNCREATE =1,
+    BTNCREATE = 1,
     BTNSERACH,
     BTNPROFILE,
     BTNSETTING,
@@ -42,12 +43,10 @@ enum{
         btnSearch.frame = CGRectMake(btnSearch.frame.origin.x+5, btnSearch.frame.origin.y, 63, 63);
         btnSetting.frame = CGRectMake(btnSetting.frame.origin.x+5, btnSetting.frame.origin.y, 63, 63);
     }
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -55,42 +54,33 @@ enum{
     [super viewWillAppear:YES];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 - (IBAction)onClick:(id)sender {
     switch ([sender tag]) {
         case BTNCREATE:{
             CreateViewController *createViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CreateViewController"];
             [self.navigationController pushViewController:createViewController animated:YES];
-        }
             break;
+        }
         case BTNSERACH:{
-            SearchViewController *SearchViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SearchViewController"];
-            [self.navigationController pushViewController:SearchViewController animated:YES];
-        }
+            SearchViewController *searchViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SearchViewController"];
+            [self.navigationController pushViewController:searchViewController animated:YES];
             break;
+        }
         case BTNPROFILE:{
             ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
            
             profileViewController.userURL = [NSString stringWithFormat:@"%@%@/",PROFILEURL,GetUserName];
             [self.navigationController pushViewController:profileViewController animated:YES];
-        }
             break;
+        }
         case BTNSETTING:{
             SettingViewController *settingViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingViewController"];
             [self.navigationController pushViewController:settingViewController animated:YES];
+            break;
         }
+        default: {
             break;
-        default:
-            break;
+        }
     }
 }
 

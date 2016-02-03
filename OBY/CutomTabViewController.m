@@ -10,12 +10,14 @@
 #import "MiscellaneousViewController.h"
 #import "NotificationClass.h"
 #import "NotificationViewController.h"
+#import "ShopViewController.h"
 #import "TimeLineViewController.h"
 
 
-enum{
+enum {
     TABHOME = 10,
     TABTIMELINE,
+    TABSHOP,
     TABNOTIFICATION,
     TABMISCELLANEOUS,
 };
@@ -33,7 +35,6 @@ enum{
 - (IBAction)onTabSelectionChange:(id)sender;
 
 @property (weak, nonatomic) IBOutlet BadgeLabel *badgeLabel;
-@property(nonatomic) BOOL scrollsToTop;
 
 @end
 
@@ -77,6 +78,8 @@ enum{
     UIButton *btn = (UIButton*)[self.view viewWithTag:TABHOME];
     btn.titleLabel.font = fontLight(13);
     btn = (UIButton*)[self.view viewWithTag:TABTIMELINE];
+    btn.titleLabel.font = fontLight(13);
+    btn = (UIButton*)[self.view viewWithTag:TABSHOP];
     btn.titleLabel.font = fontLight(13);
     btn = (UIButton*)[self.view viewWithTag:TABNOTIFICATION];
     btn.titleLabel.font = fontLight(13);
@@ -154,18 +157,22 @@ enum{
 -(void)LoadTabBar{
     HomeViewController *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
     TimeLineViewController *timeLineViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"TimeLineViewController"];
+    ShopViewController *shopViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ShopViewController"];
+    [self.navigationController pushViewController:shopViewController animated:YES];
     NotificationViewController *notificationViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NotificationViewController"];
     MiscellaneousViewController *miscellaneousViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MiscellaneousViewController"];
     
     UINavigationController *navController1 = [[UINavigationController alloc]initWithRootViewController:homeViewController];
     UINavigationController *navController2 = [[UINavigationController alloc]initWithRootViewController:timeLineViewController];
-    UINavigationController *navController3 = [[UINavigationController alloc]initWithRootViewController:notificationViewController];
-    UINavigationController *navController4 = [[UINavigationController alloc]initWithRootViewController:miscellaneousViewController];
+    UINavigationController *navController3 = [[UINavigationController alloc]initWithRootViewController:shopViewController];
+    UINavigationController *navController4 = [[UINavigationController alloc]initWithRootViewController:notificationViewController];
+    UINavigationController *navController5 = [[UINavigationController alloc]initWithRootViewController:miscellaneousViewController];
     
     [self PushViewController:navController1];
     [self PushViewController:navController2];
     [self PushViewController:navController3];
     [self PushViewController:navController4];
+    [self PushViewController:navController5];
 }
 
 -(void)PushViewController:(UINavigationController *)nvc{
@@ -187,7 +194,7 @@ enum{
     prevController = specialViewController;
 }
 
--(void)presentThisView :(UINavigationController*)naVController{
+-(void)presentThisView:(UINavigationController*)naVController{
     if(prevController != nil){
         [prevController.view removeFromSuperview];
     }
@@ -224,15 +231,14 @@ enum{
 //            [collectionVW scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
 //        }];
 //        NSLog(@"Click");
+        
+        // send notification to HomeViewController to scrollToTop
     } else {
         if (previousIndex != 0){
             UIButton *btnpreviousIndex = (UIButton*)[tabView viewWithTag:previousIndex];
             
             if (btnpreviousIndex != nil && previousIndex != -1){
                 [btnpreviousIndex setSelected:NO];
-                
-              //  NSArray *viewsToRemove = [btnpreviousIndex subviews];
-                //[[viewsToRemove lastObject] removeFromSuperview];
             }
            // UIView *bottomBorder = [[UIView alloc] initWithFrame:CGRectMake(0, btn.frame.size.height - 4.0f, btn.frame.size.width, 4)];
           //  bottomBorder.backgroundColor = [UIColor lightGrayColor];
@@ -249,21 +255,26 @@ enum{
             navController.navigationBarHidden = YES;
             [navController popToRootViewControllerAnimated:NO];
             [self presentThisView: navController];
-        }
             break;
+        }
         case TABTIMELINE: {
             UINavigationController *navController = [appDelegate.arrViewControllers objectAtIndex:1];
             [self presentThisView: navController];
-        }
             break;
-        case TABNOTIFICATION: {
-            self.badgeLabel.hidden = YES;
+        }
+        case TABSHOP: {
             UINavigationController *navController = [appDelegate.arrViewControllers objectAtIndex:2];
             [self presentThisView: navController];
             break;
         }
-        case TABMISCELLANEOUS: {
+        case TABNOTIFICATION: {
+            self.badgeLabel.hidden = YES;
             UINavigationController *navController = [appDelegate.arrViewControllers objectAtIndex:3];
+            [self presentThisView: navController];
+            break;
+        }
+        case TABMISCELLANEOUS: {
+            UINavigationController *navController = [appDelegate.arrViewControllers objectAtIndex:4];
             [self presentThisView: navController];
             break;
         }
