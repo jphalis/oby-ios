@@ -79,7 +79,7 @@
     
     NSIndexPath *indexPath = [colltionVw indexPathForItemAtPoint:p];
     if (indexPath == nil){
-
+        return;
     } else {
         static int i = 0;
         i++;

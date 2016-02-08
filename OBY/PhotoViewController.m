@@ -246,7 +246,6 @@
                     [self.delegate removeImage];
                 }];
             });
-            
         } else {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Are you sure you want to report this image as inappropriate?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
             alert.delegate = self;

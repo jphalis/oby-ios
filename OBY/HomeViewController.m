@@ -133,15 +133,15 @@
         return;
     }
     
-//    if(isMenuChoosed){
-//        if(arrCategoryPhotos.count > 0){
-//            [self scrollToTop];
-//        }
-//    } else {
-//        if(arrHomePhotos.count > 0){
-//            [self scrollToTop];
-//        }
-//    }
+    if(isMenuChoosed){
+        if(arrCategoryPhotos.count > 0){
+            [self scrollToTop];
+        }
+    } else {
+        if(arrHomePhotos.count > 0){
+            [self scrollToTop];
+        }
+    }
 }
 
 -(void)scrollToTop{
@@ -164,7 +164,7 @@
     
     NSIndexPath *indexPath = [collectionVWHome indexPathForItemAtPoint:p];
     if (indexPath == nil){
-
+        return;
     } else {
         [self collectionView:collectionVWHome didSelectItemAtIndexPath:indexPath];
     }
@@ -175,7 +175,7 @@
         
     NSIndexPath *indexPath = [collectionVWHome indexPathForItemAtPoint:p];
     if (indexPath == nil){
-
+        return;
     } else {
         static int i = 0;
         i++;
@@ -204,7 +204,7 @@
     
     NSIndexPath *indexPath = [collectionVWHome indexPathForItemAtPoint:p];
     if (indexPath == nil){
-
+        return;
     } else {
         PhotoClass *photoClass;
         
@@ -700,7 +700,6 @@
                          
                          [arrHomePhotos addObject:photoClass];
                      }
-
                      [self setBusy:NO];
                      [appDelegate hideHUDForView2:self.view];
                      [self showImages];

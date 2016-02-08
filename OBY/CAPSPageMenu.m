@@ -173,11 +173,11 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     _mutableMenuItemWidths  = [NSMutableArray array];
     
     _menuHeight                           = 34.0;
-    _menuMargin                           = 15.0;
+    _menuMargin                           = 18.0;
     _menuItemWidth                        = 111.0;
-    _selectionIndicatorHeight             = 3.0;
+    _selectionIndicatorHeight             = 2.0;
     _totalMenuItemWidthIfDifferentWidths  = 0.0;
-    _scrollAnimationDurationOnMenuItemTap = 500;
+    _scrollAnimationDurationOnMenuItemTap = 200;
     _startingMenuMargin                   = 0.0;
     
     _selectionIndicatorView = [UIView new];
@@ -186,7 +186,7 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
     _lastPageIndex    = 0;
     
     _selectionIndicatorColor      = [UIColor whiteColor];
-    _selectedMenuItemLabelColor   = [UIColor whiteColor];
+    _selectedMenuItemLabelColor   = [UIColor colorWithRed:2.0/255.0 green:134.0/255.0 blue:208.0/255.0 alpha:1.0];
     _unselectedMenuItemLabelColor = [UIColor lightGrayColor];
     _scrollMenuBackgroundColor    = [UIColor blackColor];
     _viewBackgroundColor          = [UIColor whiteColor];

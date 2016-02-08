@@ -1,5 +1,5 @@
 //
-//  AllProductsViewController.m
+//  ProductsViewController.m
 //  OBY
 //
 
@@ -7,31 +7,36 @@
 #import "defs.h"
 #import "GlobalFunctions.h"
 #import "SCLAlertView.h"
-#import "AllProductsViewController.h"
+#import "ProductsViewController.h"
 #import "StringUtil.h"
 #import "TableViewCellProducts.h"
 #import "ShopViewController.h"
 
 
-@interface AllProductsViewController (){
+@interface ProductsViewController (){
     AppDelegate *appDelegate;
     
     __weak IBOutlet UITableView *tblVW;
     __weak IBOutlet UILabel *lblWaterMark;
     
-    BOOL isEmpty;
-    BOOL isFilter;
     NSMutableArray *arrProducts;
     UIRefreshControl *refreshControl;
 }
 
 @end
 
-@implementation AllProductsViewController
+@implementation ProductsViewController
 
 - (void)viewDidLoad {
     appDelegate = [AppDelegate getDelegate];
     arrProducts = [[NSMutableArray alloc] init];
+    
+    if([self.title isEqual: @"Available"]){
+        [self doGetProducts:AVAILABLESHOPURL];
+    } else {
+        [self doGetProducts:REDEEMEDSHOPURL];
+    }
+    
     refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(startRefresh)
              forControlEvents:UIControlEventValueChanged];
@@ -45,7 +50,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-//    appDelegate.tabbar.tabView.hidden = NO;
+    appDelegate.tabbar.tabView.hidden = NO;
     [super viewWillAppear:YES];
 }
 
@@ -60,18 +65,18 @@
 */
 
 -(void)startRefresh{
-    [self doGetProducts];
+    if([self.title isEqual: @"Available"]){
+        [self doGetProducts:AVAILABLESHOPURL];
+    } else {
+        [self doGetProducts:REDEEMEDSHOPURL];
+    }
 }
 
--(void)doGetProducts{
+-(void)doGetProducts:(NSString *)requestURL{
     checkNetworkReachability();
-   
-    if(isEmpty == YES){
-        return;
-    }
     
     [self setBusy:YES];
-    NSString *urlString = [NSString stringWithFormat:@"%@",AVAILABLESHOPURL];
+    NSString *urlString = [NSString stringWithFormat:@"%@",requestURL];
     NSMutableURLRequest *_request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                              timeoutInterval:60];
     NSString *authStr = [NSString stringWithFormat:@"%@:%@", GetUserName, GetUserPassword];
@@ -92,7 +97,7 @@
             if([JSONValue isKindOfClass:[NSDictionary class]] && [[JSONValue allKeys]count] > 2){
                 NSArray *arrProductResult = [JSONValue objectForKey:@"results"];
                 
-                if([JSONValue count] > 0){
+                if([arrProductResult count] > 0){
                     for (int i = 0; i < arrProductResult.count; i++) {
                         
                         NSMutableDictionary *dictResult;
@@ -138,17 +143,18 @@
                         [arrProducts addObject:dictResult];
                     }
                     [appDelegate hideHUDForView2:self.view];
-                    //[self setBusy:NO];
+                    [self setBusy:NO];
                     [self showProducts];
                 }
             } else {
+                [self setBusy:NO];
                 lblWaterMark.hidden = NO;
-                lblWaterMark.text = [NSString stringWithFormat:@"%@", [JSONValue objectForKey:@"results"]];
+                lblWaterMark.text = [NSString stringWithFormat:@"%@", [JSONValue objectForKey:@"detail"]];
             }
         } else {
             [refreshControl endRefreshing];
             [appDelegate hideHUDForView2:self.view];
-            //[self setBusy:NO];
+            [self setBusy:NO];
             showServerError();
         }
     }];
