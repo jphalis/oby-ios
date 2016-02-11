@@ -246,7 +246,6 @@
         } else {
             return;
         }
-        
     } else {
         
     }
@@ -304,7 +303,7 @@
         alert.tag = 100;
         [alert show];
     } else if(buttonIndex == 1){
-        NSLog(@"Cancel button clicked");
+//        NSLog(@"Cancel button clicked");
     }
 }
 
@@ -557,6 +556,8 @@
                  profileClass.gender = [JSONValue objectForKey:@"gender"];
                  BOOL isVerified = [[JSONValue objectForKey:@"is_verified"]boolValue];
                  profileClass.is_verified = isVerified;
+                 BOOL isAdvertiser = [[JSONValue objectForKey:@"is_advertiser"]boolValue];
+                 profileClass.is_advertiser = isAdvertiser;
                  profileClass.arrphoto_set = [[NSMutableArray alloc]init];
                      
                  NSArray *arrPhotoset = [JSONValue objectForKey:@"photo_set"];

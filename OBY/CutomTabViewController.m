@@ -158,7 +158,6 @@ enum {
     HomeViewController *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
     TimeLineViewController *timeLineViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"TimeLineViewController"];
     ShopViewController *shopViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ShopViewController"];
-    [self.navigationController pushViewController:shopViewController animated:YES];
     NotificationViewController *notificationViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NotificationViewController"];
     MiscellaneousViewController *miscellaneousViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MiscellaneousViewController"];
     

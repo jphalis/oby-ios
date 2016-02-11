@@ -22,5 +22,6 @@
 @property (nonatomic, retain) NSString *followers_count;
 @property (nonatomic, retain) NSString *following_count;
 @property (nonatomic, assign) BOOL is_verified;
+@property (nonatomic, assign) BOOL is_advertiser;
 
 @end

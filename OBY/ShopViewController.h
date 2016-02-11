@@ -7,6 +7,5 @@
 #import "CAPSPageMenu.h"
 
 @interface ShopViewController : UIViewController
-
 @end
 

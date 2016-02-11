@@ -124,6 +124,9 @@ extern AppDelegate *appDelegate;
 #define    SetUserPassword(x)    [[NSUserDefaults standardUserDefaults] setObject:(x) forKey:@"UserPassword"]
 #define    GetUserPassword       [[NSUserDefaults standardUserDefaults] objectForKey:@"UserPassword"]
 
+#define    SetisAdvertiser(x)    [[NSUserDefaults standardUserDefaults] setInteger:(x) forKey:@"isAdvertiser"]
+#define    GetisAdvertiser       [[NSUserDefaults standardUserDefaults] integerForKey:@"isAdvertiser"]
+
 #define    SetisMobile_Registered(x)      [[NSUserDefaults standardUserDefaults] setBool:(x) forKey:@"isMobileRegistered"]
 #define    GetisMobile_Registered         [[NSUserDefaults standardUserDefaults] boolForKey:@"isMobileRegistered"]
 

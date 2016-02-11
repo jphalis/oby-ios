@@ -228,6 +228,7 @@ MBProgressHUD *hud;
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"UserBio"];
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"UserFullName"];
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"ProifilePic"];
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"isAdvertiser"];
 
     if(arrSupports.count > 0){
         [arrSupports removeAllObjects];

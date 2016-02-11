@@ -16,6 +16,7 @@
 @interface ProductsViewController (){
     AppDelegate *appDelegate;
     
+    
     __weak IBOutlet UITableView *tblVW;
     __weak IBOutlet UILabel *lblWaterMark;
     
@@ -40,6 +41,7 @@
     refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(startRefresh)
              forControlEvents:UIControlEventValueChanged];
+    [tblVW addSubview:refreshControl];
     
     [super viewDidLoad];
 }
@@ -65,6 +67,9 @@
 */
 
 -(void)startRefresh{
+    if(arrProducts.count > 0){
+        [arrProducts removeAllObjects];
+    }
     if([self.title isEqual: @"Available"]){
         [self doGetProducts:AVAILABLESHOPURL];
     } else {
@@ -94,62 +99,69 @@
         if ([data length] > 0 && error == nil){
             NSDictionary *JSONValue = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             
-            if([JSONValue isKindOfClass:[NSDictionary class]] && [[JSONValue allKeys]count] > 2){
-                NSArray *arrProductResult = [JSONValue objectForKey:@"results"];
+            if([JSONValue isKindOfClass:[NSDictionary class]]){
+                SetisAdvertiser([[JSONValue objectForKey:@"is_advertiser"] integerValue]);
+
+                if ([[JSONValue objectForKey:@"detail"] isKindOfClass:[NSArray class]]){
+                    NSArray *arrProductResult = [JSONValue objectForKey:@"detail"];
                 
-                if([arrProductResult count] > 0){
-                    for (int i = 0; i < arrProductResult.count; i++) {
+                    if([arrProductResult count] > 0){
+                        for (int i = 0; i < arrProductResult.count; i++) {
                         
-                        NSMutableDictionary *dictResult;
-                        dictResult = [arrProductResult objectAtIndex:i];
-                        NSMutableDictionary *dictProducts = [[NSMutableDictionary alloc]init];
+                            NSMutableDictionary *dictResult;
+                            dictResult = [arrProductResult objectAtIndex:i];
+                            NSMutableDictionary *dictProducts = [[NSMutableDictionary alloc]init];
                         
-                        if([dictResult objectForKey:@"owner"] == [NSNull null]){
-                            [dictProducts setValue:@"" forKey:@"owner"];
-                        } else {
-                            [dictProducts setValue:[dictResult objectForKey:@"owner"] forKey:@"owner"];
-                        }
-                        if([dictResult objectForKey:@"owner_url"] == [NSNull null]){
-                            [dictProducts setValue:@"" forKey:@"owner_url"];
-                        } else {
-                            [dictProducts setValue:[dictResult objectForKey:@"owner_url"] forKey:@"owner_url"];
-                        }
-                        if([dictResult objectForKey:@"title"] == [NSNull null]){
-                            [dictProducts setValue:@"" forKey:@"title"];
-                        } else {
-                            [dictProducts setValue:[dictResult objectForKey:@"title"] forKey:@"title"];
-                        }
-                        if([dictResult objectForKey:@"slug"] == [NSNull null]){
-                            [dictProducts setValue:@"" forKey:@"slug"];
-                        } else {
-                            [dictProducts setValue:[dictResult objectForKey:@"slug"] forKey:@"slug"];
-                        }
-                        if([dictResult objectForKey:@"description"] == [NSNull null]){
-                            [dictProducts setValue:@"" forKey:@"description"];
-                        } else {
-                            [dictProducts setValue:[dictResult objectForKey:@"description"] forKey:@"description"];
-                        }
-                        if([dictResult objectForKey:@"cost"] == [NSNull null]){
-                            [dictProducts setValue:@"" forKey:@"cost"];
-                        } else {
-                            [dictProducts setValue:[dictResult objectForKey:@"cost"] forKey:@"cost"];
-                        }
-                        if([dictResult objectForKey:@"promo_code"] == [NSNull null]){
-                            [dictProducts setValue:@"" forKey:@"promo_code"];
-                        } else {
-                            [dictProducts setValue:[dictResult objectForKey:@"promo_code"] forKey:@"promo_code"];
-                        }
+                            if([dictResult objectForKey:@"owner"] == [NSNull null]){
+                                [dictProducts setValue:@"" forKey:@"owner"];
+                            } else {
+                                [dictProducts setValue:[dictResult objectForKey:@"owner"] forKey:@"owner"];
+                            }
+                            if([dictResult objectForKey:@"owner_url"] == [NSNull null]){
+                                [dictProducts setValue:@"" forKey:@"owner_url"];
+                            } else {
+                                [dictProducts setValue:[dictResult objectForKey:@"owner_url"] forKey:@"owner_url"];
+                            }
+                            if([dictResult objectForKey:@"title"] == [NSNull null]){
+                                [dictProducts setValue:@"" forKey:@"title"];
+                            } else {
+                                [dictProducts setValue:[dictResult objectForKey:@"title"] forKey:@"title"];
+                            }
+                            if([dictResult objectForKey:@"slug"] == [NSNull null]){
+                                [dictProducts setValue:@"" forKey:@"slug"];
+                            } else {
+                                [dictProducts setValue:[dictResult objectForKey:@"slug"] forKey:@"slug"];
+                            }
+                            if([dictResult objectForKey:@"description"] == [NSNull null]){
+                                [dictProducts setValue:@"" forKey:@"description"];
+                            } else {
+                                [dictProducts setValue:[dictResult objectForKey:@"description"] forKey:@"description"];
+                            }
+                            if([dictResult objectForKey:@"cost"] == [NSNull null]){
+                                [dictProducts setValue:@"" forKey:@"cost"];
+                            } else {
+                                [dictProducts setValue:[dictResult objectForKey:@"cost"] forKey:@"cost"];
+                            }
+                            if([dictResult objectForKey:@"promo_code"] == [NSNull null]){
+                                [dictProducts setValue:@"" forKey:@"promo_code"];
+                            } else {
+                                [dictProducts setValue:[dictResult objectForKey:@"promo_code"] forKey:@"promo_code"];
+                            }
                         
-                        [arrProducts addObject:dictResult];
+                            [arrProducts addObject:dictResult];
+                        }
+                        [appDelegate hideHUDForView2:self.view];
+                        [self setBusy:NO];
+                        [self showProducts];
                     }
-                    [appDelegate hideHUDForView2:self.view];
+                } else {
+                    [refreshControl endRefreshing];
                     [self setBusy:NO];
-                    [self showProducts];
+                    lblWaterMark.hidden = NO;
+                    lblWaterMark.text = [NSString stringWithFormat:@"%@", [JSONValue objectForKey:@"detail"]];
                 }
             } else {
                 [self setBusy:NO];
-                lblWaterMark.hidden = NO;
-                lblWaterMark.text = [NSString stringWithFormat:@"%@", [JSONValue objectForKey:@"detail"]];
             }
         } else {
             [refreshControl endRefreshing];
@@ -161,9 +173,8 @@
 }
 
 -(void)showProducts{
-    if(arrProducts.count > 0){
-        [arrProducts removeAllObjects];
-    }
+    [refreshControl endRefreshing];
+    [tblVW reloadData];
     lblWaterMark.hidden = YES;
     lblWaterMark.text = @"";
 }

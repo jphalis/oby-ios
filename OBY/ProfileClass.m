@@ -7,6 +7,6 @@
 
 @implementation ProfileClass
 
-@synthesize Id,account_url,username,email,full_name,bio,website,gender,arrphoto_set,profile_picture,followers_count,following_count,arrfollowers,arrfollowings,is_verified;
+@synthesize Id,account_url,username,email,full_name,bio,website,gender,arrphoto_set,profile_picture,followers_count,following_count,arrfollowers,arrfollowings,is_verified,is_advertiser;
 
 @end

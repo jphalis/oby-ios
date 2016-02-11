@@ -4,11 +4,12 @@
 //
 
 #import "AppDelegate.h"
+#import "defs.h"
 #import "ProductCreateViewController.h"
-#import "ShopViewController.h"
 #import "ProductsViewController.h"
-
+#import "ProfileClass.h"
 #import "SettingViewController.h"
+#import "ShopViewController.h"
 
 
 @interface ShopViewController (){
@@ -16,6 +17,7 @@
 }
 
 @property (nonatomic) CAPSPageMenu *pageMenu;
+@property (weak, nonatomic) IBOutlet UIButton *createBtn;
 
 - (IBAction)onAddNew:(id)sender;
 
@@ -24,8 +26,8 @@
 @implementation ShopViewController
 
 - (void)viewDidLoad {
-    appDelegate = [AppDelegate getDelegate];
     [super viewDidLoad];
+    appDelegate = [AppDelegate getDelegate];
     
     ProductsViewController *controller1 = [self.storyboard instantiateViewControllerWithIdentifier:@"ProductsViewController"];
     controller1.title = @"Available";
@@ -50,6 +52,15 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     appDelegate.tabbar.tabView.hidden = NO;
+
+    if (GetisAdvertiser == 1){
+        self.createBtn.hidden = NO;
+    } else {
+        self.createBtn.hidden = YES;
+    }
+    
+//    NSLog(@"Advertiser: %@", GetisAdvertiser ? @"YES" : @"NO");
+    
     [super viewWillAppear:YES];
 }
 
