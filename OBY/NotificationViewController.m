@@ -154,9 +154,6 @@
                      } else {
                          notificationClass.target_url = @"";
                      }
-                     if([[arrNotifResult objectAtIndex:i]valueForKey:@"target_photo"]){
-                    
-                     }
                      if([[arrNotifResult objectAtIndex:i]valueForKey:@"target_photo"] != [NSNull null]){
                          NSString *urlString = [NSString stringWithFormat:@"https:%@",[[arrNotifResult objectAtIndex:i]valueForKey:@"target_photo"]];
                              
@@ -204,8 +201,7 @@
 }
 
 
-- (UITableViewCell *)tableView:(UITableView *)tableView
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
  
     TableViewCellNotification *cell = [tableView dequeueReusableCellWithIdentifier:@"TableViewCellNotification" forIndexPath:indexPath];
  
@@ -264,9 +260,6 @@
             SinglePhotoViewController *singlePhotoViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SinglePhotoViewController"];
             singlePhotoViewController.singlePhotoURL = notificationClass.view_target_photo_url;
             [self.navigationController pushViewController:singlePhotoViewController animated:YES];
-//            photoViewController.photoURL = notificationClass.target_photo;
-//            photoViewController.view.frame = appDelegate.window.frame;
-//            [self.view addSubview:photoViewController.view];
         }
     }
 }
@@ -282,9 +275,6 @@
         SinglePhotoViewController *singlePhotoViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SinglePhotoViewController"];
         singlePhotoViewController.singlePhotoURL = notificationClass.view_target_photo_url;
         [self.navigationController pushViewController:singlePhotoViewController animated:YES];
-//        photoViewController.photoURL = notificationClass.target_photo;
-//        photoViewController.view.frame = appDelegate.window.frame;
-//        [self.view addSubview:photoViewController.view];
     }
 }
 

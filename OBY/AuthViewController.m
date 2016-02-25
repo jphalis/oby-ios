@@ -431,7 +431,6 @@
                  SetUserEduMail([JSONValue objectForKey:@"edu_email"]);
                  SetUserWebsite([JSONValue objectForKey:@"website"]);
                  SetUserBio([JSONValue objectForKey:@"bio"]);
-                 SetisAdvertiser([JSONValue objectForKey:@"is_advertiser"]);
 
                  [self setBusy:NO];
              } else {
@@ -508,7 +507,6 @@
         return;
     }
 }
-
 
 -(void)doRegister{
     checkNetworkReachability();

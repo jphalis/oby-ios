@@ -277,13 +277,15 @@ NSString * const KILabelLinkKey = @"link";
     UIColor *color = self.textColor;
     if (!self.isEnabled){
         color = [UIColor lightGrayColor];
-    } else if (self.isHighlighted){
-        color = self.highlightedTextColor;
+    } else if (self.isHighlighted && self.highlightedTextColor){
+        // color = self.highlightedTextColor;
+        color = [UIColor lightGrayColor];
     }
     
     // Setup paragraph attributes
     NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
     paragraph.alignment = self.textAlignment;
+    
     
     // Create the dictionary
     NSDictionary *attributes = @{NSFontAttributeName : self.font,

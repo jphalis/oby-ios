@@ -47,6 +47,7 @@
                                 };
 
     _pageMenu = [[CAPSPageMenu alloc] initWithViewControllers:controllerArray frame:CGRectMake(0.0, 64.0, self.view.frame.size.width, self.view.frame.size.height) options:parameters];
+    [self addChildViewController:_pageMenu];
     [self.view addSubview:_pageMenu.view];
 }
 
@@ -58,8 +59,6 @@
     } else {
         self.createBtn.hidden = YES;
     }
-    
-//    NSLog(@"Advertiser: %@", GetisAdvertiser ? @"YES" : @"NO");
     
     [super viewWillAppear:YES];
 }

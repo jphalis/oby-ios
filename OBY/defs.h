@@ -75,6 +75,8 @@ extern AppDelegate *appDelegate;
     #define LIKEURL @"https://www.obystudio.com/hide/oby/api/like/"
     #define FLAGURL @"https://www.obystudio.com/hide/oby/api/flag/create/"
     #define BLOCKURL @"https://www.obystudio.com/hide/oby/api/block/"
+    #define AVAILABLESHOPURL @"https://www.obystudio.com/hide/oby/api/shop/"
+    #define REDEEMEDSHOPURL @"https://www.obystudio.com/hide/oby/api/shop/redeemed/"
     #define COMMENTURL @"https://www.obystudio.com/hide/oby/api/comments/create/"
     #define SUPPORTURL @"https://www.obystudio.com/hide/oby/api/support/"
     #define SEARCH_URL @"https://www.obystudio.com/hide/oby/api/search/?q="

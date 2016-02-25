@@ -303,38 +303,6 @@
     photoViewController.photoCreator = photoClass.creator;
     photoViewController.view.frame = appDelegate.window.frame;
     [appDelegate.window addSubview:photoViewController.view];
-    
-    /*
-     if(previousIndexPath==nil){
-     currentCell.imgView.hidden=YES;
-     currentCell.viewInfo.hidden=NO;
-     
-     [AnimatedMethods animatedFlipFromRight:currentCell.imgView secondView:currentCell.viewInfo];
-     
-     previousIndexPath=indexPath;
-     return;
-     }
-     
-     if (previousIndexPath.row!=indexPath.row) {
-     currentCell.imgView.hidden=YES;
-     currentCell.viewInfo.hidden=NO;
-     
-     [AnimatedMethods animatedFlipFromRight:currentCell.imgView secondView:currentCell.viewInfo];
-     
-     if(previousIndexPath!=nil){
-     PreivousCell.imgView.hidden=NO;
-     PreivousCell.viewInfo.hidden=YES;
-     // [AnimatedMethods animatedFlipFrombottom:PreivousCell.imgView secondView:PreivousCell.viewInfo];
-     }
-     previousIndexPath=indexPath;
-     }else{
-     currentCell.imgView.hidden=NO;
-     currentCell.viewInfo.hidden=YES;
-     [AnimatedMethods animatedFlipFromLeft:currentCell.imgView secondView:currentCell.viewInfo];
-     
-     previousIndexPath=nil;
-     }
-     */
 }
 
 -(void)onCommentList:(CustomButton*)sender{
@@ -529,17 +497,16 @@
                     PhotoClass *photoClass = [[PhotoClass alloc]init];
                     photoClass.category_url = [JSONValue objectForKey:@"category_url"];
                     photoClass.photo_url = [JSONValue objectForKey:@"photo_url"];
-                    photoClass.comment_count = [JSONValue objectForKey:@"comment_count"];
+                    photoClass.comment_count = [NSString abbreviateNumber:[[JSONValue objectForKey:@"comment_count"]intValue]];
                     photoClass.created = [JSONValue objectForKey:@"created"];
                     photoClass.creator = [JSONValue objectForKey:@"creator"];
                     photoClass.creator_url = [JSONValue objectForKey:@"creator_url"];
                     photoClass.description = [JSONValue objectForKey:@"description"];
                          
                     int userId = [[JSONValue objectForKey:@"id"]intValue];
-                    int like_Count = [[JSONValue objectForKey:@"like_count"]intValue];
                          
                     photoClass.PhotoId = [NSString stringWithFormat:@"%d",userId];
-                    photoClass.like_count = [NSString stringWithFormat:@"%d",like_Count];
+                    photoClass.like_count = [NSString abbreviateNumber:[[JSONValue objectForKey:@"like_count"]intValue]];
                          
                     photoClass.likers = [[NSMutableArray alloc]init];
                     photoClass.comment_set = [[NSMutableArray alloc]init];

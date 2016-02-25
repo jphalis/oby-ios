@@ -153,13 +153,6 @@
     [UIView animateWithDuration:0.3 animations:^(void){
         [colltionVw scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
     }];
-    
-    // [colltionVw setContentOffset:CGPointZero animated:YES];
-    //colltionVw.contentOffset = CGPointMake(colltionVw.contentOffset.x, 0.0);
-    
-    //    [colltionVw scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]
-    //                             atScrollPosition:UICollectionViewScrollPositionCenteredVertically
-    //                                     animated:NO];
 }
 
 #pragma mark - Collecinview delegates
@@ -285,7 +278,6 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     CollectionViewCellimage *currentCell = (CollectionViewCellimage *)[collectionView cellForItemAtIndexPath:indexPath];
-    //CollectionViewCellimage *PreivousCell=(CollectionViewCellimage *)[collectionView cellForItemAtIndexPath:previousIndexPath];
     
     if(currentCell.imgView.image == nil){
         return;
@@ -304,38 +296,6 @@
     photoViewController.photoCreator = photoClass.creator;
     photoViewController.view.frame = appDelegate.window.frame;
     [appDelegate.window addSubview:photoViewController.view];
-    
-    /*
-     if(previousIndexPath==nil){
-     currentCell.imgView.hidden=YES;
-     currentCell.viewInfo.hidden=NO;
-     
-     [AnimatedMethods animatedFlipFromRight:currentCell.imgView secondView:currentCell.viewInfo];
-     
-     previousIndexPath=indexPath;
-     return;
-     }
-     
-     if (previousIndexPath.row!=indexPath.row) {
-     currentCell.imgView.hidden=YES;
-     currentCell.viewInfo.hidden=NO;
-     
-     [AnimatedMethods animatedFlipFromRight:currentCell.imgView secondView:currentCell.viewInfo];
-     
-     if(previousIndexPath!=nil){
-     PreivousCell.imgView.hidden=NO;
-     PreivousCell.viewInfo.hidden=YES;
-     // [AnimatedMethods animatedFlipFrombottom:PreivousCell.imgView secondView:PreivousCell.viewInfo];
-     }
-     previousIndexPath=indexPath;
-     }else{
-     currentCell.imgView.hidden=NO;
-     currentCell.viewInfo.hidden=YES;
-     [AnimatedMethods animatedFlipFromLeft:currentCell.imgView secondView:currentCell.viewInfo];
-     
-     previousIndexPath=nil;
-     }
-     */
 }
 
 -(void)onCommentList:(CustomButton*)sender{
@@ -542,18 +502,16 @@
                          PhotoClass *photoClass = [[PhotoClass alloc]init];
                          photoClass.category_url = [dictResult objectForKey:@"category_url"];
                          photoClass.photo_url = [dictResult objectForKey:@"photo_url"];
-                         photoClass.comment_count = [dictResult objectForKey:@"comment_count"];
-                         //photoClass.comment_set = [dictResult objectForKey:@"comment_set"];
+                         photoClass.comment_count = [NSString abbreviateNumber:[[dictResult objectForKey:@"comment_count"]intValue]];
                          photoClass.created = [dictResult objectForKey:@"created"];
                          photoClass.creator = [[dictResult objectForKey:@"creator"] uppercaseString];
                          photoClass.creator_url = [dictResult objectForKey:@"creator_url"];
                          photoClass.description = [dictResult objectForKey:@"description"];
                          
                          int userId = [[dictResult objectForKey:@"id"]intValue];
-                         int like_Count = [[dictResult objectForKey:@"like_count"]intValue];
                          
                          photoClass.PhotoId = [NSString stringWithFormat:@"%d",userId];
-                         photoClass.like_count = [NSString stringWithFormat:@"%d",like_Count];
+                         photoClass.like_count = [NSString abbreviateNumber:[[dictResult objectForKey:@"like_count"]intValue]];
                          
                          photoClass.likers = [[NSMutableArray alloc]init];
                          photoClass.comment_set = [[NSMutableArray alloc]init];

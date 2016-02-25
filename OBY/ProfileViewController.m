@@ -570,7 +570,7 @@
                      photoClass.category_url = [dictResult objectForKey:@"category_url"];
                      photoClass.photo_url = [dictResult objectForKey:@"photo_url"];
                      photoClass.photo = [dictResult objectForKey:@"photo"];
-                     photoClass.comment_count = [dictResult objectForKey:@"comment_count"];
+                     photoClass.comment_count = [NSString abbreviateNumber:[[dictResult objectForKey:@"comment_count"]intValue]];
                      photoClass.created = [dictResult objectForKey:@"created"];
                      photoClass.creator = [[dictResult objectForKey:@"creator"] uppercaseString];
                      photoClass.creator_url = [dictResult objectForKey:@"creator_url"];
@@ -578,7 +578,7 @@
                          
                      int userId = [[dictResult objectForKey:@"id"]intValue];
                      photoClass.PhotoId = [NSString stringWithFormat:@"%d",userId];
-                     photoClass.like_count = [dictResult objectForKey:@"like_count"];
+                     photoClass.like_count = [NSString abbreviateNumber:[[dictResult objectForKey:@"like_count"]intValue]];
                      photoClass.likers = [[NSMutableArray alloc]init];
                      photoClass.comment_set = [[NSMutableArray alloc]init];
                          
@@ -690,16 +690,14 @@
                      NSDictionary *dictFollower = [JSONValue objectForKey:@"follower"];
                      NSMutableArray *arrFollower = [dictFollower objectForKey:@"get_followers_info"];
                      NSMutableArray *arrFollowing = [dictFollower objectForKey:@"get_following_info"];
-                     NSString *followerCount = [dictFollower objectForKey:@"get_followers_count"];
-                     NSString *followingCount = [dictFollower objectForKey:@"get_following_count"];
                      
                      if ([[dictFollower objectForKey:@"get_followers_count"]intValue] > 0) {
-                         profileClass.followers_count = followerCount;
+                         profileClass.followers_count = [NSString abbreviateNumber:[[dictFollower objectForKey:@"get_followers_count"]intValue]];
                      } else {
                          profileClass.followers_count = @"0";
                      }
                      if ([[dictFollower objectForKey:@"get_following_count"]intValue] > 0) {
-                         profileClass.following_count = followingCount;
+                         profileClass.following_count = [NSString abbreviateNumber:[[dictFollower objectForKey:@"get_following_count"]intValue]];
                      } else {
                          profileClass.following_count = @"0";
                      }

@@ -59,8 +59,6 @@
     txtEduEmail.text = GetUserEduMail;
     txtWebsite.text = GetUserWebsite;
     txtBio.text = GetUserBio;
-
-//    [self getProfileInfo];
     
     [super viewDidLoad];
     

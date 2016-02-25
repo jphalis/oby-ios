@@ -7,21 +7,24 @@
 #import "defs.h"
 #import "GlobalFunctions.h"
 #import "SCLAlertView.h"
+#import "ProductClass.h"
+#import "ProductSingleViewController.h"
 #import "ProductsViewController.h"
 #import "StringUtil.h"
 #import "TableViewCellProducts.h"
 #import "ShopViewController.h"
 
 
-@interface ProductsViewController (){
+@interface ProductsViewController () <ProductSingleViewControllerDelegate>{
     AppDelegate *appDelegate;
-    
     
     __weak IBOutlet UITableView *tblVW;
     __weak IBOutlet UILabel *lblWaterMark;
     
     NSMutableArray *arrProducts;
     UIRefreshControl *refreshControl;
+    
+    ProductSingleViewController *productSingleViewController;
 }
 
 @end
@@ -44,6 +47,9 @@
     [tblVW addSubview:refreshControl];
     
     [super viewDidLoad];
+    
+    productSingleViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProductSingleViewController"];
+    productSingleViewController.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -53,7 +59,16 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     appDelegate.tabbar.tabView.hidden = NO;
+    
+    if(arrProducts.count > 0){
+        [self scrollToTop];
+    }
+    
     [super viewWillAppear:YES];
+}
+
+-(void)scrollToTop{
+    [tblVW setContentOffset:CGPointZero animated:YES];
 }
 
 /*
@@ -101,54 +116,168 @@
             
             if([JSONValue isKindOfClass:[NSDictionary class]]){
                 SetisAdvertiser([[JSONValue objectForKey:@"is_advertiser"] integerValue]);
-
+                
                 if ([[JSONValue objectForKey:@"detail"] isKindOfClass:[NSArray class]]){
                     NSArray *arrProductResult = [JSONValue objectForKey:@"detail"];
                 
                     if([arrProductResult count] > 0){
                         for (int i = 0; i < arrProductResult.count; i++) {
-                        
                             NSMutableDictionary *dictResult;
+                            dictResult = [[NSMutableDictionary alloc]init];
                             dictResult = [arrProductResult objectAtIndex:i];
-                            NSMutableDictionary *dictProducts = [[NSMutableDictionary alloc]init];
-                        
-                            if([dictResult objectForKey:@"owner"] == [NSNull null]){
-                                [dictProducts setValue:@"" forKey:@"owner"];
+                            ProductClass *productClass = [[ProductClass alloc]init];
+                            
+                            // Product id
+                            int product_id = [[[arrProductResult objectAtIndex:i]valueForKey:@"id"]intValue];
+                            productClass.product_id = [NSString stringWithFormat:@"%d",product_id];
+                            
+                            // Is listed
+                            if([[arrProductResult objectAtIndex:i]valueForKey:@"is_listed"]){
+                                productClass.is_listed = @"Yes";
                             } else {
-                                [dictProducts setValue:[dictResult objectForKey:@"owner"] forKey:@"owner"];
+                                productClass.is_listed = @"No";
                             }
-                            if([dictResult objectForKey:@"owner_url"] == [NSNull null]){
-                                [dictProducts setValue:@"" forKey:@"owner_url"];
+                            
+                            // Is featured
+                            if([[arrProductResult objectAtIndex:i]valueForKey:@"is_featured"]){
+                                productClass.is_featured = @"Yes";
                             } else {
-                                [dictProducts setValue:[dictResult objectForKey:@"owner_url"] forKey:@"owner_url"];
+                                productClass.is_featured = @"No";
                             }
-                            if([dictResult objectForKey:@"title"] == [NSNull null]){
-                                [dictProducts setValue:@"" forKey:@"title"];
+                            
+                            // Owner
+                            productClass.owner = [[arrProductResult objectAtIndex:i]valueForKey:@"owner"];
+                            
+                            // Title
+                            productClass.title = [[arrProductResult objectAtIndex:i]valueForKey:@"title"];
+                            
+                            // Slug
+                            productClass.slug = [[arrProductResult objectAtIndex:i]valueForKey:@"slug"];
+                            
+                            // Description
+                            if([[arrProductResult objectAtIndex:i]valueForKey:@"description"] != [NSNull null]){
+                                productClass.description = [[arrProductResult objectAtIndex:i]valueForKey:@"description"];
                             } else {
-                                [dictProducts setValue:[dictResult objectForKey:@"title"] forKey:@"title"];
+                                productClass.description = @"";
                             }
-                            if([dictResult objectForKey:@"slug"] == [NSNull null]){
-                                [dictProducts setValue:@"" forKey:@"slug"];
+                            
+                            // Cost
+                            if([[arrProductResult objectAtIndex:i]valueForKey:@"cost"] != [NSNull null]){
+                                productClass.cost = [[arrProductResult objectAtIndex:i]valueForKey:@"cost"];
                             } else {
-                                [dictProducts setValue:[dictResult objectForKey:@"slug"] forKey:@"slug"];
+                                productClass.cost = @"0";
                             }
-                            if([dictResult objectForKey:@"description"] == [NSNull null]){
-                                [dictProducts setValue:@"" forKey:@"description"];
+                            
+                            // Promo code
+                            if([[arrProductResult objectAtIndex:i]valueForKey:@"promo_code"] != [NSNull null]){
+                                productClass.promo_code = [[arrProductResult objectAtIndex:i]valueForKey:@"promo_code"];
                             } else {
-                                [dictProducts setValue:[dictResult objectForKey:@"description"] forKey:@"description"];
+                                productClass.promo_code = @"";
                             }
-                            if([dictResult objectForKey:@"cost"] == [NSNull null]){
-                                [dictProducts setValue:@"" forKey:@"cost"];
+                            
+                            // Buyers
+                            productClass.buyers = [[NSMutableArray alloc]init];
+                            
+                            NSArray *arrBuyer = [dictResult objectForKey:@"get_buyers_info"];
+                            
+                            productClass.is_purchased = NO;
+                            if([[dictResult objectForKey:@"get_buyers_info"] count] > 0){
+                                for(int l = 0; l < [arrBuyer count]; l++){
+                                    NSDictionary *dictUsers = [arrBuyer objectAtIndex:l];
+                                    if([[dictUsers objectForKey:@"username"] isEqualToString:GetUserName]){
+                                        productClass.is_purchased = YES;
+                                        break;
+                                    }
+                                }
+                            }
+                            
+                            for(int j = 0; j < arrBuyer.count; j++){
+                                NSMutableDictionary *dictBuyerInfo = [[NSMutableDictionary alloc]init];
+                                NSDictionary *dictUserDetail = [arrBuyer objectAtIndex:j];
+                                
+                                if([dictUserDetail objectForKey:@"profile_picture"] == [NSNull null]){
+                                    [dictBuyerInfo setObject:@"" forKey:@"user__profile_picture"];
+                                } else {
+                                    NSString *proflURL = [NSString stringWithFormat:@"%@%@",@"https://oby.s3.amazonaws.com/media/",[dictUserDetail objectForKey:@"profile_picture"]];
+                                    
+                                    [dictBuyerInfo setValue:proflURL forKey:@"user__profile_picture"];
+                                }
+                                if([dictUserDetail objectForKey:@"username"] == [NSNull null]){
+                                    [dictBuyerInfo setObject:@"" forKey:@"user__username"];
+                                } else {
+                                    [dictBuyerInfo setObject:[dictUserDetail objectForKey:@"username"] forKey:@"user__username"];
+                                }
+                                if([dictUserDetail objectForKey:@"full_name"] == [NSNull null]){
+                                    [dictBuyerInfo setObject:@"" forKey:@"full_name"];
+                                } else {
+                                    [dictBuyerInfo setObject:[dictUserDetail objectForKey:@"full_name"] forKey:@"full_name"];
+                                }
+                                
+                                NSString *fullString;
+                                NSString *userName = [dictBuyerInfo objectForKey:@"user__username"];
+                                NSString *fullName = [dictBuyerInfo objectForKey:@"full_name"];
+                                
+                                fullString = [NSString stringWithFormat:@"%@ %@",fullName,userName];
+                                
+                                NSMutableAttributedString *hogan = [[NSMutableAttributedString alloc] initWithString:fullString];
+                                
+                                NSRange range = [fullString rangeOfString:userName options:NSForcedOrderingSearch];
+                                
+                                [hogan addAttribute: NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
+                                
+                                [dictBuyerInfo setValue:hogan forKey:@"usernameText"];
+                                
+                                [productClass.buyers addObject:dictBuyerInfo];
+                            }
+                            
+                            // Is useable
+                            if([[arrProductResult objectAtIndex:i]valueForKey:@"is_useable"]){
+                                productClass.is_useable = @"Yes";
                             } else {
-                                [dictProducts setValue:[dictResult objectForKey:@"cost"] forKey:@"cost"];
+                                productClass.is_useable = @"No";
                             }
-                            if([dictResult objectForKey:@"promo_code"] == [NSNull null]){
-                                [dictProducts setValue:@"" forKey:@"promo_code"];
+                            
+                            // Max downloads
+                            if([[arrProductResult objectAtIndex:i]valueForKey:@"max_downloads"] != [NSNull null]){
+                                productClass.max_downloads = [[arrProductResult objectAtIndex:i]valueForKey:@"max_downloads"];
                             } else {
-                                [dictProducts setValue:[dictResult objectForKey:@"promo_code"] forKey:@"promo_code"];
+                                productClass.max_downloads = @"";
                             }
-                        
-                            [arrProducts addObject:dictResult];
+                            
+                            // List date start
+                            if([[arrProductResult objectAtIndex:i]valueForKey:@"list_date_start"] != [NSNull null]){
+                                productClass.list_date_start = [[arrProductResult objectAtIndex:i]valueForKey:@"list_date_start"];
+                            } else {
+                                productClass.list_date_start = @"";
+                            }
+                            
+                            // List date end
+                            if([[arrProductResult objectAtIndex:i]valueForKey:@"list_date_end"] != [NSNull null]){
+                                productClass.list_date_end = [[arrProductResult objectAtIndex:i]valueForKey:@"list_date_end"];
+                            } else {
+                                productClass.list_date_end = @"";
+                            }
+                            
+                            // Use date start
+                            if([[arrProductResult objectAtIndex:i]valueForKey:@"use_date_start"] != [NSNull null]){
+                                productClass.use_date_start = [[arrProductResult objectAtIndex:i]valueForKey:@"use_date_start"];
+                            } else {
+                                productClass.use_date_start = @"";
+                            }
+                            
+                            // Use date end
+                            if([[arrProductResult objectAtIndex:i]valueForKey:@"use_date_end"] != [NSNull null]){
+                                productClass.use_date_end = [[arrProductResult objectAtIndex:i]valueForKey:@"use_date_end"];
+                            } else {
+                                productClass.use_date_end = @"";
+                            }
+                            
+                            // Company logo
+                            // NSString *str = [[arrProductResult objectAtIndex:i]valueForKey:@"company_logo"];
+                            // NSString *newStr = [NSString stringWithFormat:@"https:%@",str];
+                            // productClass.company_logo = newStr;
+                            
+                            [arrProducts addObject:productClass];
                         }
                         [appDelegate hideHUDForView2:self.view];
                         [self setBusy:NO];
@@ -193,15 +322,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     TableViewCellProducts *cell = [tableView dequeueReusableCellWithIdentifier:@"ProductCell" forIndexPath:indexPath];
-
-    NSMutableDictionary *dictProducts;
     
-    dictProducts = [arrProducts objectAtIndex:indexPath.row];
+    if(arrProducts.count <= 0){
+        return cell;
+    }
+    
+    ProductClass *productClass = [arrProducts objectAtIndex:indexPath.row];
 
-    cell.description.text = [dictProducts objectForKey:@"description"];
-    cell.pointValue.text = [dictProducts objectForKey:@"cost"];
-    [cell.companyLogo loadImageFromURL:[dictProducts objectForKey:@"company_logo"] withTempImage:@"avatar"];
-    cell.companyLogo.layer.masksToBounds = YES;
+    cell.description.text = productClass.description;
+    cell.pointValue.text = [NSString stringWithFormat:@"%@ points", productClass.cost];
+//    [cell.companyLogo loadImageFromURL:productClass.company_logo withTempImage:@"avatar"];
+//    cell.companyLogo.layer.masksToBounds = YES;
     
     UIView *bottomBorder = [[UIView alloc] initWithFrame:CGRectMake(0, cell.frame.size.height - 1, cell.frame.size.width, 1)];
     bottomBorder.backgroundColor = [UIColor colorWithRed:(234/255.0) green:(234/255.0) blue:(234/255.0) alpha:1.0];
@@ -211,15 +342,14 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self.view endEditing:YES];
-
-    NSMutableDictionary *dictProducts;
-    
-    dictProducts = [arrProducts objectAtIndex:indexPath.row];
-    
-//    ProfileViewController *profileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
-//    profileViewController.userURL = [dictUser objectForKey:@"account_url"];
-//    [self.navigationController pushViewController:profileViewController animated:YES];
+    ProductClass *productClass = [arrProducts objectAtIndex:indexPath.row];
+    productSingleViewController.owner = productClass.owner;
+//    productSingleViewController.company_logo = productClass.company_logo;
+    productSingleViewController.prod_title = productClass.title;
+    productSingleViewController.prod_descrip = productClass.description;
+    productSingleViewController.point_value = productClass.cost;
+    productSingleViewController.prod_slug = productClass.slug;
+    [self.navigationController pushViewController:productSingleViewController animated:YES];
 }
 
 @end

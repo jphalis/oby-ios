@@ -521,7 +521,7 @@
                          PhotoClass *photoClass = [[PhotoClass alloc]init];
                          photoClass.category_url = [dictResult objectForKey:@"category_url"];
                          photoClass.photo_url = [dictResult objectForKey:@"photo_url"];
-                         photoClass.comment_count = [dictResult objectForKey:@"comment_count"];
+                         photoClass.comment_count = [NSString abbreviateNumber:[[dictResult objectForKey:@"comment_count"]intValue]];
                          photoClass.created = [dictResult objectForKey:@"created"];
                          photoClass.creator = [[dictResult objectForKey:@"creator"] uppercaseString];
                          photoClass.creator_url = [dictResult objectForKey:@"creator_url"];
@@ -530,7 +530,7 @@
                          int userId = [[dictResult objectForKey:@"id"]intValue];
                          
                          photoClass.PhotoId = [NSString stringWithFormat:@"%d",userId];
-                         photoClass.like_count = [dictResult objectForKey:@"like_count"];
+                         photoClass.like_count = [NSString abbreviateNumber:[[dictResult objectForKey:@"like_count"]intValue]];
                          
                          photoClass.likers = [[NSMutableArray alloc]init];
                          photoClass.comment_set = [[NSMutableArray alloc]init];
